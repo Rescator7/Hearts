@@ -6,9 +6,13 @@ The card game Hearts for QT (linux)
 - QT Widget 5
 - Liballegro 5
 
+2. Install: (under ubuntu 16.04)
+- sudo apt-get update
+- sudo apt-get install liballegro5-dev
 
-2. License: 
+3. License: 
  - MIT for the software
+ - Cards set: https://github.com/htdebeer/SVG-cards/blob/master/LICENSE
  - Sounds are CC 3.0 and 1.0
  - Icons: CC 1.0
-(read credits for more information)
+<p>(read credits for more information)
