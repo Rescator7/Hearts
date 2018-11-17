@@ -6,7 +6,7 @@ The card game Hearts for QT (linux)
 - QT Widget 5
 - Liballegro 5
 
-2. Install: (under ubuntu 16.04)
+2. Install: (under ubuntu 16.04) [this section is still in developement]
 - sudo apt-get update
 - sudo apt-get install liballegro5-dev
 
