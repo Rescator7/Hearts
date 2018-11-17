@@ -15,4 +15,5 @@ The card game Hearts for QT (linux)
  - Cards set: https://github.com/htdebeer/SVG-cards/blob/master/LICENSE
  - Sounds are CC 3.0 and 1.0
  - Icons: CC 1.0
-<p>(read credits for more information)
+<p>(read credits for more information<p>
+![hearts]((https://github.com/Rescator7/Hearts/blob/master/screenshot/hearts.jpg)
