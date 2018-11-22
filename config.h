@@ -12,10 +12,7 @@ const int CONFIG_QUEEN_SPADE_BREAK_HEART = 7;
 const int CONFIG_NO_TRICK_BONUS          = 8;
 const int CONFIG_NEW_MOON                = 9;
 const int CONFIG_NO_DRAW                 = 10;
-
-const int FNOERR                         = 0;
-const int ERROPENRO                      = 1;
-const int ERROPENWO                      = 2;
+const int CONFIG_SAVE_GAME               = 11;
 
 const char CONFIG_FILENAME[10]  = "/.hearts";
 
@@ -28,8 +25,6 @@ private:
     void init_vars();
     int save_config_file();
     int load_config_file();
-
-    int error;
 
     // settings
     bool auto_centering;
@@ -45,6 +40,7 @@ private:
     bool no_trick_bonus;
     bool new_moon;
     bool no_draw;
+    bool save_game;
 
 public:
      int set_config_file(int param, bool enable);
@@ -61,6 +57,7 @@ public:
      bool is_no_trick_bonus();
      bool is_new_moon();
      bool is_no_draw();
+     bool is_save_game();
 };
 
 #endif // CONFIG_H

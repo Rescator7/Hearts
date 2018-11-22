@@ -8,13 +8,17 @@ const int DECK_SIZE     = 52;
 const int NOT_FOUND     = -1;
 
 const int two_clubs     = 0;
+const int ace_clubs     = 12;
+const int two_spade     = 13;
 const int queen_spade   = 23;
 const int king_spade    = 24;
 const int ace_spade     = 25;
+const int two_diamond   = 26;
 const int jack_diamond  = 35;
 const int queen_diamond = 36;
 const int king_diamond  = 37;
 const int ace_diamond   = 38;
+const int two_heart     = 39;
 const int ace_heart     = 51;
 const int empty         = 127;
 
@@ -38,6 +42,7 @@ const int OMNIBUS_BONUS        = 1;
 const int NO_TRICK_BONUS       = 2;
 
 const char suit_names[4][10]   = {"club", "spade", "diamond", "heart"};
+const char SAVEDGAME_FILENAME[20]  = "/.hearts.saved";
 
 class CHearts : public QObject
 {
@@ -67,6 +72,7 @@ private: // variables
     bool cards_played[DECK_SIZE];
 
     int user_id;
+    int plr_name_id[4];
     int turn;
     int hand_turn;
     int current_suit;
@@ -92,7 +98,6 @@ private: // functions
    bool can_play_qs_first_hand(int plr);
    bool is_only_heart_left(int plr);
    bool is_tram(int plr);
-   bool is_first_card();
    bool is_moon_still_possible();
    bool is_card_on_table(int card);
 
@@ -101,10 +106,12 @@ private: // functions
    int  get_lowest_suit_pos(int plr, int suit);
    int  get_card_position(int plr, int card);
    int  get_highest_suit_pos(int plr, int suit);
+   int  get_highest_card_table();
    int  check_invalid_move(int plr, int card);
    int  freesuit_lead_eval(int card);
    int  spade_lead_eval(int card);
    int  diamond_lead_eval(int card);
+   int  eval_card_strength(int plr, int card);
 
    void init_vars();
    void reset_cards_on_table();
@@ -142,6 +149,10 @@ public: // functions
    int  get_my_score();
    int  count_my_cards();
    int  count_plr_cards(int plr);
+   int  save_game(int plr1, int plr2, int pl3, int pl4);
+   int  load_saved_game();
+   int  get_plr_name_id(int plr);
+   int  get_plr_hand_card(int plr);
 
    void new_game();
    void set_tram_enabled(bool enable);  

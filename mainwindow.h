@@ -79,6 +79,8 @@ private slots:
 
     void on_actionSettings_triggered();
 
+    void on_actionSave_Game_Quit_triggered();
+
 private:
     Ui::MainWindow *ui;
     QImage *img_cards[52];
@@ -114,6 +116,7 @@ private:
 
     int active_deck;
     int cards_received[3];
+    int plr_names_idx[4];
 
     void clear_deck();
     void show_deck(int plr);
@@ -124,6 +127,7 @@ private:
     void init_pointers();
     void set_options();
     void set_hearts_options();
+    void load_saved_game();
 
 public:
     void message(QString mesg);
@@ -147,6 +151,7 @@ public slots:
     void breaking_hearts();
     void perfect_100(int plr);
     void receive_bonus(int plr, int bonus, int value);
+    void quit();
 };
 
 #endif // MAINWINDOW_H

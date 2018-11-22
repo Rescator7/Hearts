@@ -2,6 +2,10 @@
 #include "variants.h"
 #include "assert.h"
 #include <QMessageBox>
+#include <QFile>
+#include <QDir>
+#include <QTextStream>
+#include "define.h"
 
 CHearts::CHearts()
 {
@@ -14,9 +18,11 @@ CHearts::~CHearts()
 void CHearts::new_game()
 {
   init_vars();
-  reset_cards_on_table();
+
   reset_score();
   reset_hand_score();
+
+  reset_cards_on_table();
   reset_cards_left_in_suit();
   reset_cards_played();
   reset_cards_passed();
@@ -47,6 +53,274 @@ void CHearts::init_vars()
   best_hand = 0;
   hand_turn = 0;
   current_suit = CLUB;
+}
+
+int CHearts::save_game(int plr1, int plr2, int plr3, int plr4)
+{
+  QFile file(QDir::homePath() + SAVEDGAME_FILENAME);
+
+  if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
+     return ERROPENWO;
+  }
+
+  QTextStream out(&file);
+
+  out << plr1 << " " << plr2 << " "
+      << plr3 << " " << plr4 << endl;                            // plr names idx (-1 = whoami)
+
+  out << turn          << " " << hand_turn << " "                // turn, hand turn, plr_best_hand,
+      << plr_best_hand << " " << plr_jack_diamond << " "         // plr_jack_diamond, passed_to, current_suit
+      << passed_to     << " " << current_suit << " " << endl;
+
+  out << heart_broken  << " " << hand_score   << " "             // heart_broken, hand_score, best_hand
+      << best_hand     << " " << mode_playing << endl;           // mode_playing
+
+  out << plr_hand_score[0] << " " << plr_hand_score[1] << " "    // players hand_score
+      << plr_hand_score[2] << " " << plr_hand_score[3] << endl;
+
+  out << plr_score[0]  << " " << plr_score[1] << " "             // players score
+      << plr_score[2]  << " " << plr_score[3] << endl;
+
+  out << hand_cards[0] << " " << hand_cards[1] << " "            // hand_cards
+      << hand_cards[2] << " " << hand_cards[3] << endl;
+
+  for (int i=0; i<4; i++) {                                      // player's cards
+    for (int i2=0; i2<13; i2++) {
+       out << plr_cards[i][i2] << " ";
+     }
+     out << endl;
+  }
+
+  file.close();
+  return NOERROR;
+}
+
+int CHearts::load_saved_game()
+{
+  QFile file(QDir::homePath() + SAVEDGAME_FILENAME);
+
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    return ERROPENRO;
+  }
+
+  int cpt = 0;
+  bool found_whoami = false;
+  bool card_found[DECK_SIZE];
+  for (int i=0; i<DECK_SIZE; i++)
+    card_found[i] = false;
+
+  while (!file.atEnd()) {
+    int value;
+
+    QString line = file.readLine();
+    cpt++;
+    switch (cpt) {
+       case 1 :   // extract the players names index in the name lists. also, find whoami (== -1)
+                 for (int i=0; i<4; i++) {
+                    value = line.section(' ', i, i).toInt();
+                    if ((value < -1) || (value > MAX_PLR_NAMES - 1))
+                      return FCORRUPTED;
+
+                    plr_name_id[i] = value;
+                    if (value == -1) {
+                      if (found_whoami)
+                        return FCORRUPTED;
+                      user_id = i;
+                      found_whoami = true;
+                    }
+                 }
+                 break;
+
+       case 2 :  // extract turn, hand_turn, passed_to
+                 for (int i=0; i<6; i++) {
+                   value = line.section(' ', i, i).toInt();
+                   if ((value < -1) || (value > 4))
+                     return FCORRUPTED;
+
+                   if ((value > 3) && (i != 5))                // current_suit can have value = 4 = FREESUIT
+                     return FCORRUPTED;
+
+                   if ((value == -1) && (i != 2) && (i != 3))  // plr_best_hand, plr_jack_diamond = -1 = NOTFOUND
+                      return FCORRUPTED;
+
+                   switch (i) {
+                      case 0 : turn = value; break;
+                      case 1 : hand_turn = value; break;
+                      case 2 : plr_best_hand = value; break;
+                      case 3 : plr_jack_diamond = value; break;
+                      case 4 : passed_to = value; break;
+                      case 5 : current_suit = value; break;
+                   }
+                 }
+                 break;
+
+       case 3 :  // extract heart_broken, hand_score, best_hand, mode_playing
+                 for (int i=0; i<4; i++) {
+                   value = line.section(' ', i, i).toInt();
+                   switch (i) {
+                      case 0 : if ((value < 0) || (value > 1))
+                                 return FCORRUPTED;
+                               heart_broken = value;
+                               break;
+                      case 1 : if ((value < -10) || (value > 26))
+                                 return FCORRUPTED;
+                               hand_score = value;
+                               break;
+                      case 2 : if ((value < two_clubs) || (value > DECK_SIZE - 1))
+                                 return FCORRUPTED;
+                               best_hand = value;
+                               break;
+                      case 3 : if ((value < 0) || (value > 1))
+                                 return FCORRUPTED;
+                               mode_playing = value;
+                               break;
+                   }
+                 }
+                 break;
+       case 4 :  // extract players hand_score
+                 for (int i=0; i<4; i++) {
+                   value = line.section(' ', i, i).toInt();
+                   if ((value < -10) || (value > 26))
+                     return FCORRUPTED;
+                   plr_hand_score[i] = value;
+                 }
+                 break;
+       case 5 :  // extract players score
+                 for (int i=0; i<4; i++) {
+                   value = line.section(' ', i, i).toInt();
+                   if ((value < 0) || (value > game_over_score - 1))
+                     return FCORRUPTED;
+                   plr_score[i] = value;
+                 }
+                 break;
+       case 6 : // extract hand_cards
+                for (int i=0; i<4; i++) {
+                  value = line.section(' ', i, i).toInt();
+                  if ((value < two_clubs) || (value > DECK_SIZE - 1)) {
+                    if (value != empty)
+                      return FCORRUPTED;
+                  }
+                  hand_cards[i] = value;
+                }
+                break;
+       case 7 :
+       case 8 :
+       case 9 :
+       case 10: // read players cards
+                for (int i=0; i<13; i++) {
+                  value = line.section(' ', i, i).toInt();
+
+                  // found the same card twice !
+                  if ((value != empty) && card_found[value]) {
+                    return FCORRUPTED;
+                  }
+
+                  if (((value < two_clubs) || (value > DECK_SIZE - 1)) && (value != empty))
+                    return FCORRUPTED;     
+
+                  if (value != empty)
+                    card_found[value] = true;
+
+                  plr_cards[cpt - 7][i] = value;
+                }
+                break;
+
+       default : break; // return FCORRUPTED ?? or break ??
+    }
+  }
+
+  if (cpt != 10)
+    return FCORRUPTED;
+
+  // make sure there is no card played twice on the table.
+  if (((hand_cards[0] == hand_cards[1]) || (hand_cards[0] == hand_cards[2])) && (hand_cards[0] != empty))
+    return FCORRUPTED;
+
+  if ((hand_cards[1] == hand_cards[2]) && (hand_cards[1] != empty))
+    return FCORRUPTED;
+
+  file.remove();
+
+  shoot_moon = false;
+  game_over = false;
+
+  reset_cards_played();
+  reset_cards_passed();
+  reset_plr_cards_in_suit();
+  reset_plr_has_card();
+
+  // Those inits are different from a new_game() -> reset_function().
+  for (int i=0; i<4; i++) {
+    cpt_plr_cards[i] = 0;
+    cards_left_in_suit[i] = 0;
+  }
+
+  card_left = 0;
+  // analyse the cards for counters, etc... and plr_has_card[]
+  for (int i=0; i<4; i++) {
+    for (int i2=0; i2<13; i2++) {
+      int card = plr_cards[i][i2];
+      int card_suit = card / 13;
+
+      if (card != empty) {
+        card_left++;
+        cpt_plr_cards[i]++;
+        plr_has_card[i][card] = true;
+        plr_cards_in_suit[i][card_suit]++;
+        cards_left_in_suit[card_suit]++;
+      }
+    }
+  }
+
+ // check that the number of cards are valid (they should have the same number of card, not more than 1 card diff)
+  int cpt_card = cpt_plr_cards[user_id];
+  int next = user_id;
+  int diff;
+  bool found = false;
+  for (int i=0; i<3; i++) {
+    if (++next > 3)
+      next = 0;
+
+    diff = cpt_card - cpt_plr_cards[next];
+
+    if (found && (diff != 1))
+      return FCORRUPTED;
+
+    if ((diff < 0) || (diff > 1))
+      return FCORRUPTED;
+
+    if (diff == 1)
+      found = true;
+  }
+
+
+ // analyse the cards to find those that has been played.
+ for (int i=0; i<DECK_SIZE; i++)
+   if (!plr_has_card[0][i] && !plr_has_card[1][i] &&
+       !plr_has_card[2][i] && !plr_has_card[3][i]) {
+     cards_played[i] = true;
+  }
+
+  // check that the hand cards has been found as played.
+  for (int i=0; i<3; i++)
+    if ((hand_cards[i] != empty) && !cards_played[hand_cards[i]]) {
+      return FCORRUPTED;
+    }
+
+  // emit the new score/hand score of this game.
+  for (int i=0; i<4; i++) {
+    emit sig_hand_score(plr_hand_score[i], i);
+    emit sig_score(plr_score[i], i);
+  }
+
+  emit sig_clear_table();
+  emit sig_refresh_deck(user_id);
+  emit sig_pass_to(passed_to);
+
+  if (mode_playing)
+    emit sig_your_turn(user_id);
+
+  return NOERROR;
 }
 
 void CHearts::reset_cards_on_table()
@@ -259,6 +533,32 @@ void CHearts::set_cpu_passing_cards(int plr)
   cards_selected_count[plr] = 3;
 }
 
+int CHearts::eval_card_strength(int plr, int card)
+{
+ int suit = card / 13;
+
+ if (!plr_cards_in_suit[plr][suit])
+   return 0;
+
+ const int first[4] = {two_clubs, two_spade, two_diamond, two_heart};
+ const int last[4]  = {ace_clubs, ace_spade, ace_diamond, ace_heart};
+
+ int cpt = 0;
+
+ for (int i=first[suit]; i<=last[suit]; i++) {
+    if (!cards_played[i] && !plr_has_card[plr][i]) {
+      if (card > i)
+        cpt++;
+    }
+  }
+
+
+ assert(cards_left_in_suit[suit]);
+ int value = (cpt / cards_left_in_suit[suit]) * 100;
+
+ return value;
+}
+
 void CHearts::select_cpus_cards()
 {
  for (int i=0; i<4; i++)
@@ -410,8 +710,8 @@ int CHearts::freesuit_lead_eval(int card)
                 ((card == ace_diamond) || (card == king_diamond) || (card == queen_diamond)))
     return 63;
 
-  // if nothing has been found => return 0
-  return 0;
+  // the stronger that card is, the worst it is to play.
+  return -eval_card_strength(turn, card);
 }
 
 int CHearts::spade_lead_eval(int card)
@@ -431,8 +731,6 @@ int CHearts::spade_lead_eval(int card)
  // avoid giving the jack of diamond
   if (omnibus && (card == jack_diamond))
     return -62;
-
- // QMessageBox::warning(0, "warning", QString("turn: ") + QString::number(turn) + QString(" handturn: ") + QString::number(hand_turn));
 
  // last to talk, the queen is not in the trick.. throw your ace/king.
   if ((hand_turn == 3) && !is_card_on_table(queen_spade) && ((card == ace_spade) || (card == king_spade)))
@@ -488,37 +786,51 @@ int CHearts::get_cpu_move()
                         break;
 
          case SPADE:    eval[i] = spade_lead_eval(card);
-
                         break;
 
          case DIAMOND:  eval[i] = diamond_lead_eval(card);
+
+         default :      // give away the queen of spade
+                        if (card == queen_spade)
+                          eval[i] = 105;
+                        else
+                        // the queen of spade has not been played yet, let's throw our ace/king spade away.
+                        if (((card == ace_spade) || (card == king_spade)) && !cards_played[queen_spade])
+                          eval[i] = 76;
+
       }
 
-    // if we didn't hit a specific evaluation in previous section, let's try those evaluation.
-    if (eval[i] == 0) {
+    // if we didn't hit a specific evaluation in previous section, let's try those evaluations.
+      if (eval[i] == 0) {
+        // don't give away the jack of diamond.
+        if ((current_suit != DIAMOND) && omnibus && (card == jack_diamond))
+         eval[i] = -63;
+        else
+        // we are the last one of the trick: play our bigger cards, but not in hearts, and not if queen spade is in
+         if ((hand_turn == 3) && (current_suit != HEART) && !is_card_on_table(queen_spade))
+           eval[i] = card % 13;
+        else
+        if (current_suit != FREESUIT) {
+           // throw away our big hearts cards
+           if ((current_suit != HEART) && (card / 13 == HEART))
+             eval[i] = (card % 13) + 30;
+           else
+           // not in the suit, throw the bigest cards
+           if (current_suit != card / 13)
+             eval[i] = (card % 13) + 15;
+           else {
+           // in the suit, throw our bigest cards under the best cards on the table
+              int highest = get_highest_card_table();
 
-      // give away the queen of spade
-      if (card == queen_spade)
-         eval[i] = 105;
-      else
-
-      // the queen of spade has not been played yet, let's throw our ace/king spade away.
-      if ((current_suit != SPADE) && ((card == ace_spade) || (card == king_spade)) && !cards_played[queen_spade])
-        eval[i] = 76;
-      else
-      // don't give away the jack of diamond.
-      if ((current_suit != DIAMOND) && omnibus && (card == jack_diamond))
-       eval[i] = -63;
-      else
-      // we are the last one of the trick: play our bigger cards, but not in hearts, and not if queen spade is in
-       if ((hand_turn == 3) && (current_suit != HEART) && !is_card_on_table(queen_spade))
-         eval[i] = card % 13;
-      else
-      // not last, play the lowest card.
-      if (hand_turn != 3)
-        eval[i] = -(card % 13);
+              if (card < highest)
+                eval[i] = -(card - highest);
+           }
+        }
+        else
+        // play the lowest card.
+          eval[i] = -(card % 13);
+      }
     }
-   }
  }
 
  // search for the best move... eventually, it could go into the first loop...
@@ -629,6 +941,7 @@ void CHearts::process_next_pass(bool skip_moon_check)
     reset_cards_played();
     reset_cards_passed();
     reset_hand_score();
+    reset_cards_left_in_suit();
     reset_plr_cards_in_suit();
     reset_plr_has_card();
     random_deck();
@@ -1005,6 +1318,32 @@ int CHearts::check_invalid_move(int plr, int card)
   return NOERROR;
 }
 
+int CHearts::get_plr_name_id(int plr)
+{
+ assert((plr_name_id[plr] >= -1) && (plr_name_id[plr] < MAX_PLR_NAMES));
+
+ return plr_name_id[plr];
+}
+
+int CHearts::get_plr_hand_card(int plr)
+{
+ return hand_cards[plr];
+}
+
+int CHearts::get_highest_card_table()
+{
+  int highest = hand_cards[0];
+
+  switch (hand_turn) {
+     case 3 : if ((hand_cards[2] / 13 == current_suit) && (hand_cards[2] > highest))
+                highest = hand_cards[2];
+     case 2 : if ((hand_cards[1] / 13 == current_suit) && (hand_cards[1] > highest))
+                highest = hand_cards[1];
+  }
+
+  return highest;
+}
+
 bool CHearts::is_ready_to_pass()
 {
  return cards_selected_count[user_id] == 3;
@@ -1104,9 +1443,4 @@ void CHearts::set_new_moon(bool enable)
 void CHearts::set_no_draw(bool enable)
 {
   no_draw = enable;
-}
-
-bool CHearts::is_first_card()
-{
-  return card_left == DECK_SIZE;
 }

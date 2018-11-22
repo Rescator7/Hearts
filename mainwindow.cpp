@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <cardspos.h>
 #include <QLabel>
+#include <QFile>
+#include <QDir>
 #include <QPushButton>
 #include <QImage>
 #include <QString>
@@ -21,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     srand(time(0));
+
+    ui->textEdit->setTextColor((Qt::yellow));
+    ui->textEdit->setTextBackgroundColor(Qt::black);
 
     stop_delay = false;
 
@@ -50,19 +55,29 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(hearts, SIGNAL(sig_pass_to(int)), this, SLOT(pass_to(int)));
 
     connect(ui->actionQuit, SIGNAL(triggered(bool)), this, SLOT(close()));
+    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(quit()));
 
-    hearts->new_game();
+    message("Welcome to " + QString(version));
+
+    int errno;
+
+    errno = hearts->load_saved_game();
+    if (errno == NOERROR)
+      load_saved_game();
+    else {
+      if (errno == FCORRUPTED) {
+        message("[Error]: The saved game file is corrupted! Deleted!");
+
+        QFile file(QDir::homePath() + SAVEDGAME_FILENAME);
+        file.remove();
+      }
+      hearts->new_game();
+      set_plr_names();
+    }
 
     set_options();         // set_options require: hearts->whoami(), must be called after hearts->new_game()
 
     set_hearts_options();
-
-    set_plr_names();
-
-    ui->textEdit->setTextColor((Qt::yellow));
-    ui->textEdit->setTextBackgroundColor(Qt::black);
-
-    message("Welcome to " + QString(version));
 }
 
 MainWindow::~MainWindow()
@@ -286,6 +301,49 @@ void MainWindow::init_pointers()
     cheat_radio_button[3] = ui->radioButton_4;
 }
 
+void MainWindow::quit()
+{
+ if (!ui->actionSave_Game_Quit->isChecked())
+   return;
+
+ if (hearts->is_game_over())
+   return;
+
+ hearts->save_game(plr_names_idx[0], plr_names_idx[1], plr_names_idx[2], plr_names_idx[3]);
+}
+
+void MainWindow::load_saved_game()
+{
+  message("[Info]: Previous saved game has been loaded!");
+  for (int i=0; i<4; i++) {
+    int name_id = hearts->get_plr_name_id(i);
+
+    plr_names_idx[i] = name_id;
+
+    if (name_id == -1)
+      label[18 + i]->setText("You");
+    else
+      label[18 + i]->setText(names[name_id]);
+  }
+
+  if (hearts->is_mode_playing()) {
+    label[17]->setDisabled(true);
+
+
+    int cpt = hearts->whoami();
+    for (int i=0; i<3; i++) {
+      int card = hearts->get_plr_hand_card(2-i);
+
+      if (card == empty) continue;
+
+      if (--cpt < 0)
+        cpt = 3;
+
+      label[13 + cpt]->setPixmap(QPixmap::fromImage(img_cards[card]->scaledToHeight(100)));
+    }
+  }
+}
+
 void MainWindow::set_options()
 {
   ui->actionAuto_Centering->setChecked(config->is_auto_centering());
@@ -300,6 +358,7 @@ void MainWindow::set_options()
   ui->actionNo_Trick_Bonus->setChecked(config->is_no_trick_bonus());
   ui->actionNew_Moon->setChecked(config->is_new_moon());
   ui->actionNo_Draw->setChecked(config->is_no_draw());
+  ui->actionSave_Game_Quit->setChecked(config->is_save_game());
 
   set_info_channel_enabled(config->is_info_channel());
   set_cheat_mode_enabled(config->is_cheat_mode());
@@ -318,17 +377,9 @@ void MainWindow::set_hearts_options()
 
 void MainWindow::set_plr_names()
 {
-  const int max_names = 43;
-  const char names[max_names][10] = {"Aina", "Airi", "Alex", "Charles", "Christian", "Christine", "Cindy",
-                                     "David", "Danny", "Denis", "Elena", "Erica", "Gabriel", "Grace",
-                                     "Karine", "Karl", "Jason", "John", "Jennifer", "Linda", "Mai",
-                                     "Maimi", "Patricia", "Paul", "Marc", "Mary", "Masaki", "Michael",
-                                     "Michelle", "Myriam", "Nadia", "Reina", "Rick", "Riho", "Robert",
-                                     "Sam", "Sandy", "Sayuki", "Sayumi", "Sara", "Sophie", "Sonia",
-                                     "Tomoko"};
-  bool name_taken[max_names];
+  bool name_taken[MAX_PLR_NAMES];
 
-  for (int i=0; i<max_names; i++)
+  for (int i=0; i<MAX_PLR_NAMES; i++)
      name_taken[i] = false;
 
   int whoami = hearts->whoami();
@@ -336,15 +387,17 @@ void MainWindow::set_plr_names()
   for (int i=0; i<4; i++) {
      if (i == whoami) continue;
 
-    int x = rand() % max_names;
+    int x = rand() % MAX_PLR_NAMES;
     while (name_taken[x])
-        x = rand() % max_names;
+        x = rand() % MAX_PLR_NAMES;
 
     name_taken[x] = true;;
     label[18 + i]->setText(names[x]);
+    plr_names_idx[i] = x;
   }
 
   label[18 + whoami]->setText("You");
+  plr_names_idx[whoami] = -1;
 }
 
 void MainWindow::receive_bonus(int plr, int bonus, int value)
@@ -437,6 +490,7 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
 #endif
 
   ui->actionNew->setDisabled(false);
+  ui->actionSave->setDisabled(true);
 }
 
 void MainWindow::tram(int plr)
@@ -497,6 +551,7 @@ void MainWindow::shoot_moon(int plr)
 void MainWindow::pass_to(int pass_to)
 {        
   ui->actionNew->setDisabled(false);
+  ui->actionSave->setDisabled(false);
   label[17]->setPixmap(QPixmap::fromImage(img_pass[pass_to]->scaledToHeight(80)));
   label[17]->setDisabled(pass_to == pNOPASS);
 }
@@ -639,7 +694,7 @@ void MainWindow::select_card(int num)
   else
     card_id = num;
 
-  assert((card_id >=0) && (card_id <= 12));
+  assert((card_id >= 0) && (card_id <= 12));
 
  if ((active_deck != hearts->whoami()) || wait_delay) return;
 
@@ -648,6 +703,7 @@ void MainWindow::select_card(int num)
    if (!hearts->is_it_my_turn()) return;     // wait_delay seem to do the job, but maybe it's just by luck...
 
    ui->actionNew->setDisabled(true);
+   ui->actionSave->setDisabled(true);
 
    int error;
 
@@ -666,6 +722,7 @@ void MainWindow::select_card(int num)
        al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
 #endif
       ui->actionNew->setDisabled(false);
+      ui->actionSave->setDisabled(false);
    }  
    return;
  }
@@ -720,6 +777,7 @@ void MainWindow::show_your_turn(int idx)
 #endif
 
   ui->actionNew->setDisabled(false);
+  ui->actionSave->setDisabled(false);
 }
 
 void MainWindow::on_label_18_clicked() // pass 3 cards
@@ -741,6 +799,7 @@ void MainWindow::on_label_18_clicked() // pass 3 cards
   label[17]->setDisabled(true);
 
   ui->actionNew->setDisabled(true);
+  ui->actionSave->setDisabled(true);
 
   hearts->select_cpus_cards();
 
@@ -972,6 +1031,11 @@ void MainWindow::on_actionNo_Draw_triggered()
   config->set_config_file(CONFIG_NO_DRAW, checked);
 }
 
+void MainWindow::on_actionSave_Game_Quit_triggered()
+{
+  config->set_config_file(CONFIG_SAVE_GAME, ui->actionSave_Game_Quit->isChecked());
+}
+
 void MainWindow::on_actionRules_triggered()
 {
   Rules rules_diag(this);
@@ -984,7 +1048,6 @@ void MainWindow::on_actionCredits_triggered()
   Credits credits_diag(this);
   credits_diag.setModal(true);
   credits_diag.exec();
-
 }
 
 void MainWindow::on_actionSettings_triggered()

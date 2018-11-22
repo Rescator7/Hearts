@@ -3,8 +3,7 @@
 #include <QString>
 #include <QTextStream>
 #include "config.h"
-
-//#include <QMessageBox>
+#include "define.h"
 
 CConfig::CConfig()
 {
@@ -25,6 +24,7 @@ void CConfig::init_vars()
   info_channel = true;
   sounds = true;
   detect_tram = true;
+  save_game = true;
 
   perfect_100 = false;
   omnibus = false;
@@ -50,8 +50,6 @@ int CConfig::load_config_file() {
       QString value = line.section(" ", -1, -1);
 
       bool enable;
-
-     //  QMessageBox::warning(0, "warning", param+"='"+value+"'"+QString::number(value.length()));
 
       if (value == "true\n")
         enable = true;
@@ -90,11 +88,14 @@ int CConfig::load_config_file() {
       else
       if (param == "No_Draw")
         no_draw = enable;
+      else
+      if (param == "Save_Game")
+        save_game = enable;
       else {
           // unknown param
       }
 
-      if (cpt > 11) break; // too many lines ?? corrupted file ??
+      if (cpt > 12) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
@@ -116,6 +117,7 @@ int CConfig::set_config_file(int param, bool enable)
     case CONFIG_NO_TRICK_BONUS :          no_trick_bonus = enable; break;
     case CONFIG_NEW_MOON :                new_moon = enable; break;
     case CONFIG_NO_DRAW :                 no_draw = enable; break;
+    case CONFIG_SAVE_GAME :               save_game = enable; break;
   }
 
   return save_config_file();
@@ -143,6 +145,7 @@ int CConfig::save_config_file()
   out << "No_Trick_Bonus = " << (no_trick_bonus ? "true" : "false") << endl;
   out << "New_Moon = " << (new_moon ? "true" : "false") << endl;
   out << "No_Draw = " << (no_draw ? "true" : "false") << endl;
+  out << "Save_Game = " << (save_game ? "true" : "false") << endl;
 
   file.close();
   return FNOERR;
@@ -190,4 +193,8 @@ bool CConfig::is_new_moon() {
 
 bool CConfig::is_no_draw() {
   return no_draw;
+}
+
+bool CConfig::is_save_game() {
+  return save_game;
 }
