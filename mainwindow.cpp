@@ -39,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     hearts = new CHearts;
 
+    set_options();
+    set_hearts_options();
+
     connect(hearts, SIGNAL(sig_refresh_deck(int)), this, SLOT(refresh_deck(int)));
     connect(hearts, SIGNAL(sig_play_card(int,int)), this, SLOT(play_card(int,int)));
     connect(hearts, SIGNAL(sig_clear_table()), this, SLOT(clear_table()));
@@ -75,9 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
       set_plr_names();
     }
 
-    set_options();         // set_options require: hearts->whoami(), must be called after hearts->new_game()
-
-    set_hearts_options();
+    set_cheat_mode_enabled(config->is_cheat_mode());
 }
 
 MainWindow::~MainWindow()
@@ -361,7 +362,6 @@ void MainWindow::set_options()
   ui->actionSave_Game_Quit->setChecked(config->is_save_game());
 
   set_info_channel_enabled(config->is_info_channel());
-  set_cheat_mode_enabled(config->is_cheat_mode());
 }
 
 void MainWindow::set_hearts_options()

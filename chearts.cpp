@@ -1,4 +1,4 @@
-#include "chearts.h"
+    #include "chearts.h"
 #include "variants.h"
 #include "assert.h"
 #include <QMessageBox>
@@ -244,6 +244,13 @@ int CHearts::load_saved_game()
   shoot_moon = false;
   game_over = false;
 
+  // check if the jack of diamond is played in the current hand
+  if ((hand_cards[0] == jack_diamond) || (hand_cards[1] == jack_diamond) ||
+      (hand_cards[2] == jack_diamond) || (hand_cards[3] == jack_diamond))
+    jack_diamond_played = true;
+  else
+    jack_diamond_played = false;
+
   reset_cards_played();
   reset_cards_passed();
   reset_plr_cards_in_suit();
@@ -272,6 +279,13 @@ int CHearts::load_saved_game()
     }
   }
 
+  // make sure there is enough card left
+  if (!mode_playing && (card_left < DECK_SIZE))
+    return FCORRUPTED;
+
+  if (mode_playing && !card_left)
+    return FCORRUPTED;
+
  // check that the number of cards are valid (they should have the same number of card, not more than 1 card diff)
   int cpt_card = cpt_plr_cards[user_id];
   int next = user_id;
@@ -292,7 +306,6 @@ int CHearts::load_saved_game()
     if (diff == 1)
       found = true;
   }
-
 
  // analyse the cards to find those that has been played.
  for (int i=0; i<DECK_SIZE; i++)
@@ -1174,15 +1187,18 @@ bool CHearts::is_it_draw()
 {
   int lowest = plr_score[0];
 
+  int cpt;
   for (int i=1; i<4; i++) {
-     if (plr_score[i] < lowest)
+     if (plr_score[i] < lowest) {
        lowest = plr_score[i];
+       cpt = 0;
+     }
      else
        if (plr_score[i] == lowest)
-         return true;
+         cpt++;
   }
 
-  return false;
+  return cpt;
 }
 
 bool CHearts::can_break_heart(int plr)
