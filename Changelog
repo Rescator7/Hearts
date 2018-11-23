@@ -1,3 +1,8 @@
 22 nov 2018: Version 1.0b
+------------------------------------------------------------------------------------------------
 22 nov 2018: Added auto save/load unfinished game.
-22 nov 2018: fixed and tune up of the AI
+22 nov 2018: fixed and tune up of the AI.
+23 nov 2018: is_it_draw(): fixed a bug. eg: scores 106 45 45 20 was considered a draw!
+23 nov 2018: auto_centering: fixed minor bug.
+23 nov 2018: load_saved_game(): 1- initialisation of jack_diamond_played variable.
+                                2- more file integrity check (FCORRUPTED).
