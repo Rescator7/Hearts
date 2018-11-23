@@ -1187,7 +1187,7 @@ bool CHearts::is_it_draw()
 {
   int lowest = plr_score[0];
 
-  int cpt;
+  int cpt = 0;
   for (int i=1; i<4; i++) {
      if (plr_score[i] < lowest) {
        lowest = plr_score[i];
