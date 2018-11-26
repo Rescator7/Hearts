@@ -4314,9 +4314,17 @@
     <addaction name="actionNew_Moon"/>
     <addaction name="actionNo_Draw"/>
    </widget>
+   <widget class="QMenu" name="menuStats">
+    <property name="title">
+     <string>Stats</string>
+    </property>
+    <addaction name="actionShow"/>
+    <addaction name="actionReset"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGame_Variations"/>
    <addaction name="menuOptions"/>
+   <addaction name="menuStats"/>
    <addaction name="menuHelp"/>
    <addaction name="menuAbout"/>
   </widget>
@@ -4462,6 +4470,16 @@
    </property>
    <property name="text">
     <string>Save Game (Quit)</string>
+   </property>
+  </action>
+  <action name="actionShow">
+   <property name="text">
+    <string>Show</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset</string>
    </property>
   </action>
  </widget>

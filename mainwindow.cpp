@@ -39,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     hearts = new CHearts;
 
+    stats = new CStats;
+
     set_options();
     set_hearts_options();
 
@@ -56,11 +58,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(hearts, SIGNAL(sig_perfect_100(int)), this, SLOT(perfect_100(int)));
     connect(hearts, SIGNAL(sig_bonus(int,int,int)), this, SLOT(receive_bonus(int,int,int)));
     connect(hearts, SIGNAL(sig_pass_to(int)), this, SLOT(pass_to(int)));
+    connect(hearts, SIGNAL(sig_got_queen_spade(int)), this, SLOT(got_queen_spade(int)));
 
-    connect(ui->actionQuit, SIGNAL(triggered(bool)), this, SLOT(close()));
-    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(quit()));
+    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(save_files()));
 
     message("Welcome to " + QString(version));
+
+    if (stats->is_file_corrupted())
+      message("[Error]: The statistics file is corrupted!");
 
     int errno;
 
@@ -74,6 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QFile file(QDir::homePath() + SAVEDGAME_FILENAME);
         file.remove();
       }
+      stats->increase_stats(0, STATS_GAME_STARTED);
       hearts->new_game();
       set_plr_names();
     }
@@ -86,6 +92,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete hearts;
     delete config;
+    delete stats;
 
     delete img_empty_card;
     delete img_your_turn;
@@ -302,8 +309,11 @@ void MainWindow::init_pointers()
     cheat_radio_button[3] = ui->radioButton_4;
 }
 
-void MainWindow::quit()
+void MainWindow::save_files()
 {
+ stats->save_stats_file();
+ stats->quit();
+
  if (!ui->actionSave_Game_Quit->isChecked())
    return;
 
@@ -388,7 +398,7 @@ void MainWindow::set_plr_names()
      if (i == whoami) continue;
 
     int x = rand() % MAX_PLR_NAMES;
-    while (name_taken[x])
+    while (!x || name_taken[x])
         x = rand() % MAX_PLR_NAMES;
 
     name_taken[x] = true;;
@@ -397,7 +407,12 @@ void MainWindow::set_plr_names()
   }
 
   label[18 + whoami]->setText("You");
-  plr_names_idx[whoami] = -1;
+  plr_names_idx[whoami] = 0;
+}
+
+void MainWindow::got_queen_spade(int plr)
+{
+ stats->increase_stats(plr_names_idx[plr], STATS_QUEEN_SPADE);
 }
 
 void MainWindow::receive_bonus(int plr, int bonus, int value)
@@ -406,8 +421,10 @@ void MainWindow::receive_bonus(int plr, int bonus, int value)
 
   switch (bonus) {
      case OMNIBUS_BONUS  : msg_bonus = "omnibus ";
+                           stats->increase_stats(plr_names_idx[plr], STATS_OMNIBUS);
                            break;
      case NO_TRICK_BONUS : msg_bonus = "no trick bonus ";
+                           stats->increase_stats(plr_names_idx[plr], STATS_NO_TRICKS);
                            break;
      default: msg_bonus = "<unknown> ";
   }
@@ -423,6 +440,8 @@ void MainWindow::receive_bonus(int plr, int bonus, int value)
 
 void MainWindow::perfect_100(int plr)
 {
+ stats->increase_stats(plr_names_idx[plr], STATS_PERFECT_100);
+
  QString mesg;
 
  if (plr == hearts->whoami())
@@ -453,6 +472,8 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
 {
   QString mesg, mesg2;
 
+  stats->increase_stats(0, STATS_GAME_FINISHED);
+
   clear_deck();
 
   if (!hearts->is_it_draw())
@@ -460,26 +481,48 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
   else
     mesg2 = "Drew !";
 
-  int lowest = score1;
+ int lowest;
+ int unsorted[4];
 
-  if (score2 < lowest)
-    lowest = score2;
+ unsorted[0] = score1;
+ unsorted[1] = score2;
+ unsorted[2] = score3;
+ unsorted[3] = score4;
 
-  if (score3 < lowest)
-    lowest = score3;
+ for (int i=0; i<4; i++) {
+   int cpt = 0;
+   for (int i2=0; i2<4; i2++)
+     if (unsorted[i] >= unsorted[i2])
+       cpt++;
 
-  if (score4 < lowest)
-    lowest = score4;
+   switch(cpt) {
+     case 1 : stats->increase_stats(plr_names_idx[i], STATS_FIRST_PLACE);
+              lowest = unsorted[i];
+              break;
+     case 2 : stats->increase_stats(plr_names_idx[i], STATS_SECOND_PLACE);
+              break;
+     case 3 : stats->increase_stats(plr_names_idx[i], STATS_THIRD_PLACE);
+              break;
+     case 4 : stats->increase_stats(plr_names_idx[i], STATS_FOURTH_PLACE);
+              break;
+   }
+ }
 
-  mesg = "[Info]: GAME OVER!\n[Info]: Player '" + label[18]->text() + "': " +
-          QString::number(score1) + " point(s) " + (score1 == lowest ? mesg2 : "") +
-          "\n[Info]: Player '"                  + label[19]->text() + "': " +
-          QString::number(score2) + " point(s) " + (score2 == lowest ? mesg2 : "") +
-          "\n[Info]: Player '"                  + label[20]->text() + "': " +
-          QString::number(score3) + " point(s) " + (score3 == lowest ? mesg2 : "") +
-          "\n[Info]: Player '"                  + label[21]->text() + "': " +
-          QString::number(score4) + " point(s) " + (score4 == lowest ? mesg2 : "");
-  message(mesg);
+ stats->set_score(plr_names_idx[0], score1);
+ stats->set_score(plr_names_idx[1], score2);
+ stats->set_score(plr_names_idx[2], score3);
+ stats->set_score(plr_names_idx[3], score4);
+
+ mesg = "[Info]: GAME OVER!\n[Info]: Player '" + label[18]->text() + "': " +
+         QString::number(score1) + " point(s) " + (score1 == lowest ? mesg2 : "") +
+        "\n[Info]: Player '"                  + label[19]->text() + "': " +
+         QString::number(score2) + " point(s) " + (score2 == lowest ? mesg2 : "") +
+        "\n[Info]: Player '"                  + label[20]->text() + "': " +
+         QString::number(score3) + " point(s) " + (score3 == lowest ? mesg2 : "") +
+        "\n[Info]: Player '"                  + label[21]->text() + "': " +
+         QString::number(score4) + " point(s) " + (score4 == lowest ? mesg2 : "");
+
+ message(mesg);
 
   if (!ui->actionInfo_Channel->isChecked())
     QMessageBox::information(this, "information", mesg);
@@ -508,6 +551,9 @@ void MainWindow::tram(int plr)
 
 void MainWindow::shoot_moon(int plr)
 {
+
+ stats->increase_stats(plr_names_idx[plr], STATS_SHOOT_MOON);
+
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
     al_play_sample(snd_shoot_moon, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
@@ -568,6 +614,8 @@ void MainWindow::refresh_hand_score(int score, int idx)
 
 void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
 {
+  stats->increase_stats(0, STATS_HANDS_PLAYED);
+
   lcd_hand_score[0]->display(score1);
   lcd_hand_score[1]->display(score2);
   lcd_hand_score[2]->display(score3);
@@ -939,12 +987,14 @@ void MainWindow::on_label_13_clicked()
 
 void MainWindow::on_actionNew_triggered()
 {
-    message("[Info]: Starting a new game.");
+  stats->increase_stats(0, STATS_GAME_STARTED);
 
-    stop_delay = true;
-    hearts->new_game();
-    stop_delay = false;
-    set_plr_names();
+  message("[Info]: Starting a new game.");
+
+  stop_delay = true;
+  hearts->new_game();
+  stop_delay = false;
+  set_plr_names();
 }
 
 void MainWindow::on_actionCheat_triggered()
@@ -1055,4 +1105,30 @@ void MainWindow::on_actionSettings_triggered()
   Settings settings_diag(this);
   settings_diag.setModal(true);
   settings_diag.exec();
+}
+
+void MainWindow::on_actionReset_triggered()
+{
+  QMessageBox msgBox(this);
+  msgBox.setText("Do you want to reset statistics?");
+  msgBox.setInformativeText("Are you sure?");
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+  msgBox.setDefaultButton(QMessageBox::No);
+  int ret = msgBox.exec();
+  if (ret == QMessageBox::Yes) {
+     stats->reset();
+     message("[Info]: You resetted the statistics!");
+  }
+}
+
+void MainWindow::on_actionShow_triggered()
+{
+  stats->show_stats();
+}
+
+void MainWindow::on_actionQuit_triggered()
+{
+  save_files();
+
+  close();
 }

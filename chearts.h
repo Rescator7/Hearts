@@ -185,6 +185,7 @@ signals:
    void sig_pass_to(int idx);
    void sig_game_over(int score1, int score2, int score3, int score4);
    void sig_bonus(int plr, int bonus, int value);
+   void sig_got_queen_spade(int plr);
 };
 
 #endif // CHEARTS_H

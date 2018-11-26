@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     config.cpp \
     rules.cpp \
     credits.cpp \
-    settings.cpp
+    settings.cpp \
+    cstats.cpp
 
 HEADERS  += mainwindow.h \
     clabel.h \
@@ -30,7 +31,8 @@ HEADERS  += mainwindow.h \
     rules.h \
     credits.h \
     settings.h \
-    define.h
+    define.h \
+    cstats.h
 
 FORMS    += mainwindow.ui \
     rules.ui \

@@ -17,6 +17,7 @@
 
 #include "chearts.h"
 #include "config.h"
+#include "cstats.h"
 
 const int max_mainwindow_height = 915;
 
@@ -81,6 +82,12 @@ private slots:
 
     void on_actionSave_Game_Quit_triggered();
 
+    void on_actionReset_triggered();
+
+    void on_actionShow_triggered();
+
+    void on_actionQuit_triggered();
+
 private:
     Ui::MainWindow *ui;
     QImage *img_cards[52];
@@ -110,6 +117,7 @@ private:
 private:
     CHearts *hearts;
     CConfig *config;
+    CStats  *stats;
 
     bool wait_delay;
     bool stop_delay;
@@ -151,7 +159,8 @@ public slots:
     void breaking_hearts();
     void perfect_100(int plr);
     void receive_bonus(int plr, int bonus, int value);
-    void quit();
+    void got_queen_spade(int plr);
+    void save_files();
 };
 
 #endif // MAINWINDOW_H

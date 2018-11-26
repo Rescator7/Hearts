@@ -115,14 +115,14 @@ int CHearts::load_saved_game()
     QString line = file.readLine();
     cpt++;
     switch (cpt) {
-       case 1 :   // extract the players names index in the name lists. also, find whoami (== -1)
+       case 1 :   // extract the players names index in the name lists. also, find whoami (== 0)
                  for (int i=0; i<4; i++) {
                     value = line.section(' ', i, i).toInt();
-                    if ((value < -1) || (value > MAX_PLR_NAMES - 1))
+                    if ((value < 0) || (value > MAX_PLR_NAMES - 1))
                       return FCORRUPTED;
 
                     plr_name_id[i] = value;
-                    if (value == -1) {
+                    if (!value) {
                       if (found_whoami)
                         return FCORRUPTED;
                       user_id = i;
@@ -284,6 +284,10 @@ int CHearts::load_saved_game()
     return FCORRUPTED;
 
   if (mode_playing && !card_left)
+    return FCORRUPTED;
+
+  // make sure that we found who user_id is
+  if (!found_whoami)
     return FCORRUPTED;
 
  // check that the number of cards are valid (they should have the same number of card, not more than 1 card diff)
@@ -1035,6 +1039,9 @@ void CHearts::advance_turn()
  bool tram = false;
 
  if (++hand_turn > 3) {
+   if (is_card_on_table(queen_spade))
+     emit sig_got_queen_spade(plr_best_hand);
+
    reset_cards_on_table();
 
    turn = plr_best_hand;
@@ -1203,7 +1210,7 @@ bool CHearts::is_it_draw()
 
 bool CHearts::can_break_heart(int plr)
 {
-  if (card_left > DECK_SIZE - 3) return false;
+  if (card_left > DECK_SIZE - 4) return false;
 
   if (current_suit != FREESUIT)
     return !plr_cards_in_suit[plr][current_suit];
@@ -1288,6 +1295,7 @@ bool CHearts::select_card(int idx)
 bool CHearts::is_card_on_table(int card)
 {
   switch (hand_turn) {
+      case 4 : if (hand_cards[3] == card) return true;
       case 3 : if (hand_cards[2] == card) return true;
       case 2 : if (hand_cards[1] == card) return true;
       case 1 : if (hand_cards[0] == card) return true;
