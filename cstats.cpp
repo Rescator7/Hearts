@@ -10,6 +10,8 @@ CStats::CStats()
 {
   setWindowTitle("Game Statistics");
 
+  setAttribute( Qt::WA_QuitOnClose, false );
+
   init_vars();
 
   QFile file(QDir::homePath() + STATS_FILENAME);
@@ -247,15 +249,13 @@ void CStats::set_score(int plr, int score)
 {
   total_score[plr] += score;
 
-  if ((best_score[plr] == -1) || (score < best_score[plr])) {
+  if ((best_score[plr] == -1) || (score < best_score[plr]))
     best_score[plr] = score;
-    update_window(plr, STATS_SCORES);
-  }
 
-  if ((worst_score[plr] == -1) || (score > worst_score[plr])) {
+  if ((worst_score[plr] == -1) || (score > worst_score[plr]))
     worst_score[plr] = score;
-    update_window(plr, STATS_SCORES);
-  }
+
+  update_window(plr, STATS_SCORES);
 }
 
 void CStats::reset()
