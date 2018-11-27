@@ -6,3 +6,11 @@
 23 nov 2018: auto_centering: fixed minor bug.
 23 nov 2018: load_saved_game(): 1- initialisation of jack_diamond_played variable.
                                 2- more file integrity check (FCORRUPTED).
+27 nov 2018: Version 1.1b
+------------------------------------------------------------------------------------------------
+27 nov 2018: added statistics of the game play.
+27 nov 2018: fixed: can_break_heart(): a rare bug could occur to break heart early.
+27 nov 2018: fixed: windows resize(), small GUI glitch.
+27 nov 2018: added: Source code link to the about -> credits.
+27 nov 2018: removed: GUI toolskit.
+27 nov 2018: auto_save_game() system -> don't save fresh started new games.
