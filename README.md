@@ -1,4 +1,4 @@
-# Hearts 1.0b
+# Hearts 1.1b
 The card game Hearts for QT (linux)
 
 1. Requirements:
