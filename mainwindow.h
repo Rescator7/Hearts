@@ -86,8 +86,6 @@ private slots:
 
     void on_actionShow_triggered();
 
-    void on_actionQuit_triggered();
-
 private:
     Ui::MainWindow *ui;
     QImage *img_cards[52];

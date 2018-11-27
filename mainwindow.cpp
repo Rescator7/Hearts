@@ -61,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(hearts, SIGNAL(sig_got_queen_spade(int)), this, SLOT(got_queen_spade(int)));
 
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(save_files()));
+    connect(ui->actionQuit, SIGNAL(triggered(bool)), this, SLOT(close()));
 
     message("Welcome to " + QString(version));
 
@@ -312,7 +313,6 @@ void MainWindow::init_pointers()
 void MainWindow::save_files()
 {
  stats->save_stats_file();
- stats->quit();
 
  if (!ui->actionSave_Game_Quit->isChecked())
    return;
@@ -1124,11 +1124,4 @@ void MainWindow::on_actionReset_triggered()
 void MainWindow::on_actionShow_triggered()
 {
   stats->show_stats();
-}
-
-void MainWindow::on_actionQuit_triggered()
-{
-  save_files();
-
-  close();
 }

@@ -90,7 +90,6 @@ public: // functions
     void set_score(int plr, int score);
     void reset();
     void show_stats();
-    void quit();
 };
 
 #endif // CSTATS_H

@@ -37,11 +37,6 @@ CStats::~CStats()
   delete table_widget;
 }
 
-void CStats::quit()
-{
-  close();
-}
-
 void CStats::init_vars()
 {
   game_started = 1;
