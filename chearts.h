@@ -153,6 +153,7 @@ public: // functions
    int  load_saved_game();
    int  get_plr_name_id(int plr);
    int  get_plr_hand_card(int plr);
+   int  get_cards_left();
 
    void new_game();
    void set_tram_enabled(bool enable);  

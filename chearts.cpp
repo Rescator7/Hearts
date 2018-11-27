@@ -66,7 +66,7 @@ int CHearts::save_game(int plr1, int plr2, int plr3, int plr4)
   QTextStream out(&file);
 
   out << plr1 << " " << plr2 << " "
-      << plr3 << " " << plr4 << endl;                            // plr names idx (-1 = whoami)
+      << plr3 << " " << plr4 << endl;                            // plr names idx (0 = whoami)
 
   out << turn          << " " << hand_turn << " "                // turn, hand turn, plr_best_hand,
       << plr_best_hand << " " << plr_jack_diamond << " "         // plr_jack_diamond, passed_to, current_suit
@@ -115,7 +115,7 @@ int CHearts::load_saved_game()
     QString line = file.readLine();
     cpt++;
     switch (cpt) {
-       case 1 :   // extract the players names index in the name lists. also, find whoami (== 0)
+       case 1 :   // extract the players names index in the name lists. also, find (whoami == 0)
                  for (int i=0; i<4; i++) {
                     value = line.section(' ', i, i).toInt();
                     if ((value < 0) || (value > MAX_PLR_NAMES - 1))
@@ -1467,4 +1467,9 @@ void CHearts::set_new_moon(bool enable)
 void CHearts::set_no_draw(bool enable)
 {
   no_draw = enable;
+}
+
+int CHearts::get_cards_left()
+{
+  return card_left;
 }
