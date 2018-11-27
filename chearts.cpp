@@ -789,7 +789,7 @@ int CHearts::diamond_lead_eval(int card)
 
 int CHearts::get_cpu_move()
 {
- int eval[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+ int eval[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
  for (int i=0; i<13; i++) {
     int card = plr_cards[turn][i];
