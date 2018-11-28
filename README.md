@@ -7,16 +7,24 @@ The card game Hearts for QT (linux)
 - Liballegro 5
 
 2. Install: (under ubuntu 16.04)
-<pre><code>   sudo apt-get update
-   sudo apt-get install git
-   sudo apt-get install qtcreator
-   sudo apt-get install build-essential
-   sudo apt-get install qt5-default
-   sudo apt-get install liballegro5-dev</code></pre>
+<pre><code> sudo apt-get update
+ sudo apt-get install git
+ sudo apt-get install qtcreator
+ sudo apt-get install build-essential
+ sudo apt-get install qt5-default
+ sudo apt-get install liballegro5-dev</code></pre>
    
    ## After that you need to download Hearts repertory
-   <pre><code>git clone https://github.com/Rescator7/Hearts.git</code></pre>
-
+<pre><code> git clone https://github.com/Rescator7/Hearts.git</code></pre>
+   
+Option #1: (without QtCreator)
+<pre><code>
+ cd Hearts
+ qmake Hearts.pro
+ make</code></pre>
+   
+Option #2:
+   
    ## Start up qtcreator
    <pre><code>qtcreator</code></pre>
    
