@@ -251,6 +251,7 @@ int CHearts::load_saved_game()
   else
     jack_diamond_played = false;
 
+  moon_add_to_scores = true;
   reset_cards_played();
   reset_cards_passed();
   reset_plr_cards_in_suit();
@@ -872,17 +873,27 @@ void CHearts::process_next_pass(bool skip_moon_check)
       if (!omnibus || (plr_jack_diamond == i))
         if (plr_hand_score[i] == 26) {
           shoot_moon = true;
+          int my_score = plr_score[user_id];    // 27-11-2018 (bob): fixe to an elusive bug. i can't test below
+                                                // plr_score[usr_id] >= 26 because, emit will trigger
+                                                // [add][subs] and substract choice will modify plr_score[user_id]
+                                                // because we return here after the reentrant, and the condition here
+                                                // will fail, it will break instead of return !, but that way my_score
+                                                // preserve it, because it's a copy before emit, and we won't
+                                                // enter this because of skip_moon_check. (REENTRANT issue avoided)
+
           emit sig_shoot_moon(i);
 
-          if (new_moon && ((i == user_id) && plr_score[user_id] >= 26))
-            return;    // if new_moon is enabled, the score is above 26, and
-                       // it's not a cpu who moon... we return, because
-                       // we need to select [add] or [subtract]...
-                       // emit_signal(SIG_SHOOT_MOON) will trigger the choice
-                       // and, we will return by set_moon_add_score() that will skip
-                       // this part.
-          else
-            break;     // we found someone who moon. no need to look further.
+          if (new_moon && (i == user_id) && (my_score >= 26)) {
+            return;                             // if new_moon is enabled, the score is above 26, and
+                                                // it's not a cpu who moon... we return, because
+                                                // we need to select [add] or [subtract]...
+                                                // emit_signal(SIG_SHOOT_MOON) will trigger the choice
+                                                // and, we will return by set_moon_add_score() that will skip
+                                                // this part.
+          }
+          else {
+            break;                              // we found someone who moon. no need to look further.
+          }
         }
     }
   }

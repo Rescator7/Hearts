@@ -1,7 +1,7 @@
 #ifndef DEFINE
 #define DEFINE
 
-const char version[80] = "Hearts 1.1b";
+const char version[80] = "Hearts 1.1.1b";
 
 const int FNOERR                         = 0;
 const int ERROPENRO                      = 1;
