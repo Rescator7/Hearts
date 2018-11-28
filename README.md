@@ -35,7 +35,7 @@ The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
    - build -> build all (wait for about 5 mins to compilation process)
    - build -> run (if you want)
    
-   <p>After that the executable of Hearts should be located in a directory like build-Heart-Desktop-Debug/Hearts</p?
+   <p>After that the executable of Hearts should be located in a directory like build-Heart-Desktop-Debug/Hearts</p>
    
 ## 3. Licenses: 
  - MIT for the software
