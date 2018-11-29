@@ -40,6 +40,7 @@ void CHearts::new_game()
 void CHearts::init_vars()
 {
   card_left = DECK_SIZE;
+  fresh_game = true;
   game_over = false;
   shoot_moon = false;
   heart_broken = false;
@@ -337,6 +338,8 @@ int CHearts::load_saved_game()
 
   if (mode_playing)
     emit sig_your_turn(user_id);
+
+  fresh_game = false;
 
   return NOERROR;
 }
@@ -1129,6 +1132,7 @@ int CHearts::play_card(int idx)
 void CHearts::play_2clubs()
 {
  mode_playing = true;
+ fresh_game = false;
  for (int i=0; i<4; i++) {
    if (plr_cards[i][0] == two_clubs) {
      turn = i;
@@ -1480,7 +1484,7 @@ void CHearts::set_no_draw(bool enable)
   no_draw = enable;
 }
 
-int CHearts::get_cards_left()
+int CHearts::is_fresh_game()
 {
-  return card_left;
+  return fresh_game;
 }

@@ -59,6 +59,7 @@ private: // variables
     bool jack_diamond_played;
     bool mode_playing;                       // true = playing, false = selecting cards
     bool tram_enabled;
+    bool fresh_game;
 
     bool perfect_100;
     bool omnibus;
@@ -153,7 +154,7 @@ public: // functions
    int  load_saved_game();
    int  get_plr_name_id(int plr);
    int  get_plr_hand_card(int plr);
-   int  get_cards_left();
+   int  is_fresh_game();
 
    void new_game();
    void set_tram_enabled(bool enable);  

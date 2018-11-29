@@ -320,7 +320,7 @@ void MainWindow::save_files()
  if (hearts->is_game_over())
    return;
 
- if (hearts->get_cards_left() == DECK_SIZE)
+ if (hearts->is_fresh_game())
    return;
 
  hearts->save_game(plr_names_idx[0], plr_names_idx[1], plr_names_idx[2], plr_names_idx[3]);
