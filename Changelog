@@ -20,3 +20,4 @@
 ------------------------------------------------------------------------------------------------
 27 nov 2018: fixed elusive reentrant bug in new_moon substract. if you shoot the moon with
              a score of less 52 and choosed to susbtract. A bug was triggered.
+29 nov 2018: fixed autosave() not saving on "fresh game" instead of not saving on "fresh round"
