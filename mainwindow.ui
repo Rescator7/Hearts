@@ -4288,7 +4288,6 @@
      <string>Settings</string>
     </property>
     <addaction name="actionAuto_Centering"/>
-    <addaction name="actionCheat"/>
     <addaction name="actionInfo_Channel"/>
     <addaction name="actionSounds"/>
     <addaction name="actionTram"/>
@@ -4303,7 +4302,7 @@
    </widget>
    <widget class="QMenu" name="menuGame_Variations">
     <property name="title">
-     <string>Game Options</string>
+     <string>Options</string>
     </property>
     <addaction name="actionQueen_Spade_Break_Heart"/>
     <addaction name="actionPerfect_100"/>
@@ -4319,12 +4318,20 @@
     <addaction name="actionShow"/>
     <addaction name="actionReset"/>
    </widget>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <addaction name="actionShow_2"/>
+    <addaction name="actionCheat"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGame_Variations"/>
    <addaction name="menuOptions"/>
    <addaction name="menuStats"/>
    <addaction name="menuHelp"/>
    <addaction name="menuAbout"/>
+   <addaction name="menuDebug"/>
   </widget>
   <action name="actionNew">
    <property name="text">
@@ -4478,6 +4485,16 @@
   <action name="actionReset">
    <property name="text">
     <string>Reset</string>
+   </property>
+  </action>
+  <action name="actionDebug">
+   <property name="text">
+    <string>Debug</string>
+   </property>
+  </action>
+  <action name="actionShow_2">
+   <property name="text">
+    <string>Cards history</string>
    </property>
   </action>
  </widget>

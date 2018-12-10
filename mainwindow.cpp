@@ -1,6 +1,11 @@
 #include "mainwindow.h"
+
+#ifdef DEBUG
 #include "ui_mainwindow.h"
-#include <cardspos.h>
+#else
+#include "ui_mwnodbg.h"
+#endif
+
 #include <QLabel>
 #include <QFile>
 #include <QDir>
@@ -10,11 +15,13 @@
 #include <QMessageBox>
 #include <QTime>
 #include <QResource>
+
 #include "time.h"
 #include "assert.h"
 #include "rules.h"
 #include "credits.h"
 #include "settings.h"
+#include "cardspos.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     srand(time(0));
 
-    ui->textEdit->setTextColor((Qt::yellow));
+    ui->textEdit->setTextColor(Qt::yellow);
     ui->textEdit->setTextBackgroundColor(Qt::black);
 
     stop_delay = false;
@@ -40,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent) :
     hearts = new CHearts;
 
     stats = new CStats;
+
+#ifdef DEBUG
+    debug = new CDebug(img_empty_card);
+#endif
 
     set_options();
     set_hearts_options();
@@ -85,7 +96,9 @@ MainWindow::MainWindow(QWidget *parent) :
       set_plr_names();
     }
 
+#ifdef DEBUG
     set_cheat_mode_enabled(config->is_cheat_mode());
+#endif
 }
 
 MainWindow::~MainWindow()
@@ -304,10 +317,12 @@ void MainWindow::init_pointers()
     lcd_hand_score[2] = ui->lcdNumber_12;
     lcd_hand_score[3] = ui->lcdNumber_13;
 
+ #ifdef DEBUG
     cheat_radio_button[0] = ui->radioButton;
     cheat_radio_button[1] = ui->radioButton_2;
     cheat_radio_button[2] = ui->radioButton_3;
     cheat_radio_button[3] = ui->radioButton_4;
+#endif
 }
 
 void MainWindow::save_files()
@@ -333,11 +348,7 @@ void MainWindow::load_saved_game()
     int name_id = hearts->get_plr_name_id(i);
 
     plr_names_idx[i] = name_id;
-
-    if (name_id == -1)
-      label[18 + i]->setText("You");
-    else
-      label[18 + i]->setText(names[name_id]);
+    label[18 + i]->setText(names[name_id]);
   }
 
   if (hearts->is_mode_playing()) {
@@ -353,15 +364,25 @@ void MainWindow::load_saved_game()
       if (--cpt < 0)
         cpt = 3;
 
+
       label[13 + cpt]->setPixmap(QPixmap::fromImage(img_cards[card]->scaledToHeight(100)));
+#ifdef DEBUG
+      debug->save_card(plr_names_idx[cpt], img_cards[card]);
     }
+    debug->reverse_order();
+#else
+    }
+#endif
   }
 }
 
 void MainWindow::set_options()
 {
-  ui->actionAuto_Centering->setChecked(config->is_auto_centering());
+#ifdef DEBUG
   ui->actionCheat->setChecked(config->is_cheat_mode());
+#endif
+
+  ui->actionAuto_Centering->setChecked(config->is_auto_centering());
   ui->actionInfo_Channel->setChecked(config->is_info_channel());
   ui->actionSounds->setChecked(config->is_sounds());
   ui->actionTram->setChecked(config->is_detect_tram());
@@ -407,6 +428,8 @@ void MainWindow::set_plr_names()
     name_taken[x] = true;;
     label[18 + i]->setText(names[x]);
     plr_names_idx[i] = x;
+
+    hearts->AI_set_cpu_flags(i, AI_CPU_flags[x]);
   }
 
   label[18 + whoami]->setText("You");
@@ -528,7 +551,7 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
  message(mesg);
 
   if (!ui->actionInfo_Channel->isChecked())
-    QMessageBox::information(this, "information", mesg);
+    QMessageBox::information(this, "Information", mesg);
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
@@ -619,6 +642,10 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
 {
   stats->increase_stats(0, STATS_HANDS_PLAYED);
 
+#ifdef DEBUG
+  debug->save_card(-1, img_empty_card);
+#endif
+
   lcd_hand_score[0]->display(score1);
   lcd_hand_score[1]->display(score2);
   lcd_hand_score[2]->display(score3);
@@ -695,6 +722,7 @@ void MainWindow::set_info_channel_enabled(bool enable)
     }
 }
 
+#ifdef DEBUG
 void MainWindow::set_cheat_mode_enabled(bool enable)
 {
   assert(hearts);
@@ -715,10 +743,14 @@ void MainWindow::set_cheat_mode_enabled(bool enable)
 
   cheat_radio_button[hearts->whoami()]->setChecked(true);
 }
+#endif
 
 void MainWindow::refresh_deck(int plr)
 {
+#ifdef DEBUG
   cheat_radio_button[plr]->setChecked(true);
+#endif
+
   show_deck(plr);
 }
 
@@ -804,15 +836,19 @@ void MainWindow::play_card(int card, int idx)
  else
    delay(400);
 
-  label[idx+13]->setPixmap(QPixmap::fromImage(img_cards[card]->scaledToHeight(100)));
+#ifdef DEBUG
+ debug->save_card(plr_names_idx[idx], img_cards[card]);
+#endif
+
+ label[idx+13]->setPixmap(QPixmap::fromImage(img_cards[card]->scaledToHeight(100)));
 
 #ifdef __al_included_allegro5_allegro_audio_h
-  if (ui->actionSounds->isChecked()) {
-     al_play_sample(snd_dealing_card, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+ if (ui->actionSounds->isChecked()) {
+    al_play_sample(snd_dealing_card, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
 
     if (card == queen_spade)
       al_play_sample(snd_queen_spade, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
-  }
+ }
 #endif
 }
 
@@ -852,7 +888,7 @@ void MainWindow::on_label_18_clicked() // pass 3 cards
   ui->actionNew->setDisabled(true);
   ui->actionSave->setDisabled(true);
 
-  hearts->select_cpus_cards();
+  hearts->AI_pass_cpus_cards();
 
   hearts->pass_cards();
 
@@ -903,6 +939,7 @@ void MainWindow::delay(int n)
     wait_delay = false;
 }
 
+#ifdef DEBUG
 void MainWindow::on_radioButton_clicked()
 {
   show_deck(0);
@@ -922,6 +959,7 @@ void MainWindow::on_radioButton_4_clicked()
 {
   show_deck(3);
 }
+#endif
 
 void MainWindow::on_label_clicked()
 {
@@ -992,6 +1030,10 @@ void MainWindow::on_actionNew_triggered()
 {
   stats->increase_stats(0, STATS_GAME_STARTED);
 
+#ifdef DEBUG
+  debug->reset();
+#endif
+
   message("[Info]: Starting a new game.");
 
   stop_delay = true;
@@ -1000,6 +1042,7 @@ void MainWindow::on_actionNew_triggered()
   set_plr_names();
 }
 
+#ifdef DEBUG
 void MainWindow::on_actionCheat_triggered()
 {
   bool checked = ui->actionCheat->isChecked();
@@ -1007,6 +1050,7 @@ void MainWindow::on_actionCheat_triggered()
   set_cheat_mode_enabled(checked);
   config->set_config_file(CONFIG_CHEAT_MODE, checked);
 }
+#endif
 
 void MainWindow::on_actionAuto_Centering_triggered()
 {
@@ -1128,3 +1172,10 @@ void MainWindow::on_actionShow_triggered()
 {
   stats->show_stats();
 }
+
+#ifdef DEBUG
+void MainWindow::on_actionShow_2_triggered()
+{
+  debug->show();
+}
+#endif

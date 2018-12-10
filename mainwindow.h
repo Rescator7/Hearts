@@ -19,6 +19,10 @@
 #include "config.h"
 #include "cstats.h"
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 const int max_mainwindow_height = 915;
 
 namespace Ui {
@@ -34,10 +38,12 @@ public:
     ~MainWindow();
 
 private slots:
+#ifdef DEBUG
     void on_radioButton_clicked();
     void on_radioButton_2_clicked();
     void on_radioButton_3_clicked();
     void on_radioButton_4_clicked();
+#endif
     void on_label_clicked();
     void on_label_2_clicked();
     void on_label_3_clicked();
@@ -54,37 +60,27 @@ private slots:
     void on_label_18_clicked();
 
     void on_actionNew_triggered();
-    void on_actionCheat_triggered();
     void on_actionAuto_Centering_triggered();
     void on_actionTram_triggered();
-
     void on_actionInfo_Channel_triggered();
-
     void on_actionSounds_triggered();
-
     void on_actionPerfect_100_triggered();
-
     void on_actionOmnibus_triggered();
-
     void on_actionQueen_Spade_Break_Heart_triggered();
-
     void on_actionNo_Trick_Bonus_triggered();
-
     void on_actionNew_Moon_triggered();
-
     void on_actionNo_Draw_triggered();
-
     void on_actionRules_triggered();
-
     void on_actionCredits_triggered();
-
     void on_actionSettings_triggered();
-
     void on_actionSave_Game_Quit_triggered();
-
     void on_actionReset_triggered();
-
     void on_actionShow_triggered();
+
+#ifdef DEBUG
+    void on_actionShow_2_triggered();
+    void on_actionCheat_triggered();
+#endif
 
 private:
     Ui::MainWindow *ui;
@@ -96,7 +92,10 @@ private:
     QLabel *label[22];
     QLCDNumber *lcd_hand_score[4];
     QLCDNumber *lcd_score[4];
+
+#ifdef DEBUG
     QRadioButton *cheat_radio_button[4];
+#endif
 
 #ifdef __al_included_allegro5_allegro_audio_h
     ALLEGRO_SAMPLE *snd_shoot_moon;
@@ -117,6 +116,10 @@ private:
     CConfig *config;
     CStats  *stats;
 
+#ifdef DEBUG
+    CDebug  *debug;
+#endif
+
     bool wait_delay;
     bool stop_delay;
 
@@ -127,7 +130,9 @@ private:
     void clear_deck();
     void show_deck(int plr);
     void set_info_channel_enabled(bool enable);
+#ifdef DEBUG
     void set_cheat_mode_enabled(bool enable);
+#endif
     void load_sounds();
     void destroy_sounds();
     void init_pointers();

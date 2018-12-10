@@ -573,99 +573,297 @@ int CHearts::eval_card_strength(int plr, int card)
     }
   }
 
-
  assert(cards_left_in_suit[suit]);
  int value = (cpt / cards_left_in_suit[suit]) * 100;
 
  return value;
 }
 
-void CHearts::select_cpus_cards()
+void CHearts::AI_pass_spades(int cpu, int &cpt)
 {
- for (int i=0; i<4; i++)
-   if (i != user_id) {
-     int cpt = 0;
+  int spade_count = plr_cards_in_suit[cpu][SPADE];
 
-     int spade_count = plr_cards_in_suit[i][SPADE];
-     int pos_card = get_card_position(i, ace_spade);
+  if (!spade_count)
+    return;
 
-     if (pos_card != NOT_FOUND)
-       cpu_cards[cpt++] = pos_card;
+  int pos_queen_spade = get_card_position(cpu, queen_spade);
 
-     pos_card = get_card_position(i, king_spade);
-     if (pos_card != NOT_FOUND)
-       cpu_cards[cpt++] = pos_card;
+  bool qs_passed = false;
 
-     pos_card = get_card_position(i, queen_spade);
-     if (pos_card != NOT_FOUND)
-       cpu_cards[cpt++] = pos_card;
-
-     if (cpt == 3) {
-       set_cpu_passing_cards(i);
-       continue; // next cpu
+  // if AI_flags_safe_keep_qs is not set, or it's not safe to keep -> pass the queen of spade.
+  if (!(AI_cpu_flags[cpu] & AI_flags_safe_keep_qs) || (spade_count < 5)) {
+    if (pos_queen_spade != NOT_FOUND) {
+      AI_pass_save_card(pos_queen_spade, cpt);
+      qs_passed = true;
      }
+  }
 
-     int heart_count = plr_cards_in_suit[i][HEART];
+  // if we kept the queen of spade then don't pass either ace or king of spade, otherwise try to pass them.
+  if ((pos_queen_spade == NOT_FOUND) || qs_passed) {
+    int pos_ace_spade = get_card_position(cpu, ace_spade);
 
-     if ((heart_count > 1) || ((heart_count == 1) && !plr_has_card[i][ace_heart])) {
-       cpu_cards[cpt++] = get_lowest_suit_pos(i, HEART);
-     }
+    if (pos_ace_spade != NOT_FOUND)
+      AI_pass_save_card(pos_ace_spade, cpt);
 
-     if (cpt == 3) {
-       set_cpu_passing_cards(i);
-       continue; // next cpu
-     }
+    int pos_king_spade = get_card_position(cpu, king_spade);
 
-     // if not omnibus pass highest diamond (if available)
-     int d_count = plr_cards_in_suit[i][DIAMOND];
-
-     if (!omnibus && d_count)
-       cpu_cards[cpt++] = get_highest_suit_pos(i, DIAMOND);
-
-       if (cpt == 3) {
-         set_cpu_passing_cards(i);
-         continue; // next cpu
-       }
-
-     // pass highest club if available
-     int c_count = plr_cards_in_suit[i][CLUB];
-     if (c_count) {
-       cpu_cards[cpt++] = get_highest_suit_pos(i, CLUB);
-     }
-
-     if (cpt == 3) {
-       set_cpu_passing_cards(i);
-       continue; // next cpu
-     }
-
-     // if we did not choose 3 cards yet, fill with random cards to pass.
-     int card_id;
-     while (cpt != 3) {
-        card_id = rand() % 13;
-
-        int card = plr_cards[i][card_id];
-
-        if (omnibus && (card / 13 == DIAMOND) && ((d_count < 3) || (card == jack_diamond)))
-          continue;
-
-        if ((card / 13 == SPADE) && (spade_count < 5))
-          continue;
-
-        switch (cpt) {
-           case 0 : cpu_cards[cpt++] = card_id;
-                    break;
-           case 1 : if (card_id != cpu_cards[0])
-                      cpu_cards[cpt++] = card_id;
-                    break;
-           case 2 : if ((card_id != cpu_cards[0]) && (card_id != cpu_cards[1]))
-                      cpu_cards[cpt++] = card_id;
-        }
-     }
-     set_cpu_passing_cards(i);
+    if (pos_king_spade != NOT_FOUND)
+      AI_pass_save_card(pos_king_spade, cpt);
   }
 }
 
-int CHearts::freesuit_lead_eval(int card)
+void CHearts::AI_pass_clubs(int cpu, int &cpt)
+{
+ if (!plr_cards_in_suit[cpu][CLUB])
+   return;
+
+ // if AI_flags_elim_suit is set, try to eliminate our clubs.
+ if (AI_cpu_flags[cpu] & AI_flags_pass_elim_suit) {
+   AI_pass_remove_suit(cpu, CLUB, cpt);
+   if (cpt == 3)
+     return;
+ }
+
+ // if AI_flags_try_moon is set, pass our lowest cards, otherwise pass the highest.
+ if ((AI_cpu_flags[cpu] & AI_flags_try_moon) && is_prepass_to_moon())
+   AI_pass_save_card(get_lowest_suit_pos(cpu, CLUB), cpt);
+ else
+   AI_pass_save_card(get_highest_suit_pos(cpu, CLUB), cpt);
+}
+
+void CHearts::AI_pass_hearts(int cpu, int &cpt)
+{
+ int heart_count = plr_cards_in_suit[cpu][HEART];
+
+ if (!heart_count)
+   return;
+
+ // if AI_flags_pass_hearts_zero is set, let's roll the dice so 70% of the time we don't pass.
+ int chance = rand() % 100;
+ if ((AI_cpu_flags[cpu] & AI_flags_pass_hearts_zero) && (chance < 70))
+   return;
+
+ // adjust_low is use to pass a low heart, but not our lowest, it design on how many hearts we own.
+ const int adjust_low[14]  = {0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6};
+ int adjust_high = heart_count > 1 ? 1 : 0;
+
+ int low = NOT_FOUND;
+ int high = NOT_FOUND;
+
+ // if AI_flags_pass_hearts_low is set, this cpu will try to pass a low heart, but
+ // not the ace of hearts.
+ if ((AI_cpu_flags[cpu] & AI_flags_pass_hearts_low) || (chance >= 70))
+   low = get_lowest_suit_pos(cpu, HEART) + adjust_low[heart_count];
+
+ // if AI_flags_pass_hearts_high, this cpu will try to pass a high heart, but
+ // not the ace of hearts.
+ if (AI_cpu_flags[cpu] && AI_flags_pass_hearts_high)
+   high = get_highest_suit_pos(cpu, HEART) - adjust_high;
+
+ if ((low != NOT_FOUND) && (plr_cards[cpu][low] != ace_heart)) {
+   AI_pass_save_card(low, cpt);
+   if (cpt == 3)
+     return;
+  }
+
+ if ((high != NOT_FOUND) && (high != low) && (plr_cards[cpu][high] != ace_heart))
+   AI_pass_save_card(high, cpt);
+}
+
+void CHearts::AI_pass_diamonds(int cpu, int &cpt)
+{
+ if (!plr_cards_in_suit[cpu][DIAMOND])
+   return;
+
+ // check for omnibus friendly pass. only 1 friendly pass.
+ if (omnibus && AI_pass_friendly()) {
+   if (plr_has_card[turn][jack_diamond])
+     AI_pass_save_card(get_card_position(turn, jack_diamond), cpt);
+   else
+   if (plr_has_card[turn][ace_diamond])
+     AI_pass_save_card(get_card_position(turn, ace_diamond), cpt);
+   else
+   if (plr_has_card[turn][king_diamond])
+     AI_pass_save_card(get_card_position(turn, king_diamond), cpt);
+
+   if (cpt == 3)
+     return;
+ }
+
+ // if AI_flags_elim_suit is set, try to eliminate our diamond.
+ if (AI_cpu_flags[cpu] & AI_flags_pass_elim_suit) {
+   AI_pass_remove_suit(cpu, DIAMOND, cpt);
+   if (cpt == 3)
+     return;
+ }
+
+ // if not omnibus pass highest diamond, but not in try to moon
+ if (!omnibus && (!(AI_cpu_flags[cpu] & AI_flags_try_moon) || !is_prepass_to_moon()))
+   AI_pass_save_card(get_highest_suit_pos(cpu, DIAMOND), cpt);
+}
+
+void CHearts::AI_pass_random(int cpu, int &cpt)
+{
+ int spade_count = plr_cards_in_suit[cpu][SPADE];
+
+ int card_id;
+ int tries = 0;
+
+ while (cpt != 3) {
+   card_id = rand() % 13;
+
+   int card = plr_cards[cpu][card_id];
+
+   if (++tries < 50) { // avoid infinite loop. 50 tries is enough.
+     if (omnibus && ((card == ace_diamond) || (card == king_diamond) ||
+                     (card == queen_diamond) || (card == jack_diamond)))
+       continue;
+
+     if ((card / 13 == SPADE) && (spade_count < 5) && (card < queen_spade))
+       continue;
+
+     if ((AI_cpu_flags[cpu] & AI_flags_try_moon) && ((card % 13 + 2) > 9))
+       continue;
+   }
+
+   tries = 0;
+
+   AI_pass_save_card(card_id, cpt);
+ }
+}
+
+void CHearts::AI_pass_to_moon(int cpu, int &cpt)
+{
+  int heart_count = plr_cards_in_suit[turn][HEART];
+
+  // if we're having heart, but not the ace of heart, we needs to eliminate heart absolutely.
+  if (heart_count && ((heart_count < 9) || !plr_has_card[turn][ace_heart])) {
+    int low = get_lowest_suit_pos(cpu, HEART);
+
+    int high_cards = 0;
+    if (plr_has_card[turn][king_heart]) high_cards++;
+    if (plr_has_card[turn][queen_heart]) high_cards++;
+    if (plr_has_card[turn][jack_heart]) high_cards++;
+
+    do {
+      int card = plr_cards[turn][low];
+      if ((card < jack_heart - high_cards) || !plr_has_card[turn][ace_heart])
+        AI_pass_save_card(low, cpt);
+      low++;
+    } while ((cpt != 3) && (low < 13));
+    if (cpt == 3)
+     return;
+  }
+
+  AI_pass_remove_suit(cpu, CLUB, cpt);
+  AI_pass_remove_suit(cpu, SPADE, cpt);
+  AI_pass_remove_suit(cpu, DIAMOND, cpt);
+}
+
+void CHearts::AI_pass_remove_suit(int cpu, int suit, int &cpt)
+{
+ int suit_count = plr_cards_in_suit[cpu][suit];
+
+ if (!suit_count || (cpt == 3))
+   return;
+
+ if ((3-cpt) >= suit_count) {
+   int low = get_lowest_suit_pos(cpu, suit);
+   do {
+       AI_pass_save_card(low, cpt);
+       low++;
+   } while ((cpt != 3) && (low < 13));
+ }
+}
+
+void CHearts::AI_pass_save_card(int card_id, int &cpt)
+{
+  if (card_id == NOT_FOUND)                    // safety check
+    return;
+
+  if (plr_cards[turn][card_id] == empty)
+    return;
+
+  switch (cpt) {
+    case 0 : cpu_cards[cpt++] = card_id;
+             break;
+    case 1 : if (card_id != cpu_cards[0])
+               cpu_cards[cpt++] = card_id;
+             break;
+    case 2 : if ((card_id != cpu_cards[0]) && (card_id != cpu_cards[1]))
+               cpu_cards[cpt++] = card_id;
+  }
+}
+
+void CHearts::AI_pass_cpus_cards()
+{
+ for (int cpu=0; cpu<4; cpu++)
+   if (cpu != user_id) {
+     int cpt = 0;
+
+     if ((AI_cpu_flags[turn] & AI_flags_try_moon) && is_prepass_to_moon()) {
+       AI_pass_to_moon(cpu, cpt);
+
+       if (cpt == 3) {
+         set_cpu_passing_cards(cpu);
+         continue; // next cpu
+       }
+     }
+
+     AI_pass_spades(cpu, cpt);
+
+     if (cpt == 3) {
+       set_cpu_passing_cards(cpu);
+       continue;
+     }
+
+     AI_pass_hearts(cpu, cpt);
+
+     if (cpt == 3) {
+       set_cpu_passing_cards(cpu);
+       continue;
+     }
+
+     AI_pass_clubs(cpu, cpt);
+
+     if (cpt == 3) {
+       set_cpu_passing_cards(cpu);
+       continue;
+     }
+
+     AI_pass_diamonds(cpu, cpt);
+
+     if (cpt == 3) {
+       set_cpu_passing_cards(cpu);
+       continue;
+     }
+
+     AI_pass_random(cpu, cpt);
+
+     set_cpu_passing_cards(cpu);
+  }
+}
+
+bool CHearts::AI_pass_friendly()
+{
+  if (passed_to == pNOPASS)
+    return false;
+
+  if (!(AI_cpu_flags[turn] & AI_flags_friendly))
+    return false;
+
+  if (plr_score[turn] == get_lowest_score())
+    return false;
+
+  int score_pass_to = plr_score[get_plr_pass_to(turn)];
+
+  if ((score_pass_to == get_highest_score()) && (score_pass_to - plr_score[turn]) > 20)
+    return true;
+
+  return false;
+}
+
+int CHearts::AI_eval_lead_freesuit(int card)
 {
   int card_suit = card / 13;
 
@@ -673,32 +871,36 @@ int CHearts::freesuit_lead_eval(int card)
   if (card == queen_spade) {
     int diff_spade = cards_left_in_suit[SPADE] - plr_cards_in_suit[turn][SPADE];
 
-    if ((diff_spade == 1) && !plr_has_card[turn][ace_spade] && !cards_played[ace_spade])
-      return 100;
+    if ((AI_CPU_flags[turn] & AI_flags_count_spade) && !is_moon_an_option()) {
+      if ((diff_spade == 1) && !plr_has_card[turn][ace_spade] && !cards_played[ace_spade])
+        return 100;
 
-    if ((diff_spade == 1) && !plr_has_card[turn][king_spade] && !cards_played[king_spade])
-      return 101;
+      if ((diff_spade == 1) && !plr_has_card[turn][king_spade] && !cards_played[king_spade])
+        return 101;
 
-    if ((diff_spade == 2) && !plr_has_card[turn][ace_spade] && !plr_has_card[turn][king_spade] &&
-                             !cards_played[ace_spade] && !cards_played[king_spade])
-      return 102;
+      if ((diff_spade == 2) && !plr_has_card[turn][ace_spade] && !plr_has_card[turn][king_spade] &&
+                               !cards_played[ace_spade] && !cards_played[king_spade])
+        return 102;
+    }
 
     // don't lead the queen of spade
-    return -100;
+    if (!is_moon_an_option())
+      return -100;
   }
 
   // don't lead in a suit where there is no cards left beside ours.
-  if (cards_left_in_suit[card_suit] == plr_cards_in_suit[turn][card_suit])
-    return -80;
+  if (!is_moon_an_option()) {
+    if (cards_left_in_suit[card_suit] == plr_cards_in_suit[turn][card_suit])
+      return -80;
+  }
 
   // avoid leading the ace/king of spade, if the queen hasn't been played and we don't own it
   // otherwise, let's try to elimitate some spade.
-
   if (((card == ace_spade) || (card == king_spade)) && !cards_played[queen_spade]) {
-    if (plr_has_card[turn][queen_spade])
-     return 70;
+    if (plr_has_card[turn][queen_spade] && ((plr_cards_in_suit[turn][SPADE] > 4) || is_moon_an_option()))
+      return 70;
     else
-     return -90;
+      return -90;
   }
 
   // avoid leading in spade if the queen of spade is not played yet and the ace/king/queen spade is in your hand,
@@ -732,42 +934,52 @@ int CHearts::freesuit_lead_eval(int card)
     return 63;
 
   // the stronger that card is, the worst it is to play.
-  return -eval_card_strength(turn, card);
+  if (is_moon_an_option())
+    return eval_card_strength(turn, card);
+  else
+    return -eval_card_strength(turn, card);
 }
 
-int CHearts::spade_lead_eval(int card)
+int CHearts::AI_eval_lead_spade(int card)
 {
  // the lead is spade and the ace/king is in the trick? play the queen otherwise don't.
  if (card == queen_spade) {
-   if (is_card_on_table(ace_spade) || is_card_on_table(king_spade))
+   if ((is_card_on_table(ace_spade) || is_card_on_table(king_spade)) && !is_moon_an_option())
      return 104;
    else
      return -104;
  }
 
  // if the ace is in the trick throw away our king
-  if ((card == king_spade) && is_card_on_table(ace_spade))
+  if ((card == king_spade) && is_card_on_table(ace_spade) && !is_moon_an_option())
     return 75;
+  else
+    return -25;
 
  // avoid giving the jack of diamond
   if (omnibus && (card == jack_diamond))
     return -62;
 
  // last to talk, the queen is not in the trick.. throw your ace/king.
-  if ((hand_turn == 3) && !is_card_on_table(queen_spade) && ((card == ace_spade) || (card == king_spade)))
-    return 40;
+  if (!is_moon_an_option()) {
+    if ((hand_turn == 3) && !is_card_on_table(queen_spade) && ((card == ace_spade) || (card == king_spade)))
+      return 40;
+  }
 
   return 0;
 }
 
-int CHearts::diamond_lead_eval(int card)
+int CHearts::AI_eval_lead_diamond(int card)
 {
   if (omnibus) {
-  // Try to catch the jack of diamond with the ace/king/queen if the queen of spade isn't in the trick.
-  // note: Maybe after !is_card_on_table(queen_spade) add (cards_played[queen_spade] || has_card(turn, queen_spade))
-     if (((card == ace_diamond) || (card == king_diamond) || (card == queen_diamond)) &&
-          is_card_on_table(jack_diamond) && !is_card_on_table(queen_spade))
-        return 20 + (card % 13);
+  // If the jack of diamond is on the table, try to grab it with the ace/king/queen. (if it's safe).
+    if (((card == ace_diamond) || (card == king_diamond) || (card == queen_diamond)) && is_card_on_table(jack_diamond)) {
+      if (is_card_on_table(queen_spade))
+        return -65;
+      else
+      if (cards_played[queen_spade] || plr_has_card[turn][queen_spade] || (hand_turn == 3) || is_moon_an_option())
+        return 25 + (card % 13);
+     }
 
   // will we win this hand?
      if (card == jack_diamond) {
@@ -791,7 +1003,32 @@ int CHearts::diamond_lead_eval(int card)
   return 0;
 }
 
-int CHearts::get_cpu_move()
+int CHearts::AI_eval_lead_hearts(int card)
+{
+  int highest = get_highest_card_table();
+
+  if (is_moon_an_option()) {
+    if ((card == queen_spade) || (omnibus && (card == jack_diamond)))
+      return -50;
+    else {
+       if (card > highest)
+         return -card + 30;
+       else
+         return -30;
+    }
+
+  }
+  else {
+     if (card < highest)
+       return card - get_highest_card_table() + 30;
+     else
+       return -30;
+  }
+
+  return 0;
+}
+
+int CHearts::AI_get_cpu_move()
 {
  int eval[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
@@ -803,21 +1040,26 @@ int CHearts::get_cpu_move()
     else {
       // only valid move from here
       switch (current_suit) {
-         case FREESUIT: eval[i] = freesuit_lead_eval(card);
+         case FREESUIT: eval[i] = AI_eval_lead_freesuit(card);
                         break;
 
-         case SPADE:    eval[i] = spade_lead_eval(card);
+         case SPADE:    eval[i] = AI_eval_lead_spade(card);
                         break;
 
-         case DIAMOND:  eval[i] = diamond_lead_eval(card);
+         case DIAMOND:  eval[i] = AI_eval_lead_diamond(card);
 
-         default :      // give away the queen of spade
-                        if (card == queen_spade)
-                          eval[i] = 105;
-                        else
-                        // the queen of spade has not been played yet, let's throw our ace/king spade away.
-                        if (((card == ace_spade) || (card == king_spade)) && !cards_played[queen_spade])
-                          eval[i] = 76;
+         default :      if (current_suit == HEART)
+                          AI_eval_lead_hearts(card);
+
+                        // give away the queen of spade
+                        if (!is_moon_an_option()) {
+                          if (card == queen_spade)
+                            eval[i] = 105;
+                          else
+                          // the queen of spade has not been played yet, let's throw our ace/king spade away.
+                          if (((card == ace_spade) || (card == king_spade)) && !cards_played[queen_spade])
+                            eval[i] = 61;
+                        }
 
       }
 
@@ -829,9 +1071,9 @@ int CHearts::get_cpu_move()
         else
         // we are the last one of the trick: play our bigger cards, but not in hearts, and not if queen spade is in
          if ((hand_turn == 3) && (current_suit != HEART) && !is_card_on_table(queen_spade))
-           eval[i] = card % 13;
+           eval[i] = card % 13 + 2;
         else
-        if (current_suit != FREESUIT) {
+        if (!is_moon_an_option() && (current_suit != FREESUIT)) {
            // throw away our big hearts cards
            if ((current_suit != HEART) && (card / 13 == HEART))
              eval[i] = (card % 13) + 30;
@@ -849,13 +1091,13 @@ int CHearts::get_cpu_move()
         }
         else
         // play the lowest card.
-          eval[i] = -(card % 13);
+          eval[i] = -(card % 13 + 2);
       }
     }
  }
 
- // search for the best move... eventually, it could go into the first loop...
- int best_move = -32768, best_card_id;
+ // search for the best move.
+ int best_move = -32768, best_card_id = 0;
 
  for (int i=0; i<13; i++)
    if (eval[i] > best_move) {
@@ -1029,7 +1271,7 @@ void CHearts::process_card(int card)
 
 void CHearts::play_hand()
 {
-  int card_id = get_cpu_move();
+  int card_id = AI_get_cpu_move();
 
   assert((card_id >= 0) && (card_id < 13));
 
@@ -1193,16 +1435,84 @@ bool CHearts::is_tram(int plr) {
   return true;
 }
 
-bool CHearts::is_moon_still_possible()
+bool CHearts::is_moon_an_option()
 {
-  int cpt = 0;
+  if (!(AI_cpu_flags[turn] & AI_flags_try_moon))
+    return false;
 
-  if (plr_hand_score[0] || (omnibus && (plr_jack_diamond == 0))) cpt++;
-  if (plr_hand_score[1] || (omnibus && (plr_jack_diamond == 1))) cpt++;
-  if (plr_hand_score[2] || (omnibus && (plr_jack_diamond == 2))) cpt++;
-  if (plr_hand_score[3] || (omnibus && (plr_jack_diamond == 3))) cpt++;
+  if ((turn != 0) && (plr_hand_score[0] || (omnibus && (plr_jack_diamond == 0)))) return false;
+  if ((turn != 1) && (plr_hand_score[1] || (omnibus && (plr_jack_diamond == 1)))) return false;
+  if ((turn != 2) && (plr_hand_score[2] || (omnibus && (plr_jack_diamond == 2)))) return false;
+  if ((turn != 3) && (plr_hand_score[3] || (omnibus && (plr_jack_diamond == 3)))) return false;
 
-  return cpt < 2;
+  if (plr_cards_in_suit[turn][HEART] && !plr_has_card[turn][ace_heart] && !cards_played[ace_heart])
+    return false;
+
+  return true;
+}
+
+bool CHearts::is_prepass_to_moon()
+{
+  const int aces[4] = {ace_clubs, ace_spade, ace_diamond, ace_heart};
+
+  int bonus = 0;
+  int discard = 0;
+
+  for (int i=0; i<4; i++) {
+     int cpt_suit = plr_cards_in_suit[turn][i];
+
+     if (cpt_suit) {
+       if (cpt_suit > 8)
+         bonus = 2;
+       else
+       if (cpt_suit > 6)
+         bonus = 1;
+
+       if (!plr_has_card[turn][aces[i]] && ((i == HEART) || ((cpt_suit >= 3) && (cpt_suit <= 6))))
+         discard += cpt_suit;
+     }
+
+     if (discard > 3)
+       return false;
+  }
+
+  int card_value;
+  int low1 = 65535;
+  int low2 = 65535;
+  int low3 = 65535;
+
+  double total = 0;
+  for (int i=0; i<13; i++) {
+    card_value = (plr_cards[turn][i] % 13) + 2;
+
+    if (card_value < low1) {
+      if (low1 < low2) {
+        if (low2 < low3)
+          low3 = low2;
+        low2 = low1;
+      }
+      low1 = card_value;
+    }
+    else
+    if (card_value < low2) {
+      if (low2 < low3)
+        low3 = low2;
+      low2 = card_value;
+    }
+    else
+    if (card_value < low3)
+      low3 = card_value;
+
+    total += card_value;
+  }
+
+  total = (total - low1 - low2 - low3) / 10 + bonus;
+
+  if (total < 10)                                     // although, some hands with a total of 7 are promising and
+    return false;                                     // some with total of 11 aren't, it's usually better to
+                                                      // have total above 10.
+
+  return true;
 }
 
 bool CHearts::is_it_draw()
@@ -1279,10 +1589,26 @@ int CHearts::get_highest_suit_pos(int plr, int suit)
      int card = plr_cards[plr][i];
      int card_suit = card / 13;
 
-     if (card == empty) return NOT_FOUND;
+     if (card == empty) return highest;
      if (card_suit > suit) return highest;
      if (card_suit == suit)
        highest = i;
+  }
+  return highest;
+}
+
+int CHearts::get_highest_suit(int plr, int suit)
+{
+  int highest = NOT_FOUND;
+
+  for (int i=0; i<13; i++) {
+    int card = plr_cards[plr][i];
+    int card_suit = card /13;
+
+    if (card == empty) return highest;
+    if (card_suit > suit) return highest;
+    if (card_suit == suit)
+      highest = card;
   }
   return highest;
 }
@@ -1383,6 +1709,28 @@ int CHearts::get_highest_card_table()
   return highest;
 }
 
+int CHearts::get_lowest_score()
+{
+  int lowest_score = plr_score[0];
+
+  for (int i=1; i<4; i++)
+    if (plr_score[i] < lowest_score)
+      lowest_score = plr_score[i];
+
+  return lowest_score;
+}
+
+int CHearts::get_highest_score()
+{
+ int highest_score = plr_score[0];
+
+ for (int i=1; i<4; i++)
+   if (plr_score[i] > highest_score)
+     highest_score = plr_score[i];
+
+ return highest_score;
+}
+
 bool CHearts::is_ready_to_pass()
 {
  return cards_selected_count[user_id] == 3;
@@ -1443,6 +1791,26 @@ int CHearts::get_card(int idx)
   return plr_cards[user_id][idx];
 }
 
+int CHearts::is_fresh_game()
+{
+  return fresh_game;
+}
+
+int CHearts::get_plr_pass_to(int plr_from)
+{
+  const int plr_pass_to[4][4] = {{1, 2, 3, 0},   // pass to the left.
+                                 {3, 0, 1, 2},   // pass to the right.
+                                 {2, 3, 0, 1},   // pass accross.
+                                 {0, 1, 2, 3}};  // no pass.
+
+  return plr_pass_to[passed_to][plr_from];
+}
+
+void CHearts::AI_set_cpu_flags(int cpu, int flags)
+{
+  AI_cpu_flags[cpu] = flags;
+}
+
 void CHearts::set_moon_add_to_score(bool enable)
 {
   moon_add_to_scores = enable;
@@ -1482,9 +1850,4 @@ void CHearts::set_new_moon(bool enable)
 void CHearts::set_no_draw(bool enable)
 {
   no_draw = enable;
-}
-
-int CHearts::is_fresh_game()
-{
-  return fresh_game;
 }

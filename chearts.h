@@ -19,6 +19,9 @@ const int queen_diamond = 36;
 const int king_diamond  = 37;
 const int ace_diamond   = 38;
 const int two_heart     = 39;
+const int jack_heart    = 48;
+const int queen_heart   = 49;
+const int king_heart    = 50;
 const int ace_heart     = 51;
 const int empty         = 127;
 
@@ -93,26 +96,42 @@ private: // variables
     int plr_has_card[4][52];
     int cpu_cards[3];
     int hand_cards[4];
+    int AI_cpu_flags[4];
 
 private: // functions
    bool can_break_heart(int plr);
    bool can_play_qs_first_hand(int plr);
    bool is_only_heart_left(int plr);
    bool is_tram(int plr);
-   bool is_moon_still_possible();
+   bool is_prepass_to_moon();
+   bool is_moon_an_option();
    bool is_card_on_table(int card);
 
-   int  get_cpu_move();
+
    int  get_lowest_suit(int plr, int suit);
    int  get_lowest_suit_pos(int plr, int suit);
    int  get_card_position(int plr, int card);
+   int  get_highest_suit(int plr, int suit);
    int  get_highest_suit_pos(int plr, int suit);
    int  get_highest_card_table();
    int  check_invalid_move(int plr, int card);
-   int  freesuit_lead_eval(int card);
-   int  spade_lead_eval(int card);
-   int  diamond_lead_eval(int card);
    int  eval_card_strength(int plr, int card);
+
+   int  AI_get_cpu_move();
+   int  AI_eval_lead_spade(int card);
+   int  AI_eval_lead_diamond(int card);
+   int  AI_eval_lead_hearts(int card);
+   int  AI_eval_lead_freesuit(int card);
+
+   bool AI_pass_friendly();
+   void AI_pass_hearts(int cpu, int &cpt);
+   void AI_pass_spades(int cpu, int &cpt);
+   void AI_pass_clubs(int cpu, int &cpt);
+   void AI_pass_diamonds(int cpu, int &cpt);
+   void AI_pass_random(int cpu, int &cpt);
+   void AI_pass_to_moon(int cpu, int &cpt);
+   void AI_pass_remove_suit(int cpu, int suit, int &cpt);
+   void AI_pass_save_card(int card_id, int &cpt);
 
    void init_vars();
    void reset_cards_on_table();
@@ -155,14 +174,19 @@ public: // functions
    int  get_plr_name_id(int plr);
    int  get_plr_hand_card(int plr);
    int  is_fresh_game();
+   int  get_lowest_score();
+   int  get_highest_score();
+   int  get_plr_pass_to(int plr_from);
 
    void new_game();
    void set_tram_enabled(bool enable);  
    void sort_plr_cards();
    void play_2clubs();
-   void select_cpus_cards();
    void pass_cards();
    void reset_cards_passed();
+
+   void AI_set_cpu_flags(int cpu, int flags);
+   void AI_pass_cpus_cards();
 
    void set_perfect_100(bool enable);
    void set_omnibus(bool enable);
