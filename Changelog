@@ -16,8 +16,13 @@
 27 nov 2018: removed: GUI toolskit.
 27 nov 2018: auto_save_game() system -> don't save fresh started new games.
 
-27 nov 2018: Version 1.1.1b
+27 nov 2018: Version 1.1.1b "Unreleased"
 ------------------------------------------------------------------------------------------------
 27 nov 2018: fixed elusive reentrant bug in new_moon substract. if you shoot the moon with
              a score of less 52 and choosed to susbtract. A bug was triggered.
 29 nov 2018: fixed autosave() not saving on "fresh game" instead of not saving on "fresh round"
+
+10 dec 2018: Version 1.2b
+------------------------------------------------------------------------------------------------
+10 dec 2018: Redesign of the AI to make diffent computers playing styles. (an attempt)
+10 dec 2018: added: cards history as a debuging tools, cheat mode has been moved to debug section
