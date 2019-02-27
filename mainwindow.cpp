@@ -354,7 +354,6 @@ void MainWindow::load_saved_game()
   if (hearts->is_mode_playing()) {
     label[17]->setDisabled(true);
 
-
     int cpt = hearts->whoami();
     for (int i=0; i<3; i++) {
       int card = hearts->get_plr_hand_card(2-i);
@@ -363,7 +362,6 @@ void MainWindow::load_saved_game()
 
       if (--cpt < 0)
         cpt = 3;
-
 
       label[13 + cpt]->setPixmap(QPixmap::fromImage(img_cards[card]->scaledToHeight(100)));
 #ifdef DEBUG
@@ -518,18 +516,18 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
  for (int i=0; i<4; i++) {
    int cpt = 0;
    for (int i2=0; i2<4; i2++)
-     if (unsorted[i] >= unsorted[i2])
+     if (unsorted[i] > unsorted[i2])
        cpt++;
 
    switch(cpt) {
-     case 1 : stats->increase_stats(plr_names_idx[i], STATS_FIRST_PLACE);
+     case 0 : stats->increase_stats(plr_names_idx[i], STATS_FIRST_PLACE);
               lowest = unsorted[i];
               break;
-     case 2 : stats->increase_stats(plr_names_idx[i], STATS_SECOND_PLACE);
+     case 1 : stats->increase_stats(plr_names_idx[i], STATS_SECOND_PLACE);
               break;
-     case 3 : stats->increase_stats(plr_names_idx[i], STATS_THIRD_PLACE);
+     case 2 : stats->increase_stats(plr_names_idx[i], STATS_THIRD_PLACE);
               break;
-     case 4 : stats->increase_stats(plr_names_idx[i], STATS_FOURTH_PLACE);
+     case 3 : stats->increase_stats(plr_names_idx[i], STATS_FOURTH_PLACE);
               break;
    }
  }
@@ -550,13 +548,13 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
 
  message(mesg);
 
-  if (!ui->actionInfo_Channel->isChecked())
-    QMessageBox::information(this, "Information", mesg);
-
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
     al_play_sample(snd_game_over, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
 #endif
+
+  if (!ui->actionInfo_Channel->isChecked())
+    QMessageBox::information(this, "Information", mesg);
 
   ui->actionNew->setDisabled(false);
   ui->actionSave->setDisabled(true);

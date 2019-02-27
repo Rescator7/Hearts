@@ -7,7 +7,7 @@
 // Compilation will create Debug menu
 #define DEBUG
 
-const char version[80] = "Hearts 1.2b";
+const char version[80] = "Hearts 1.2.1b";
 
 const int FNOERR                         = 0;
 const int ERROPENRO                      = 1;

@@ -190,7 +190,8 @@ int CHearts::load_saved_game()
                  for (int i=0; i<4; i++) {
                    value = line.section(' ', i, i).toInt();
                    if ((value < 0) || (value > game_over_score - 1))
-                     return FCORRUPTED;
+                     return FCORRUPTED;      // FIX ME: it's possible to have a score above 100 pts,
+                                             // in no draw enabled situation...
                    plr_score[i] = value;
                  }
                  break;
@@ -1191,8 +1192,7 @@ void CHearts::process_next_pass(bool skip_moon_check)
      }
 
      if (plr_score[i] >= game_over_score)
-       if (!is_it_draw() || !no_draw)
-         game_over = true;
+       game_over = true;
 
      emit sig_score(plr_score[i], i);
   }
@@ -1200,7 +1200,7 @@ void CHearts::process_next_pass(bool skip_moon_check)
   moon_add_to_scores = true;         // reset to default: true. this is important.
   emit sig_end_hand(plr_hand_score[0], plr_hand_score[1], plr_hand_score[2], plr_hand_score[3]);
 
-  if (!game_over) {
+  if (!game_over || (is_it_draw() && no_draw)) {
     card_left = DECK_SIZE;
     plr_jack_diamond = NOT_FOUND;
 
