@@ -22,6 +22,7 @@
 #include "credits.h"
 #include "settings.h"
 #include "cardspos.h"
+#include "language.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -48,12 +49,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     stats = new CStats;
 
+    deck = new CImg_deckcards(DEFAULT_DECK);
+
 #ifdef DEBUG
     debug = new CDebug(img_empty_card);
 #endif
 
+    card_height = 130;
+    def_card_posy = ui->label->y();
+
     set_options();
     set_hearts_options();
+    set_language(config->get_language());
 
     connect(hearts, SIGNAL(sig_refresh_deck(int)), this, SLOT(refresh_deck(int)));
     connect(hearts, SIGNAL(sig_play_card(int,int)), this, SLOT(play_card(int,int)));
@@ -110,15 +117,11 @@ MainWindow::~MainWindow()
 
     delete img_empty_card;
     delete img_your_turn;
-    delete img_back_card;
 
     delete img_pass[pLEFT];
     delete img_pass[pRIGHT];
     delete img_pass[pACCROSS];
     delete img_pass[pNOPASS];
-
-    for (int i=0; i < DECK_SIZE; i++)
-      delete img_cards[i];
 
     destroy_sounds();
 }
@@ -221,68 +224,11 @@ void MainWindow::init_pointers()
 {
     img_empty_card = new QImage(":/SVG-cards/empty.png", "PNG");     // NEW
     img_your_turn = new QImage(":/SVG-cards/card-base2.png", "PNG"); // NEW
-    img_back_card = new QImage(":/SVG-cards/back.png", "PNG");
 
     img_pass[pLEFT] = new QImage(":/icons/left-icon.png", "PNG");
     img_pass[pRIGHT] = new QImage(":/icons/right-icon.png", "PNG");
     img_pass[pACCROSS] = new QImage(":/icons/up-icon.png", "PNG");
     img_pass[pNOPASS] = new QImage(":/icons/no_pass-icon.png", "PNG");
-
-    img_cards[0] = new QImage(":/SVG-cards/club_2.png", "PNG");
-    img_cards[1] = new QImage(":/SVG-cards/club_3.png", "PNG");
-    img_cards[2] = new QImage(":/SVG-cards/club_4.png", "PNG");
-    img_cards[3] = new QImage(":/SVG-cards/club_5.png", "PNG");
-    img_cards[4] = new QImage(":/SVG-cards/club_6.png", "PNG");
-    img_cards[5] = new QImage(":/SVG-cards/club_7.png", "PNG");
-    img_cards[6] = new QImage(":/SVG-cards/club_8.png", "PNG");
-    img_cards[7] = new QImage(":/SVG-cards/club_9.png", "PNG");
-    img_cards[8] = new QImage(":/SVG-cards/club_10.png", "PNG");
-    img_cards[9] = new QImage(":/SVG-cards/club_jack.png", "PNG");
-    img_cards[10] = new QImage(":/SVG-cards/club_queen.png", "PNG");
-    img_cards[11] = new QImage(":/SVG-cards/club_king.png", "PNG");
-    img_cards[12] = new QImage(":/SVG-cards/club_1.png", "PNG");
-
-    img_cards[13] = new QImage(":/SVG-cards/spade_2.png", "PNG");
-    img_cards[14] = new QImage(":/SVG-cards/spade_3.png", "PNG");
-    img_cards[15] = new QImage(":/SVG-cards/spade_4.png", "PNG");
-    img_cards[16] = new QImage(":/SVG-cards/spade_5.png", "PNG");
-    img_cards[17] = new QImage(":/SVG-cards/spade_6.png", "PNG");
-    img_cards[18] = new QImage(":/SVG-cards/spade_7.png", "PNG");
-    img_cards[19] = new QImage(":/SVG-cards/spade_8.png", "PNG");
-    img_cards[20] = new QImage(":/SVG-cards/spade_9.png", "PNG");
-    img_cards[21] = new QImage(":/SVG-cards/spade_10.png", "PNG");
-    img_cards[22] = new QImage(":/SVG-cards/spade_jack.png", "PNG");
-    img_cards[23] = new QImage(":/SVG-cards/spade_queen.png", "PNG");
-    img_cards[24] = new QImage(":/SVG-cards/spade_king.png", "PNG");
-    img_cards[25] = new QImage(":/SVG-cards/spade_1.png", "PNG");
-
-    img_cards[26] = new QImage(":/SVG-cards/diamond_2.png", "PNG");
-    img_cards[27] = new QImage(":/SVG-cards/diamond_3.png", "PNG");
-    img_cards[28] = new QImage(":/SVG-cards/diamond_4.png", "PNG");
-    img_cards[29] = new QImage(":/SVG-cards/diamond_5.png", "PNG");
-    img_cards[30] = new QImage(":/SVG-cards/diamond_6.png", "PNG");
-    img_cards[31] = new QImage(":/SVG-cards/diamond_7.png", "PNG");
-    img_cards[32] = new QImage(":/SVG-cards/diamond_8.png", "PNG");
-    img_cards[33] = new QImage(":/SVG-cards/diamond_9.png", "PNG");
-    img_cards[34] = new QImage(":/SVG-cards/diamond_10.png", "PNG");
-    img_cards[35] = new QImage(":/SVG-cards/diamond_jack.png", "PNG");
-    img_cards[36] = new QImage(":/SVG-cards/diamond_queen.png", "PNG");
-    img_cards[37] = new QImage(":/SVG-cards/diamond_king.png", "PNG");
-    img_cards[38] = new QImage(":/SVG-cards/diamond_1.png", "PNG");
-
-    img_cards[39] = new QImage(":/SVG-cards/heart_2.png", "PNG");
-    img_cards[40] = new QImage(":/SVG-cards/heart_3.png", "PNG");
-    img_cards[41] = new QImage(":/SVG-cards/heart_4.png", "PNG");
-    img_cards[42] = new QImage(":/SVG-cards/heart_5.png", "PNG");
-    img_cards[43] = new QImage(":/SVG-cards/heart_6.png", "PNG");
-    img_cards[44] = new QImage(":/SVG-cards/heart_7.png", "PNG");
-    img_cards[45] = new QImage(":/SVG-cards/heart_8.png", "PNG");
-    img_cards[46] = new QImage(":/SVG-cards/heart_9.png", "PNG");
-    img_cards[47] = new QImage(":/SVG-cards/heart_10.png", "PNG");
-    img_cards[48] = new QImage(":/SVG-cards/heart_jack.png", "PNG");
-    img_cards[49] = new QImage(":/SVG-cards/heart_queen.png", "PNG");
-    img_cards[50] = new QImage(":/SVG-cards/heart_king.png", "PNG");
-    img_cards[51] = new QImage(":/SVG-cards/heart_1.png", "PNG");
 
     label[0] = ui->label;
     label[1] = ui->label_2;
@@ -363,9 +309,9 @@ void MainWindow::load_saved_game()
       if (--cpt < 0)
         cpt = 3;
 
-      label[13 + cpt]->setPixmap(QPixmap::fromImage(img_cards[card]->scaledToHeight(100)));
+      label[13 + cpt]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
 #ifdef DEBUG
-      debug->save_card(plr_names_idx[cpt], img_cards[card]);
+      debug->save_card(plr_names_idx[cpt], deck->get_img_card(card));
     }
     debug->reverse_order();
 #else
@@ -557,7 +503,6 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
     QMessageBox::information(this, "Information", mesg);
 
   ui->actionNew->setDisabled(false);
-  ui->actionSave->setDisabled(true);
 }
 
 void MainWindow::tram(int plr)
@@ -621,7 +566,6 @@ void MainWindow::shoot_moon(int plr)
 void MainWindow::pass_to(int pass_to)
 {        
   ui->actionNew->setDisabled(false);
-  ui->actionSave->setDisabled(false);
   label[17]->setPixmap(QPixmap::fromImage(img_pass[pass_to]->scaledToHeight(80)));
   label[17]->setDisabled(pass_to == pNOPASS);
 }
@@ -694,10 +638,12 @@ void MainWindow::show_deck(int plr)
     assert ((pos >= 0) && (pos <= 12));
 
     label[pos]->show();
+
+    label[pos]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
     if (hearts->is_card_selected(plr, i))
-      label[pos]->setPixmap(QPixmap::fromImage(img_back_card->scaledToHeight(100)));
+      label[pos]->move(label[pos]->x(),def_card_posy - 20);
     else
-      label[pos]->setPixmap(QPixmap::fromImage(img_cards[card]->scaledToHeight(100)));
+      label[pos]->move(label[pos]->x(),def_card_posy);
   }
 }
 
@@ -762,7 +708,7 @@ void MainWindow::clear_table()
 {
   delay(200);
   for (int i=0; i<4; i++)
-    label[i+13]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(100)));
+    label[i+13]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
 }
 
 void MainWindow::select_card(int num)
@@ -784,7 +730,6 @@ void MainWindow::select_card(int num)
    if (!hearts->is_it_my_turn()) return;     // wait_delay seem to do the job, but maybe it's just by luck...
 
    ui->actionNew->setDisabled(true);
-   ui->actionSave->setDisabled(true);
 
    int error;
 
@@ -803,7 +748,6 @@ void MainWindow::select_card(int num)
        al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
 #endif
       ui->actionNew->setDisabled(false);
-      ui->actionSave->setDisabled(false);
    }  
    return;
  }
@@ -812,13 +756,11 @@ void MainWindow::select_card(int num)
 
  if (selected) {
    if (hearts->unselect_card(card_id)) {
-     int card = hearts->get_card(card_id);
-     label[card_id]->setPixmap(QPixmap::fromImage((img_cards[card]->scaledToHeight(100))));
-
+     label[card_id]->move(label[card_id]->x(), def_card_posy);
    }
  } else
      if (hearts->select_card(card_id)) {
-       label[card_id]->setPixmap(QPixmap::fromImage(img_back_card->scaledToHeight(100)));
+       label[card_id]->move(label[card_id]->x(), def_card_posy - 20);
 
 #ifdef __al_included_allegro5_allegro_audio_h
        if (ui->actionSounds->isChecked())
@@ -835,10 +777,10 @@ void MainWindow::play_card(int card, int idx)
    delay(400);
 
 #ifdef DEBUG
- debug->save_card(plr_names_idx[idx], img_cards[card]);
+ debug->save_card(plr_names_idx[idx], deck->get_img_card(card));
 #endif
 
- label[idx+13]->setPixmap(QPixmap::fromImage(img_cards[card]->scaledToHeight(100)));
+ label[idx+13]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
 
 #ifdef __al_included_allegro5_allegro_audio_h
  if (ui->actionSounds->isChecked()) {
@@ -854,7 +796,7 @@ void MainWindow::show_your_turn(int idx)
 {
   delay(200);
 
-  label[idx+13]->setPixmap(QPixmap::fromImage(img_your_turn->scaledToHeight(100)));
+  label[idx+13]->setPixmap(QPixmap::fromImage(img_your_turn->scaledToHeight(card_height)));
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
@@ -862,7 +804,6 @@ void MainWindow::show_your_turn(int idx)
 #endif
 
   ui->actionNew->setDisabled(false);
-  ui->actionSave->setDisabled(false);
 }
 
 void MainWindow::on_label_18_clicked() // pass 3 cards
@@ -884,7 +825,6 @@ void MainWindow::on_label_18_clicked() // pass 3 cards
   label[17]->setDisabled(true);
 
   ui->actionNew->setDisabled(true);
-  ui->actionSave->setDisabled(true);
 
   hearts->AI_pass_cpus_cards();
 
@@ -918,9 +858,9 @@ void MainWindow::on_label_18_clicked() // pass 3 cards
 
 void MainWindow::reverse_cards_rgb()
 {
-  img_cards[cards_received[0]]->invertPixels();
-  img_cards[cards_received[1]]->invertPixels();
-  img_cards[cards_received[2]]->invertPixels();
+  deck->reverse_card_rgb(cards_received[0]);
+  deck->reverse_card_rgb(cards_received[1]);
+  deck->reverse_card_rgb(cards_received[2]);
 }
 
 void MainWindow::message(QString mesg)
@@ -1177,3 +1117,87 @@ void MainWindow::on_actionShow_2_triggered()
   debug->show();
 }
 #endif
+
+
+void MainWindow::set_language(int lang)
+{
+ ui->actionEnglish->setChecked(false);
+ ui->actionFrench->setChecked(false);
+ ui->actionRussian->setChecked(false);
+
+ switch (lang) {
+    case LANG_ENGLISH: ui->actionEnglish->setChecked(true); break;
+    case LANG_FRENCH:  ui->actionFrench->setChecked(true); break;
+    case LANG_RUSSIAN: ui->actionRussian->setChecked(true); break;
+ }
+
+ // Main menu bar
+ ui->menuFile->setTitle(LANGUAGES[lang][LANG_menuFile]);
+ ui->menuGame_Variations->setTitle(LANGUAGES[lang][LANG_menuGame_Variations]);
+ ui->menuOptions->setTitle(LANGUAGES[lang][LANG_menuOptions]);
+ ui->menuStats->setTitle(LANGUAGES[lang][LANG_menuStats]);
+ ui->menuHelp->setTitle(LANGUAGES[lang][LANG_menuHelp]);
+ ui->menuAbout->setTitle(LANGUAGES[lang][LANG_menuAbout]);
+ ui->menuLanguage->setTitle(LANGUAGES[lang][LANG_menuLanguage]);
+ ui->menuDebug->setTitle(LANGUAGES[lang][LANG_menuDebug]);
+
+ // Menu: File
+ ui->actionNew->setText(LANGUAGES[lang][LANG_actionNew]);
+ ui->actionQuit->setText(LANGUAGES[lang][LANG_actionQuit]);
+
+ // Menu: Options
+ ui->actionQueen_Spade_Break_Heart->setText(LANGUAGES[lang][LANG_actionQueen_Spade_Break_Heart]);
+ ui->actionPerfect_100->setText(LANGUAGES[lang][LANG_actionPerfect_100]);
+ ui->actionOmnibus->setText(LANGUAGES[lang][LANG_actionOmnibus]);
+ ui->actionNo_Trick_Bonus->setText(LANGUAGES[lang][LANG_actionNo_Trick_Bonus]);
+ ui->actionNew_Moon->setText(LANGUAGES[lang][LANG_actionNew_Moon]);
+ ui->actionNo_Draw->setText(LANGUAGES[lang][LANG_actionNo_Draw]);
+
+ // Menu: Settings
+ ui->actionAuto_Centering->setText(LANGUAGES[lang][LANG_actionAuto_Centering]);
+ ui->actionInfo_Channel->setText(LANGUAGES[lang][LANG_actionInfo_Channel]);
+ ui->actionSounds->setText(LANGUAGES[lang][LANG_actionSounds]);
+ ui->actionTram->setText(LANGUAGES[lang][LANG_actionTram]);
+ ui->actionSave_Game_Quit->setText(LANGUAGES[lang][LANG_actionSave_Game_Quit]);
+
+ // Menu: Stats
+ ui->actionShow->setText(LANGUAGES[lang][LANG_actionShow]);
+ ui->actionReset->setText(LANGUAGES[lang][LANG_actionReset]);
+
+ // Menu: Help
+ ui->actionRules->setText(LANGUAGES[lang][LANG_actionRules]);
+ ui->actionSettings->setText(LANGUAGES[lang][LANG_actionSettings]);
+
+ // Menu: About
+ ui->actionCredits->setText(LANGUAGES[lang][LANG_actionCredits]);
+
+ // Menu: Language
+ ui->actionEnglish->setText(LANGUAGES[lang][LANG_actionEnglish]);
+ ui->actionFrench->setText(LANGUAGES[lang][LANG_actionFrench]);
+ ui->actionRussian->setText(LANGUAGES[lang][LANG_actionRussian]);
+
+ // Menu: Debug
+ ui->actionShow_2->setText(LANGUAGES[lang][LANG_actionShow_2]);
+ ui->actionCheat->setText(LANGUAGES[lang][LANG_actionCheat]);
+}
+
+void MainWindow::on_actionEnglish_triggered()
+{
+ set_language(LANG_ENGLISH);
+
+ config->set_language(LANG_ENGLISH);
+}
+
+void MainWindow::on_actionFrench_triggered()
+{
+ set_language(LANG_FRENCH);
+
+ config->set_language(LANG_FRENCH);
+}
+
+void MainWindow::on_actionRussian_triggered()
+{
+ set_language(LANG_RUSSIAN);
+
+ config->set_language(LANG_RUSSIAN);
+}

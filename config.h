@@ -13,6 +13,7 @@ const int CONFIG_NO_TRICK_BONUS          = 8;
 const int CONFIG_NEW_MOON                = 9;
 const int CONFIG_NO_DRAW                 = 10;
 const int CONFIG_SAVE_GAME               = 11;
+const int CONFIG_LANGUAGE                = 12;
 
 const char CONFIG_FILENAME[10]  = "/.hearts";
 
@@ -25,6 +26,8 @@ private:
     void init_vars();
     int save_config_file();
     int load_config_file();
+
+    int language;
 
     // settings
     bool auto_centering;
@@ -44,6 +47,8 @@ private:
 
 public:
      int set_config_file(int param, bool enable);
+     int set_language(int lang);
+     int get_language();
 
      bool is_auto_centering();
      bool is_cheat_mode();

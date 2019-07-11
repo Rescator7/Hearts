@@ -4,6 +4,7 @@
 #include <QTextStream>
 #include "config.h"
 #include "define.h"
+#include "language.h"
 
 CConfig::CConfig()
 {
@@ -32,6 +33,8 @@ void CConfig::init_vars()
   no_trick_bonus = false;
   new_moon = false;
   no_draw = false;
+
+  language = LANG_ENGLISH;
 }
 
 int CConfig::load_config_file() {
@@ -48,6 +51,19 @@ int CConfig::load_config_file() {
       QString line = file.readLine();
       QString param = line.section(" ", 0, 0);
       QString value = line.section(" ", -1, -1);
+
+      if (param == "Language") {
+        if (value == "english\n")
+          language = LANG_ENGLISH;
+        else
+        if (value == "french\n")
+          language = LANG_FRENCH;
+        else
+        if (value == "russian\n")
+          language = LANG_RUSSIAN;
+
+        continue;
+      }
 
       bool enable;
 
@@ -95,11 +111,17 @@ int CConfig::load_config_file() {
           // unknown param
       }
 
-      if (cpt > 12) break; // too many lines ?? corrupted file ??
+      if (cpt > 13) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
   return FNOERR;
+}
+
+int CConfig::set_language(int lang) {
+  language = lang;
+
+  return save_config_file();
 }
 
 int CConfig::set_config_file(int param, bool enable)
@@ -132,6 +154,12 @@ int CConfig::save_config_file()
   }
 
   QTextStream out(&file);
+
+  switch (language) {
+    case LANG_ENGLISH: out << "Language = english" << endl; break;
+    case LANG_FRENCH:  out << "Language = french"  << endl; break;
+    case LANG_RUSSIAN: out << "Language = russian" << endl; break;
+  }
 
   out << "Auto_Centering = " << (auto_centering ? "true" : "false") << endl;
   out << "Cheat_Mode = " << (cheat_mode ? "true" : "false") << endl;
@@ -197,4 +225,8 @@ bool CConfig::is_no_draw() {
 
 bool CConfig::is_save_game() {
   return save_game;
+}
+
+int CConfig::get_language() {
+  return language;
 }

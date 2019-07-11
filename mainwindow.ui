@@ -450,10 +450,10 @@
    <widget class="CLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>485</y>
-      <width>70</width>
-      <height>100</height>
+      <x>95</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -463,10 +463,10 @@
    <widget class="CLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>485</y>
-      <width>70</width>
-      <height>100</height>
+      <x>130</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -476,10 +476,10 @@
    <widget class="CLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>485</y>
-      <width>70</width>
-      <height>100</height>
+      <x>165</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -489,10 +489,10 @@
    <widget class="CLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>485</y>
-      <width>70</width>
-      <height>100</height>
+      <x>200</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -502,10 +502,10 @@
    <widget class="CLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>485</y>
-      <width>70</width>
-      <height>100</height>
+      <x>235</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -515,10 +515,10 @@
    <widget class="CLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>485</y>
-      <width>70</width>
-      <height>100</height>
+      <x>270</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -528,10 +528,10 @@
    <widget class="CLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>595</y>
-      <width>70</width>
-      <height>100</height>
+      <x>305</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -541,10 +541,10 @@
    <widget class="CLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>595</y>
-      <width>70</width>
-      <height>100</height>
+      <x>340</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -554,10 +554,10 @@
    <widget class="CLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>595</y>
-      <width>70</width>
-      <height>100</height>
+      <x>375</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -567,10 +567,10 @@
    <widget class="CLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>595</y>
-      <width>70</width>
-      <height>100</height>
+      <x>410</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -580,10 +580,10 @@
    <widget class="CLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>595</y>
-      <width>70</width>
-      <height>100</height>
+      <x>445</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -593,10 +593,10 @@
    <widget class="CLabel" name="label_12">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>595</y>
-      <width>70</width>
-      <height>100</height>
+      <x>480</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -606,10 +606,10 @@
    <widget class="CLabel" name="label_13">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>595</y>
-      <width>70</width>
-      <height>100</height>
+      <x>515</x>
+      <y>550</y>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -622,7 +622,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>470</x>
       <y>385</y>
       <width>16</width>
       <height>21</height>
@@ -676,7 +676,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>570</x>
+      <x>590</x>
       <y>245</y>
       <width>16</width>
       <height>21</height>
@@ -689,7 +689,7 @@
    <widget class="QLCDNumber" name="lcdNumber">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>400</x>
       <y>385</y>
       <width>64</width>
       <height>25</height>
@@ -1964,7 +1964,7 @@
    <widget class="QLCDNumber" name="lcdNumber_4">
     <property name="geometry">
      <rect>
-      <x>500</x>
+      <x>520</x>
       <y>245</y>
       <width>64</width>
       <height>25</height>
@@ -2391,8 +2391,8 @@
      <rect>
       <x>300</x>
       <y>345</y>
-      <width>70</width>
-      <height>100</height>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -2404,8 +2404,8 @@
      <rect>
       <x>180</x>
       <y>205</y>
-      <width>70</width>
-      <height>100</height>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -2417,8 +2417,8 @@
      <rect>
       <x>300</x>
       <y>65</y>
-      <width>70</width>
-      <height>100</height>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -2430,8 +2430,8 @@
      <rect>
       <x>420</x>
       <y>205</y>
-      <width>70</width>
-      <height>100</height>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -2441,10 +2441,10 @@
    <widget class="CLabel" name="label_18">
     <property name="geometry">
      <rect>
-      <x>295</x>
+      <x>305</x>
       <y>205</y>
-      <width>80</width>
-      <height>100</height>
+      <width>90</width>
+      <height>130</height>
      </rect>
     </property>
     <property name="text">
@@ -2454,7 +2454,7 @@
    <widget class="QLCDNumber" name="lcdNumber_10">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>400</x>
       <y>415</y>
       <width>64</width>
       <height>25</height>
@@ -3729,7 +3729,7 @@
    <widget class="QLCDNumber" name="lcdNumber_13">
     <property name="geometry">
      <rect>
-      <x>500</x>
+      <x>520</x>
       <y>275</y>
       <width>64</width>
       <height>25</height>
@@ -4154,7 +4154,7 @@
    <widget class="QLabel" name="label_19">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>400</x>
       <y>365</y>
       <width>64</width>
       <height>16</height>
@@ -4193,7 +4193,7 @@
    <widget class="QLabel" name="label_22">
     <property name="geometry">
      <rect>
-      <x>500</x>
+      <x>520</x>
       <y>225</y>
       <width>64</width>
       <height>16</height>
@@ -4325,12 +4325,21 @@
     <addaction name="actionShow_2"/>
     <addaction name="actionCheat"/>
    </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>Language</string>
+    </property>
+    <addaction name="actionEnglish"/>
+    <addaction name="actionFrench"/>
+    <addaction name="actionRussian"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGame_Variations"/>
    <addaction name="menuOptions"/>
    <addaction name="menuStats"/>
    <addaction name="menuHelp"/>
    <addaction name="menuAbout"/>
+   <addaction name="menuLanguage"/>
    <addaction name="menuDebug"/>
   </widget>
   <action name="actionNew">
@@ -4461,11 +4470,6 @@
     <string>Settings</string>
    </property>
   </action>
-  <action name="actionSave">
-   <property name="text">
-    <string>Save</string>
-   </property>
-  </action>
   <action name="actionSave_Game_Quit">
    <property name="checkable">
     <bool>true</bool>
@@ -4487,14 +4491,33 @@
     <string>Reset</string>
    </property>
   </action>
-  <action name="actionDebug">
-   <property name="text">
-    <string>Debug</string>
-   </property>
-  </action>
   <action name="actionShow_2">
    <property name="text">
-    <string>Cards history</string>
+    <string>Cards History</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionRussian">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Russian</string>
+   </property>
+  </action>
+  <action name="actionFrench">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>French</string>
    </property>
   </action>
  </widget>

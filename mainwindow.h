@@ -18,6 +18,7 @@
 #include "chearts.h"
 #include "config.h"
 #include "cstats.h"
+#include "cimg_deckcards.h"
 
 #ifdef DEBUG
 #include "debug.h"
@@ -82,12 +83,16 @@ private slots:
     void on_actionCheat_triggered();
 #endif
 
+    void on_actionEnglish_triggered();
+
+    void on_actionRussian_triggered();
+
+    void on_actionFrench_triggered();
+
 private:
     Ui::MainWindow *ui;
-    QImage *img_cards[52];
     QImage *img_pass[4];
     QImage *img_empty_card;
-    QImage *img_back_card;
     QImage *img_your_turn;
     QLabel *label[22];
     QLCDNumber *lcd_hand_score[4];
@@ -115,6 +120,7 @@ private:
     CHearts *hearts;
     CConfig *config;
     CStats  *stats;
+    CImg_deckcards *deck;
 
 #ifdef DEBUG
     CDebug  *debug;
@@ -126,10 +132,14 @@ private:
     int active_deck;
     int cards_received[3];
     int plr_names_idx[4];
+    int card_height;
+    int def_card_posy;
 
     void clear_deck();
     void show_deck(int plr);
     void set_info_channel_enabled(bool enable);
+    void set_language(int lang);
+
 #ifdef DEBUG
     void set_cheat_mode_enabled(bool enable);
 #endif

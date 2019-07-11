@@ -1,6 +1,6 @@
 #include "chearts.h"
 #include "variants.h"
-#include "assert.h"
+#include <assert.h>
 #include <QMessageBox>
 #include <QFile>
 #include <QDir>
@@ -1629,7 +1629,7 @@ bool CHearts::select_card(int idx)
     cards_selected_count[user_id]++;
     cards_selected[user_id][idx] = true;
     return true;
-  }\
+  }
   return false;
 }
 
@@ -1641,7 +1641,6 @@ bool CHearts::is_card_on_table(int card)
       case 2 : if (hand_cards[1] == card) return true;
       case 1 : if (hand_cards[0] == card) return true;
   }
-
   return false;
 }
 
