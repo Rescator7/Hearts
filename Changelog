@@ -26,3 +26,7 @@
 ------------------------------------------------------------------------------------------------
 10 dec 2018: Redesign of the AI to make diffent computers playing styles. (an attempt)
 10 dec 2018: added: cards history as a debuging tools, cheat mode has been moved to debug section
+
+26 Feb 2019: Version 1.2.1b "Unreleased"
+------------------------------------------------------------------------------------------------
+26 Feb 2019: Fix minor draw bug.
