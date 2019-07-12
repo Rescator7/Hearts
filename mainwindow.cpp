@@ -114,6 +114,7 @@ MainWindow::~MainWindow()
     delete hearts;
     delete config;
     delete stats;
+    delete deck;
 
     delete img_empty_card;
     delete img_your_turn;

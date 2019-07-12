@@ -69,7 +69,7 @@ const char LANGUAGES[MAX_LANGUAGES][MAX_FIELDS][MAX_STRLANG_SIZE] = {
 
   {"Fichier", "Variations du jeu", "Options", "Statistiques", "Aide", "À propos", "Langue", "Débuggage",
    "Nouvelle partie", "Quitter",
-   "La dame de pique brise le coeur", "Les pointages de 100 sont réduit de moitié", "Omnibus", "Bonus zero pénalité",
+   "La dame de pique brise le coeur", "Les pointages de 100 sont réduit de moitié", "Omnibus", "Bonus zéro pénalité",
         "Nouvelle lune", "Bris d'égalité",
    "Recentrage des cartes", "Canal d'informations", "Activations des sons", "Détection de la fin d'un tour",
         "Sauvegarde automatique",
@@ -81,14 +81,14 @@ const char LANGUAGES[MAX_LANGUAGES][MAX_FIELDS][MAX_STRLANG_SIZE] = {
 
    // RUSSIAN
 
-   {"Файл", "Параметры", "Настройки", "Статистика", "Помощь", "Об игре", "языки", "Отладка",
+   {"Файл", "Параметры", "Настройки", "Статистика", "Помощь", "Об игре", "Язык", "Отладка",
     "Новая игра", "Выход",
-    "Дама пик разбила сердце", "Ровно 100", "Омнибус", "Бонус за ноль взяток", "Новая луна", "Без ничьи",
-    "По центру", "Инфоканал", "звуки", "остальное мое", "Сохранить при выходе",
+    "Дама пик разбила сердце", "Ровно 100", "Омнибус", "Бонус за ноль взяток", "Новая луна", "Без ничьи", 
+    "По центру", "Инфоканал", "Звуки", "Остальное моё", "Сохранить при выходе",
     "Просмотр", "Сброс",
     "Правила", "Настройки",
     "Благодарности",
-    "английский", "Французский", "русский",
+    "Английский", "Французский", "Русский",
     "История карт", "Чужие карты"}
   };
 
