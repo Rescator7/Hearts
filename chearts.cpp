@@ -33,7 +33,7 @@ void CHearts::new_game()
   user_id = turn;
 
   emit sig_clear_table();
-  emit sig_refresh_deck(user_id);
+  emit sig_refresh_deck(user_id, true);
   emit sig_pass_to(passed_to);
 }
 
@@ -334,7 +334,7 @@ int CHearts::load_saved_game()
   }
 
   emit sig_clear_table();
-  emit sig_refresh_deck(user_id);
+  emit sig_refresh_deck(user_id, true);
   emit sig_pass_to(passed_to);
 
   if (mode_playing)
@@ -1219,15 +1219,12 @@ void CHearts::process_next_pass(bool skip_moon_check)
     reset_plr_has_card();
     random_deck();
 
-    emit sig_refresh_deck(user_id);
+    mode_playing = false;
+    emit sig_refresh_deck(user_id, true);
 
     heart_broken = false;
-    if (passed_to == pNOPASS) {
-      mode_playing = true;
+    if (passed_to == pNOPASS)
       play_2clubs();
-    } else {
-       mode_playing = false;
-      }
   } else
       emit sig_game_over(plr_score[0], plr_score[1], plr_score[2], plr_score[3]);
 }
@@ -1363,7 +1360,7 @@ int CHearts::play_card(int idx)
   process_card(card);
   sort_plr_cards();
 
-  emit sig_refresh_deck(user_id);
+  emit sig_refresh_deck(user_id, false);
   emit sig_play_card(card, user_id);
 
   advance_turn();
@@ -1531,6 +1528,17 @@ bool CHearts::is_it_draw()
   }
 
   return cpt;
+}
+
+bool CHearts::is_card_selectable(int card)
+{
+  if (!mode_playing)
+    return true;
+
+  if (turn != user_id)
+    return false;
+
+  return (check_invalid_move(user_id, card) == NOERROR);
 }
 
 bool CHearts::can_break_heart(int plr)

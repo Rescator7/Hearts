@@ -3,7 +3,7 @@
 
 
 const int MAX_LANGUAGES     = 3;
-const int MAX_FIELDS        = 31;
+const int MAX_FIELDS        = 36;
 const int MAX_STRLANG_SIZE  = 80;
 
 const int LANG_ENGLISH      = 0;
@@ -28,26 +28,32 @@ const int LANG_actionNo_Trick_Bonus           = 13;
 const int LANG_actionNew_Moon                 = 14;
 const int LANG_actionNo_Draw                  = 15;
 
-const int LANG_actionAuto_Centering = 16;
-const int LANG_actionInfo_Channel   = 17;
-const int LANG_actionSounds         = 18;
-const int LANG_actionTram           = 19;
-const int LANG_actionSave_Game_Quit = 20;
+const int LANG_actionAuto_Centering      = 16;
+const int LANG_actionInfo_Channel        = 17;
+const int LANG_actionSounds              = 18;
+const int LANG_actionTram                = 19;
+const int LANG_actionEasy_Card_Selection = 20;
+const int LANG_actionSave_Game_Quit      = 21;
+const int LANG_MenuDeck                  = 22;
 
-const int LANG_actionShow           = 21;
-const int LANG_actionReset          = 22;
+const int LANG_actionStandard       = 23;
+const int LANG_actionEnglish_2      = 24;
+const int LANG_actionRussian_2      = 25;
 
-const int LANG_actionRules          = 23;
-const int LANG_actionSettings       = 24;
+const int LANG_actionShow           = 26;
+const int LANG_actionReset          = 27;
 
-const int LANG_actionCredits        = 25;
+const int LANG_actionRules          = 28;
+const int LANG_actionSettings       = 29;
 
-const int LANG_actionEnglish        = 26;
-const int LANG_actionFrench         = 27;
-const int LANG_actionRussian        = 28;
+const int LANG_actionCredits        = 30;
 
-const int LANG_actionShow_2         = 29;
-const int LANG_actionCheat          = 30;
+const int LANG_actionEnglish        = 31;
+const int LANG_actionFrench         = 32;
+const int LANG_actionRussian        = 33;
+
+const int LANG_actionShow_2         = 34;
+const int LANG_actionCheat          = 35;
 
 
 const char LANGUAGES[MAX_LANGUAGES][MAX_FIELDS][MAX_STRLANG_SIZE] = {
@@ -57,7 +63,8 @@ const char LANGUAGES[MAX_LANGUAGES][MAX_FIELDS][MAX_STRLANG_SIZE] = {
   {"File", "Options", "Settings", "Stats", "Help", "About", "Language", "Debug",
    "New", "Quit",
    "Queen Spade Break Heart", "Perfect 100", "Omnibus", "No Trick Bonus", "New Moon", "No Draw",
-   "Auto Centering", "Info Channel", "Sounds", "Detect Tram", "Save Game (Quit)",
+   "Auto Centering", "Info Channel", "Sounds", "Detect Tram", "Easy card selection", "Save Game (Quit)", "Card deck",
+   "Standard", "English", "Russian",
    "Show", "Reset",
    "Rules", "Settings",
    "Credits",
@@ -72,7 +79,8 @@ const char LANGUAGES[MAX_LANGUAGES][MAX_FIELDS][MAX_STRLANG_SIZE] = {
    "La dame de pique brise le coeur", "Les pointages de 100 sont réduit de moitié", "Omnibus", "Bonus zéro pénalité",
         "Nouvelle lune", "Bris d'égalité",
    "Recentrage des cartes", "Canal d'informations", "Activations des sons", "Détection de la fin d'un tour",
-        "Sauvegarde automatique",
+        "Sélection de carte assistée", "Sauvegarde automatique", "Jeu de cartes",
+   "Standard", "Anglais", "Russe",
    "Montrer", "Effacer",
    "Les règles", "Paramètres",
    "Remerciements",
@@ -84,7 +92,8 @@ const char LANGUAGES[MAX_LANGUAGES][MAX_FIELDS][MAX_STRLANG_SIZE] = {
    {"Файл", "Параметры", "Настройки", "Статистика", "Помощь", "Об игре", "Язык", "Отладка",
     "Новая игра", "Выход",
     "Дама пик разбила сердце", "Ровно 100", "Омнибус", "Бонус за ноль взяток", "Новая луна", "Без ничьи", 
-    "По центру", "Инфоканал", "Звуки", "Остальное моё", "Сохранить при выходе",
+    "По центру", "Инфоканал", "Звуки", "Остальное моё", "Простой выбор карты", "Сохранить при выходе", "Колода",
+    "Стандарт", "Английский", "Русский",
     "Просмотр", "Сброс",
     "Правила", "Настройки",
     "Благодарности",

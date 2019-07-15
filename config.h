@@ -14,6 +14,8 @@ const int CONFIG_NEW_MOON                = 9;
 const int CONFIG_NO_DRAW                 = 10;
 const int CONFIG_SAVE_GAME               = 11;
 const int CONFIG_LANGUAGE                = 12;
+const int CONFIG_EASY_CARD_SELECTION     = 13;
+const int CONFIG_DECK_STYLE              = 14;
 
 const char CONFIG_FILENAME[10]  = "/.hearts";
 
@@ -28,13 +30,7 @@ private:
     int load_config_file();
 
     int language;
-
-    // settings
-    bool auto_centering;
-    bool cheat_mode;
-    bool info_channel;
-    bool sounds;
-    bool detect_tram;
+    int deck_style;
 
     // game variants
     bool perfect_100;
@@ -43,12 +39,22 @@ private:
     bool no_trick_bonus;
     bool new_moon;
     bool no_draw;
+
+    // settings
+    bool auto_centering;
+    bool cheat_mode;
+    bool info_channel;
+    bool sounds;
+    bool detect_tram;
+    bool easy_card_selection;
     bool save_game;
 
 public:
      int set_config_file(int param, bool enable);
      int set_language(int lang);
+     int set_deck_style(int style);
      int get_language();
+     int get_deck_style();
 
      bool is_auto_centering();
      bool is_cheat_mode();
@@ -63,6 +69,7 @@ public:
      bool is_new_moon();
      bool is_no_draw();
      bool is_save_game();
+     bool is_easy_card_selection();
 };
 
 #endif // CONFIG_H

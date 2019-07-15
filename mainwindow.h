@@ -89,6 +89,14 @@ private slots:
 
     void on_actionFrench_triggered();
 
+    void on_actionEasy_card_selection_triggered();
+
+    void on_actionStandard_triggered();
+
+    void on_actionRussian_2_triggered();
+
+    void on_actionEnglish_2_triggered();
+
 private:
     Ui::MainWindow *ui;
     QImage *img_pass[4];
@@ -134,11 +142,16 @@ private:
     int plr_names_idx[4];
     int card_height;
     int def_card_posy;
+    int card_played[4];
 
     void clear_deck();
-    void show_deck(int plr);
+    void show_deck(int plr, bool refresh);
     void set_info_channel_enabled(bool enable);
     void set_language(int lang);
+    void set_cards_disabled(bool d);
+    void flush_deck();
+    void refresh_cards_played();
+    void init_vars();
 
 #ifdef DEBUG
     void set_cheat_mode_enabled(bool enable);
@@ -157,7 +170,7 @@ public:
     void select_card(int num);
 
 public slots:
-    void refresh_deck(int plr);
+    void refresh_deck(int plr, bool d);
     void play_card(int card, int idx);
     void clear_table();
     void refresh_score(int score, int idx);

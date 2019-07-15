@@ -24,6 +24,7 @@ const int queen_heart   = 49;
 const int king_heart    = 50;
 const int ace_heart     = 51;
 const int empty         = 127;
+const int your_turn     = 255;
 
 const int pLEFT         = 0;
 const int pRIGHT        = 1;
@@ -157,6 +158,7 @@ public: // functions
    bool is_it_my_turn();
    bool is_card_selected(int plr, int idx);
    bool is_card_selected(int idx);
+   bool is_card_selectable(int card);
 
    bool select_card(int idx);
    bool unselect_card(int idx);
@@ -199,7 +201,7 @@ public: // functions
 signals:
    void sig_clear_table();
    void sig_play_card(int card, int idx);
-   void sig_refresh_deck(int plr);
+   void sig_refresh_deck(int plr, bool d);
    void sig_score(int score, int idx);
    void sig_end_hand(int score1, int score2, int score3, int score4);
    void sig_hand_score(int score, int idx);

@@ -49,20 +49,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     stats = new CStats;
 
-    deck = new CImg_deckcards(DEFAULT_DECK);
+    deck = new CImg_deckcards(config->get_deck_style());
 
 #ifdef DEBUG
     debug = new CDebug(img_empty_card);
 #endif
 
-    card_height = 130;
-    def_card_posy = ui->label->y();
-
     set_options();
     set_hearts_options();
     set_language(config->get_language());
 
-    connect(hearts, SIGNAL(sig_refresh_deck(int)), this, SLOT(refresh_deck(int)));
+    init_vars();
+
+    connect(hearts, SIGNAL(sig_refresh_deck(int,bool)), this, SLOT(refresh_deck(int,bool)));
     connect(hearts, SIGNAL(sig_play_card(int,int)), this, SLOT(play_card(int,int)));
     connect(hearts, SIGNAL(sig_clear_table()), this, SLOT(clear_table()));
     connect(hearts, SIGNAL(sig_score(int,int)), this, SLOT(refresh_score(int,int)));
@@ -125,6 +124,23 @@ MainWindow::~MainWindow()
     delete img_pass[pNOPASS];
 
     destroy_sounds();
+}
+
+void MainWindow::init_vars()
+{
+  card_played[0] = empty;
+  card_played[1] = empty;
+  card_played[2] = empty;
+  card_played[3] = empty;
+
+  card_height = 130;
+  def_card_posy = ui->label->y();
+
+  switch (config->get_deck_style()) {
+    case STANDARD_DECK: ui->actionStandard->setChecked(true); break;
+    case ENGLISH_DECK:  ui->actionEnglish_2->setChecked(true); break;
+    case RUSSIAN_DECK:  ui->actionRussian_2->setChecked(true); break;
+  }
 }
 
 void MainWindow::load_sounds()
@@ -223,8 +239,8 @@ void MainWindow::destroy_sounds()
 
 void MainWindow::init_pointers()
 {
-    img_empty_card = new QImage(":/SVG-cards/empty.png", "PNG");     // NEW
-    img_your_turn = new QImage(":/SVG-cards/card-base2.png", "PNG"); // NEW
+    img_empty_card = new QImage(":/SVG-cards/Default/empty.png", "PNG");     // NEW
+    img_your_turn = new QImage(":/SVG-cards/Default/card-base2.png", "PNG"); // NEW
 
     img_pass[pLEFT] = new QImage(":/icons/left-icon.png", "PNG");
     img_pass[pRIGHT] = new QImage(":/icons/right-icon.png", "PNG");
@@ -311,6 +327,8 @@ void MainWindow::load_saved_game()
         cpt = 3;
 
       label[13 + cpt]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
+      card_played[cpt] = card;
+
 #ifdef DEBUG
       debug->save_card(plr_names_idx[cpt], deck->get_img_card(card));
     }
@@ -331,6 +349,7 @@ void MainWindow::set_options()
   ui->actionInfo_Channel->setChecked(config->is_info_channel());
   ui->actionSounds->setChecked(config->is_sounds());
   ui->actionTram->setChecked(config->is_detect_tram());
+  ui->actionEasy_card_selection->setChecked(config->is_easy_card_selection());
 
   ui->actionPerfect_100->setChecked(config->is_perfect_100());
   ui->actionOmnibus->setChecked(config->is_omnibus());
@@ -616,7 +635,7 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
 #endif
 }
 
-void MainWindow::show_deck(int plr)
+void MainWindow::show_deck(int plr, bool refresh)
 {
   active_deck = plr;
 
@@ -645,6 +664,14 @@ void MainWindow::show_deck(int plr)
       label[pos]->move(label[pos]->x(),def_card_posy - 20);
     else
       label[pos]->move(label[pos]->x(),def_card_posy);
+
+    if (ui->actionEasy_card_selection->isChecked()) {
+      if (plr != hearts->whoami())
+        label[pos]->setDisabled(false);
+      else
+      if (refresh)
+        label[pos]->setDisabled(!hearts->is_card_selectable(card));
+    }
   }
 }
 
@@ -683,20 +710,20 @@ void MainWindow::set_cheat_mode_enabled(bool enable)
       cheat_radio_button[2]->hide();
       cheat_radio_button[3]->hide();
 
-      show_deck(hearts->whoami());
+      show_deck(hearts->whoami(), true);
     }
 
   cheat_radio_button[hearts->whoami()]->setChecked(true);
 }
 #endif
 
-void MainWindow::refresh_deck(int plr)
+void MainWindow::refresh_deck(int plr, bool d)
 {
 #ifdef DEBUG
   cheat_radio_button[plr]->setChecked(true);
 #endif
 
-  show_deck(plr);
+  show_deck(plr, d);
 }
 
 void MainWindow::clear_deck()
@@ -708,12 +735,16 @@ void MainWindow::clear_deck()
 void MainWindow::clear_table()
 {
   delay(200);
-  for (int i=0; i<4; i++)
+  for (int i=0; i<4; i++) {
     label[i+13]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
+    card_played[i] = empty;
+  }
 }
 
 void MainWindow::select_card(int num)
 {
+  if ((active_deck != hearts->whoami()) || wait_delay) return;
+
   int card_id;
   int count = hearts->count_my_cards() - 1;
 
@@ -724,13 +755,14 @@ void MainWindow::select_card(int num)
 
   assert((card_id >= 0) && (card_id <= 12));
 
- if ((active_deck != hearts->whoami()) || wait_delay) return;
-
  if (hearts->is_mode_playing()) {
 
    if (!hearts->is_it_my_turn()) return;     // wait_delay seem to do the job, but maybe it's just by luck...
 
    ui->actionNew->setDisabled(true);
+
+   if (ui->actionEasy_card_selection->isChecked())
+     set_cards_disabled(false);
 
    int error;
 
@@ -781,6 +813,8 @@ void MainWindow::play_card(int card, int idx)
  debug->save_card(plr_names_idx[idx], deck->get_img_card(card));
 #endif
 
+ card_played[idx] = card;
+
  label[idx+13]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
 
 #ifdef __al_included_allegro5_allegro_audio_h
@@ -797,7 +831,10 @@ void MainWindow::show_your_turn(int idx)
 {
   delay(200);
 
+  show_deck(active_deck, true);
+
   label[idx+13]->setPixmap(QPixmap::fromImage(img_your_turn->scaledToHeight(card_height)));
+  card_played[idx] = your_turn;
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
@@ -809,8 +846,8 @@ void MainWindow::show_your_turn(int idx)
 
 void MainWindow::on_label_18_clicked() // pass 3 cards
 {
-  if (hearts->is_no_pass() ||
-      (active_deck != hearts->whoami())) return;
+  if (hearts->is_no_pass() || (active_deck != hearts->whoami()))
+    return;
 
   if (!hearts->is_ready_to_pass()) {
     message("[Error]: You needs to select 3 cards to pass!");
@@ -839,7 +876,7 @@ void MainWindow::on_label_18_clicked() // pass 3 cards
   hearts->reset_cards_passed();
 
   reverse_cards_rgb();
-  show_deck(hearts->whoami());
+  show_deck(hearts->whoami(), true);
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
@@ -852,9 +889,15 @@ void MainWindow::on_label_18_clicked() // pass 3 cards
 
   reverse_cards_rgb();
 
-  show_deck(hearts->whoami());
+  show_deck(hearts->whoami(), true);
 
   hearts->play_2clubs();
+}
+
+void MainWindow::set_cards_disabled(bool d)
+{
+ for (int i=0; i<13; i++)
+   label[i]->setDisabled(d);
 }
 
 void MainWindow::reverse_cards_rgb()
@@ -862,6 +905,34 @@ void MainWindow::reverse_cards_rgb()
   deck->reverse_card_rgb(cards_received[0]);
   deck->reverse_card_rgb(cards_received[1]);
   deck->reverse_card_rgb(cards_received[2]);
+}
+
+void MainWindow::flush_deck()
+{
+  for (int i=0; i<13; i++)
+    label[i]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
+
+  for (int i=0; i<4; i++) {
+    label[i + 13]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
+  }
+}
+
+void MainWindow::refresh_cards_played()
+{
+  for (int i=0; i<4; i++) {
+    int card = card_played[i];
+
+    if (card == empty)
+      label[13 + i]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
+    else
+    if (card == your_turn)
+      label[13 +i]->setPixmap(QPixmap::fromImage(img_your_turn->scaledToHeight(card_height)));
+    else {
+      assert((card >= 0) && (card <= 51));
+
+      label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card_played[i])->scaledToHeight(card_height)));
+    }
+  }
 }
 
 void MainWindow::message(QString mesg)
@@ -881,22 +952,22 @@ void MainWindow::delay(int n)
 #ifdef DEBUG
 void MainWindow::on_radioButton_clicked()
 {
-  show_deck(0);
+  show_deck(0, true);
 }
 
 void MainWindow::on_radioButton_2_clicked()
 {
-  show_deck(1);
+  show_deck(1, true);
 }
 
 void MainWindow::on_radioButton_3_clicked()
 {
-  show_deck(2);
+  show_deck(2, true);
 }
 
 void MainWindow::on_radioButton_4_clicked()
 {
-  show_deck(3);
+  show_deck(3, true);
 }
 #endif
 
@@ -979,6 +1050,7 @@ void MainWindow::on_actionNew_triggered()
   hearts->new_game();
   stop_delay = false;
   set_plr_names();
+  set_cards_disabled(false);
 }
 
 #ifdef DEBUG
@@ -993,7 +1065,7 @@ void MainWindow::on_actionCheat_triggered()
 
 void MainWindow::on_actionAuto_Centering_triggered()
 {
-  show_deck(active_deck);
+  show_deck(active_deck, false);
 
   config->set_config_file(CONFIG_AUTO_CENTERING, ui->actionAuto_Centering->isChecked());
 }
@@ -1159,7 +1231,14 @@ void MainWindow::set_language(int lang)
  ui->actionInfo_Channel->setText(LANGUAGES[lang][LANG_actionInfo_Channel]);
  ui->actionSounds->setText(LANGUAGES[lang][LANG_actionSounds]);
  ui->actionTram->setText(LANGUAGES[lang][LANG_actionTram]);
+ ui->actionEasy_card_selection->setText(LANGUAGES[lang][LANG_actionEasy_Card_Selection]);
+ ui->menuDeck->setTitle(LANGUAGES[lang][LANG_MenuDeck]);
  ui->actionSave_Game_Quit->setText(LANGUAGES[lang][LANG_actionSave_Game_Quit]);
+
+ // Menu Deck
+ ui->actionStandard->setText(LANGUAGES[lang][LANG_actionStandard]);
+ ui->actionEnglish_2->setText(LANGUAGES[lang][LANG_actionEnglish_2]);
+ ui->actionRussian_2->setText(LANGUAGES[lang][LANG_actionRussian_2]);
 
  // Menu: Stats
  ui->actionShow->setText(LANGUAGES[lang][LANG_actionShow]);
@@ -1201,4 +1280,70 @@ void MainWindow::on_actionRussian_triggered()
  set_language(LANG_RUSSIAN);
 
  config->set_language(LANG_RUSSIAN);
+}
+
+void MainWindow::on_actionEasy_card_selection_triggered()
+{
+ bool checked = ui->actionEasy_card_selection->isChecked();
+
+ if (checked)
+   show_deck(active_deck, true);
+ else
+   set_cards_disabled(false);
+
+ config->set_config_file(CONFIG_EASY_CARD_SELECTION, checked);
+}
+
+void MainWindow::on_actionStandard_triggered()
+{
+  ui->actionStandard->setChecked(true);
+  ui->actionEnglish_2->setChecked(false);
+  ui->actionRussian_2->setChecked(false);
+
+  if (config->get_deck_style() == STANDARD_DECK)
+    return;
+
+  debug->reset();
+  flush_deck();
+
+  deck->set_deck(STANDARD_DECK);
+  show_deck(active_deck, true);
+  refresh_cards_played();
+  config->set_deck_style(STANDARD_DECK);
+}
+
+void MainWindow::on_actionEnglish_2_triggered()
+{
+  ui->actionStandard->setChecked(false);
+  ui->actionEnglish_2->setChecked(true);
+  ui->actionRussian_2->setChecked(false);
+
+  if (config->get_deck_style() == ENGLISH_DECK)
+    return;
+
+  debug->reset();
+  flush_deck();
+
+  deck->set_deck(ENGLISH_DECK);
+  show_deck(active_deck, true);
+  refresh_cards_played();
+  config->set_deck_style(ENGLISH_DECK);
+}
+
+void MainWindow::on_actionRussian_2_triggered()
+{
+  ui->actionStandard->setChecked(false);
+  ui->actionEnglish_2->setChecked(false);
+  ui->actionRussian_2->setChecked(true);
+
+  if (config->get_deck_style() == RUSSIAN_DECK)
+    return;
+
+  debug->reset();
+  flush_deck();
+
+  deck->set_deck(RUSSIAN_DECK);
+  show_deck(active_deck, true);
+  refresh_cards_played();
+  config->set_deck_style(RUSSIAN_DECK);
 }

@@ -5,6 +5,7 @@
 #include "config.h"
 #include "define.h"
 #include "language.h"
+#include "cimg_deckcards.h"
 
 CConfig::CConfig()
 {
@@ -25,6 +26,7 @@ void CConfig::init_vars()
   info_channel = true;
   sounds = true;
   detect_tram = true;
+  easy_card_selection = true;
   save_game = true;
 
   perfect_100 = false;
@@ -35,6 +37,7 @@ void CConfig::init_vars()
   no_draw = false;
 
   language = LANG_ENGLISH;
+  deck_style = STANDARD_DECK;
 }
 
 int CConfig::load_config_file() {
@@ -65,6 +68,19 @@ int CConfig::load_config_file() {
         continue;
       }
 
+      if (param == "Deck_Style") {
+        if (value == "standard\n")
+          deck_style = STANDARD_DECK;
+        else
+        if (value == "english\n")
+          deck_style = ENGLISH_DECK;
+        else
+        if (value == "russian\n")
+          deck_style = RUSSIAN_DECK;
+
+        continue;
+      }
+
       bool enable;
 
       if (value == "true\n")
@@ -86,6 +102,9 @@ int CConfig::load_config_file() {
       else
       if (param == "Detect_Tram")
         detect_tram = enable;
+      else
+      if (param == "Easy_Card_Selection")
+        easy_card_selection = enable;
       else
       if (param == "Perfect_100")
         perfect_100 = enable;
@@ -111,7 +130,7 @@ int CConfig::load_config_file() {
           // unknown param
       }
 
-      if (cpt > 13) break; // too many lines ?? corrupted file ??
+      if (cpt > 15) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
@@ -124,15 +143,20 @@ int CConfig::set_language(int lang) {
   return save_config_file();
 }
 
+int CConfig::set_deck_style(int style) {
+   deck_style = style;
+
+   return save_config_file();
+}
+
 int CConfig::set_config_file(int param, bool enable)
 {
   switch (param) {
     case CONFIG_AUTO_CENTERING :          auto_centering = enable; break;
     case CONFIG_CHEAT_MODE :              cheat_mode = enable; break;
-    case CONFIG_DETECT_TRAM :             detect_tram = enable; break;
     case CONFIG_INFO_CHANNEL :            info_channel = enable; break;
     case CONFIG_SOUNDS :                  sounds = enable; break;
-
+    case CONFIG_DETECT_TRAM :             detect_tram = enable; break;
     case CONFIG_PERFECT_100 :             perfect_100 = enable; break;
     case CONFIG_OMNIBUS :                 omnibus = enable; break;
     case CONFIG_QUEEN_SPADE_BREAK_HEART : queen_spade_break_heart = enable; break;
@@ -140,6 +164,7 @@ int CConfig::set_config_file(int param, bool enable)
     case CONFIG_NEW_MOON :                new_moon = enable; break;
     case CONFIG_NO_DRAW :                 no_draw = enable; break;
     case CONFIG_SAVE_GAME :               save_game = enable; break;
+    case CONFIG_EASY_CARD_SELECTION :     easy_card_selection = enable; break;
   }
 
   return save_config_file();
@@ -161,11 +186,18 @@ int CConfig::save_config_file()
     case LANG_RUSSIAN: out << "Language = russian" << endl; break;
   }
 
+  switch (deck_style) {
+    case STANDARD_DECK: out << "Deck_Style = standard" << endl; break;
+    case ENGLISH_DECK:  out << "Deck_Style = english" << endl; break;
+    case RUSSIAN_DECK:  out << "Deck_Style = russian" << endl; break;
+  }
+
   out << "Auto_Centering = " << (auto_centering ? "true" : "false") << endl;
   out << "Cheat_Mode = " << (cheat_mode ? "true" : "false") << endl;
   out << "Info_Channel = " << (info_channel ? "true" : "false") << endl;
   out << "Sounds = " << (sounds ? "true" : "false") << endl;
   out << "Detect_Tram = " << (detect_tram ? "true" : "false") << endl;
+  out << "Easy_Card_Selection = " << (easy_card_selection ? "true" : "false") << endl;
 
   out << "Perfect_100 = " << (perfect_100 ? "true" : "false") << endl;
   out << "Omnibus = " << (omnibus ? "true" : "false") << endl;
@@ -227,6 +259,14 @@ bool CConfig::is_save_game() {
   return save_game;
 }
 
+bool CConfig::is_easy_card_selection() {
+  return easy_card_selection;
+}
+
 int CConfig::get_language() {
   return language;
+}
+
+int CConfig::get_deck_style() {
+  return deck_style;
 }

@@ -629,7 +629,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Player A</string>
+     <string>Pla&amp;yer A</string>
     </property>
     <property name="checked">
      <bool>true</bool>
@@ -4272,37 +4272,47 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionNew"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
-     <string>About</string>
+     <string>A&amp;bout</string>
     </property>
     <addaction name="actionCredits"/>
    </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="title">
-     <string>Settings</string>
+     <string>S&amp;ettings</string>
     </property>
+    <widget class="QMenu" name="menuDeck">
+     <property name="title">
+      <string>De&amp;ck</string>
+     </property>
+     <addaction name="actionStandard"/>
+     <addaction name="actionEnglish_2"/>
+     <addaction name="actionRussian_2"/>
+    </widget>
     <addaction name="actionAuto_Centering"/>
     <addaction name="actionInfo_Channel"/>
     <addaction name="actionSounds"/>
     <addaction name="actionTram"/>
+    <addaction name="actionEasy_card_selection"/>
     <addaction name="actionSave_Game_Quit"/>
+    <addaction name="menuDeck"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionRules"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuGame_Variations">
     <property name="title">
-     <string>Options</string>
+     <string>Opt&amp;ions</string>
     </property>
     <addaction name="actionQueen_Spade_Break_Heart"/>
     <addaction name="actionPerfect_100"/>
@@ -4320,14 +4330,14 @@
    </widget>
    <widget class="QMenu" name="menuDebug">
     <property name="title">
-     <string>Debug</string>
+     <string>&amp;Debug</string>
     </property>
     <addaction name="actionShow_2"/>
     <addaction name="actionCheat"/>
    </widget>
    <widget class="QMenu" name="menuLanguage">
     <property name="title">
-     <string>Language</string>
+     <string>&amp;Language</string>
     </property>
     <addaction name="actionEnglish"/>
     <addaction name="actionFrench"/>
@@ -4344,17 +4354,17 @@
   </widget>
   <action name="actionNew">
    <property name="text">
-    <string>New</string>
+    <string>&amp;New</string>
    </property>
   </action>
   <action name="actionQuit">
    <property name="text">
-    <string>Quit</string>
+    <string>&amp;Quit</string>
    </property>
   </action>
   <action name="actionCredits">
    <property name="text">
-    <string>Credits</string>
+    <string>&amp;Credits</string>
    </property>
   </action>
   <action name="actionTram">
@@ -4365,7 +4375,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Detect Tram</string>
+    <string>&amp;Detect Tram</string>
    </property>
    <property name="whatsThis">
     <string extracomment="The game will detect when a player takes the rest of the cards. Not applied for last hand."/>
@@ -4379,7 +4389,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Sounds</string>
+    <string>&amp;Sounds</string>
    </property>
   </action>
   <action name="actionAuto_Centering">
@@ -4390,7 +4400,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Auto Centering</string>
+    <string>&amp;Auto Centering</string>
    </property>
   </action>
   <action name="actionCheat">
@@ -4398,7 +4408,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Cheat Mode</string>
+    <string>Cheat &amp;Mode</string>
    </property>
   </action>
   <action name="actionInfo_Channel">
@@ -4409,12 +4419,12 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Info Channel</string>
+    <string>&amp;Info Channel</string>
    </property>
   </action>
   <action name="actionRules">
    <property name="text">
-    <string>Rules</string>
+    <string>&amp;Rules</string>
    </property>
   </action>
   <action name="actionPerfect_100">
@@ -4422,7 +4432,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Perfect 100</string>
+    <string>&amp;Perfect 100</string>
    </property>
   </action>
   <action name="actionOmnibus">
@@ -4430,7 +4440,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Omnibus</string>
+    <string>&amp;Omnibus</string>
    </property>
   </action>
   <action name="actionQueen_Spade_Break_Heart">
@@ -4438,7 +4448,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Queen Spade Break Heart</string>
+    <string>&amp;Queen Spade Break Heart</string>
    </property>
   </action>
   <action name="actionNo_Trick_Bonus">
@@ -4446,7 +4456,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>No Trick Bonus</string>
+    <string>&amp;No Trick Bonus</string>
    </property>
   </action>
   <action name="actionNew_Moon">
@@ -4454,7 +4464,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>New Moon</string>
+    <string>New &amp;Moon</string>
    </property>
   </action>
   <action name="actionNo_Draw">
@@ -4462,12 +4472,12 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>No Draw</string>
+    <string>No &amp;Draw</string>
    </property>
   </action>
   <action name="actionSettings">
    <property name="text">
-    <string>Settings</string>
+    <string>&amp;Settings</string>
    </property>
   </action>
   <action name="actionSave_Game_Quit">
@@ -4478,22 +4488,22 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Save Game (Quit)</string>
+    <string>Save &amp;Game (Quit)</string>
    </property>
   </action>
   <action name="actionShow">
    <property name="text">
-    <string>Show</string>
+    <string>&amp;Show</string>
    </property>
   </action>
   <action name="actionReset">
    <property name="text">
-    <string>Reset</string>
+    <string>&amp;Reset</string>
    </property>
   </action>
   <action name="actionShow_2">
    <property name="text">
-    <string>Cards History</string>
+    <string>&amp;Cards History</string>
    </property>
   </action>
   <action name="actionEnglish">
@@ -4501,7 +4511,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>English</string>
+    <string>&amp;English</string>
    </property>
   </action>
   <action name="actionRussian">
@@ -4509,7 +4519,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Russian</string>
+    <string>&amp;Russian</string>
    </property>
   </action>
   <action name="actionFrench">
@@ -4517,7 +4527,45 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>French</string>
+    <string>&amp;French</string>
+   </property>
+  </action>
+  <action name="actionEasy_card_selection">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Easy card selection</string>
+   </property>
+  </action>
+  <action name="actionStandard">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Standard</string>
+   </property>
+  </action>
+  <action name="actionRussian_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Russian</string>
+   </property>
+  </action>
+  <action name="actionEnglish_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;English</string>
    </property>
   </action>
  </widget>
