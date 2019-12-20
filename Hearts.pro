@@ -22,7 +22,7 @@ SOURCES += main.cpp\
     settings.cpp \
     cstats.cpp \
     debug.cpp \
-    cimg_deckcards.cpp
+    cdeck.cpp
 
 HEADERS  += mainwindow.h \
     clabel.h \
@@ -37,7 +37,7 @@ HEADERS  += mainwindow.h \
     cstats.h \
     debug.h \
     language.h \
-    cimg_deckcards.h
+    cdeck.h
 
 FORMS    += mainwindow.ui \
     rules.ui \

@@ -1,8 +1,8 @@
-#include "cimg_deckcards.h"
+#include "cdeck.h"
 #include "chearts.h"
 #include <assert.h>
 
-CImg_deckcards::CImg_deckcards(int deck)
+CDeck::CDeck(int deck)
 {
   current_deck = deck;
 
@@ -13,11 +13,11 @@ CImg_deckcards::CImg_deckcards(int deck)
      case ENGLISH_DECK: set_english_deck(); break;
      case RUSSIAN_DECK: set_russian_deck(); break;
 
-     default: set_standard_deck(); break;
+     default: set_standard_deck();
   }
 }
 
-void CImg_deckcards::set_standard_deck(){
+void CDeck::set_standard_deck(){
   img_cards[0] = new QImage(":/SVG-cards/Default/club_2.png", "PNG");
   img_cards[1] = new QImage(":/SVG-cards/Default/club_3.png", "PNG");
   img_cards[2] = new QImage(":/SVG-cards/Default/club_4.png", "PNG");
@@ -75,7 +75,7 @@ void CImg_deckcards::set_standard_deck(){
   img_cards[51] = new QImage(":/SVG-cards/Default/heart_1.png", "PNG");
 }
 
-void CImg_deckcards::set_english_deck(){
+void CDeck::set_english_deck(){
   img_cards[0] = new QImage(":/SVG-cards/English/club_2.svg", "SVG");
   img_cards[1] = new QImage(":/SVG-cards/English/club_3.svg", "SVG");
   img_cards[2] = new QImage(":/SVG-cards/English/club_4.svg", "SVG");
@@ -133,7 +133,7 @@ void CImg_deckcards::set_english_deck(){
   img_cards[51] = new QImage(":/SVG-cards/English/heart_1.svg", "SVG");
 }
 
-void CImg_deckcards::set_russian_deck(){
+void CDeck::set_russian_deck(){
   img_cards[0] = new QImage(":/SVG-cards/Russian/club_2.svg", "SVG");
   img_cards[1] = new QImage(":/SVG-cards/Russian/club_3.svg", "SVG");
   img_cards[2] = new QImage(":/SVG-cards/Russian/club_4.svg", "SVG");
@@ -191,20 +191,20 @@ void CImg_deckcards::set_russian_deck(){
   img_cards[51] = new QImage(":/SVG-cards/Russian/heart_1.svg", "SVG");
 }
 
-CImg_deckcards::~CImg_deckcards()
+CDeck::~CDeck()
 {
   delete_current_deck();
 }
 
-QImage *CImg_deckcards::get_img_card(int card) {
+QImage *CDeck::get_img_card(int card) {
   return img_cards[card];
 }
 
-void CImg_deckcards::reverse_card_rgb(int card) {
+void CDeck::reverse_card_rgb(int card) {
   img_cards[card]->invertPixels();
 }
 
-void CImg_deckcards::delete_current_deck()
+void CDeck::delete_current_deck()
 {
   for (int i=0; i<DECK_SIZE; i++) {
     assert(img_cards[i]);
@@ -213,7 +213,7 @@ void CImg_deckcards::delete_current_deck()
   }
 }
 
-void CImg_deckcards::set_deck(int deck)
+void CDeck::set_deck(int deck)
 {
   if (deck == current_deck)
     return;

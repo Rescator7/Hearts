@@ -1,10 +1,5 @@
 #include "mainwindow.h"
-
-#ifdef DEBUG
 #include "ui_mainwindow.h"
-#else
-#include "ui_mwnodbg.h"
-#endif
 
 #include <QLabel>
 #include <QFile>
@@ -49,17 +44,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     stats = new CStats;
 
-    deck = new CImg_deckcards(config->get_deck_style());
+    deck = new CDeck(config->get_deck_style());
 
 #ifdef DEBUG
     debug = new CDebug(img_empty_card);
 #endif
 
-    set_options();
-    set_hearts_options();
-    set_language(config->get_language());
-
     init_vars();
+    set_settings();
+    set_options();
+    set_language(config->get_language());
 
     connect(hearts, SIGNAL(sig_refresh_deck(int,bool)), this, SLOT(refresh_deck(int,bool)));
     connect(hearts, SIGNAL(sig_play_card(int,int)), this, SLOT(play_card(int,int)));
@@ -104,26 +98,31 @@ MainWindow::MainWindow(QWidget *parent) :
 
 #ifdef DEBUG
     set_cheat_mode_enabled(config->is_cheat_mode());
+#else
+    ui->radioButton->hide();
+    ui->radioButton_2->hide();
+    ui->radioButton_3->hide();
+    ui->radioButton_4->hide();
 #endif
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
-    delete hearts;
-    delete config;
-    delete stats;
-    delete deck;
+  delete ui;
+  delete hearts;
+  delete config;
+  delete stats;
+  delete deck;
 
-    delete img_empty_card;
-    delete img_your_turn;
+  delete img_empty_card;
+  delete img_your_turn;
 
-    delete img_pass[pLEFT];
-    delete img_pass[pRIGHT];
-    delete img_pass[pACCROSS];
-    delete img_pass[pNOPASS];
+  delete img_pass[pLEFT];
+  delete img_pass[pRIGHT];
+  delete img_pass[pACCROSS];
+  delete img_pass[pNOPASS];
 
-    destroy_sounds();
+  destroy_sounds();
 }
 
 void MainWindow::init_vars()
@@ -339,7 +338,7 @@ void MainWindow::load_saved_game()
   }
 }
 
-void MainWindow::set_options()
+void MainWindow::set_settings()
 {
 #ifdef DEBUG
   ui->actionCheat->setChecked(config->is_cheat_mode());
@@ -362,7 +361,7 @@ void MainWindow::set_options()
   set_info_channel_enabled(config->is_info_channel());
 }
 
-void MainWindow::set_hearts_options()
+void MainWindow::set_options()
 {
   hearts->set_tram_enabled(config->is_detect_tram());
   hearts->set_perfect_100(config->is_perfect_100());
@@ -853,8 +852,8 @@ void MainWindow::on_label_18_clicked() // pass 3 cards
     message("[Error]: You needs to select 3 cards to pass!");
 
  #ifdef __al_included_allegro5_allegro_audio_h
-  if (ui->actionSounds->isChecked())
-    al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    if (ui->actionSounds->isChecked())
+      al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
  #endif
 
     return;
@@ -930,7 +929,7 @@ void MainWindow::refresh_cards_played()
     else {
       assert((card >= 0) && (card <= 51));
 
-      label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card_played[i])->scaledToHeight(card_height)));
+      label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
     }
   }
 }
@@ -942,11 +941,11 @@ void MainWindow::message(QString mesg)
 
 void MainWindow::delay(int n)
 {
-    wait_delay = true;
-    QTime dieTime= QTime::currentTime().addMSecs(n);
-    while ((QTime::currentTime() < dieTime) && !stop_delay)
-      QCoreApplication::processEvents(QEventLoop::AllEvents, 2000);
-    wait_delay = false;
+  wait_delay = true;
+  QTime dieTime= QTime::currentTime().addMSecs(n);
+  while ((QTime::currentTime() < dieTime) && !stop_delay)
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 2000);
+  wait_delay = false;
 }
 
 #ifdef DEBUG
@@ -1212,7 +1211,13 @@ void MainWindow::set_language(int lang)
  ui->menuHelp->setTitle(LANGUAGES[lang][LANG_menuHelp]);
  ui->menuAbout->setTitle(LANGUAGES[lang][LANG_menuAbout]);
  ui->menuLanguage->setTitle(LANGUAGES[lang][LANG_menuLanguage]);
+
+#ifdef DEBUG
  ui->menuDebug->setTitle(LANGUAGES[lang][LANG_menuDebug]);
+#else
+ ui->menuDebug->setTitle("");
+ ui->menuDebug->setEnabled(false);
+#endif
 
  // Menu: File
  ui->actionNew->setText(LANGUAGES[lang][LANG_actionNew]);
@@ -1303,7 +1308,10 @@ void MainWindow::on_actionStandard_triggered()
   if (config->get_deck_style() == STANDARD_DECK)
     return;
 
+#ifdef DEBUG
   debug->reset();
+#endif
+
   flush_deck();
 
   deck->set_deck(STANDARD_DECK);
@@ -1321,7 +1329,10 @@ void MainWindow::on_actionEnglish_2_triggered()
   if (config->get_deck_style() == ENGLISH_DECK)
     return;
 
+#ifdef DEBUG
   debug->reset();
+#endif
+
   flush_deck();
 
   deck->set_deck(ENGLISH_DECK);
@@ -1339,7 +1350,10 @@ void MainWindow::on_actionRussian_2_triggered()
   if (config->get_deck_style() == RUSSIAN_DECK)
     return;
 
+#ifdef DEBUG
   debug->reset();
+#endif
+
   flush_deck();
 
   deck->set_deck(RUSSIAN_DECK);

@@ -18,7 +18,7 @@
 #include "chearts.h"
 #include "config.h"
 #include "cstats.h"
-#include "cimg_deckcards.h"
+#include "cdeck.h"
 
 #ifdef DEBUG
 #include "debug.h"
@@ -84,17 +84,11 @@ private slots:
 #endif
 
     void on_actionEnglish_triggered();
-
     void on_actionRussian_triggered();
-
     void on_actionFrench_triggered();
-
     void on_actionEasy_card_selection_triggered();
-
     void on_actionStandard_triggered();
-
     void on_actionRussian_2_triggered();
-
     void on_actionEnglish_2_triggered();
 
 private:
@@ -128,7 +122,7 @@ private:
     CHearts *hearts;
     CConfig *config;
     CStats  *stats;
-    CImg_deckcards *deck;
+    CDeck *deck;
 
 #ifdef DEBUG
     CDebug  *debug;
@@ -156,11 +150,12 @@ private:
 #ifdef DEBUG
     void set_cheat_mode_enabled(bool enable);
 #endif
+
     void load_sounds();
     void destroy_sounds();
     void init_pointers();
+    void set_settings();
     void set_options();
-    void set_hearts_options();
     void load_saved_game();
 
 public:

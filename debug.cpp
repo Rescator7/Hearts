@@ -131,30 +131,30 @@ void CDebug::reset()
 // played.
 void CDebug::reverse_order()
 {
-  int ptr;
+ int ptr;
 
-  if (history_size == 2)
-    ptr = 1;
-  else
-  if (history_size == 3)
-    ptr = 2;
-  else
-    return;
+ if (history_size == 2)
+   ptr = 1;
+ else
+ if (history_size == 3)
+   ptr = 2;
+ else
+   return;
 
-  QImage *first_img = img_stack[0];
-  int first_plr = plr_stack[0];
+ QImage *first_img = img_stack[0];
+ int first_plr = plr_stack[0];
 
-  labels[0]->setPixmap(QPixmap::fromImage(img_stack[ptr]->scaledToHeight(100)));
-  labels[ptr]->setPixmap(QPixmap::fromImage(img_stack[0]->scaledToHeight(100)));
+ labels[0]->setPixmap(QPixmap::fromImage(img_stack[ptr]->scaledToHeight(100)));
+ labels[ptr]->setPixmap(QPixmap::fromImage(img_stack[0]->scaledToHeight(100)));
 
-  img_stack[0] = img_stack[ptr];
-  img_stack[ptr] = first_img;
+ img_stack[0] = img_stack[ptr];
+ img_stack[ptr] = first_img;
 
-  labels[7]->setText(names[plr_stack[ptr]]);
-  labels[7+ptr]->setText(names[first_plr]);
+ labels[7]->setText(names[plr_stack[ptr]]);
+ labels[7+ptr]->setText(names[first_plr]);
 
-  plr_stack[0] = plr_stack[ptr];
-  plr_stack[ptr] = first_plr;
+ plr_stack[0] = plr_stack[ptr];
+ plr_stack[ptr] = first_plr;
 }
 
 void CDebug::handle_bar(int value)

@@ -5,7 +5,7 @@
 #include "config.h"
 #include "define.h"
 #include "language.h"
-#include "cimg_deckcards.h"
+#include "cdeck.h"
 
 CConfig::CConfig()
 {
@@ -144,9 +144,9 @@ int CConfig::set_language(int lang) {
 }
 
 int CConfig::set_deck_style(int style) {
-   deck_style = style;
+  deck_style = style;
 
-   return save_config_file();
+  return save_config_file();
 }
 
 int CConfig::set_config_file(int param, bool enable)

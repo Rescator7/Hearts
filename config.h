@@ -50,26 +50,26 @@ private:
     bool save_game;
 
 public:
-     int set_config_file(int param, bool enable);
-     int set_language(int lang);
-     int set_deck_style(int style);
-     int get_language();
-     int get_deck_style();
+    int set_config_file(int param, bool enable);
+    int set_language(int lang);
+    int set_deck_style(int style);
+    int get_language();
+    int get_deck_style();
 
-     bool is_auto_centering();
-     bool is_cheat_mode();
-     bool is_info_channel();
-     bool is_sounds();
-     bool is_detect_tram();
+    bool is_auto_centering();
+    bool is_cheat_mode();
+    bool is_info_channel();
+    bool is_sounds();
+    bool is_detect_tram();
 
-     bool is_perfect_100();
-     bool is_omnibus();
-     bool is_queen_spade_break_heart();
-     bool is_no_trick_bonus();
-     bool is_new_moon();
-     bool is_no_draw();
-     bool is_save_game();
-     bool is_easy_card_selection();
+    bool is_perfect_100();
+    bool is_omnibus();
+    bool is_queen_spade_break_heart();
+    bool is_no_trick_bonus();
+    bool is_new_moon();
+    bool is_no_draw();
+    bool is_save_game();
+    bool is_easy_card_selection();
 };
 
 #endif // CONFIG_H
