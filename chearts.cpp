@@ -1200,7 +1200,13 @@ void CHearts::process_next_pass(bool skip_moon_check)
   moon_add_to_scores = true;         // reset to default: true. this is important.
   emit sig_end_hand(plr_hand_score[0], plr_hand_score[1], plr_hand_score[2], plr_hand_score[3]);
 
-  if (!game_over || (is_it_draw() && no_draw)) {
+  if (is_it_draw() && no_draw)
+    game_over = false;               // we must reset game_over to false, if it's a draw and no draw
+                                     // otherwise, on the next hand a game could end with a score of:
+                                     // 95 70 24 26 because the looser got his score below 100 by a bonus.
+                                     // the game shouldn't be over anymore !
+
+  if (!game_over) {
     card_left = DECK_SIZE;
     plr_jack_diamond = NOT_FOUND;
 
@@ -1514,6 +1520,9 @@ bool CHearts::is_prepass_to_moon()
 
 bool CHearts::is_it_draw()
 {
+  if (!game_over)                                     // if a game isn't over, well it's not a draw
+    return false;                                     // even if the 2 lowests scores are the same.
+
   int lowest = plr_score[0];
 
   int cpt = 0;
