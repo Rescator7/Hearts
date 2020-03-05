@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    srand(time(0));
+    srand(static_cast<unsigned int>(time(nullptr)));
 
     ui->textEdit->setTextColor(Qt::yellow);
     ui->textEdit->setTextBackgroundColor(Qt::black);
@@ -79,13 +79,12 @@ MainWindow::MainWindow(QWidget *parent) :
     if (stats->is_file_corrupted())
       message("[Error]: The statistics file is corrupted!");
 
-    int errno;
+    int error = hearts->load_saved_game();
 
-    errno = hearts->load_saved_game();
-    if (errno == NOERROR)
+    if (error == NOERROR)
       load_saved_game();
     else {
-      if (errno == FCORRUPTED) {
+      if (error == FCORRUPTED) {
         message("[Error]: The saved game file is corrupted! Deleted!");
 
         QFile file(QDir::homePath() + SAVEDGAME_FILENAME);
@@ -161,47 +160,47 @@ void MainWindow::load_sounds()
     QResource resource_snd10(":/sounds/423767__someonecool14__card-shuffling.wav");
     QResource resource_snd11(":/sounds/400163__vitovsky1__fanfare-short.wav");
 
-    ALLEGRO_FILE *fp = al_open_memfile((void*)resource_snd1.data(), resource_snd1.size(), "rb");
+    ALLEGRO_FILE *fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd1.data())), resource_snd1.size(), "rb");
     snd_breaking_heart = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd2.data(), resource_snd2.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd2.data())), resource_snd2.size(), "rb");
     snd_dealing_card = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd3.data(), resource_snd3.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd3.data())), resource_snd3.size(), "rb");
     snd_error = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd4.data(), resource_snd4.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd4.data())), resource_snd4.size(), "rb");
     snd_game_over = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd5.data(), resource_snd5.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd5.data())), resource_snd5.size(), "rb");
     snd_shoot_moon = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd6.data(), resource_snd6.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd6.data())), resource_snd6.size(), "rb");
     snd_your_turn = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd7.data(), resource_snd7.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd7.data())), resource_snd7.size(), "rb");
     snd_queen_spade = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd8.data(), resource_snd8.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd8.data())), resource_snd8.size(), "rb");
     snd_contact = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd9.data(), resource_snd9.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd9.data())), resource_snd9.size(), "rb");
     snd_passing_cards = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd10.data(), resource_snd10.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd10.data())), resource_snd10.size(), "rb");
     snd_shuffling_cards = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
-    fp = al_open_memfile((void*)resource_snd11.data(), resource_snd11.size(), "rb");
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd11.data())), resource_snd11.size(), "rb");
     snd_perfect_100 = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
@@ -443,7 +442,7 @@ void MainWindow::perfect_100(int plr)
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
-    al_play_sample(snd_perfect_100, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(snd_perfect_100, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
 }
 
@@ -453,7 +452,7 @@ void MainWindow::breaking_hearts()
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
-    al_play_sample(snd_breaking_heart, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(snd_breaking_heart, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
 }
 
@@ -470,7 +469,7 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
   else
     mesg2 = "Drew !";
 
- int lowest;
+ int lowest = 0;
  int unsorted[4];
 
  unsorted[0] = score1;
@@ -515,7 +514,7 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
-    al_play_sample(snd_game_over, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(snd_game_over, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
 
   if (!ui->actionInfo_Channel->isChecked())
@@ -544,7 +543,7 @@ void MainWindow::shoot_moon(int plr)
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
-    al_play_sample(snd_shoot_moon, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(snd_shoot_moon, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
 
   QString mesg;
@@ -628,7 +627,7 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked() && !hearts->is_game_over()) {
-    al_play_sample(snd_shuffling_cards, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(snd_shuffling_cards, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
     delay(1500);
   }
 #endif
@@ -777,7 +776,7 @@ void MainWindow::select_card(int num)
      }
 #ifdef __al_included_allegro5_allegro_audio_h
      if (ui->actionSounds->isChecked())
-       al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+       al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
       ui->actionNew->setDisabled(false);
    }  
@@ -796,7 +795,7 @@ void MainWindow::select_card(int num)
 
 #ifdef __al_included_allegro5_allegro_audio_h
        if (ui->actionSounds->isChecked())
-         al_play_sample(snd_contact, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+         al_play_sample(snd_contact, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
      }
 }
@@ -818,10 +817,10 @@ void MainWindow::play_card(int card, int idx)
 
 #ifdef __al_included_allegro5_allegro_audio_h
  if (ui->actionSounds->isChecked()) {
-    al_play_sample(snd_dealing_card, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(snd_dealing_card, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 
     if (card == queen_spade)
-      al_play_sample(snd_queen_spade, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+      al_play_sample(snd_queen_spade, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
  }
 #endif
 }
@@ -837,7 +836,7 @@ void MainWindow::show_your_turn(int idx)
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
-    al_play_sample(snd_your_turn, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(snd_your_turn, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
 
   ui->actionNew->setDisabled(false);
@@ -853,7 +852,7 @@ void MainWindow::on_label_18_clicked() // pass 3 cards
 
  #ifdef __al_included_allegro5_allegro_audio_h
     if (ui->actionSounds->isChecked())
-      al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+      al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
  #endif
 
     return;
@@ -879,7 +878,7 @@ void MainWindow::on_label_18_clicked() // pass 3 cards
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
-    al_play_sample(snd_passing_cards, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+    al_play_sample(snd_passing_cards, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
 
   delay(2000);

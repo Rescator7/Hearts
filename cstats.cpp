@@ -163,12 +163,12 @@ void CStats::update_window(int plr, int stats)
 {
  double total = first_place[plr] + second_place[plr] + third_place[plr] + fourth_place[plr];
 
- if (!total)
+ if (!static_cast<bool>(total))
    total = 1;                // avoid division by 0
 
  double started = game_started;
 
- if (!started)
+ if (!static_cast<bool>(started))
    started = 1;
 
  int value;
@@ -301,7 +301,7 @@ void CStats::create_window()
 
      double total = first_place[i] + second_place[i] + third_place[i] + fourth_place[i];
 
-     if (!total)
+     if (!static_cast<bool>(total))
        total = 1;
 
      for (int i2=0; i2<4; i2++) {

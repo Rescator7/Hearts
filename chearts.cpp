@@ -658,7 +658,7 @@ void CHearts::AI_pass_hearts(int cpu, int &cpt)
 
  // if AI_flags_pass_hearts_high, this cpu will try to pass a high heart, but
  // not the ace of hearts.
- if (AI_cpu_flags[cpu] && AI_flags_pass_hearts_high)
+ if (AI_cpu_flags[cpu] & AI_flags_pass_hearts_high)
    high = get_highest_suit_pos(cpu, HEART) - adjust_high;
 
  if ((low != NOT_FOUND) && (plr_cards[cpu][low] != ace_heart)) {
@@ -1048,20 +1048,22 @@ int CHearts::AI_get_cpu_move()
                         break;
 
          case DIAMOND:  eval[i] = AI_eval_lead_diamond(card);
+                        break;
 
-         default :      if (current_suit == HEART)
-                          AI_eval_lead_hearts(card);
+         case HEART:    eval[i] = AI_eval_lead_hearts(card);
+                        break;
+      }
 
-                        // give away the queen of spade
-                        if (!is_moon_an_option()) {
-                          if (card == queen_spade)
-                            eval[i] = 105;
-                          else
-                          // the queen of spade has not been played yet, let's throw our ace/king spade away.
-                          if (((card == ace_spade) || (card == king_spade)) && !cards_played[queen_spade])
-                            eval[i] = 61;
-                        }
-
+      if ((current_suit != FREESUIT) && (current_suit != SPADE)) {
+        // give away the queen of spade
+        if (!is_moon_an_option()) {
+          if (card == queen_spade)
+            eval[i] = 105;
+          else
+          // the queen of spade has not been played yet, let's throw our ace/king spade away.
+          if (((card == ace_spade) || (card == king_spade)) && !cards_played[queen_spade])
+            eval[i] = 61;
+        }
       }
 
     // if we didn't hit a specific evaluation in previous section, let's try those evaluations.
@@ -1652,12 +1654,11 @@ bool CHearts::select_card(int idx)
 
 bool CHearts::is_card_on_table(int card)
 {
-  switch (hand_turn) {
-      case 4 : if (hand_cards[3] == card) return true;
-      case 3 : if (hand_cards[2] == card) return true;
-      case 2 : if (hand_cards[1] == card) return true;
-      case 1 : if (hand_cards[0] == card) return true;
-  }
+  if ((hand_turn == 4) && (hand_cards[3] == card)) return true;
+  if ((hand_turn >= 3) && (hand_cards[2] == card)) return true;
+  if ((hand_turn >= 2) && (hand_cards[1] == card)) return true;
+  if (hand_cards[0] == card) return true;
+
   return false;
 }
 
@@ -1715,13 +1716,18 @@ int CHearts::get_highest_card_table()
 {
   int highest = hand_cards[0];
 
-  switch (hand_turn) {
-     case 3 : if ((hand_cards[2] / 13 == current_suit) && (hand_cards[2] > highest))
-                highest = hand_cards[2];
-     case 2 : if ((hand_cards[1] / 13 == current_suit) && (hand_cards[1] > highest))
-                highest = hand_cards[1];
+  if (hand_turn == 3) {
+    if ((hand_cards[2] / 13 == current_suit) && (hand_cards[2] > highest))
+      highest = hand_cards[2];
   }
 
+  if (hand_turn >= 2) {
+    if ((hand_cards[1] / 13 == current_suit) && (hand_cards[1] > highest))
+      highest = hand_cards[1];
+  }
+
+  // if (hand_turn == 1) highest = hand_cards[0];
+  // if (hand_turn == 4) doesn't apply, we already move to next round.
   return highest;
 }
 

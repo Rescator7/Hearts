@@ -7,7 +7,7 @@ CDeck::CDeck(int deck)
   current_deck = deck;
 
   for (int i=0; i<DECK_SIZE; i++)
-     img_cards[i] = NULL;
+     img_cards[i] = nullptr;
 
   switch (deck) {
      case ENGLISH_DECK: set_english_deck(); break;
