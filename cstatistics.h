@@ -1,17 +1,11 @@
-#ifndef CSTATS_H
-#define CSTATS_H
+#ifndef CSTATISTICS_H
+#define CSTATISTICS_H
 
-#include <QObject>
 #include <QWidget>
-#include <QString>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QTableWidget>
 #include <QTableWidgetItem>
 
 #include "define.h"
 
-/*
 const char STATS_FILENAME[20] = "/.hearts.stats";
 const char STATS_BACKUP_FILE[20] = "/.hearts.stats.bak";
 
@@ -28,20 +22,23 @@ const int STATS_QUEEN_SPADE   = 9;
 const int STATS_OMNIBUS       = 10;
 const int STATS_NO_TRICKS     = 11;
 const int STATS_PERFECT_100   = 12;
-*/
 
-class CStats : QWidget
+namespace Ui {
+class CStatistics;
+}
+
+class CStatistics : public QWidget
 {
     Q_OBJECT
 
 public:
-    CStats();
-    ~CStats();
+    explicit CStatistics(QWidget *parent = nullptr);
+    ~CStatistics();
 
-private: // variables
-    QVBoxLayout *layout;
-    QLabel *game_info;
-    QTableWidget *table_widget;
+private:
+    Ui::CStatistics *ui;
+    bool file_corrupted;
+
     QTableWidgetItem *item_names[MAX_PLR_NAMES];
     QTableWidgetItem *item_first_place[MAX_PLR_NAMES];
     QTableWidgetItem *item_second_place[MAX_PLR_NAMES];
@@ -55,8 +52,6 @@ private: // variables
     QTableWidgetItem *item_omnibus[MAX_PLR_NAMES];
     QTableWidgetItem *item_no_tricks[MAX_PLR_NAMES];
     QTableWidgetItem *item_perfect_100[MAX_PLR_NAMES];
-
-    bool file_corrupted;
 
     int game_started;
     int game_finished;
@@ -95,4 +90,4 @@ public: // functions
     void Translate();
 };
 
-#endif // CSTATS_H
+#endif // CSTATISTICS_H

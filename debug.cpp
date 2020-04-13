@@ -8,11 +8,12 @@
 #include <QPalette>
 #include <QColor>
 #include <QGroupBox>
-#include <QMessageBox>
+
+const char PLR_NOBODY[7] = "Nobody";
 
 CDebug::CDebug(QImage *_img_empty)
 {
- setWindowTitle("Cards history");
+ setWindowTitle(tr("Cards history"));
 
  setAttribute( Qt::WA_QuitOnClose, false );
 
@@ -75,24 +76,20 @@ CDebug::~CDebug()
 void CDebug::show_history(int slide)
 {
  for (int i=0; i<7; i++) {
-    labels[i]->setPixmap(QPixmap::fromImage(img_stack[i + ptr_screen - slide]->scaledToHeight(100)));
-    if (plr_stack[i + ptr_screen - slide] == NOBODY)
-      labels[i+7]->setText("Nobody");
-    else
-      labels[i+7]->setText(names[plr_stack[i + ptr_screen - slide]]);
-    }
+   labels[i]->setPixmap(QPixmap::fromImage(img_stack[i + ptr_screen - slide]->scaledToHeight(100)));
+   labels[i+7]->setText(plr_names[i + ptr_screen - slide]);
+ }
 }
 
-void CDebug::save_card(int plr, QImage *img)
+void CDebug::save_card(const char *name, QImage *img)
 {
   assert(img);
-  assert((plr >= NOBODY) && (plr < MAX_PLR_NAMES));
 
   if (history_size >= MAX_HISTORY_SIZE)
     reset();
 
   img_stack[history_size] = img;
-  plr_stack[history_size] = plr;
+  plr_names[history_size] = name ? name : reinterpret_cast<const char *>(&PLR_NOBODY);
   history_size++;
 
   if (history_size >= 7) {
@@ -123,7 +120,7 @@ void CDebug::reset()
  // show 7 Nobody as names
  for (int i=0; i<MAX_HISTORY_SIZE; i++) {
    img_stack[i] = img_empty;
-   plr_stack[i] = NOBODY;
+   plr_names[i] = reinterpret_cast<const char *>(&PLR_NOBODY);
  }
 }
 
@@ -142,7 +139,7 @@ void CDebug::reverse_order()
    return;
 
  QImage *first_img = img_stack[0];
- int first_plr = plr_stack[0];
+ const char *first_name = plr_names[0];
 
  labels[0]->setPixmap(QPixmap::fromImage(img_stack[ptr]->scaledToHeight(100)));
  labels[ptr]->setPixmap(QPixmap::fromImage(img_stack[0]->scaledToHeight(100)));
@@ -150,11 +147,12 @@ void CDebug::reverse_order()
  img_stack[0] = img_stack[ptr];
  img_stack[ptr] = first_img;
 
- labels[7]->setText(names[plr_stack[ptr]]);
- labels[7+ptr]->setText(names[first_plr]);
+// labels[7]->setText(names[plr_stack[ptr]]);
+ labels[7]->setText(plr_names[ptr]);
+ labels[7+ptr]->setText(first_name);
 
- plr_stack[0] = plr_stack[ptr];
- plr_stack[ptr] = first_plr;
+ plr_names[0] = plr_names[ptr];
+ plr_names[ptr] = first_name;
 }
 
 void CDebug::handle_bar(int value)

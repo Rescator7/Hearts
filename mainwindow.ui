@@ -166,6 +166,15 @@
        </color>
       </brush>
      </colorrole>
+     <colorrole role="PlaceholderText">
+      <brush brushstyle="NoBrush">
+       <color alpha="128">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
     </active>
     <inactive>
      <colorrole role="WindowText">
@@ -297,6 +306,15 @@
      <colorrole role="ToolTipText">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="PlaceholderText">
+      <brush brushstyle="NoBrush">
+       <color alpha="128">
         <red>0</red>
         <green>0</green>
         <blue>0</blue>
@@ -440,6 +458,15 @@
        </color>
       </brush>
      </colorrole>
+     <colorrole role="PlaceholderText">
+      <brush brushstyle="NoBrush">
+       <color alpha="128">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
     </disabled>
    </palette>
   </property>
@@ -457,7 +484,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 1</string>
+     <string notr="true">Card 1</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_2">
@@ -470,7 +497,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 2</string>
+     <string notr="true">Card 2</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_3">
@@ -483,7 +510,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 3</string>
+     <string notr="true">Card 3</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_4">
@@ -496,7 +523,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 4</string>
+     <string notr="true">Card 4</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_5">
@@ -509,7 +536,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 5</string>
+     <string notr="true">Card 5</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_6">
@@ -522,7 +549,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 6</string>
+     <string notr="true">Card 6</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_7">
@@ -535,7 +562,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 7</string>
+     <string notr="true">Card 7</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_8">
@@ -548,7 +575,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 8</string>
+     <string notr="true">Card 8</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_9">
@@ -561,7 +588,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 9</string>
+     <string notr="true">Card 9</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_10">
@@ -574,7 +601,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 10</string>
+     <string notr="true">Card 10</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_11">
@@ -587,7 +614,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 11</string>
+     <string notr="true">Card 11</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_12">
@@ -600,7 +627,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 12</string>
+     <string notr="true">Card 12</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_13">
@@ -613,7 +640,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card 13</string>
+     <string notr="true">Card 13</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioButton">
@@ -629,7 +656,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Pla&amp;yer A</string>
+     <string notr="true"/>
     </property>
     <property name="checked">
      <bool>true</bool>
@@ -648,7 +675,7 @@
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string notr="true"/>
     </property>
     <property name="checked">
      <bool>false</bool>
@@ -667,7 +694,7 @@
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string notr="true"/>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioButton_4">
@@ -683,7 +710,7 @@
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string notr="true"/>
     </property>
    </widget>
    <widget class="QLCDNumber" name="lcdNumber">
@@ -833,6 +860,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </active>
       <inactive>
        <colorrole role="WindowText">
@@ -970,6 +1006,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </inactive>
       <disabled>
        <colorrole role="WindowText">
@@ -1101,6 +1146,15 @@
        <colorrole role="ToolTipText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
@@ -1258,6 +1312,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </active>
       <inactive>
        <colorrole role="WindowText">
@@ -1395,6 +1458,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </inactive>
       <disabled>
        <colorrole role="WindowText">
@@ -1526,6 +1598,15 @@
        <colorrole role="ToolTipText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
@@ -1683,6 +1764,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </active>
       <inactive>
        <colorrole role="WindowText">
@@ -1820,6 +1910,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </inactive>
       <disabled>
        <colorrole role="WindowText">
@@ -1951,6 +2050,15 @@
        <colorrole role="ToolTipText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
@@ -2108,6 +2216,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </active>
       <inactive>
        <colorrole role="WindowText">
@@ -2239,6 +2356,15 @@
        <colorrole role="ToolTipText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
@@ -2382,11 +2508,20 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </disabled>
      </palette>
     </property>
    </widget>
-   <widget class="QLabel" name="label_14">
+   <widget class="CLabel" name="label_14">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -2396,10 +2531,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card A</string>
+     <string notr="true">Card A</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_15">
+   <widget class="CLabel" name="label_15">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -2409,10 +2544,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card B</string>
+     <string notr="true">Card B</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_16">
+   <widget class="CLabel" name="label_16">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -2422,10 +2557,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card C</string>
+     <string notr="true">Card C</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_17">
+   <widget class="CLabel" name="label_17">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -2435,7 +2570,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Card D</string>
+     <string notr="true">Card D</string>
     </property>
    </widget>
    <widget class="CLabel" name="label_18">
@@ -2448,7 +2583,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Pass to</string>
+     <string notr="true">Pass to</string>
     </property>
    </widget>
    <widget class="QLCDNumber" name="lcdNumber_10">
@@ -2598,6 +2733,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </active>
       <inactive>
        <colorrole role="WindowText">
@@ -2735,6 +2879,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </inactive>
       <disabled>
        <colorrole role="WindowText">
@@ -2866,6 +3019,15 @@
        <colorrole role="ToolTipText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
@@ -3023,6 +3185,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </active>
       <inactive>
        <colorrole role="WindowText">
@@ -3160,6 +3331,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </inactive>
       <disabled>
        <colorrole role="WindowText">
@@ -3291,6 +3471,15 @@
        <colorrole role="ToolTipText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
@@ -3448,6 +3637,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </active>
       <inactive>
        <colorrole role="WindowText">
@@ -3585,6 +3783,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </inactive>
       <disabled>
        <colorrole role="WindowText">
@@ -3716,6 +3923,15 @@
        <colorrole role="ToolTipText">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
@@ -3873,6 +4089,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </active>
       <inactive>
        <colorrole role="WindowText">
@@ -4010,6 +4235,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </inactive>
       <disabled>
        <colorrole role="WindowText">
@@ -4147,6 +4381,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
       </disabled>
      </palette>
     </property>
@@ -4161,7 +4404,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>A</string>
+     <string notr="true">A</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_20">
@@ -4174,7 +4417,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>B</string>
+     <string notr="true">B</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_21">
@@ -4187,7 +4430,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>C</string>
+     <string notr="true">C</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_22">
@@ -4200,7 +4443,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>D</string>
+     <string notr="true">D</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit">
@@ -4253,6 +4496,110 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>850</y>
+      <width>661</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>690</y>
+      <width>118</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>100</number>
+    </property>
+    <property name="format">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_23">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>700</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Online:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_24">
+    <property name="geometry">
+     <rect>
+      <x>665</x>
+      <y>695</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string notr="true">TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>40</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Exit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>0</y>
+      <width>50</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Leave</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>0</y>
+      <width>55</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tables</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>155</x>
+      <y>0</y>
+      <width>95</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create Table</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -4261,7 +4608,7 @@
      <x>0</x>
      <y>0</y>
      <width>700</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="defaultUp">
@@ -4275,6 +4622,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actionNew"/>
+    <addaction name="actionConnect"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
@@ -4566,6 +4914,21 @@
    </property>
    <property name="text">
     <string>&amp;English</string>
+   </property>
+  </action>
+  <action name="actionConnect">
+   <property name="text">
+    <string>Connect</string>
+   </property>
+  </action>
+  <action name="actionCreate_Table">
+   <property name="text">
+    <string>Create Table</string>
+   </property>
+  </action>
+  <action name="actionTables">
+   <property name="text">
+    <string>Tables</string>
    </property>
   </action>
  </widget>

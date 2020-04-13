@@ -27,9 +27,10 @@ private: // variables;
     QImage *img_stack[MAX_HISTORY_SIZE];
     QImage *img_empty;
 
+    const char *plr_names[MAX_HISTORY_SIZE];
+
     int ptr_screen;
     int history_size;
-    int plr_stack[MAX_HISTORY_SIZE];
 
 private: // functions
     void show_history(int slide);
@@ -38,7 +39,7 @@ public:
     CDebug(QImage *_img_empty);
     ~CDebug();
 
-    void save_card(int plr, QImage *img);
+    void save_card(const char *name, QImage *img);
     void reverse_order();
     void reset();
 

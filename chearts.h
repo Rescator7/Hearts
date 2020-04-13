@@ -23,6 +23,7 @@ const int jack_heart    = 48;
 const int queen_heart   = 49;
 const int king_heart    = 50;
 const int ace_heart     = 51;
+const int back_card     = 100;
 const int empty         = 127;
 const int your_turn     = 255;
 
@@ -203,7 +204,7 @@ signals:
    void sig_play_card(int card, int idx);
    void sig_refresh_deck(int plr, bool d);
    void sig_score(int score, int idx);
-   void sig_end_hand(int score1, int score2, int score3, int score4);
+   void sig_end_hand(bool online);
    void sig_hand_score(int score, int idx);
    void sig_your_turn(int idx);
    void sig_breaking_heart();

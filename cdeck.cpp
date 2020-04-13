@@ -1,5 +1,4 @@
 #include "cdeck.h"
-#include "chearts.h"
 #include <assert.h>
 
 CDeck::CDeck(int deck)
@@ -8,6 +7,10 @@ CDeck::CDeck(int deck)
 
   for (int i=0; i<DECK_SIZE; i++)
      img_cards[i] = nullptr;
+
+  img_empty_card = new QImage(":/SVG-cards/Default/empty.png", "PNG");
+  img_your_turn = new QImage(":/SVG-cards/Default/card-base2.png", "PNG");
+  img_back_card = new QImage(":/SVG-cards/Default/back.png", "PNG");
 
   switch (deck) {
      case ENGLISH_DECK: set_english_deck(); break;
@@ -193,14 +196,23 @@ void CDeck::set_russian_deck(){
 
 CDeck::~CDeck()
 {
+  delete img_empty_card;
+  delete img_your_turn;
+  delete img_back_card;
+
   delete_current_deck();
 }
 
 QImage *CDeck::get_img_card(int card) {
+  if (card == back_card)
+    return img_back_card;
+
+  assert((card >= 0) && (card < DECK_SIZE));
   return img_cards[card];
 }
 
 void CDeck::reverse_card_rgb(int card) {
+  assert((card >= 0) && (card < DECK_SIZE));
   img_cards[card]->invertPixels();
 }
 

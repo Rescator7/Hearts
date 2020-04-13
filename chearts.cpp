@@ -1,7 +1,6 @@
 #include "chearts.h"
 #include "variants.h"
 #include <assert.h>
-#include <QMessageBox>
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
@@ -951,23 +950,21 @@ int CHearts::AI_eval_lead_spade(int card)
      return -104;
  }
 
+ // avoid giving the jack of diamond
+  if (omnibus && (card == jack_diamond))
+    return -62;
+
+  // last to talk, the queen is not in the trick.. throw your ace/king.
+   if (!is_moon_an_option()) {
+     if ((hand_turn == 3) && !is_card_on_table(queen_spade) && ((card == ace_spade) || (card == king_spade)))
+       return 40;
+   }
+
  // if the ace is in the trick throw away our king
   if ((card == king_spade) && is_card_on_table(ace_spade) && !is_moon_an_option())
     return 75;
   else
     return -25;
-
- // avoid giving the jack of diamond
-  if (omnibus && (card == jack_diamond))
-    return -62;
-
- // last to talk, the queen is not in the trick.. throw your ace/king.
-  if (!is_moon_an_option()) {
-    if ((hand_turn == 3) && !is_card_on_table(queen_spade) && ((card == ace_spade) || (card == king_spade)))
-      return 40;
-  }
-
-  return 0;
 }
 
 int CHearts::AI_eval_lead_diamond(int card)
@@ -1025,8 +1022,6 @@ int CHearts::AI_eval_lead_hearts(int card)
      else
        return -30;
   }
-
-  return 0;
 }
 
 int CHearts::AI_get_cpu_move()
@@ -1200,7 +1195,7 @@ void CHearts::process_next_pass(bool skip_moon_check)
   }
 
   moon_add_to_scores = true;         // reset to default: true. this is important.
-  emit sig_end_hand(plr_hand_score[0], plr_hand_score[1], plr_hand_score[2], plr_hand_score[3]);
+  emit sig_end_hand(false);
 
   if (is_it_draw() && no_draw)
     game_over = false;               // we must reset game_over to false, if it's a draw and no draw
@@ -1554,7 +1549,7 @@ bool CHearts::is_card_selectable(int card)
 
 bool CHearts::can_break_heart(int plr)
 {
-  if (card_left > DECK_SIZE - 4) return false;
+  //if (card_left > DECK_SIZE - 4) return false;
 
   if (current_suit != FREESUIT)
     return !plr_cards_in_suit[plr][current_suit];

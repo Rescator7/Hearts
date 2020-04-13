@@ -2,6 +2,7 @@
 #define CDECK_H
 
 #include <QImage>
+#include "chearts.h"
 
 const int STANDARD_DECK = 0;
 const int ENGLISH_DECK  = 1;
@@ -14,9 +15,10 @@ public:
     ~CDeck();
 
 private:
-    QImage *img_cards[52];
+    QImage *img_cards[DECK_SIZE];
     QImage *img_empty_card;
     QImage *img_your_turn;
+    QImage *img_back_card;
 
     int current_deck;
 

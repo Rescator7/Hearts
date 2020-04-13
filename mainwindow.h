@@ -18,7 +18,10 @@
 #include "chearts.h"
 #include "config.h"
 #include "cstats.h"
+#include "cstatistics.h"
 #include "cdeck.h"
+#include "client.h"
+#include "ctable.h"
 
 #ifdef DEBUG
 #include "debug.h"
@@ -35,7 +38,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -83,22 +86,41 @@ private slots:
     void on_actionCheat_triggered();
 #endif
 
-    void on_actionEnglish_triggered();
-    void on_actionRussian_triggered();
-    void on_actionFrench_triggered();
+    void on_actionEnglish_triggered(bool checked);
+    void on_actionRussian_triggered(bool checked);
+    void on_actionFrench_triggered(bool checked);
     void on_actionEasy_card_selection_triggered();
     void on_actionStandard_triggered();
     void on_actionRussian_2_triggered();
     void on_actionEnglish_2_triggered();
+    void on_lineEdit_returnPressed();
+    void on_actionConnect_triggered();
+    void on_actionCreate_Table_triggered();
+    void on_label_14_clicked();
+    void on_label_16_clicked();
+    void on_label_15_clicked();
+    void on_label_17_clicked();
+    void on_actionTables_triggered();
+
+    void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked();
+    void on_pushButton_4_clicked();
+
+
 
 private:
     Ui::MainWindow *ui;
     QImage *img_pass[4];
     QImage *img_empty_card;
     QImage *img_your_turn;
+    QImage *img_sit_here;
+    QImage *img_connected;
+    QImage *img_disconnected;
     QLabel *label[22];
     QLCDNumber *lcd_hand_score[4];
     QLCDNumber *lcd_score[4];
+    QTranslator translator;
 
 #ifdef DEBUG
     QRadioButton *cheat_radio_button[4];
@@ -116,13 +138,20 @@ private:
     ALLEGRO_SAMPLE *snd_passing_cards;
     ALLEGRO_SAMPLE *snd_shuffling_cards;
     ALLEGRO_SAMPLE *snd_perfect_100;
+    ALLEGRO_SAMPLE *snd_connected;
+    ALLEGRO_SAMPLE *snd_disconnected;
+    ALLEGRO_SAMPLE *snd_announcement;
 #endif
 
 private:
     CHearts *hearts;
     CConfig *config;
     CStats  *stats;
+    CStatistics *statistics;
     CDeck *deck;
+    CClient *client;
+    CTable *table_list;
+    QTimer *timer;
 
 #ifdef DEBUG
     CDebug  *debug;
@@ -137,6 +166,25 @@ private:
     int card_height;
     int def_card_posy;
     int card_played[4];
+
+// Online variables
+    int  online_table_id;
+    int  online_passto;
+    int  online_num_cards;
+    int  online_num_selected;
+    int  online_myCards[13];
+    int  online_cards_received_pos[3];
+    int  online_my_turn;
+
+    bool online_selected[13];
+    bool online_playing;
+    bool online_connected;
+    bool online_can_sit;
+    bool online_heart_broken;
+    bool online_new_moon;
+    bool online_game_started;
+
+    char online_names[4][20];
 
     void clear_deck();
     void show_deck(int plr, bool refresh);
@@ -157,19 +205,37 @@ private:
     void set_settings();
     void set_options();
     void load_saved_game();
+    void start_game();
+    void disable_cheat(bool full);
 
 public:
-    void message(QString mesg);
+    int get_name_label(QString p);
+
     void delay(int n);
     void set_plr_names();
     void select_card(int num);
+    void set_online_game();
+    void reset_cards_pos();
+    void shoot_moon(int plr, int delay);
+    void set_connected(bool connected);
+
+    void online_end_hand(int north, int south, int west, int east);
+    void online_game_over(int north, int south, int west, int east);
+    void online_receive_bonus(int plr, int bonus, int value);
+    void online_perfect_100(int plr);
+    void online_select_card(int num);
+    void online_pass_cards();
+    void online_show_buttons(bool enable);
 
 public slots:
+    void online_action(unsigned int action, QString param);
+
+    void message(QString mesg);
     void refresh_deck(int plr, bool d);
     void play_card(int card, int idx);
     void clear_table();
     void refresh_score(int score, int idx);
-    void end_of_hand(int score1, int score2, int score3, int score4);
+    void end_of_hand(bool online);
     void refresh_hand_score(int score, int idx);
     void show_your_turn(int idx);
     void pass_to(int pass_to);
@@ -182,6 +248,10 @@ public slots:
     void receive_bonus(int plr, int bonus, int value);
     void got_queen_spade(int plr);
     void save_files();
+    void join_game(int id, char chair);
+    void update_bar();
+    void activate_timer(int secs);
+    void remove_timer();
 };
 
 #endif // MAINWINDOW_H

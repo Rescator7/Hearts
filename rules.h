@@ -12,7 +12,7 @@ class Rules : public QDialog
     Q_OBJECT
 
 public:
-    explicit Rules(QWidget *parent = 0);
+    explicit Rules(QWidget *parent = nullptr);
     ~Rules();
 
 private:

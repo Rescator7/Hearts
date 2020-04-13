@@ -1,13 +1,24 @@
 #ifndef DEFINE
 #define DEFINE
 
+const char version[80] = "Hearts 1.5b";
+
 // Compilation will use liballegro
 #define USE_LIBALLEGRO5
 
 // Compilation will create Debug menu
 #define DEBUG
 
-const char version[80] = "Hearts 1.4b";
+#define QUEEN_SPADE_f    1
+#define PERFECT_100_f    1 << 1
+#define OMNIBUS_f        1 << 2
+#define NO_TRICK_BONUS_f 1 << 3
+#define NEW_MOON_f       1 << 4
+#define NO_DRAW_f        1 << 5
+
+const int LANG_ENGLISH      = 0;
+const int LANG_FRENCH       = 1;
+const int LANG_RUSSIAN      = 2;
 
 const int FNOERR                         = 0;
 const int ERROPENRO                      = 1;
@@ -26,6 +37,7 @@ const int AI_flags_pass_elim_suit        = 0x10;
 const int AI_flags_safe_keep_qs          = 0x20;
 const int AI_flags_count_spade           = 0x40;
 const int AI_flags_friendly              = 0x80;
+
 
 const char names[MAX_PLR_NAMES][10] = {"You", "Aina", "Airi", "Alex", "Charles", "Christian", "Christine", "Cindy",
                                        "Danny", "David", "Denis", "Elena", "Erica", "Gabriel", "Grace", "Karine",

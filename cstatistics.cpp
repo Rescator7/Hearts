@@ -1,14 +1,16 @@
+#include <QFile>
 #include <QDir>
 #include <QTextStream>
-#include <QStringList>
-#include <QLabel>
-#include <QColor>
-#include <QMessageBox>
-#include "cstats.h"
-#include "cstatistics.h"
 
-CStats::CStats()
+#include "cstatistics.h"
+#include "ui_cstatistics.h"
+
+CStatistics::CStatistics(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::CStatistics)
 {
+  ui->setupUi(this);
+
   setWindowTitle(tr("Game Statistics"));
 
   setAttribute( Qt::WA_QuitOnClose, false );
@@ -28,17 +30,15 @@ CStats::CStats()
   create_window();
 
   file.close();
-  resize(1000, 600);
+  //  resize(1000, 600);
 }
 
-CStats::~CStats()
+CStatistics::~CStatistics()
 {
-  delete layout;
-  delete game_info;
-  delete table_widget;
+  delete ui;
 }
 
-void CStats::init_vars()
+void CStatistics::init_vars()
 {
   game_started = 1;
   game_finished = 0;
@@ -62,7 +62,7 @@ void CStats::init_vars()
   }
 }
 
-int CStats::save_stats_file()
+int CStatistics::save_stats_file()
 {
   QFile file(QDir::homePath() + STATS_FILENAME);
 
@@ -88,7 +88,7 @@ int CStats::save_stats_file()
   return FNOERR;
 }
 
-int CStats::load_stats_file()
+int CStatistics::load_stats_file()
 {
   QFile file(QDir::homePath() + STATS_FILENAME);
 
@@ -159,8 +159,7 @@ int CStats::load_stats_file()
  file.close();
  return FNOERR;
 }
-
-void CStats::update_window(int plr, int stats)
+void CStatistics::update_window(int plr, int stats)
 {
  double total = first_place[plr] + second_place[plr] + third_place[plr] + fourth_place[plr];
 
@@ -183,14 +182,19 @@ void CStats::update_window(int plr, int stats)
                              if (worst_score[plr] != -1)
                                item_worst_score[plr]->setData(Qt::EditRole, worst_score[plr]);
                              break;
-   case STATS_GAME_STARTED :
-   case STATS_GAME_FINISHED :
-   case STATS_HANDS_PLAYED :  game_info->setText(tr("Games Started: ") + QString::number(game_started) + "\n" +
+   case STATS_GAME_STARTED : ui->label_4->setText(QString::number(game_started)); break;
+   case STATS_GAME_FINISHED : ui->label_5->setText(QString::number(game_finished) + " (" + QString::number(double(game_finished * 100 / started), 'f', 1) );
+                              break;
+   case STATS_HANDS_PLAYED : ui->label_6->setText(QString::number(game_finished)); break;
+     /*
+                              game_info->setText(tr("Games Started: ") + QString::number(game_started) + "\n" +
                                                  tr("Games Finished: ") + QString::number(game_finished) +
                                                  " (" + QString::number(double(game_finished * 100 / started), 'f', 1) +
                                                  "%)\n" +
                                                  tr("Hands Played: ") + QString::number(hands_played));
+
                              break;
+                             */
    case STATS_FIRST_PLACE :
    case STATS_SECOND_PLACE :
    case STATS_THIRD_PLACE :
@@ -221,7 +225,7 @@ void CStats::update_window(int plr, int stats)
   }
 }
 
-void CStats::increase_stats(int plr, int stats)
+void CStatistics::increase_stats(int plr, int stats)
 {
   switch (stats) {
      case STATS_GAME_STARTED:  game_started++; break;
@@ -241,7 +245,7 @@ void CStats::increase_stats(int plr, int stats)
   update_window(plr, stats);
 }
 
-void CStats::set_score(int plr, int score)
+void CStatistics::set_score(int plr, int score)
 {
   total_score[plr] += score;
 
@@ -254,7 +258,7 @@ void CStats::set_score(int plr, int score)
   update_window(plr, STATS_SCORES);
 }
 
-void CStats::reset()
+void CStatistics::reset()
 {
  init_vars();
 
@@ -276,20 +280,20 @@ void CStats::reset()
  save_stats_file();
 }
 
-void CStats::create_window()
+void CStatistics::create_window()
 {
-  layout = new QVBoxLayout;
+ // layout = new QVBoxLayout;
 
-  table_widget = new QTableWidget(MAX_PLR_NAMES, 13, this);
+ // table_widget = new QTableWidget(MAX_PLR_NAMES, 13, this);
 
-  QStringList labels;
+//  QStringList labels;
 
-  labels << tr("Name")        << tr("First")       << tr("Second")      << tr("Third") <<
-            tr("Fourth")      << tr("Avg. Score")  << tr("Best Score")  << tr("Worst Score") <<
-            tr("Shoot Moon")  << tr("Queen Spade") << tr("Omnibus")     << tr("No tricks")   <<
-            tr("Perfect 100");
+ // labels << tr("Name")        << tr("First")       << tr("Second")      << tr("Third") <<
+  //          tr("Fourth")      << tr("Avg. Score")  << tr("Best Score")  << tr("Worst Score") <<
+  //          tr("Shoot Moon")  << tr("Queen Spade") << tr("Omnibus")     << tr("No tricks")   <<
+   //         tr("Perfect 100");
 
-  table_widget->setHorizontalHeaderLabels(labels);
+ // table_widget->setHorizontalHeaderLabels(labels);
 
   QColor color1(78, 199, 102);
   QColor color2(94, 239, 123);
@@ -298,7 +302,7 @@ void CStats::create_window()
      item_names[i] = new QTableWidgetItem(QString(names[i]));
      item_names[i]->setFlags(item_names[i]->flags() & ~Qt::ItemIsEditable);
      item_names[i]->setBackgroundColor(color1);
-     table_widget->setItem(i, 0, item_names[i]);
+     ui->tableWidget->setItem(i, 0, item_names[i]);
 
      double total = first_place[i] + second_place[i] + third_place[i] + fourth_place[i];
 
@@ -314,28 +318,28 @@ void CStats::create_window()
                                                              QString::number(double(value * 100 / total), 'f', 1) + "%)");
                   item_first_place[i]->setFlags(item_first_place[i]->flags() & ~Qt::ItemIsEditable);
                   item_first_place[i]->setBackgroundColor(color2);
-                  table_widget->setItem(i, 1, item_first_place[i]);
+                  ui->tableWidget->setItem(i, 1, item_first_place[i]);
                   break;
          case 1 : value = second_place[i];
                   item_second_place[i] = new QTableWidgetItem(QString::number(value) + " (" +
                                                               QString::number((value * 100 / total), 'f', 1) + "%)");
                   item_second_place[i]->setFlags(item_second_place[i]->flags() & ~Qt::ItemIsEditable);
                   item_second_place[i]->setBackgroundColor(color1);
-                  table_widget->setItem(i, 2, item_second_place[i]);
+                  ui->tableWidget->setItem(i, 2, item_second_place[i]);
                   break;
          case 2 : value = third_place[i];
                   item_third_place[i] = new QTableWidgetItem(QString::number(value) + " (" +
                                                              QString::number(double(value * 100 / total), 'f', 1) + "%)");
                   item_third_place[i]->setFlags(item_third_place[i]->flags() & ~Qt::ItemIsEditable);
                   item_third_place[i]->setBackgroundColor(color2);
-                  table_widget->setItem(i, 3, item_third_place[i]);
+                  ui->tableWidget->setItem(i, 3, item_third_place[i]);
                   break;
          case 3 : value = fourth_place[i];
                   item_fourth_place[i] = new QTableWidgetItem(QString::number(value) + " (" +
                                                               QString::number(double(value * 100 / total), 'f', 1) + "%)");
                   item_fourth_place[i]->setFlags(item_fourth_place[i]->flags() & ~Qt::ItemIsEditable);
                   item_fourth_place[i]->setBackgroundColor(color1);
-                  table_widget->setItem(i, 4, item_fourth_place[i]);
+                  ui->tableWidget->setItem(i, 4, item_fourth_place[i]);
                   break;
        }
      }
@@ -386,40 +390,44 @@ void CStats::create_window()
      item_no_tricks[i]->setBackgroundColor(color2);
      item_perfect_100[i]->setBackgroundColor(color1);
 
-     table_widget->setItem(i, 5, item_avg_score[i]);
-     table_widget->setItem(i, 6, item_best_score[i]);
-     table_widget->setItem(i, 7, item_worst_score[i]);
-     table_widget->setItem(i, 8, item_shoot_moon[i]);
-     table_widget->setItem(i, 9, item_queen_spade[i]);
-     table_widget->setItem(i, 10, item_omnibus[i]);
-     table_widget->setItem(i, 11, item_no_tricks[i]);
-     table_widget->setItem(i, 12, item_perfect_100[i]);
+     ui->tableWidget->setItem(i, 5, item_avg_score[i]);
+     ui->tableWidget->setItem(i, 6, item_best_score[i]);
+     ui->tableWidget->setItem(i, 7, item_worst_score[i]);
+     ui->tableWidget->setItem(i, 8, item_shoot_moon[i]);
+     ui->tableWidget->setItem(i, 9, item_queen_spade[i]);
+     ui->tableWidget->setItem(i, 10, item_omnibus[i]);
+     ui->tableWidget->setItem(i, 11, item_no_tricks[i]);
+     ui->tableWidget->setItem(i, 12, item_perfect_100[i]);
   }
 
-  table_widget->setSortingEnabled(true);
+  ui->tableWidget->setSortingEnabled(true);
 
-  table_widget->resize(1000, 600);
+//  table_widget->resize(1000, 600);
 
-  game_info = new QLabel(this);
+ // game_info = new QLabel(this);
 
   update_window(0, STATS_GAME_STARTED);
-
+/*
   layout->addWidget(game_info);
   layout->addWidget(table_widget);
 
   setLayout(layout);
+  */
 }
 
+/*
 void CStats::show_stats()
 {
  show();
 }
+*/
 
-bool CStats::is_file_corrupted()
+bool CStatistics::is_file_corrupted()
 {
  return file_corrupted;
 }
 
-void CStats::Translate()
+void CStatistics::Translate()
 {
 }
+
