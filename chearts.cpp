@@ -1549,7 +1549,7 @@ bool CHearts::is_card_selectable(int card)
 
 bool CHearts::can_break_heart(int plr)
 {
-  //if (card_left > DECK_SIZE - 4) return false;
+  if (card_left > DECK_SIZE - 4) return false;
 
   if (current_suit != FREESUIT)
     return !plr_cards_in_suit[plr][current_suit];
