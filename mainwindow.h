@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QLCDNumber>
 #include <QRadioButton>
+#include <QPushButton>
 #include "define.h"
 
 #ifdef USE_LIBALLEGRO5
@@ -17,7 +18,6 @@
 
 #include "chearts.h"
 #include "config.h"
-#include "cstats.h"
 #include "cstatistics.h"
 #include "cdeck.h"
 #include "client.h"
@@ -28,6 +28,13 @@
 #endif
 
 const int max_mainwindow_height = 915;
+
+const int mode_button_command   = 1;
+const int mode_button_help      = 2;
+const int mode_button_says      = 3;
+
+const int mode_button_first     = 1;
+const int mode_button_last      = 3;
 
 namespace Ui {
 class MainWindow;
@@ -106,8 +113,9 @@ private slots:
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
+    void on_pushButton_5_clicked();
 
-
+    void on_pushButton_6_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -146,8 +154,7 @@ private:
 private:
     CHearts *hearts;
     CConfig *config;
-    CStats  *stats;
-    CStatistics *statistics;
+    CStatistics *stats;
     CDeck *deck;
     CClient *client;
     CTable *table_list;
@@ -175,6 +182,7 @@ private:
     int  online_myCards[13];
     int  online_cards_received_pos[3];
     int  online_my_turn;
+    int  online_button_mode;
 
     bool online_selected[13];
     bool online_playing;
@@ -214,10 +222,11 @@ public:
     void delay(int n);
     void set_plr_names();
     void select_card(int num);
-    void set_online_game();
+    void init_online_game();
     void reset_cards_pos();
     void shoot_moon(int plr, int delay);
-    void set_connected(bool connected);
+    void light_connected(bool connected);
+    void fit_button(QPushButton *button, int x, int width);
 
     void online_end_hand(int north, int south, int west, int east);
     void online_game_over(int north, int south, int west, int east);
@@ -226,6 +235,7 @@ public:
     void online_select_card(int num);
     void online_pass_cards();
     void online_show_buttons(bool enable);
+    void online_show_deck();
 
 public slots:
     void online_action(unsigned int action, QString param);
@@ -235,7 +245,7 @@ public slots:
     void play_card(int card, int idx);
     void clear_table();
     void refresh_score(int score, int idx);
-    void end_of_hand(bool online);
+    void end_of_hand(int score1, int score2, int score3, int score4);
     void refresh_hand_score(int score, int idx);
     void show_your_turn(int idx);
     void pass_to(int pass_to);
@@ -250,8 +260,9 @@ public slots:
     void save_files();
     void join_game(int id, char chair);
     void update_bar();
-    void activate_timer(int secs);
+    void activate_timer(int cs);
     void remove_timer();
+    void aboutToQuit();
 };
 
 #endif // MAINWINDOW_H

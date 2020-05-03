@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>cStatistic</class>
- <widget class="QWidget" name="cStatistic">
+ <class>CStatistics</class>
+ <widget class="QWidget" name="CStatistics">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1331</width>
+    <width>1351</width>
     <height>695</height>
    </rect>
   </property>
@@ -453,19 +453,22 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Statistics</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>111</width>
+     <width>130</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
     <string>Games Started:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -473,12 +476,15 @@
     <rect>
      <x>10</x>
      <y>40</y>
-     <width>131</width>
+     <width>130</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
     <string>Games Finished:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -486,18 +492,21 @@
     <rect>
      <x>10</x>
      <y>60</y>
-     <width>101</width>
+     <width>130</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
     <string>Hands Played:</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>150</x>
      <y>20</y>
      <width>67</width>
      <height>17</height>
@@ -510,7 +519,7 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>125</x>
+     <x>150</x>
      <y>40</y>
      <width>67</width>
      <height>17</height>
@@ -523,7 +532,7 @@
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>150</x>
      <y>60</y>
      <width>67</width>
      <height>17</height>
@@ -538,9 +547,15 @@
     <rect>
      <x>10</x>
      <y>90</y>
-     <width>1311</width>
+     <width>1331</width>
      <height>581</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <property name="palette">
     <palette>
@@ -984,6 +999,18 @@
      </disabled>
     </palette>
    </property>
+   <property name="autoScrollMargin">
+    <number>16</number>
+   </property>
+   <attribute name="horizontalHeaderCascadingSectionResizes">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="horizontalHeaderMinimumSectionSize">
+    <number>90</number>
+   </attribute>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>150</number>
+   </attribute>
    <row>
     <property name="text">
      <string notr="true">1</string>
@@ -1211,11 +1238,6 @@
    </column>
    <column>
     <property name="text">
-     <string>New Column</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
      <string>First</string>
     </property>
    </column>
@@ -1247,6 +1269,11 @@
    <column>
     <property name="text">
      <string>Worst Score</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Shoot Moon</string>
     </property>
    </column>
    <column>

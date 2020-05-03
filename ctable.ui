@@ -453,7 +453,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Table list</string>
   </property>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">

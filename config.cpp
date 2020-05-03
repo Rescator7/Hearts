@@ -4,7 +4,6 @@
 #include <QTextStream>
 #include "config.h"
 #include "define.h"
-#include "language.h"
 #include "cdeck.h"
 
 CConfig::CConfig()
@@ -17,6 +16,10 @@ CConfig::CConfig()
    save_config_file();      // create the file by saving the default values.
  else
    load_config_file();
+}
+
+CConfig::~CConfig()
+{
 }
 
 void CConfig::init_vars()
@@ -36,6 +39,10 @@ void CConfig::init_vars()
   new_moon = false;
   no_draw = false;
 
+  username = "";
+  password = "";
+  warning = true;
+
   language = LANG_ENGLISH;
   deck_style = STANDARD_DECK;
 }
@@ -53,37 +60,47 @@ int CConfig::load_config_file() {
       cpt++;
       QString line = file.readLine();
       QString param = line.section(" ", 0, 0);
-      QString value = line.section(" ", -1, -1);
+      QString value = line.section(" ", -1, -1).simplified();
 
       if (param == "Language") {
-        if (value == "english\n")
+        if (value == "english")
           language = LANG_ENGLISH;
         else
-        if (value == "french\n")
+        if (value == "french")
           language = LANG_FRENCH;
         else
-        if (value == "russian\n")
+        if (value == "russian")
           language = LANG_RUSSIAN;
 
         continue;
       }
 
       if (param == "Deck_Style") {
-        if (value == "standard\n")
+        if (value == "standard")
           deck_style = STANDARD_DECK;
         else
-        if (value == "english\n")
+        if (value == "english")
           deck_style = ENGLISH_DECK;
         else
-        if (value == "russian\n")
+        if (value == "russian")
           deck_style = RUSSIAN_DECK;
 
         continue;
       }
 
+      if (param == "Username") {
+        username  = value;
+        continue;
+      }
+
+      if (param == "Password") {
+        password = value;
+        continue;
+      }
+
       bool enable;
 
-      if (value == "true\n")
+      if (value == "true")
         enable = true;
       else
         enable = false;
@@ -126,11 +143,13 @@ int CConfig::load_config_file() {
       else
       if (param == "Save_Game")
         save_game = enable;
+      if (param == "Warning")
+        warning = enable;
       else {
           // unknown param
       }
 
-      if (cpt > 15) break; // too many lines ?? corrupted file ??
+      if (cpt > 18) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
@@ -165,6 +184,7 @@ int CConfig::set_config_file(int param, bool enable)
     case CONFIG_NO_DRAW :                 no_draw = enable; break;
     case CONFIG_SAVE_GAME :               save_game = enable; break;
     case CONFIG_EASY_CARD_SELECTION :     easy_card_selection = enable; break;
+    case CONFIG_WARNING :                 warning = enable; break;
   }
 
   return save_config_file();
@@ -179,6 +199,12 @@ int CConfig::save_config_file()
   }
 
   QTextStream out(&file);
+
+  if (username.size() && password.size()) {
+    out << "Username = " << username << endl;
+    out << "Password = " << password << endl;
+    out << "Warning = " << (warning ? "true" : "false") << endl;
+  }
 
   switch (language) {
     case LANG_ENGLISH: out << "Language = english" << endl; break;
@@ -209,6 +235,29 @@ int CConfig::save_config_file()
 
   file.close();
   return FNOERR;
+}
+
+void CConfig::set_online(QString u, QString p)
+{
+  username = u;
+  password = p;
+
+  save_config_file();
+}
+
+QString &CConfig::Username()
+{
+  return username;
+}
+
+QString &CConfig::Password()
+{
+  return password;
+}
+
+bool CConfig::Warning()
+{
+  return warning;
 }
 
 bool CConfig::is_auto_centering() {

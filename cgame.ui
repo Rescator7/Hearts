@@ -453,7 +453,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Create table</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -476,7 +476,7 @@
     <rect>
      <x>110</x>
      <y>70</y>
-     <width>141</width>
+     <width>160</width>
      <height>23</height>
     </rect>
    </property>
@@ -489,7 +489,7 @@
     <rect>
      <x>110</x>
      <y>100</y>
-     <width>111</width>
+     <width>160</width>
      <height>23</height>
     </rect>
    </property>
@@ -502,7 +502,7 @@
     <rect>
      <x>110</x>
      <y>130</y>
-     <width>92</width>
+     <width>160</width>
      <height>23</height>
     </rect>
    </property>
@@ -515,7 +515,7 @@
     <rect>
      <x>280</x>
      <y>70</y>
-     <width>131</width>
+     <width>160</width>
      <height>23</height>
     </rect>
    </property>
@@ -528,7 +528,7 @@
     <rect>
      <x>280</x>
      <y>100</y>
-     <width>131</width>
+     <width>160</width>
      <height>23</height>
     </rect>
    </property>
@@ -541,7 +541,7 @@
     <rect>
      <x>280</x>
      <y>130</y>
-     <width>92</width>
+     <width>160</width>
      <height>23</height>
     </rect>
    </property>
@@ -552,14 +552,17 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>170</x>
      <y>20</y>
-     <width>121</width>
+     <width>160</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#73d216;&quot;&gt;Game Options&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

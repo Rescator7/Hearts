@@ -471,7 +471,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string/>
+   <string notr="true">Hearts</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="CLabel" name="label">
@@ -4452,7 +4452,7 @@
       <x>20</x>
       <y>725</y>
       <width>661</width>
-      <height>121</height>
+      <height>126</height>
      </rect>
     </property>
     <property name="palette">
@@ -4499,9 +4499,9 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>60</x>
       <y>850</y>
-      <width>661</width>
+      <width>621</width>
       <height>25</height>
      </rect>
     </property>
@@ -4525,14 +4525,17 @@
    <widget class="QLabel" name="label_23">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>580</x>
       <y>700</y>
-      <width>51</width>
+      <width>81</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
      <string>Online:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="label_24">
@@ -4566,7 +4569,7 @@
      <rect>
       <x>50</x>
       <y>0</y>
-      <width>50</width>
+      <width>55</width>
       <height>25</height>
      </rect>
     </property>
@@ -4577,7 +4580,7 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>105</x>
       <y>0</y>
       <width>55</width>
       <height>25</height>
@@ -4590,9 +4593,9 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>155</x>
+      <x>160</x>
       <y>0</y>
-      <width>95</width>
+      <width>100</width>
       <height>25</height>
      </rect>
     </property>
@@ -4600,8 +4603,33 @@
      <string>Create Table</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>0</y>
+      <width>50</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Mute</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>850</y>
+      <width>41</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string notr="true">&gt;</string>
+    </property>
+   </widget>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>

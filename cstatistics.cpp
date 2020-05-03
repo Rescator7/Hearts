@@ -27,10 +27,11 @@ CStatistics::CStatistics(QWidget *parent) :
       file_corrupted = true;
   }
 
+  ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
   create_window();
 
   file.close();
-  //  resize(1000, 600);
 }
 
 CStatistics::~CStatistics()
@@ -182,19 +183,12 @@ void CStatistics::update_window(int plr, int stats)
                              if (worst_score[plr] != -1)
                                item_worst_score[plr]->setData(Qt::EditRole, worst_score[plr]);
                              break;
-   case STATS_GAME_STARTED : ui->label_4->setText(QString::number(game_started)); break;
-   case STATS_GAME_FINISHED : ui->label_5->setText(QString::number(game_finished) + " (" + QString::number(double(game_finished * 100 / started), 'f', 1) );
+   case STATS_GAME_STARTED :
+   case STATS_GAME_FINISHED :
+   case STATS_HANDS_PLAYED :  ui->label_4->setText(QString::number(game_started));
+                              ui->label_5->setText(QString::number(game_finished) + " (" + QString::number(double(game_finished * 100 / started), 'f', 1) + QString("%)") );
+                              ui->label_6->setText(QString::number(hands_played));
                               break;
-   case STATS_HANDS_PLAYED : ui->label_6->setText(QString::number(game_finished)); break;
-     /*
-                              game_info->setText(tr("Games Started: ") + QString::number(game_started) + "\n" +
-                                                 tr("Games Finished: ") + QString::number(game_finished) +
-                                                 " (" + QString::number(double(game_finished * 100 / started), 'f', 1) +
-                                                 "%)\n" +
-                                                 tr("Hands Played: ") + QString::number(hands_played));
-
-                             break;
-                             */
    case STATS_FIRST_PLACE :
    case STATS_SECOND_PLACE :
    case STATS_THIRD_PLACE :
@@ -282,19 +276,6 @@ void CStatistics::reset()
 
 void CStatistics::create_window()
 {
- // layout = new QVBoxLayout;
-
- // table_widget = new QTableWidget(MAX_PLR_NAMES, 13, this);
-
-//  QStringList labels;
-
- // labels << tr("Name")        << tr("First")       << tr("Second")      << tr("Third") <<
-  //          tr("Fourth")      << tr("Avg. Score")  << tr("Best Score")  << tr("Worst Score") <<
-  //          tr("Shoot Moon")  << tr("Queen Spade") << tr("Omnibus")     << tr("No tricks")   <<
-   //         tr("Perfect 100");
-
- // table_widget->setHorizontalHeaderLabels(labels);
-
   QColor color1(78, 199, 102);
   QColor color2(94, 239, 123);
 
@@ -402,32 +383,16 @@ void CStatistics::create_window()
 
   ui->tableWidget->setSortingEnabled(true);
 
-//  table_widget->resize(1000, 600);
-
- // game_info = new QLabel(this);
-
   update_window(0, STATS_GAME_STARTED);
-/*
-  layout->addWidget(game_info);
-  layout->addWidget(table_widget);
-
-  setLayout(layout);
-  */
 }
-
-/*
-void CStats::show_stats()
-{
- show();
-}
-*/
 
 bool CStatistics::is_file_corrupted()
 {
- return file_corrupted;
+  return file_corrupted;
 }
 
 void CStatistics::Translate()
 {
+  ui->retranslateUi(this);
 }
 

@@ -44,10 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     hearts = new CHearts;
 
-    stats = new CStats;
-
-    statistics = new CStatistics;
-    statistics->show();
+    stats = new CStatistics;
 
     deck = new CDeck(config->get_deck_style());
 
@@ -66,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     set_settings();
     set_options();
 
+    light_connected(false);
     online_show_buttons(false);
 
     connect(timer, SIGNAL(timeout()), this, SLOT(update_bar()));
@@ -80,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(hearts, SIGNAL(sig_clear_table()), this, SLOT(clear_table()));
     connect(hearts, SIGNAL(sig_score(int,int)), this, SLOT(refresh_score(int,int)));
     connect(hearts, SIGNAL(sig_hand_score(int,int)), this, SLOT(refresh_hand_score(int,int)));
-    connect(hearts, SIGNAL(sig_end_hand(bool)), this, SLOT(end_of_hand(bool)));
+    connect(hearts, SIGNAL(sig_end_hand(int,int,int,int)), this, SLOT(end_of_hand(int,int,int,int)));
     connect(hearts, SIGNAL(sig_your_turn(int)), this, SLOT(show_your_turn(int)));
     connect(hearts, SIGNAL(sig_breaking_heart()), this, SLOT(breaking_hearts()));
     connect(hearts, SIGNAL(sig_game_over(int,int,int,int)), this, SLOT(game_over(int,int,int,int)));
@@ -91,19 +89,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(hearts, SIGNAL(sig_pass_to(int)), this, SLOT(pass_to(int)));
     connect(hearts, SIGNAL(sig_got_queen_spade(int)), this, SLOT(got_queen_spade(int)));
 
-    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(save_files()));
+    connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(aboutToQuit()));
     connect(ui->actionQuit, SIGNAL(triggered(bool)), this, SLOT(close()));
 
-    message("Welcome to " + QString(version));
+    set_language(config->get_language());
+
+    message(tr("Welcome to ") + QString(version));
 
     if (stats->is_file_corrupted())
       message(tr("[Error]: The statistics file is corrupted!"));
 
-    set_connected(false);
-
     start_game();
-
-    set_language(config->get_language());
 
 #ifdef DEBUG
     set_cheat_mode_enabled(config->is_cheat_mode());
@@ -118,10 +114,17 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
   delete ui;
+  delete client;
   delete hearts;
   delete config;
   delete stats;
   delete deck;
+  delete table_list;
+  delete timer;
+
+#ifdef DEBUG
+  delete debug;
+#endif
 
   delete img_connected;
   delete img_disconnected;
@@ -146,6 +149,7 @@ void MainWindow::init_vars()
   online_connected = false;
   online_can_sit = false;
   online_game_started = false;
+  online_button_mode = mode_button_command;
 
   card_played[0] = empty;
   card_played[1] = empty;
@@ -331,8 +335,14 @@ void MainWindow::init_pointers()
 #endif
 }
 
-void MainWindow::save_files()
+void MainWindow::aboutToQuit()
 {
+  client->disconnect();
+  save_files();
+}
+
+void MainWindow::save_files()
+{    
  stats->save_stats_file();
 
  if (!ui->actionSave_Game_Quit->isChecked())
@@ -349,7 +359,7 @@ void MainWindow::save_files()
 
 void MainWindow::load_saved_game()
 {
-  message("[Info]: Previous saved game has been loaded!");
+  message(tr("[Info]: Previous saved game has been loaded!"));
   for (int i=0; i<4; i++) {
     int name_id = hearts->get_plr_name_id(i);
 
@@ -401,7 +411,7 @@ void MainWindow::start_game()
   }
 }
 
-void MainWindow::set_connected(bool connected)
+void MainWindow::light_connected(bool connected)
 {
   if (connected)
     ui->label_24->setPixmap(QPixmap::fromImage(img_connected->scaledToHeight(15)));
@@ -472,7 +482,7 @@ void MainWindow::set_plr_names()
 
 void MainWindow::got_queen_spade(int plr)
 {
- stats->increase_stats(plr_names_idx[plr], STATS_QUEEN_SPADE);
+  stats->increase_stats(plr_names_idx[plr], STATS_QUEEN_SPADE);
 }
 
 void MainWindow::receive_bonus(int plr, int bonus, int value)
@@ -507,7 +517,7 @@ void MainWindow::online_receive_bonus(int plr, int bonus, int value)
                            break;
      case NO_TRICK_BONUS : msg_bonus = tr("no trick bonus ");
                            break;
-     default: msg_bonus = "<unknown> ";
+     default: msg_bonus = tr("<unknown> ");
   }
 
   if (plr == online_my_turn)
@@ -529,7 +539,7 @@ void MainWindow::perfect_100(int plr)
    mesg = tr("[Info]: You got the perfect 100!\n[Info]: Your score has been set to 50.");
  else
    mesg = tr("[Info]: Player '") + label[18 + plr]->text() + tr("' got the perfect 100!\n[Info]: Player '") +
-                               label[18 + plr]->text() + tr("' score has been set to 50.");
+                                   label[18 + plr]->text() + tr("' score has been set to 50.");
 
  message(mesg);
 
@@ -565,59 +575,6 @@ void MainWindow::breaking_hearts()
   if (ui->actionSounds->isChecked())
     al_play_sample(snd_breaking_heart, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
-}
-
-void MainWindow::online_game_over(int north, int south, int west, int east)
-{
-  int lowest = south;
-  bool drew = false;
-
-  if ((north <= south) && (north <= west) && (north <= east)) {
-    lowest = north;
-  if ((north == south) || (north == west) || (north == east))
-    drew = true;
-  } else
-      if ((south <= north) && (south <= west) && (south <= east)) {
-        lowest = south;
-        if ((south == north) || (south == west) || (south == east))
-          drew = true;
-      } else
-          if ((west <= north) && (west <= south) && (west <= east)) {
-            lowest = west;
-            if ((west == north) || (west == south) || (west == east))
-              drew = true;
-          } else
-              if ((east <= north) && (east <= south) && (east <= west)) {
-                lowest = east;
-                if ((east == north) || (east == south) || (east == west))
-                  drew = true;
-              }
-
-  QString mesg, mesg2;
-
-  if (drew)
-    mesg2 = tr("Drew !");
-  else
-    mesg2 = tr("Won !");
-
-  mesg = tr("[Info]: GAME OVER!\n[Info]: Player '") + label[18]->text() + "': " +
-          QString::number(south) + tr(" point(s) ") + (south == lowest ? mesg2 : "") +
-         tr("\n[Info]: Player '")                   + label[19]->text() + "': " +
-          QString::number(west) + tr(" point(s) ")  + (west == lowest ? mesg2 : "") +
-         tr("\n[Info]: Player '")                   + label[20]->text() + "': " +
-          QString::number(north) + tr(" point(s) ") + (north == lowest ? mesg2 : "") +
-         tr("\n[Info]: Player '")                   + label[21]->text() + "': " +
-          QString::number(east) + tr(" point(s) ")  + (east == lowest ? mesg2 : "");
-
-  message(mesg);
-
- #ifdef __al_included_allegro5_allegro_audio_h
-   if (ui->actionSounds->isChecked())
-     al_play_sample(snd_game_over, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
- #endif
-
-   if (!ui->actionInfo_Channel->isChecked())
-     QMessageBox::information(this, tr("Information"), mesg);
 }
 
 void MainWindow::game_over(int score1, int score2, int score3, int score4)
@@ -684,8 +641,60 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
   if (!ui->actionInfo_Channel->isChecked())
     QMessageBox::information(this, tr("Information"), mesg);
 
-  if (!online_connected)
-    ui->actionNew->setDisabled(false);
+  ui->actionNew->setDisabled(false);
+}
+
+void MainWindow::online_game_over(int north, int south, int west, int east)
+{
+  int lowest = south;
+  bool drew = false;
+
+  if ((north <= south) && (north <= west) && (north <= east)) {
+    lowest = north;
+  if ((north == south) || (north == west) || (north == east))
+    drew = true;
+  } else
+      if ((south <= north) && (south <= west) && (south <= east)) {
+        lowest = south;
+        if ((south == north) || (south == west) || (south == east))
+          drew = true;
+      } else
+          if ((west <= north) && (west <= south) && (west <= east)) {
+            lowest = west;
+            if ((west == north) || (west == south) || (west == east))
+              drew = true;
+          } else
+              if ((east <= north) && (east <= south) && (east <= west)) {
+                lowest = east;
+                if ((east == north) || (east == south) || (east == west))
+                  drew = true;
+              }
+
+  QString mesg, mesg2;
+
+  if (drew)
+    mesg2 = tr("Drew !");
+  else
+    mesg2 = tr("Won !");
+
+  mesg = tr("[Info]: GAME OVER!\n[Info]: Player '") + label[18]->text() + "': " +
+          QString::number(south) + tr(" point(s) ") + (south == lowest ? mesg2 : "") +
+         tr("\n[Info]: Player '")                   + label[19]->text() + "': " +
+          QString::number(west) + tr(" point(s) ")  + (west == lowest ? mesg2 : "") +
+         tr("\n[Info]: Player '")                   + label[20]->text() + "': " +
+          QString::number(north) + tr(" point(s) ") + (north == lowest ? mesg2 : "") +
+         tr("\n[Info]: Player '")                   + label[21]->text() + "': " +
+          QString::number(east) + tr(" point(s) ")  + (east == lowest ? mesg2 : "");
+
+  message(mesg);
+
+ #ifdef __al_included_allegro5_allegro_audio_h
+   if (ui->actionSounds->isChecked())
+     al_play_sample(snd_game_over, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
+ #endif
+
+   if (!ui->actionInfo_Channel->isChecked())
+     QMessageBox::information(this, tr("Information"), mesg);
 }
 
 void MainWindow::tram(int plr)
@@ -701,19 +710,9 @@ void MainWindow::tram(int plr)
   clear_deck();
 }
 
-void MainWindow::shoot_moon(int plr, int delay)
+void MainWindow::shoot_moon(int plr)
 {
- int who_ami;
- bool new_moon;
-
- if (!online_connected) {
-   stats->increase_stats(plr_names_idx[plr], STATS_SHOOT_MOON);
-   who_ami = hearts->whoami();
-   new_moon = ui->actionNew_Moon->isChecked() && (hearts->get_my_score() >= 26);
- } else {
-     who_ami = online_my_turn;
-     new_moon = online_new_moon;
-   }
+  stats->increase_stats(plr_names_idx[plr], STATS_SHOOT_MOON);
 
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked())
@@ -722,10 +721,52 @@ void MainWindow::shoot_moon(int plr, int delay)
 
   QString mesg;
 
-  if (plr == who_ami) {
+  if (plr == hearts->whoami()) {
     mesg = tr("[Info]: You shoot the moon!");
 
-    if (new_moon) {
+    if (ui->actionNew_Moon->isChecked() && (hearts->get_my_score() >= 26)) {
+      message(mesg);
+
+      QMessageBox msgBox(this);
+      msgBox.setWindowTitle(tr("You shoot the moon!"));
+      msgBox.setText(tr("What is your choice ?"));
+      QPushButton *button_add = msgBox.addButton(tr("Add"), QMessageBox::YesRole);
+      msgBox.addButton(tr("Subtract"), QMessageBox::NoRole);
+      msgBox.setDefaultButton(button_add);
+      msgBox.exec();
+      if (msgBox.clickedButton() == button_add) {
+         message(tr("[Info]: You added 26 pts to everyone's scores!"));
+         hearts->set_moon_add_to_score(true);
+      } else {
+          message(tr("[Info]: You substracted 26 pts to your score!"));
+          hearts->set_moon_add_to_score(false);
+         }
+      return;
+    }
+  } else {
+      mesg = tr("[Info]: Player '") + label[18 + plr]->text() + tr("' shoot the moon!");
+    }
+
+  message(mesg);
+
+  if (!ui->actionInfo_Channel->isChecked())
+    QMessageBox::information(this, tr("information"), mesg);
+}
+
+// this is the online version of shoot_moon()
+void MainWindow::shoot_moon(int plr, int delay)
+{
+#ifdef __al_included_allegro5_allegro_audio_h
+  if (ui->actionSounds->isChecked())
+    al_play_sample(snd_shoot_moon, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
+#endif
+
+  QString mesg;
+
+  if (plr == online_my_turn) {
+    mesg = tr("[Info]: You shoot the moon!");
+
+    if (online_new_moon) {
       message(mesg);
 
       QMessageBox msgBox(this);
@@ -739,20 +780,14 @@ void MainWindow::shoot_moon(int plr, int delay)
       msgBox.exec();
       if (msgBox.clickedButton() == button_add) {
          message(tr("[Info]: You added 26 pts to everyone's scores!"));
-         if (online_connected) {
-           client->send("moon +");
-           remove_timer();
-         }
-         else
-           hearts->set_moon_add_to_score(true);
+
+         client->send("moon +");
+         remove_timer();
       } else {
          message(tr("[Info]: You substracted 26 pts to your score!"));
-         if (online_connected) {
-           client->send("moon -");
-           remove_timer();
-         }
-         else
-           hearts->set_moon_add_to_score(false);
+
+         client->send("moon -");
+         remove_timer();
         }
       return;
     }
@@ -767,15 +802,12 @@ void MainWindow::shoot_moon(int plr, int delay)
     QMessageBox::information(this, tr("information"), mesg);
 }
 
-void MainWindow::shoot_moon(int plr)
-{
-  shoot_moon(plr, 0);
-}
-
 void MainWindow::pass_to(int pass_to)
-{        
-  if (!online_connected)
+{
+  if (!online_connected) {
     ui->actionNew->setDisabled(false);
+    ui->actionConnect->setDisabled(false);
+  }
   label[17]->setPixmap(QPixmap::fromImage(img_pass[pass_to]->scaledToHeight(80)));
   label[17]->setDisabled(pass_to == pNOPASS);
 }
@@ -790,14 +822,18 @@ void MainWindow::refresh_hand_score(int score, int idx)
   lcd_hand_score[idx]->display(score);
 }
 
-void MainWindow::end_of_hand(bool online)
+void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
 {
-  if (!online)
-    stats->increase_stats(0, STATS_HANDS_PLAYED);
+  stats->increase_stats(0, STATS_HANDS_PLAYED);
 
 #ifdef DEBUG
   debug->save_card(nullptr, img_empty_card);
 #endif
+
+  lcd_hand_score[0]->display(score1);
+  lcd_hand_score[1]->display(score2);
+  lcd_hand_score[2]->display(score3);
+  lcd_hand_score[3]->display(score4);
 
   QString mesg;
 
@@ -812,12 +848,10 @@ void MainWindow::end_of_hand(bool online)
 
   message(mesg);
 
-
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked() && !hearts->is_game_over()) {
     al_play_sample(snd_shuffling_cards, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
-    if (!online)
-      delay(1500);
+    delay(1500);
   }
 #endif
 }
@@ -833,7 +867,18 @@ void MainWindow::online_end_hand(int north, int south, int west, int east) {
   lcd_score[2]->display(north);
   lcd_score[3]->display(east);
 
-  end_of_hand(true);
+  QString mesg;
+
+  mesg = tr("[Info]: New scores: '") + label[18]->text() + ": " +
+          QString::number(lcd_score[0]->value()) + " (" + QString::number(lcd_hand_score[0]->value()) + ")', '" +
+                                   label[19]->text() + ": " +
+          QString::number(lcd_score[1]->value()) + " (" + QString::number(lcd_hand_score[1]->value()) + ")', '" +
+                                   label[20]->text() + ": " +
+          QString::number(lcd_score[2]->value()) + " (" + QString::number(lcd_hand_score[2]->value()) + ")', '" +
+                                   label[21]->text() + ": " +
+          QString::number(lcd_score[3]->value()) + " (" + QString::number(lcd_hand_score[3]->value()) + ")'";
+
+  message(mesg);
 
   for (int i=0; i<4; i++)
     lcd_hand_score[i]->display(0);
@@ -842,28 +887,57 @@ void MainWindow::online_end_hand(int north, int south, int west, int east) {
 void MainWindow::show_deck(int plr, bool refresh)
 {
   active_deck = plr;
-  bool selected, selectable, mycard;
 
-  int count = online_connected ? online_num_cards - 1 : hearts->count_plr_cards(plr) - 1;
+  if (online_connected) {
+    online_show_deck();
+    return;
+  }
+
+  int count = hearts->count_plr_cards(plr) - 1;
 
   for (int i=0; i<13; i++)
     label[i]->hide();
 
   for (int i=0; i<13; i++) {
-    int card;
+    int card = hearts->get_card(plr, i);
 
-    if (online_connected) {
-      card = online_myCards[i];
-      selected = online_selected[i];
-      selectable = true;
-      mycard = true;
+    if (card == empty) break;
+
+    int pos;
+    if (ui->actionAuto_Centering->isChecked())
+      pos = cards_position[count][i];
+    else
+      pos = i;
+
+    assert ((pos >= 0) && (pos <= 12));
+
+    label[pos]->show();
+
+    label[pos]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
+    if (hearts->is_card_selected(plr, i))
+      label[pos]->move(label[pos]->x(),def_card_posy - 20);
+    else
+      label[pos]->move(label[pos]->x(),def_card_posy);
+
+    if (ui->actionEasy_card_selection->isChecked()) {
+      if (plr != hearts->whoami())
+        label[pos]->setDisabled(false);
+      else
+      if (refresh)
+        label[pos]->setDisabled(!hearts->is_card_selectable(card));
     }
-    else {
-      card = hearts->get_card(plr, i);
-      selected = hearts->is_card_selected(plr, i);
-      selectable = hearts->is_card_selectable(card);
-      mycard = hearts->whoami() == plr;
-    }
+  }
+}
+
+void MainWindow::online_show_deck()
+{
+  int count = online_num_cards - 1;
+
+  for (int i=0; i<13; i++)
+    label[i]->hide();
+
+  for (int i=0; i<13; i++) {
+    int card = online_myCards[i];
 
     if (card == empty) break;
 
@@ -878,18 +952,10 @@ void MainWindow::show_deck(int plr, bool refresh)
     label[pos]->show();
     label[pos]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
 
-    if (selected)
+    if (online_selected[i])
       label[pos]->move(label[pos]->x(),def_card_posy - 20);
     else
       label[pos]->move(label[pos]->x(),def_card_posy);
-
-    if (ui->actionEasy_card_selection->isChecked()) {
-      if (!mycard)
-        label[pos]->setDisabled(false);
-      else
-        if (refresh)
-          label[pos]->setDisabled(!selectable);
-    }
   }
 }
 
@@ -1028,6 +1094,7 @@ void MainWindow::select_card(int num)
     if (!hearts->is_it_my_turn()) return;     // wait_delay seem to do the job, but maybe it's just by luck...
 
     ui->actionNew->setDisabled(true);
+    ui->actionConnect->setDisabled(true);
 
     if (ui->actionEasy_card_selection->isChecked())
       set_cards_disabled(false);
@@ -1048,11 +1115,11 @@ void MainWindow::select_card(int num)
 #ifdef __al_included_allegro5_allegro_audio_h
       if (error && ui->actionSounds->isChecked())
         al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
-#endif
-
-      ui->actionNew->setDisabled(false);
+#endif  
     }
 
+    ui->actionNew->setDisabled(false);
+    ui->actionConnect->setDisabled(false);
     return;
  }
 
@@ -1112,8 +1179,10 @@ void MainWindow::show_your_turn(int idx)
     al_play_sample(snd_your_turn, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
 
-  if (!online_connected)
+  if (!online_connected) {
     ui->actionNew->setDisabled(false);
+    ui->actionConnect->setDisabled(false);
+  }
 }
 
 void MainWindow::online_pass_cards()
@@ -1144,6 +1213,7 @@ void MainWindow::online_pass_cards()
     }
 
   client->send(s);
+  remove_timer();
   wait_delay = true;  // this will disable cards select, while waiting to receive more from the server
 }
 
@@ -1172,6 +1242,7 @@ void MainWindow::on_label_18_clicked()
   label[17]->setDisabled(true);
 
   ui->actionNew->setDisabled(true);
+  ui->actionConnect->setDisabled(true);
 
   hearts->AI_pass_cpus_cards();
   hearts->pass_cards();
@@ -1492,7 +1563,7 @@ void MainWindow::on_actionReset_triggered()
 
 void MainWindow::on_actionShow_triggered()
 {
-  stats->show_stats();
+  stats->show();
 }
 
 #ifdef DEBUG
@@ -1503,6 +1574,14 @@ void MainWindow::on_actionShow_2_triggered()
 #endif
 
 
+void MainWindow::fit_button(QPushButton *button, int x, int width)
+{
+  int y = ui->pushButton->y();
+
+  button->setFixedWidth(width);
+  button->move(x, y);
+}
+
 void MainWindow::set_language(int lang)
 {
  ui->actionEnglish->setChecked(false);
@@ -1512,22 +1591,44 @@ void MainWindow::set_language(int lang)
  qApp->removeTranslator(&translator);
 
  switch (lang) {
-    case LANG_ENGLISH: if (translator.load(QLocale(QLocale::English), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages")))
+    case LANG_ENGLISH: if (translator.load(QLocale(QLocale::English), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages"))) {
                          qApp->installTranslator(&translator);
-                       ui->actionEnglish->setChecked(true);
+
+                         ui->actionEnglish->setChecked(true);
+                         fit_button(ui->pushButton, 10, 40);
+                         fit_button(ui->pushButton_2, 50, 55);
+                         fit_button(ui->pushButton_3, 105, 55);
+                         fit_button(ui->pushButton_4, 160, 100);
+                         fit_button(ui->pushButton_5, 260, 50);
+                       }
                        break;
-    case LANG_FRENCH:  if (translator.load(QLocale(QLocale::French), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages")))
+    case LANG_FRENCH:  if (translator.load(QLocale(QLocale::French), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages"))) {
                          qApp->installTranslator(&translator);
-                       ui->actionFrench->setChecked(true);
+
+                         ui->actionFrench->setChecked(true);
+                         fit_button(ui->pushButton, 10, 60);
+                         fit_button(ui->pushButton_2, 70, 65);
+                         fit_button(ui->pushButton_3, 135, 55);
+                         fit_button(ui->pushButton_4, 190, 90);
+                         fit_button(ui->pushButton_5, 280, 75);
+                       }
                        break;
-    case LANG_RUSSIAN: if (translator.load(QLocale(QLocale::Russian), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages")))
+    case LANG_RUSSIAN: if (translator.load(QLocale(QLocale::Russian), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages"))) {
                          qApp->installTranslator(&translator);
-                       ui->actionRussian->setChecked(true);
+
+                         ui->actionRussian->setChecked(true);
+                         fit_button(ui->pushButton, 10, 60);
+                         fit_button(ui->pushButton_2, 70, 55);
+                         fit_button(ui->pushButton_3, 125, 80);
+                         fit_button(ui->pushButton_4, 205, 135);
+                         fit_button(ui->pushButton_5, 340, 80);
+                       }
                        break;
  }
 
  ui->retranslateUi(this);
  table_list->Translate();
+ stats->Translate();
 
 #ifndef DEBUG
   ui->menuDebug->setTitle("");
@@ -1649,26 +1750,48 @@ void MainWindow::on_actionRussian_2_triggered()
 
 void MainWindow::on_lineEdit_returnPressed()
 {
-  client->send(ui->lineEdit->text());
+  QString data;
+
+  switch (online_button_mode) {
+     case mode_button_command: break;
+     case mode_button_help: data = "help "; break;
+     case mode_button_says: data = "say "; break;
+  }
+
+  data += ui->lineEdit->text();
+
+  client->send(data);
+  message(data);
+
   ui->lineEdit->clear();
 }
 
 void MainWindow::on_actionConnect_triggered()
 {
+  bool warning = config->Warning();
+
   Connect connect_diag(this);
   connect_diag.setModal(true);
+  connect_diag.config(config->Username(), config->Password(), warning);
+
   connect_diag.exec();
 
   client->setHandle(connect_diag.getHandle());
   client->setPassword(connect_diag.getPassword());
 
-  switch (connect_diag.result()) {
-     case QDialog::Accepted: client->socketConnect(false, connect_diag.getHost(), connect_diag.getPort());
-                             break;
-     case QDialog::Rejected:
-                             break;
-     default: client->socketConnect(true, connect_diag.getHost(), connect_diag.getPort());
-  }
+  config->set_online(connect_diag.getHandle(), connect_diag.getPassword());
+
+  if (warning && connect_diag.WarningDisabled())
+    config->set_config_file(CONFIG_WARNING, false);
+
+  if (connect_diag.WarningAccepted())
+    switch (connect_diag.result()) {
+      case QDialog::Accepted: client->socketConnect(true, connect_diag.getHost(), connect_diag.getPort());
+                              break;
+      case QDialog::Rejected:
+                              break;
+      default: client->socketConnect(false, connect_diag.getHost(), connect_diag.getPort());
+    }
 }
 
 void MainWindow::on_actionCreate_Table_triggered()
@@ -1736,9 +1859,15 @@ void MainWindow::on_label_17_clicked()
     client->send("sit e");
 }
 
-void MainWindow::set_online_game()
+void MainWindow::init_online_game()
 {
   online_table_id = 0;
+
+  for (int i=0; i<13; i++) {
+     online_myCards[i] = back_card;
+     online_selected[i] = false;
+     online_num_cards = 13;
+  }
 
   // Clear players's name
   label[18]->setText("");
@@ -1761,6 +1890,8 @@ void MainWindow::set_online_game()
     label[i]->setEnabled(true);
     label[i]->show();
   }
+
+  reset_cards_pos();
 }
 
 int MainWindow::get_name_label(QString p)
@@ -1784,65 +1915,75 @@ void MainWindow::online_action(unsigned int action, QString param)
 
   int name, wait, c1, c2, c3, p1, p2, p3;
   int north, south, west, east;
+  long int s1, s2, s3, s4;
+
+#ifdef DEBUG_DATAGRAMS
+  m = "Action: " + QString::number(action) + " Param : " + param;
+  message(m);
+#endif
 
   switch (action) {
     case ACTION_CONNECTED:
-           ui->actionConnect->setEnabled(false);
-
            // Save the current game
-           save_files(); 
-           set_connected(true);
-
-           for (int i=0; i<13; i++) {
-              online_myCards[i] = back_card;
-              online_selected[i] = false;
-              online_num_cards = 13;
-           }
-
-           set_online_game();
-           disable_cheat(true);
-           online_show_buttons(true);
+           save_files();
 
            online_connected = true;
-           ui->actionNew->setDisabled(true);
            wait_delay = true; // disable cards select
+
+           // Disable New & Connect Buttons
+           ui->actionConnect->setDisabled(true);
+           ui->actionNew->setDisabled(true);
+
+           disable_cheat(true);
+
+           light_connected(true);
+           online_show_buttons(true);
+
+           init_online_game();
+
+#ifdef DEBUG
+           debug->reset();
+#endif
 
 #ifdef __al_included_allegro5_allegro_audio_h
             if (ui->actionSounds->isChecked())
               al_play_sample(snd_connected, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
-
-#ifdef DEBUG
-           debug->reset();
-#endif
            break;
     case ACTION_CHOOSE_CHAIR:
+            if (pList.size() != 1) {
+              message("ERROR: ACTION_CHOOSE_CHAIR");
+              break;
+            }
             online_can_sit = true;
-            online_table_id = param.toInt();
+            online_table_id = pList.at(0).toInt();
+
             for (int i=0; i<4; i++)
               label[i + 13]->setPixmap(QPixmap::fromImage(img_sit_here->scaledToHeight(card_height)));
+
             break;
     case ACTION_SIT_CHAIR:
-            // 0 = table_id   1 = n,s,w,e   2 = player name
-           if (pList.size() != 3) {
+            // 0 = table_id   1 = n,s,w,e   2 = bool muted, 3 = player name
+           if (pList.size() != 4) {
              message("ERROR: ACTION_SIT_CHAIR");
              break;
            }
 
            // update the game list window
-           table_list->SetPlayer(pList.at(0), pList.at(2), pList.at(1));
+           table_list->SetPlayer(pList.at(0), pList.at(3), pList.at(1));
 
            // not my table --> break
            if (pList.at(0).toInt() != online_table_id) break;
 
-            name = get_name_label(pList.at(1));
-            if (name) {
-              QByteArray ba = pList.at(2).toLocal8Bit();
-              strncpy(online_names[name-18], ba.data(), 20);
-              label[name]->setText(pList.at(2));
-              label[name-5]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
-            }
-            break;
+           ui->pushButton_5->setDisabled(pList.at(2).toInt());
+
+           name = get_name_label(pList.at(1));
+           if (name) {
+             QByteArray ba = pList.at(3).toLocal8Bit();
+             strncpy(online_names[name-18], ba.data(), 20);
+             label[name]->setText(pList.at(3));
+           }
+           break;
     case ACTION_MY_CHAIR:
             if (pList.size() != 1) {
               message("ERROR: ACTION_MY_CHAIR");
@@ -1879,7 +2020,7 @@ void MainWindow::online_action(unsigned int action, QString param)
     case ACTION_DELETE_TABLE:
             table_list->RemoveRow(param);
             if (online_table_id == param.toInt()) {
-              set_online_game();
+              init_online_game();
             }
             break;
     case ACTION_DISCONNECTED:
@@ -1893,50 +2034,52 @@ void MainWindow::online_action(unsigned int action, QString param)
               break;
 
             remove_timer();
-            table_list->Empty();
-            reset_cards_pos();
 
-            set_connected(false);
+            table_list->Empty();
+
+            light_connected(false);
             online_show_buttons(false);
 
-            online_connected = false;
             ui->actionConnect->setDisabled(false);
-            ui->actionCheat->setDisabled(false);
             ui->actionNew->setDisabled(false);
+            ui->actionCheat->setDisabled(false);
 
 #ifdef __al_included_allegro5_allegro_audio_h
             if (ui->actionSounds->isChecked())
               al_play_sample(snd_disconnected, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
+            online_connected = false;
+
+            reset_cards_pos();
 
             start_game();
             break;
     case ACTION_SET_CARDS:
+            if (pList.size() != 15) {
+              message("ERROR: ACTION_SET_CARDS");
+              break;
+            }
+
             for (int i=0; i<13;i++)
-               online_myCards[i] = empty;
-            if (pList.size() >= 2) {
-              online_passto = pList.at(0).toInt();
-              wait = pList.at(1).toInt();
-            } else {
-                message("ERROR: ACTION_SET_CARDS");
-                break;
-            }
-            for (int i=2; i<pList.size(); i++) {
-               online_myCards[i-2] = pList.at(i).toInt();
-            }
+               online_selected[i] = false;
+
+            online_passto = pList.at(0).toInt();
+            wait = pList.at(1).toInt();
+
+            for (int i=2; i<pList.size(); i++)
+              online_myCards[i-2] = pList.at(i).toInt();
+
             online_game_started = true;
             online_can_sit = false;
             online_playing = false;
             online_num_cards = pList.size() - 2;
             online_num_selected = 0;
-            for (int i=0; i<13; i++)
-               online_selected[i] = false;
+
             pass_to(online_passto);
             show_deck(0, false);
-            if (online_passto == pNOPASS)
-              wait_delay = true;
-            else
-              wait_delay = false;
+
+            wait_delay = online_passto == pNOPASS;
+
             activate_timer(wait);
             break;
     case ACTION_FORCE_PASS:
@@ -2037,7 +2180,6 @@ void MainWindow::online_action(unsigned int action, QString param)
             show_deck(0, 0);
             break;
     case ACTION_HAND_SCORE:
-            clear_table();
             if (pList.size() != 2) {
               message("ERROR: ACTION_HAND_SCORE");
               break;
@@ -2047,6 +2189,8 @@ void MainWindow::online_action(unsigned int action, QString param)
             refresh_hand_score(c2, c1);
             break;
     case ACTION_SCORE:
+            clear_table();
+
             if (pList.size() != 4) {
               message("ERROR: ACTION_SCORE");
               break;
@@ -2098,7 +2242,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_receive_bonus(c1, OMNIBUS_BONUS, c2);
             break;
     case ACTION_PERFECT_100:
-            if (pList.size() != 1) {
+            if (pList.size() != 2) {
               message("ERROR: ACTION_PERFECT_100");
               break;
             }
@@ -2109,10 +2253,12 @@ void MainWindow::online_action(unsigned int action, QString param)
               message("ERROR: ACTION_SCORE");
               break;
             }
+            remove_timer();
             north = pList.at(0).toInt(); // score NORTH
             south = pList.at(1).toInt(); // score SOUTH
             west = pList.at(2).toInt();  // score WEST
             east = pList.at(3).toInt();  // score EAST
+            online_game_over(north, south, west, east);
             break;
     case ACTION_ANNOUNCEMENT:
 #ifdef __al_included_allegro5_allegro_audio_h
@@ -2149,7 +2295,143 @@ void MainWindow::online_action(unsigned int action, QString param)
               }
             break;
     case ACTION_LEAVE_TABLE:
-            set_online_game();
+            remove_timer();
+            init_online_game();
+            break;
+    case ACTION_CLEAR_TABLE:
+            clear_table();
+            break;
+    case ACTION_TABLE_MUTED:
+            ui->pushButton_5->setDisabled(true);
+            message(param);
+            break;
+    case ACTION_SHUFFLE:
+#ifdef __al_included_allegro5_allegro_audio_h
+            if (ui->actionSounds->isChecked() && !hearts->is_game_over())
+              al_play_sample(snd_shuffling_cards, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
+#endif
+            break;
+    case ACTION_STATS:
+            if (pList.size() != 4) {
+               message("ERROR: ACTION_STATS");
+               return;
+            }
+            s1 = pList.at(0).toLong();
+            s2 = pList.at(1).toLong();
+            s3 = pList.at(2).toLong();
+            s4 = pList.at(3).toLong();
+            m = tr("Your online statistics:\r\n") +
+                tr("Games  : ")     + QString::number(s1+s2+s3+s4) +
+                tr("\r\nFirst  : ") + QString::number(s1) +
+                tr("\r\nSecond : ") + QString::number(s2) +
+                tr("\r\nThird  : ") + QString::number(s3) +
+                tr("\r\nFourth : ") + QString::number(s4);
+            message(m);
+            break;
+    case ACTION_GAME_STARTED:
+            if (pList.size() != 1) {
+              message("ERROR: ACTION_GAME_STARTED");
+              return;
+            }
+            clear_table();
+            table_list->RemoveRow(param);
+            break;
+    case ACTION_RECONNECTED:
+      // 0   = table id
+      // 1   = score S
+      // 2   = score W
+      // 3   = score N
+      // 4   = score E
+      // 5   = hand score S
+      // 6   = hand score W
+      // 7   = hand score N
+      // 8   = hand score E
+      // 9   = card played S
+      // 10  = card played W
+      // 11  = card played N
+      // 12  = card played E
+      // 13  = my chair
+      // 14  = Status
+      // 15  = Time left
+      // 16  = game passto
+      // 17  = bool heart broken
+      // 18 19 20 21 22 23 24 25 26 27 28 29 30 = my cards (empty card included)
+            if (pList.size() != 31) {
+              message("ERROR: ACTION_RECONNECTED");
+              return;
+            }
+            online_table_id = pList.at(0).toInt();
+
+            south = pList.at(1).toInt();
+            west  = pList.at(2).toInt();
+            north = pList.at(3).toInt();
+            east  = pList.at(4).toInt();
+            lcd_score[PLAYER_SOUTH]->display(south);
+            lcd_score[PLAYER_WEST]->display(west);
+            lcd_score[PLAYER_NORTH]->display(north);
+            lcd_score[PLAYER_EAST]->display(east);
+
+            south = pList.at(5).toInt();
+            west  = pList.at(6).toInt();
+            north = pList.at(7).toInt();
+            east  = pList.at(8).toInt();
+            lcd_hand_score[PLAYER_SOUTH]->display(south);
+            lcd_hand_score[PLAYER_WEST]->display(west);
+            lcd_hand_score[PLAYER_NORTH]->display(north);
+            lcd_hand_score[PLAYER_EAST]->display(east);
+
+            card_played[PLAYER_SOUTH] = pList.at(9).toInt();
+            card_played[PLAYER_WEST]  = pList.at(10).toInt();
+            card_played[PLAYER_NORTH] = pList.at(11).toInt();
+            card_played[PLAYER_EAST]  = pList.at(12).toInt();
+            refresh_cards_played();
+
+            online_my_turn = pList.at(13).toInt();
+            c1 = pList.at(14).toInt(); // status
+            c2 = pList.at(15).toInt(); // timeleft
+
+            wait_delay = true;
+            online_playing = true;
+
+            if (c1 == STATUS_YOUR_TURN) {
+              wait_delay = false;
+              show_your_turn(online_my_turn);
+              if (c2) activate_timer(c2);
+            } else
+                if (c1 == STATUS_PASSING) {
+                  online_playing = false;
+                  wait_delay = false;
+                 if (c2) activate_timer(c2);
+                }
+
+            online_passto = pList.at(16).toInt();
+
+            pass_to(online_passto);
+            if ((c1 == STATUS_PASSED) || (c1 != STATUS_PASSING))
+              label[17]->setDisabled(true);
+
+            // TODO: check to disable passto button
+            online_heart_broken = pList.at(17).toInt();
+            online_num_cards = 0;
+            online_can_sit = false;
+            table_list->RemoveRow(pList.at(0));
+            for (int i=0; i<13; i++) {
+               c1 = pList.at(18+i).toInt();
+               online_myCards[i] = c1;
+               online_selected[i] = false;
+               if (c1 != empty)
+                 online_num_cards++;
+            }
+            online_game_started = true;
+            show_deck(0, false);
+            break;
+    case ACTION_WRONG_VALUE:
+            if (pList.size() != 2) {
+              message("ERROR: ACTION_WRONG_VALUE");
+              return;
+            }
+            m = tr("Wrong value ! The range is: [") + QString::number(pList.at(0).toInt()) + ", " + QString::number(pList.at(1).toInt()) + "]";
+            message(m);
             break;
   }
 }
@@ -2183,10 +2465,10 @@ void MainWindow::on_actionTables_triggered()
   table_list->show();
 }
 
-void MainWindow::activate_timer(int secs)
+void MainWindow::activate_timer(int cs)
 {
-  ui->progressBar->setMaximum(secs * 1000);
-  ui->progressBar->setValue(secs * 1000);
+  ui->progressBar->setMaximum(cs * 10);
+  ui->progressBar->setValue(cs * 10);
   ui->progressBar->show();
   timer->setInterval(100);
   timer->start();
@@ -2234,6 +2516,30 @@ void MainWindow::on_pushButton_4_clicked()
   on_actionCreate_Table_triggered();
 }
 
+// online mute
+void MainWindow::on_pushButton_5_clicked()
+{
+  client->send("mute");
+}
+
+// online button action: command, help, says
+void MainWindow::on_pushButton_6_clicked()
+{
+  online_button_mode++;
+  if (online_button_mode > mode_button_last)
+    online_button_mode = mode_button_first;
+
+  switch (online_button_mode) {
+     case mode_button_command : ui->pushButton_6->setText(">"); break;
+     case mode_button_help :    ui->pushButton_6->setText("?");
+                                client->send("help");
+                                break;
+     case mode_button_says :    ui->pushButton_6->setText("@"); break;
+  }
+}
+
+// Show online buttons when connected.
+// Hide them when disconnecting.
 void MainWindow::online_show_buttons(bool enable)
 {
   if (enable) {
@@ -2241,10 +2547,12 @@ void MainWindow::online_show_buttons(bool enable)
     ui->pushButton_2->show();
     ui->pushButton_3->show();
     ui->pushButton_4->show();
+    ui->pushButton_5->show();
   } else {
       ui->pushButton->hide();
       ui->pushButton_2->hide();
       ui->pushButton_3->hide();
       ui->pushButton_4->hide();
+      ui->pushButton_5->hide();
     }
 }

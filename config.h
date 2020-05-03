@@ -1,6 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <QString>
+
 const int CONFIG_AUTO_CENTERING          = 0;
 const int CONFIG_CHEAT_MODE              = 1;
 const int CONFIG_INFO_CHANNEL            = 2;
@@ -16,6 +18,9 @@ const int CONFIG_SAVE_GAME               = 11;
 const int CONFIG_LANGUAGE                = 12;
 const int CONFIG_EASY_CARD_SELECTION     = 13;
 const int CONFIG_DECK_STYLE              = 14;
+const int CONFIG_USERNAME                = 15;
+const int CONFIG_PASSWORD                = 16;
+const int CONFIG_WARNING                 = 17;
 
 const char CONFIG_FILENAME[10]  = "/.hearts";
 
@@ -23,6 +28,7 @@ class CConfig
 {
 public:
     CConfig();
+    ~CConfig();
 
 private:
     void init_vars();
@@ -49,7 +55,17 @@ private:
     bool easy_card_selection;
     bool save_game;
 
+    // online
+    QString username;
+    QString password;
+    bool warning;
+
 public:
+    QString &Username();
+    QString &Password();
+    bool Warning();
+
+    void set_online(QString u, QString p);
     int set_config_file(int param, bool enable);
     int set_language(int lang);
     int set_deck_style(int style);

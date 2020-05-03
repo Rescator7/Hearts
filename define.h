@@ -9,6 +9,8 @@ const char version[80] = "Hearts 1.5b";
 // Compilation will create Debug menu
 #define DEBUG
 
+//#define DEBUG_DATAGRAMS
+
 #define QUEEN_SPADE_f    1
 #define PERFECT_100_f    1 << 1
 #define OMNIBUS_f        1 << 2
@@ -28,6 +30,10 @@ const int FCORRUPTED                     = 3;
 const int MAX_PLR_NAMES                  = 44;
 
 const int NOBODY                         = -1;
+const int PLAYER_SOUTH                   = 0;
+const int PLAYER_WEST                    = 1;
+const int PLAYER_NORTH                   = 2;
+const int PLAYER_EAST                    = 3;
 
 const int AI_flags_pass_hearts_zero      = 0x1;
 const int AI_flags_pass_hearts_high      = 0x2;

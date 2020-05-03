@@ -1195,7 +1195,7 @@ void CHearts::process_next_pass(bool skip_moon_check)
   }
 
   moon_add_to_scores = true;         // reset to default: true. this is important.
-  emit sig_end_hand(false);
+  emit sig_end_hand(plr_hand_score[0], plr_hand_score[1], plr_hand_score[2], plr_hand_score[3]);
 
   if (is_it_draw() && no_draw)
     game_over = false;               // we must reset game_over to false, if it's a draw and no draw

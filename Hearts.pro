@@ -22,7 +22,6 @@ SOURCES += main.cpp\
     rules.cpp \
     credits.cpp \
     settings.cpp \
-    cstats.cpp \
     debug.cpp \
     cdeck.cpp \
     client.cpp \
@@ -41,7 +40,6 @@ HEADERS  += mainwindow.h \
     credits.h \
     settings.h \
     define.h \
-    cstats.h \
     debug.h \
     cdeck.h \
     client.h \

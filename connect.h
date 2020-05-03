@@ -21,8 +21,17 @@ public:
     QString getHandle();
     QString getPassword();
 
+    void config(QString &username, QString &password, bool warning);
+    bool WarningAccepted();
+    bool WarningDisabled();
+
 private:
     Ui::Connect *ui;
+    bool warning_accepted;
+    bool warning_disabled;
+
+private slots:
+    void on_checkBox_clicked();
 
 public slots:
     void diagButtonClicked(QAbstractButton *button);
