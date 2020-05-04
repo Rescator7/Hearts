@@ -9,7 +9,7 @@ CClient::CClient()
   init_var();
 
   connect(tcpSocket, &QIODevice::readyRead, this, &CClient::readData);
-  connect(tcpSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &CClient::displayError);
+  connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
   connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
 }
 
