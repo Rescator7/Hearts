@@ -978,6 +978,7 @@ void MainWindow::set_info_channel_enabled(bool enable)
     }
 }
 
+#ifdef DEBUG
 void MainWindow::disable_cheat(bool full)
 {
   cheat_radio_button[0]->hide();
@@ -991,7 +992,6 @@ void MainWindow::disable_cheat(bool full)
   }
 }
 
-#ifdef DEBUG
 void MainWindow::set_cheat_mode_enabled(bool enable)
 {
   assert(hearts);
@@ -1934,16 +1934,15 @@ void MainWindow::online_action(unsigned int action, QString param)
            ui->actionConnect->setDisabled(true);
            ui->actionNew->setDisabled(true);
 
+#ifdef DEBUG
+           debug->reset();
            disable_cheat(true);
+#endif
 
            light_connected(true);
            online_show_buttons(true);
 
            init_online_game();
-
-#ifdef DEBUG
-           debug->reset();
-#endif
 
 #ifdef __al_included_allegro5_allegro_audio_h
             if (ui->actionSounds->isChecked())
