@@ -120,9 +120,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QImage *img_pass[4];
-    QImage *img_empty_card;
-    QImage *img_your_turn;
-    QImage *img_sit_here;
     QImage *img_connected;
     QImage *img_disconnected;
     QLabel *label[22];

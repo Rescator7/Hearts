@@ -11,6 +11,7 @@ CDeck::CDeck(int deck)
   img_empty_card = new QImage(":/SVG-cards/Default/empty.png", "PNG");
   img_your_turn = new QImage(":/SVG-cards/Default/card-base2.png", "PNG");
   img_back_card = new QImage(":/SVG-cards/Default/back.png", "PNG");
+  img_sit_here = new QImage(":/SVG-cards/Default/sithere.png", "PNG");
 
   switch (deck) {
      case ENGLISH_DECK: set_english_deck(); break;
@@ -199,16 +200,21 @@ CDeck::~CDeck()
   delete img_empty_card;
   delete img_your_turn;
   delete img_back_card;
+  delete img_sit_here;
 
   delete_current_deck();
 }
 
 QImage *CDeck::get_img_card(int card) {
-  if (card == back_card)
-    return img_back_card;
+  switch (card) {
+     case empty:     return img_empty_card;
+     case back_card: return img_back_card;
+     case sit_here:  return img_sit_here;
+     case your_turn: return img_your_turn;
 
-  assert((card >= 0) && (card < DECK_SIZE));
-  return img_cards[card];
+     default:        assert((card >= 0) && (card < DECK_SIZE));
+                     return img_cards[card];
+  }
 }
 
 void CDeck::reverse_card_rgb(int card) {

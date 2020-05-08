@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     client = new CClient();
 
 #ifdef DEBUG
-    debug = new CDebug(img_empty_card);
+    debug = new CDebug(deck->get_img_card(empty));
 #endif
     ui->progressBar->hide();
 
@@ -128,10 +128,6 @@ MainWindow::~MainWindow()
 
   delete img_connected;
   delete img_disconnected;
-
-  delete img_empty_card;
-  delete img_sit_here;
-  delete img_your_turn;
 
   delete img_pass[pLEFT];
   delete img_pass[pRIGHT];
@@ -283,10 +279,6 @@ void MainWindow::destroy_sounds()
 
 void MainWindow::init_pointers()
 {
-    img_empty_card = new QImage(":/SVG-cards/Default/empty.png", "PNG");     // NEW
-    img_your_turn = new QImage(":/SVG-cards/Default/card-base2.png", "PNG"); // NEW
-    img_sit_here = new QImage(":/SVG-cards/Default/sithere.png", "PNG");     // NEW
-
     img_connected = new QImage(":/icons/connected.png", "PNG");
     img_disconnected = new QImage(":/icons/disconnected.png", "PNG");
     img_pass[pLEFT] = new QImage(":/icons/left-icon.png", "PNG");
@@ -827,7 +819,7 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
   stats->increase_stats(0, STATS_HANDS_PLAYED);
 
 #ifdef DEBUG
-  debug->save_card(nullptr, img_empty_card);
+  debug->save_card(nullptr, deck->get_img_card(empty));
 #endif
 
   lcd_hand_score[0]->display(score1);
@@ -859,7 +851,7 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
 void MainWindow::online_end_hand(int north, int south, int west, int east) {
 
 #ifdef DEBUG
-  debug->save_card(nullptr, img_empty_card);
+  debug->save_card(nullptr, deck->get_img_card(empty));
 #endif
 
   lcd_score[0]->display(south);
@@ -1029,7 +1021,7 @@ void MainWindow::clear_table()
 {
   delay(200);
   for (int i=0; i<4; i++) {
-    label[i+13]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
+    label[i+13]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(card_height)));
     card_played[i] = empty;
   }
 }
@@ -1171,7 +1163,7 @@ void MainWindow::show_your_turn(int idx)
 
   show_deck(active_deck, true);
 
-  label[idx+13]->setPixmap(QPixmap::fromImage(img_your_turn->scaledToHeight(card_height)));
+  label[idx+13]->setPixmap(QPixmap::fromImage(deck->get_img_card(your_turn)->scaledToHeight(card_height)));
   card_played[idx] = your_turn;
 
 #ifdef __al_included_allegro5_allegro_audio_h
@@ -1289,10 +1281,10 @@ void MainWindow::reverse_cards_rgb()
 void MainWindow::flush_deck()
 {
   for (int i=0; i<13; i++)
-    label[i]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
+    label[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(card_height)));
 
   for (int i=0; i<4; i++) {
-    label[i + 13]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
+    label[i + 13]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(card_height)));
   }
 }
 
@@ -1301,15 +1293,16 @@ void MainWindow::refresh_cards_played()
   for (int i=0; i<4; i++) {
     int card = card_played[i];
 
-    if (card == empty)
-      label[13 + i]->setPixmap(QPixmap::fromImage(img_empty_card->scaledToHeight(card_height)));
-    else
-    if (card == your_turn)
-      label[13 +i]->setPixmap(QPixmap::fromImage(img_your_turn->scaledToHeight(card_height)));
-    else {
-      assert((card >= 0) && (card < DECK_SIZE));
+    switch(card) {
+      case empty: label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(card_height)));
+                  break;
+      case your_turn: label[13 +i]->setPixmap(QPixmap::fromImage(deck->get_img_card(your_turn)->scaledToHeight(card_height)));
+                      break;
+      case sit_here: label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(card_height)));
+                     break;
+      default:  assert((card >= 0) && (card < DECK_SIZE));
 
-      label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
+                label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
     }
   }
 }
@@ -1863,6 +1856,9 @@ void MainWindow::init_online_game()
 {
   online_table_id = 0;
 
+  for (int i=0; i<4; i++)
+    card_played[i] = empty;
+
   for (int i=0; i<13; i++) {
      online_myCards[i] = back_card;
      online_selected[i] = false;
@@ -1957,8 +1953,10 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_can_sit = true;
             online_table_id = pList.at(0).toInt();
 
-            for (int i=0; i<4; i++)
-              label[i + 13]->setPixmap(QPixmap::fromImage(img_sit_here->scaledToHeight(card_height)));
+            for (int i=0; i<4; i++) {
+              card_played[i] = sit_here;
+              label[i + 13]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(card_height)));
+            }
 
             break;
     case ACTION_SIT_CHAIR:
@@ -2006,7 +2004,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             name = get_name_label(pList.at(1));
             if (name && !online_game_started) {
               label[name]->setText("");
-              label[name-5]->setPixmap(QPixmap::fromImage(img_sit_here->scaledToHeight(card_height)));   
+              label[name-5]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(card_height)));
             }
             break;
     case ACTION_CREATE_TABLE:
