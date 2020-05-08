@@ -1293,17 +1293,7 @@ void MainWindow::refresh_cards_played()
   for (int i=0; i<4; i++) {
     int card = card_played[i];
 
-    switch(card) {
-      case empty: label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(card_height)));
-                  break;
-      case your_turn: label[13 +i]->setPixmap(QPixmap::fromImage(deck->get_img_card(your_turn)->scaledToHeight(card_height)));
-                      break;
-      case sit_here: label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(card_height)));
-                     break;
-      default:  assert((card >= 0) && (card < DECK_SIZE));
-
-                label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
-    }
+    label[13 + i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
   }
 }
 
