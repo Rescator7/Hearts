@@ -1603,7 +1603,7 @@ void MainWindow::set_language(int lang)
                          fit_button(ui->pushButton_3, 135, 55);
                          fit_button(ui->pushButton_4, 190, 90);
                          fit_button(ui->pushButton_5, 280, 75);
-                         fit_button(ui->pushButton_7, 355, 50);
+                         fit_button(ui->pushButton_7, 355, 80);
                        }
                        break;
     case LANG_RUSSIAN: if (translator.load(QLocale(QLocale::Russian), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages"))) {
@@ -1615,7 +1615,7 @@ void MainWindow::set_language(int lang)
                          fit_button(ui->pushButton_3, 125, 80);
                          fit_button(ui->pushButton_4, 205, 135);
                          fit_button(ui->pushButton_5, 340, 80);
-                         fit_button(ui->pushButton_7, 420, 50);
+                         fit_button(ui->pushButton_7, 420, 65);
                        }
                        break;
  }
