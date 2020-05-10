@@ -94,6 +94,7 @@
 #define DGE_ADMIN_ABOVE             47
 #define DGE_TABLE_CORRUPTED         48
 #define DGE_WRONG_VALUE             49
+#define DGE_TABLE_NOT_OWNER         50
 
 // Users datagrams Informations
 #define DGI_PLAYER_UID              1
@@ -152,6 +153,7 @@
 #define DGI_HELP_TABLES             15
 #define DGI_HELP_UPTIME             16
 #define DGI_HELP_WHO                17
+#define DGI_HELP_START              18
 
 // Admin Datagrams help commands informations
 #define DGI_HELP_ADMIN              50

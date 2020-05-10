@@ -117,6 +117,10 @@ private slots:
 
     void on_pushButton_6_clicked();
 
+    void on_pushButton_7_clicked();
+
+    void on_actionOnline_triggered();
+
 private:
     Ui::MainWindow *ui;
     QImage *img_pass[4];

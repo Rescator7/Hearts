@@ -369,6 +369,9 @@ void CClient::processDatagram(QString data)
       case DGE_WRONG_VALUE:
            sig_action(ACTION_WRONG_VALUE, data.mid(4));
            break; // 49 - Wrong value
+      case DGE_TABLE_NOT_OWNER:
+           sig_message(tr("You are not the owner of the table!"));
+           break; // 50 - Table not owner
     }
     return;
   }
@@ -376,82 +379,85 @@ void CClient::processDatagram(QString data)
   if (data.startsWith("H")) {
     code = data.mid(1,2).toInt();
     switch (code) {
-      case DGI_HELP_DATE :
+      case DGI_HELP_DATE:
            sig_message(tr("date - Show the current server date."));
            break; // 1 - HELP_DATE
-      case DGI_HELP_EXIT :
+      case DGI_HELP_EXIT:
            sig_message(tr("exit - Exit the server and return to offline playing mode."));
            break; // 2 - HELP_EXIT
-      case DGI_HELP_HELP :
+      case DGI_HELP_HELP:
            sig_message(tr("help - Show the command list.\r\n"
                           "help <command> - Show <command>'s help.\r\n"));
            break; // 3 - HELP_HELP
-      case DGI_HELP_JOIN :
+      case DGI_HELP_JOIN:
            sig_message(tr("join <id> - Join table #id.\r\n"
                           "join <id> <chair> - Join table #id and sit on chair (n, s, e, w)."));
            break; // 4 - HELP_JOIN
-      case DGI_HELP_LEAVE :
+      case DGI_HELP_LEAVE:
            sig_message(tr("leave - Leave a table.\r\n"
                           "Please note: If you were playing that would make you finish in fourth place."));
            break; // 5 - HELP_LEAVE
-      case DGI_HELP_MOON :
+      case DGI_HELP_MOON:
            sig_message(tr("moon - Used during new moon to choose between add and substract. Usage: \"moon +\"  or \"mooon -\"."));
            break; // 6 - HELP_MOON
-      case DGI_HELP_MUTE :
+      case DGI_HELP_MUTE:
            sig_message(tr("mute - Mute your table. Turn the table in quiet mode play."));
            break; // 7 - HELP_MUTE
-      case DGI_HELP_NEW :
+      case DGI_HELP_NEW:
            sig_message(tr("new - Create a new table. Usage: New <flags>. Note: Use interface \"create table\"."));
            break; // 8 - HELP_NEW
-      case DGI_HELP_PASS :
+      case DGI_HELP_PASS:
            sig_message(tr("pass - Pass your 3 cards. Used by the client when you click button pass.\r\n"
                           "Usage: pass pos1 pos2 pos3. Values are card posititions 0-12."));
            break; // 9 - HELP_PASS
-      case DGI_HELP_PASSWORD :
+      case DGI_HELP_PASSWORD:
            sig_message(tr("password - Change your password. Usage: password old new."));
            break; // 10 - HELP_PASSWORD
-      case DGI_HELP_PLAY :
+      case DGI_HELP_PLAY:
            sig_message(tr("play - Play a card. Usage: play card."));
            break; // 11 - HELP_PLAY
-      case DGI_HELP_SAY :
+      case DGI_HELP_SAY:
            sig_message(tr("say - Say <text> at your table."));
            break; // 12 - HELP_SAY
-      case DGI_HELP_SIT :
+      case DGI_HELP_SIT:
            sig_message(tr("sit - Sit on a chair. Usage: Sit <chair>. Values: n,s,w,e"));
            break; // 13 - HELP_SIT
-      case DGI_HELP_STATS :
+      case DGI_HELP_STATS:
            sig_message(tr("stats - Show your online statistics."));
            break; // 14 - HELP_STATS
-      case DGI_HELP_TABLES :
+      case DGI_HELP_TABLES:
            sig_message(tr("tables - Show the list of tables."));
            break; // 15 - HELP_TABLES
-      case DGI_HELP_UPTIME :
+      case DGI_HELP_UPTIME:
            sig_message(tr("uptime - Show the server version and uptime."));
            break; // 16 - HELP_UPTIME
-      case DGI_HELP_WHO :
+      case DGI_HELP_WHO:
            sig_message(tr("who - Show the list of connected players."));
            break; // 17 - HELP_WHO
+      case DGI_HELP_START:
+           sig_message(tr("Start - Start the game. The empty chairs will be played by BOT."));
+           break; // 18 - HELP_START
 
-      case DGI_HELP_ADMIN :
+      case DGI_HELP_ADMIN:
            sig_message(tr("admin - Make a user to admin level. Usage: Admin user.\r\n"
                           "Note: require level super user."));
            break; // 50 - HELP_ADMIN
-      case DGI_HELP_ANNOUNCE :
+      case DGI_HELP_ANNOUNCE:
            sig_message(tr("announce - Make a server announcement. Shown to all players."));
            break; // 51 - HELP_ANNOUNCE
-      case DGI_HELP_PAUSE :
+      case DGI_HELP_PAUSE:
            sig_message(tr("pause - Put a table on pause. This must be used for debuging purpose only."));
            break; // 52 - HELP_PAUSE
-      case DGI_HELP_SET :
+      case DGI_HELP_SET:
            sig_message(tr("set - Show or set the list of server configuration parameters."));
            break; // 53 - HELP_SET
-      case DGI_HELP_SHUTDOWN :
+      case DGI_HELP_SHUTDOWN:
            sig_message(tr("shutdown - Shutdown the server."));
            break; // 54 - HELP_SHUTDOWN
-      case DGI_HELP_SHUTOFF :
+      case DGI_HELP_SHUTOFF:
            sig_message(tr("shutoff - Disable create games, and shutdown the server after all current games are finished."));
            break; // 55 - HELP_SHUTOFF
-      case DGI_HELP_TEST :
+      case DGI_HELP_TEST:
            sig_message(tr("test - Test a new feature, or bugs. This is a debugging tool. It action may differ, or do nothings."));
            break; // 56 - HELP_TEST
     }

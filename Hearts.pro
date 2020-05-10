@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     connect.cpp \
     cgame.cpp \
     ctable.cpp \
-    cstatistics.cpp
+    cstatistics.cpp \
+    online.cpp
 
 HEADERS  += mainwindow.h \
     clabel.h \
@@ -46,7 +47,8 @@ HEADERS  += mainwindow.h \
     connect.h \
     cgame.h \
     ctable.h \
-    cstatistics.h
+    cstatistics.h \
+    online.h
 
 FORMS    += mainwindow.ui \
     rules.ui \
@@ -55,7 +57,8 @@ FORMS    += mainwindow.ui \
     connect.ui \
     cgame.ui \
     ctable.ui \
-    cstatistics.ui
+    cstatistics.ui \
+    online.ui
 
 unix:!macx: LIBS += -lallegro_audio -lallegro_acodec -lallegro_memfile -lallegro
 

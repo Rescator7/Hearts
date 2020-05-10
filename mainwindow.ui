@@ -4389,6 +4389,19 @@
      <string notr="true">&gt;</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_7">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>0</y>
+      <width>50</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Start</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -4445,6 +4458,7 @@
     </property>
     <addaction name="actionRules"/>
     <addaction name="actionSettings"/>
+    <addaction name="actionOnline"/>
    </widget>
    <widget class="QMenu" name="menuGame_Variations">
     <property name="title">
@@ -4717,6 +4731,11 @@
   <action name="actionTables">
    <property name="text">
     <string>Tables</string>
+   </property>
+  </action>
+  <action name="actionOnline">
+   <property name="text">
+    <string>Online</string>
    </property>
   </action>
  </widget>

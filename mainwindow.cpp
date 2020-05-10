@@ -18,6 +18,7 @@
 #include "credits.h"
 #include "connect.h"
 #include "settings.h"
+#include "online.h"
 #include "cardspos.h"
 #include "cgame.h"
 
@@ -1530,6 +1531,13 @@ void MainWindow::on_actionSettings_triggered()
   settings_diag.exec();
 }
 
+void MainWindow::on_actionOnline_triggered()
+{
+ online online_diag(this);
+ online_diag.setModal(true);
+ online_diag.exec();
+}
+
 void MainWindow::on_actionReset_triggered()
 {
   QMessageBox msgBox(this);
@@ -1583,6 +1591,7 @@ void MainWindow::set_language(int lang)
                          fit_button(ui->pushButton_3, 105, 55);
                          fit_button(ui->pushButton_4, 160, 100);
                          fit_button(ui->pushButton_5, 260, 50);
+                         fit_button(ui->pushButton_7, 310, 50);
                        }
                        break;
     case LANG_FRENCH:  if (translator.load(QLocale(QLocale::French), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages"))) {
@@ -1594,6 +1603,7 @@ void MainWindow::set_language(int lang)
                          fit_button(ui->pushButton_3, 135, 55);
                          fit_button(ui->pushButton_4, 190, 90);
                          fit_button(ui->pushButton_5, 280, 75);
+                         fit_button(ui->pushButton_7, 355, 50);
                        }
                        break;
     case LANG_RUSSIAN: if (translator.load(QLocale(QLocale::Russian), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages"))) {
@@ -1605,6 +1615,7 @@ void MainWindow::set_language(int lang)
                          fit_button(ui->pushButton_3, 125, 80);
                          fit_button(ui->pushButton_4, 205, 135);
                          fit_button(ui->pushButton_5, 340, 80);
+                         fit_button(ui->pushButton_7, 420, 50);
                        }
                        break;
  }
@@ -1896,10 +1907,10 @@ int MainWindow::get_name_label(QString p)
 
 void MainWindow::online_action(unsigned int action, QString param)
 {
-  QString m;
+  QString m, name;
   QStringList pList = param.split(" ");
 
-  int name, wait, c1, c2, c3, p1, p2, p3;
+  int wait, c1, c2, c3, p1, p2, p3;
   int north, south, west, east;
   long int s1, s2, s3, s4;
 
@@ -1964,11 +1975,11 @@ void MainWindow::online_action(unsigned int action, QString param)
 
            ui->pushButton_5->setDisabled(pList.at(2).toInt());
 
-           name = get_name_label(pList.at(1));
-           if (name) {
+           c1 = get_name_label(pList.at(1));
+           if (c1) {
              QByteArray ba = pList.at(3).toLocal8Bit();
-             strncpy(online_names[name-18], ba.data(), 20);
-             label[name]->setText(pList.at(3));
+             strncpy(online_names[c1-18], ba.data(), 20);
+             label[c1]->setText(pList.at(3));
            }
            break;
     case ACTION_MY_CHAIR:
@@ -1991,11 +2002,18 @@ void MainWindow::online_action(unsigned int action, QString param)
             // not my table --> break
             if (pList.at(0).toInt() != online_table_id) break;
 
-            name = get_name_label(pList.at(1));
-            if (name && !online_game_started) {
-              label[name]->setText("");
-              label[name-5]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(card_height)));
-            }
+            c1 = get_name_label(pList.at(1));
+
+            if (online_game_started)
+              name = "(" + label[c1]->text() + ")";
+            else
+              name = "";
+
+            label[c1]->setText(name);
+
+            if (!online_game_started)
+              label[c1-5]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(card_height)));
+
             break;
     case ACTION_CREATE_TABLE:
             if (pList.size() != 2) {
@@ -2482,7 +2500,16 @@ void MainWindow::update_bar()
 // online button exit
 void MainWindow::on_pushButton_clicked()
 {
-  client->send("exit");
+  QMessageBox msgBox(this);
+
+  msgBox.setText(tr("Do you want to leave the server?"));
+  msgBox.setInformativeText(tr("Are you sure?"));
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+  msgBox.setDefaultButton(QMessageBox::No);
+  int ret = msgBox.exec();
+  if (ret == QMessageBox::Yes) {
+    client->send("exit");
+  }
 }
 
 // online button leave
@@ -2507,6 +2534,13 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::on_pushButton_5_clicked()
 {
   client->send("mute");
+}
+
+
+// start
+void MainWindow::on_pushButton_7_clicked()
+{
+  client->send("start");
 }
 
 // online button action: command, help, says
@@ -2535,11 +2569,13 @@ void MainWindow::online_show_buttons(bool enable)
     ui->pushButton_3->show();
     ui->pushButton_4->show();
     ui->pushButton_5->show();
+    ui->pushButton_7->show();
   } else {
       ui->pushButton->hide();
       ui->pushButton_2->hide();
       ui->pushButton_3->hide();
       ui->pushButton_4->hide();
       ui->pushButton_5->hide();
+      ui->pushButton_7->hide();
     }
 }
