@@ -52,6 +52,7 @@
 ------------------------------------------------------------------------------------------------
 10 May 2020: Fixed compile errors when DEBUG is disabled.
 10 May 2020: Downgraded to Qt creator 3.5 to support Qt 5.5.
+10 May 2020: Added: missing translation .ts files.
 10 May 2020: Minor statistics gui glitch fixed.
 10 May 2020: Minor fix in can_break_heart.
 10 May 2020: Minor online issues fixed.
