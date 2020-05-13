@@ -2075,6 +2075,7 @@ void MainWindow::online_action(unsigned int action, QString param)
               online_myCards[i-2] = pList.at(i).toInt();
 
             online_game_started = true;
+            online_heart_broken = false;
             online_can_sit = false;
             online_playing = false;
             online_num_cards = pList.size() - 2;
@@ -2120,7 +2121,6 @@ void MainWindow::online_action(unsigned int action, QString param)
             if (ui->actionSounds->isChecked())
               al_play_sample(snd_passing_cards, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
-            online_heart_broken = false;
             p1 = online_cards_received_pos[0];
             p2 = online_cards_received_pos[1];
             p3 = online_cards_received_pos[2];
