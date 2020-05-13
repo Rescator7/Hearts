@@ -47,3 +47,15 @@
 ------------------------------------------------------------------------------------------------
 03 May 2020: Added Online game play.
 03 May 2020: Added QT Linguist support.
+
+10 May 2020: Version 1.5.1b
+------------------------------------------------------------------------------------------------
+10 May 2020: Fixed compile errors when DEBUG is disabled.
+10 May 2020: Downgraded to Qt creator 3.5 to support Qt 5.5.
+10 May 2020: Added: missing translation .ts files.
+10 May 2020: Minor statistics gui glitch fixed.
+10 May 2020: Minor fix in can_break_heart.
+10 May 2020: Minor online issues fixed.
+10 May 2020: Added: Menu help->Online.
+10 May 2020: Added: online button [Start] to start a game.
+10 May 2020: Added: confirmation to the online button [Exit]. 

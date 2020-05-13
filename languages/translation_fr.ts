@@ -154,7 +154,7 @@
     <message>
         <location filename="../client.cpp" line="276"/>
         <source>You are already at a table.</source>
-        <translation>Vous êtes déjà à table.</translation>
+        <translation>Vous êtes déjà à une table.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="279"/>
@@ -1352,7 +1352,7 @@ Premier : </translation>
         <source><byte value="xd"/>
 Second : </source>
         <translation>
-deuxième : </translation>
+Deuxième : </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2332"/>
