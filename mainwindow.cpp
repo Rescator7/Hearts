@@ -56,7 +56,8 @@ MainWindow::MainWindow(QWidget *parent) :
 #ifdef DEBUG
     debug = new CDebug(deck->get_img_card(empty));
 #endif
-    ui->progressBar->hide();
+
+    online_hide_progress_bar();
 
     timer = new QTimer();
 
@@ -72,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(table_list, SIGNAL(clicked(int, char)), this, SLOT(join_game(int, char)));
 
     connect(client, SIGNAL(sig_message(QString)), this, SLOT(message(QString)));
+    connect(client, SIGNAL(sig_error(QString)), this, SLOT(error(QString)));
     connect(client, SIGNAL(sig_action(unsigned int, QString)), this, SLOT(online_action(unsigned int, QString)));
 
     connect(hearts, SIGNAL(sig_refresh_deck(int,bool)), this, SLOT(refresh_deck(int,bool)));
@@ -114,19 +116,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-  delete ui;
   delete client;
+  delete timer;
   delete hearts;
   delete config;
   delete stats;
   delete deck;
   delete table_list;
-  delete timer;
 
 #ifdef DEBUG
   delete debug;
 #endif
 
+  delete ui;
   delete img_connected;
   delete img_disconnected;
 
@@ -320,7 +322,13 @@ void MainWindow::init_pointers()
     lcd_hand_score[2] = ui->lcdNumber_12;
     lcd_hand_score[3] = ui->lcdNumber_13;
 
- #ifdef DEBUG
+    progress_bar[0] = ui->progressBar_2;
+    progress_bar[1] = ui->progressBar_3;
+    progress_bar[2] = ui->progressBar_4;
+    progress_bar[3] = ui->progressBar_5;
+    progress_bar[4] = ui->progressBar;
+
+#ifdef DEBUG
     cheat_radio_button[0] = ui->radioButton;
     cheat_radio_button[1] = ui->radioButton_2;
     cheat_radio_button[2] = ui->radioButton_3;
@@ -331,6 +339,8 @@ void MainWindow::init_pointers()
 void MainWindow::aboutToQuit()
 {
   client->disconnect();
+  timer->disconnect();
+
   save_files();
 }
 
@@ -759,15 +769,16 @@ void MainWindow::shoot_moon(int plr, int delay)
   if (plr == online_my_turn) {
     mesg = tr("[Info]: You shoot the moon!");
 
-    if (online_new_moon) {
+    if (delay) {
+      activate_timer(delay, 4, delay);
+
       message(mesg);
 
       QMessageBox msgBox(this);
       msgBox.setWindowTitle(tr("You shoot the moon!"));
       msgBox.setText(tr("What is your choice ?"));
       QPushButton *button_add = msgBox.addButton(tr("Add"), QMessageBox::YesRole);
-      if (delay)
-        button_add->animateClick(delay * 1000);
+      button_add->animateClick(delay * 10); // delay is in cs, animateClick require in ms
       msgBox.addButton(tr("Subtract"), QMessageBox::NoRole);
       msgBox.setDefaultButton(button_add);
       msgBox.exec();
@@ -775,13 +786,13 @@ void MainWindow::shoot_moon(int plr, int delay)
          message(tr("[Info]: You added 26 pts to everyone's scores!"));
 
          client->send("moon +");
-         remove_timer();
       } else {
          message(tr("[Info]: You substracted 26 pts to your score!"));
 
          client->send("moon -");
-         remove_timer();
         }
+
+      remove_timer();
       return;
     }
   }
@@ -925,6 +936,8 @@ void MainWindow::show_deck(int plr, bool refresh)
 void MainWindow::online_show_deck()
 {
   int count = online_num_cards - 1;
+
+  std::sort(online_myCards, online_myCards+13);
 
   for (int i=0; i<13; i++)
     label[i]->hide();
@@ -1301,6 +1314,16 @@ void MainWindow::refresh_cards_played()
 void MainWindow::message(QString mesg)
 {
   ui->textEdit->append(mesg);
+}
+
+void MainWindow::error(QString mesg)
+{
+  ui->textEdit->append(mesg);
+
+#ifdef __al_included_allegro5_allegro_audio_h
+   if (ui->actionSounds->isChecked())
+     al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
+#endif
 }
 
 void MainWindow::delay(int n)
@@ -1887,8 +1910,6 @@ void MainWindow::init_online_game()
     label[i]->setEnabled(true);
     label[i]->show();
   }
-
-  reset_cards_pos();
 }
 
 int MainWindow::get_name_label(QString p)
@@ -2055,8 +2076,6 @@ void MainWindow::online_action(unsigned int action, QString param)
 #endif
             online_connected = false;
 
-            reset_cards_pos();
-
             start_game();
             break;
     case ACTION_SET_CARDS:
@@ -2086,7 +2105,7 @@ void MainWindow::online_action(unsigned int action, QString param)
 
             wait_delay = online_passto == pNOPASS;
 
-            activate_timer(wait);
+            activate_timer(wait, 4, wait);
             break;
     case ACTION_FORCE_PASS:
             remove_timer();
@@ -2106,7 +2125,12 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_cards_received_pos[2] = c3;
             wait_delay = true;
             label[17]->setDisabled(true);
-            reset_cards_pos();
+
+            for (int i=0; i<13; i++)
+              online_selected[i] = false;
+
+            show_deck(0, false); // clear any selected cards
+
             label[c1]->move(label[c1]->x(), def_card_posy - 20);
             label[c2]->move(label[c2]->x(), def_card_posy - 20);
             label[c3]->move(label[c3]->x(), def_card_posy - 20);
@@ -2133,22 +2157,20 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_myCards[p1] = c1;
             online_myCards[p2] = c2;
             online_myCards[p3] = c3;
-            std::sort(online_myCards, online_myCards+13);
-            reset_cards_pos();
-            reverse_cards_rgb();
+
             label[p1]->setPixmap(QPixmap::fromImage(deck->get_img_card(c1)->scaledToHeight(card_height)));
             label[p2]->setPixmap(QPixmap::fromImage(deck->get_img_card(c2)->scaledToHeight(card_height)));
             label[p3]->setPixmap(QPixmap::fromImage(deck->get_img_card(c3)->scaledToHeight(card_height)));
-            reverse_cards_rgb();
+
             for (int i=0; i<13; i++)
               online_selected[i] = false;
-            show_deck(0, 0);
+
             break;
     case ACTION_YOUR_TURN:
             if (pList.size() != 1) {
               message("ERROR: ACTION_YOUR_TURN");
             } else
-                activate_timer(pList.at(0).toInt());
+                activate_timer(pList.at(0).toInt(), 4, pList.at(0).toInt());
             wait_delay = false;                        // enable card playing
             show_your_turn(online_my_turn);
             online_playing = true;
@@ -2180,7 +2202,6 @@ void MainWindow::online_action(unsigned int action, QString param)
                   online_num_cards--;
                   break;
                 }
-            std::sort(online_myCards, online_myCards+13);
             remove_timer();
             show_deck(0, 0);
             break;
@@ -2215,11 +2236,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             c1 = pList.at(0).toInt();
             c2 = pList.at(1).toInt();
             assert((c1 >= 0) && (c1 <= 3));
-            if (c2) {
-              activate_timer(c2);
-              online_new_moon = true;
-            } else
-                online_new_moon = false;
+
             shoot_moon(c1, c2);
             break;
     case ACTION_BONUS_NO_TRICKS:
@@ -2401,12 +2418,12 @@ void MainWindow::online_action(unsigned int action, QString param)
             if (c1 == STATUS_YOUR_TURN) {
               wait_delay = false;
               show_your_turn(online_my_turn);
-              if (c2) activate_timer(c2);
+              if (c2) activate_timer(c2, 4, c2);
             } else
                 if (c1 == STATUS_PASSING) {
                   online_playing = false;
                   wait_delay = false;
-                 if (c2) activate_timer(c2);
+                 if (c2) activate_timer(c2, 4, c2);
                 }
 
             online_passto = pList.at(16).toInt();
@@ -2438,13 +2455,20 @@ void MainWindow::online_action(unsigned int action, QString param)
             m = tr("Wrong value ! The range is: [") + QString::number(pList.at(0).toInt()) + ", " + QString::number(pList.at(1).toInt()) + "]";
             message(m);
             break;
-  }
-}
+    case ACTION_TIME_BANK:
+            if (pList.size() != 3) {
+               message("ERROR: ACTION_TIME_BANK");
+               return;
+            }
 
-void MainWindow::reset_cards_pos()
-{
-  for (int i=0; i<13; i++)
-    label[i]->move(label[i]->x(), def_card_posy);
+            c1 = pList.at(0).toInt(); // player
+            c2 = pList.at(1).toInt(); // delay in cs
+            c3 = pList.at(2).toInt(); // max delay
+
+            remove_timer();
+            activate_timer(c2, c1, c3);
+            break;
+  }
 }
 
 void MainWindow::join_game(int id, char chair)
@@ -2470,11 +2494,13 @@ void MainWindow::on_actionTables_triggered()
   table_list->show();
 }
 
-void MainWindow::activate_timer(int cs)
+void MainWindow::activate_timer(int cs, int bar, int max)
 {
-  ui->progressBar->setMaximum(cs * 10);
-  ui->progressBar->setValue(cs * 10);
-  ui->progressBar->show();
+  online_bar = bar;
+
+  progress_bar[bar]->setMaximum(max * 10);
+  progress_bar[bar]->setValue(cs * 10);
+  progress_bar[bar]->show();
   timer->setInterval(100);
   timer->start();
 }
@@ -2482,19 +2508,19 @@ void MainWindow::activate_timer(int cs)
 void MainWindow::remove_timer()
 {
   timer->stop();
-  ui->progressBar->hide();
+  online_hide_progress_bar();
 }
 
 void MainWindow::update_bar()
 {
-  int value = ui->progressBar->value();
+  int value = progress_bar[online_bar]->value();
 
   value -= 100;
   if (value <= 0) {
     value = 0;
     remove_timer();
   }
-  ui->progressBar->setValue(value);
+  progress_bar[online_bar]->setValue(value);
 }
 
 // online button exit
@@ -2578,4 +2604,13 @@ void MainWindow::online_show_buttons(bool enable)
       ui->pushButton_5->hide();
       ui->pushButton_7->hide();
     }
+}
+
+void MainWindow::online_hide_progress_bar()
+{
+  progress_bar[0]->hide();
+  progress_bar[1]->hide();
+  progress_bar[2]->hide();
+  progress_bar[3]->hide();
+  progress_bar[4]->hide();
 }

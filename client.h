@@ -43,6 +43,7 @@
 #define ACTION_GAME_STARTED         28
 #define ACTION_RECONNECTED          29
 #define ACTION_WRONG_VALUE          30
+#define ACTION_TIME_BANK            31
 
 // Users Datagrams Errors
 #define DGE_HANDLE_IS_ILLEGAL       1
@@ -134,6 +135,7 @@
 #define DGI_GAME_STARTED            35
 #define DGI_TEXT                    36
 #define DGI_RECONNECTED             37
+#define DGI_TIME_BANK               38
 
 // Users Datagrams help commands informations
 #define DGI_HELP_DATE               1
@@ -185,6 +187,7 @@ private:
 
 signals:
     void sig_message(QString mesg);
+    void sig_error(QString mesg);
     void sig_action(unsigned int action, QString param);
 
 private slots:

@@ -7,6 +7,7 @@
 #include <QLCDNumber>
 #include <QRadioButton>
 #include <QPushButton>
+#include <QProgressBar>
 #include "define.h"
 
 #ifdef USE_LIBALLEGRO5
@@ -108,17 +109,13 @@ private slots:
     void on_label_15_clicked();
     void on_label_17_clicked();
     void on_actionTables_triggered();
-
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
     void on_pushButton_5_clicked();
-
     void on_pushButton_6_clicked();
-
     void on_pushButton_7_clicked();
-
     void on_actionOnline_triggered();
 
 private:
@@ -130,6 +127,7 @@ private:
     QLCDNumber *lcd_hand_score[4];
     QLCDNumber *lcd_score[4];
     QTranslator translator;
+    QProgressBar *progress_bar[5];
 
 #ifdef DEBUG
     QRadioButton *cheat_radio_button[4];
@@ -184,13 +182,13 @@ private:
     int  online_cards_received_pos[3];
     int  online_my_turn;
     int  online_button_mode;
+    int  online_bar;
 
     bool online_selected[13];
     bool online_playing;
     bool online_connected;
     bool online_can_sit;
     bool online_heart_broken;
-    bool online_new_moon;
     bool online_game_started;
 
     char online_names[4][20];
@@ -224,7 +222,6 @@ public:
     void set_plr_names();
     void select_card(int num);
     void init_online_game();
-    void reset_cards_pos();
     void shoot_moon(int plr, int delay);
     void light_connected(bool connected);
     void fit_button(QPushButton *button, int x, int width);
@@ -237,11 +234,13 @@ public:
     void online_pass_cards();
     void online_show_buttons(bool enable);
     void online_show_deck();
+    void online_hide_progress_bar();
 
 public slots:
     void online_action(unsigned int action, QString param);
 
     void message(QString mesg);
+    void error(QString mesg);
     void refresh_deck(int plr, bool d);
     void play_card(int card, int idx);
     void clear_table();
@@ -261,7 +260,7 @@ public slots:
     void save_files();
     void join_game(int id, char chair);
     void update_bar();
-    void activate_timer(int cs);
+    void activate_timer(int cs, int bar, int max);
     void remove_timer();
     void aboutToQuit();
 };

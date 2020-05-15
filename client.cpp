@@ -190,10 +190,13 @@ void CClient::processDatagram(QString data)
            break; // 35 - Game started
       case DGI_TEXT:
            sig_message(data.mid(4));
-           break; // 36 - DG Text
+           break; // 36 - Text
       case DGI_RECONNECTED:
            sig_action(ACTION_RECONNECTED, data.mid(4));
-           break; // 37 - DG Reconnected
+           break; // 37 - Reconnected
+      case DGI_TIME_BANK:
+           sig_action(ACTION_TIME_BANK, data.mid(4));
+           break; // 38 - Time Bank
     }
     return;
   }
@@ -204,39 +207,39 @@ void CClient::processDatagram(QString data)
       case DGE_HANDLE_IS_ILLEGAL: break; // 01
       case DGE_HANDLE_UNAVAILABLE:
            m = tr("The Handle '") + handle + tr("' is already registered!");
-           sig_message(m);
+           sig_error(m);
            break; // 02 - Handle already registered.
       case DGE_HANDLE_RESERVED:
            m = tr("The Handle '") + handle + tr("' is reserved.");
-           sig_message(m);
+           sig_error(m);
            break; // 03 - Reserved handle.
       case DGE_WRONG_PASSWORD:
-           sig_message(tr("Wrong password!"));
+           sig_error(tr("Wrong password!"));
            break; // 04 - Wrong password.
       case DGE_HANDLE_TOO_SHORT:
            m = tr("The Handle '") + handle + tr("' is too short. It should contains atlease 3 characters.");
-           sig_message(m);
+           sig_error(m);
            break; // 05 - Handle too short
       case DGE_HANDLE_TOO_LONG:
            m = tr("The Handle '") + handle + tr("' is too long. It should contains a maximum of 8 characters.");
-           sig_message(m);
+           sig_error(m);
            break; // 06 - Handle too long
       case DGE_HANDLE_ILLEGAL_CHAR:
            m = tr("The Handle '") + handle + tr("' constains illegal characters. Only alphabetic, numeric '_' and '-' is accepted.");
-           sig_message(m);
+           sig_error(m);
            break; // 07 - Handle is illegal
       case DGE_PASSWORD_TOO_SHORT:
-           sig_message(tr("Your password is too short. It should contains atlease 4 characters."));
+           sig_error(tr("Your password is too short. It should contains atlease 4 characters."));
            break; // 08 - Password is too short
       case DGE_PASSWORD_TOO_LONG:
-           sig_message(tr("Your password is too long. It should contains a maximum of 16 characters."));
+           sig_error(tr("Your password is too long. It should contains a maximum of 16 characters."));
            break; // 09 - Password is too long
       case DGE_PASSWORD_DONT_MATCH:
-           sig_message(tr("Your password doesn't match."));
+           sig_error(tr("Your password doesn't match."));
            break; // 10 - Password don't match
       case DGE_HANDLE_NOT_REGISTERED:
            m = tr("The Handle '") + handle + tr("' is not registered.");
-           sig_message(m);
+           sig_error(m);
            break; // 11 - Handle is not registeredl
       case DGE_AUTO_LOGOUT_IDLENESS:
            sec = data.mid(4).toInt();
@@ -255,7 +258,7 @@ void CClient::processDatagram(QString data)
            sig_message(m);
            break; // 12 - Auto-logout due to idleness
       case DGE_UNKNOWN_COMMAND:
-           sig_message(tr("Unknown command or help file."));
+           sig_error(tr("Unknown command or help file."));
            break; // 13 - Unknown command
       case DGE_SERVER_SHUTOFF:
            sig_message(tr("The server is shuting down soon for maintenance."));
@@ -273,104 +276,104 @@ void CClient::processDatagram(QString data)
            sig_message(tr("The server detected flood. Disconnecting."));
            break; // 18 - Socket flood
       case DGE_PLAYER_AT_TABLE:
-           sig_message(tr("You are already at a table."));
+           sig_error(tr("You are already at a table."));
            break; // 19 - Player is at a table
       case DGE_PLAYER_NO_TABLE:
-           sig_message(tr("You didn't join any tables."));
+           sig_error(tr("You didn't join any tables."));
            break; // 20 - Player no table
       case DGE_TABLE_WRONG_CHAIR:
-           sig_message(tr("You can't sit on that chair. It's already used."));
+           sig_error(tr("You can't sit on that chair. It's already used."));
            break; // 21 - Wrong chair
       case DGE_PLAYER_SIT_DELAY:
-           sig_message(tr("Wait delay. Switching from chair to chair."));
+           sig_error(tr("Wait delay. Switching from chair to chair."));
            break; // 22 - Wait sit delay
       case DGE_SOCKET_MAX_CONN_IP:
-           sig_message(tr("Too many connection from this ip."));
+           sig_error(tr("Too many connection from this ip."));
            break; // 23 - Too many connection from your ip
       case DGE_TABLE_NOT_FOUND:
            m = tr("Table ") + data.mid(4) + tr(" not found.");
-           sig_message(m);
+           sig_error(m);
            break; // 24 - Table not found
       case DGE_AMBIGOUS_COMMAND:
            m = tr("The command or help matches: ") + data.mid(4);
-           sig_message(m);
+           sig_error(m);
            break; // 25 - Ambigous command
       case DGE_TABLE_MUTED:
            sig_action(ACTION_TABLE_MUTED, tr("The table is muted."));
            break; // 26 - Table is muted
       case DGE_PLAYER_NOT_SAT:
-           sig_message(tr("You needs to sit to perform this command."));
+           sig_error(tr("You needs to sit to perform this command."));
            break; // 27 - Player is not sat
       case DGE_TABLE_NOT_3PASSED:
-           sig_message(tr("You needs to pass 3 cards."));
+           sig_error(tr("You needs to pass 3 cards."));
            break; // 28 - Needs to pass 3 cards
       case DGE_TABLE_ALREADY_PASSED:
-           sig_message(tr("The cards has already been passed."));
+           sig_error(tr("The cards has already been passed."));
            break; // 29 - The cards has already been passed
       case DGE_TABLE_ILLEGAL_CARD:
-           sig_message(tr("Illegal card."));
+           sig_error(tr("Illegal card."));
            break; // 30 - You passed an illegal card
       case DGE_TABLE_CARD_NOT_FOUND:
-           sig_message(tr("Card not found."));
+           sig_error(tr("Card not found."));
            break; // 31 - Card not found
       case DGE_TABLE_DOUBLE_CARD:
-           sig_message(tr("Same card passed twice"));
+           sig_error(tr("Same card passed twice"));
            break; // 32 - Double card
       case DGE_TABLE_PASSING_OVER:
-           sig_message(tr("Passing card is over. We are now playing."));
+           sig_error(tr("Passing card is over. We are now playing."));
            break; // 33 - Passing time is over
       case DGE_TABLE_STARTED:
-           sig_message(tr("That game has already started."));
+           sig_error(tr("That game has already started."));
            break; // 34 - The game has started
       case DGE_TABLE_FULL:
-           sig_message(tr("Can't join the table is full."));
+           sig_error(tr("Can't join the table is full."));
            break; // 35 - The table is full
       case DGE_TABLE_NOT_STARTED:
-           sig_message(tr("The game hasn't started yet."));
+           sig_error(tr("The game hasn't started yet."));
            break; // 36 - Table not started
       case DGE_TABLE_NOT_YOUR_TURN:
-           sig_message(tr("It's not your turn."));
+           sig_error(tr("It's not your turn."));
            break; // 37 - It's not your turn
       case DGE_TABLE_CANT_BREAK_HEART:
-           sig_message(tr("You can't break heart yet."));
+           sig_error(tr("You can't break heart yet."));
            break; // 38 - Can't break heart
       case DGE_TABLE_QUEEN_SPADE:
-           sig_message(tr("You can't play the queen of spade."));
+           sig_error(tr("You can't play the queen of spade."));
            break; // 39 - Queen spade too early
       case DGE_TABLE_WRONG_SUIT:
-           sig_message(tr("Wrong suit."));
+           sig_error(tr("Wrong suit."));
            break; // 40 - Wrong suit
       case DGE_SOCKET_MAX_REGISTER_IP:
-           sig_message(tr("You can't register. The maximum registration from your ip has been reached."));
+           sig_error(tr("You can't register. The maximum registration from your ip has been reached."));
            break; // 41 - Max IP registration
       case DGE_TABLE_ALREADY_PLAYED:
-           sig_message(tr("You already played."));
+           sig_error(tr("You already played."));
            break; // 42 - Already played
       case DGE_SOCKET_ILLEGAL_INPUT:
-           sig_message(tr("Socket illegal input."));
+           sig_error(tr("Socket illegal input."));
            break; // 43 - Socket illegal input
       case DGE_PLAYER_NOT_MOON:
-           sig_message(tr("You did not shoot the moon."));
+           sig_error(tr("You did not shoot the moon."));
            break; // 44 - Player did not moon
       case DGE_COMMAND_WRONG_PARAMETER:
-           sig_message(tr("Wrong parameters"));
+           sig_error(tr("Wrong parameters"));
            break; // 45 - Command wrong parameter
       case DGE_ADMIN_NOT_FOUND:
            m = tr("The user '") + data.mid(4) + tr("' has not been found!");
-           sig_message(m);
+           sig_error(m);
            break; // 46 - Admin not found
       case DGE_ADMIN_ABOVE:
            m = tr("The user '") + data.mid(4) + tr("' is already an admin!");
            sig_message(m);
            break; // 47 - Admin level above
       case DGE_TABLE_CORRUPTED:
-           sig_message(tr("The table is corrupted. Game aborted!"));
+           sig_error(tr("The table is corrupted. Game aborted!"));
            break; // 48 - Table corrupted
       case DGE_WRONG_VALUE:
            sig_action(ACTION_WRONG_VALUE, data.mid(4));
            break; // 49 - Wrong value
       case DGE_TABLE_NOT_OWNER:
-           sig_message(tr("You are not the owner of the table!"));
+           sig_error(tr("You are not the owner of the table!"));
            break; // 50 - Table not owner
     }
     return;
