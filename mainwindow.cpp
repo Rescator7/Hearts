@@ -2010,6 +2010,9 @@ void MainWindow::online_action(unsigned int action, QString param)
              }
             online_my_turn = pList.at(0).toInt();
             online_game_started = false;
+#ifdef DEBUG
+            debug->reset();
+#endif
             break;
     case ACTION_STAND_CHAIR:
             if (pList.size() != 2) {
@@ -2075,6 +2078,10 @@ void MainWindow::online_action(unsigned int action, QString param)
               al_play_sample(snd_disconnected, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
             online_connected = false;
+
+#ifdef DEBUG
+            debug->reset();
+#endif
 
             start_game();
             break;
