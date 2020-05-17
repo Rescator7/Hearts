@@ -124,7 +124,7 @@ void CClient::processDatagram(QString data)
 //    case DGI_TABLE_FORCE_PLAY:
 //         break; // 14
       case DGI_TABLE_PLAY_TWO_CLUBS:
-           emit sig_message(tr("You must play the two of clubs."));
+           emit sig_error(tr("You must play the two of clubs."));
            break; // 15 - Play the 2 of clubs
       case DGI_TABLE_PLAY:
            emit sig_action(ACTION_PLAY, data.mid(4));

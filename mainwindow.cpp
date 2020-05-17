@@ -100,7 +100,7 @@ MainWindow::MainWindow(QWidget *parent) :
     message(tr("Welcome to ") + QString(version));
 
     if (stats->is_file_corrupted())
-      message(tr("[Error]: The statistics file is corrupted!"));
+      error(tr("The statistics file is corrupted!"));
 
     start_game();
 
@@ -397,13 +397,13 @@ void MainWindow::load_saved_game()
 
 void MainWindow::start_game()
 {
-  int error = hearts->load_saved_game();
+  int errnum = hearts->load_saved_game();
 
-  if (error == NOERROR)
+  if (errnum == NOERROR)
     load_saved_game();
   else {
-    if (error == FCORRUPTED) {
-      message(tr("[Error]: The saved game file is corrupted! Deleted!"));
+    if (errnum == FCORRUPTED) {
+      error(tr("The saved game file is corrupted! Deleted!"));
 
       QFile file(QDir::homePath() + SAVEDGAME_FILENAME);
       file.remove();
@@ -1105,23 +1105,18 @@ void MainWindow::select_card(int num)
     if (ui->actionEasy_card_selection->isChecked())
       set_cards_disabled(false);
 
-    int error;
+    int errnum;
 
-    if ((error = hearts->play_card(card_id))) {
-      switch (error) {
-         case ERRHEART: message(tr("[Error]: You can't break hearts yet!"));
+    if ((errnum = hearts->play_card(card_id))) {
+      switch (errnum) {
+         case ERRHEART: error(tr("You can't break hearts yet!"));
                         break;
-         case ERRSUIT:  message(tr("[Error]: You must follow the suit! The lead is in ") +
-                                QString(suit_names[hearts->get_current_suit()]) + "!");
+         case ERRSUIT:  error(tr("You must follow the suit! The lead is in ") +
+                              QString(suit_names[hearts->get_current_suit()]) + "!");
                         break;
-         case ERRQUEEN: message(tr("[Error]: You can't play the queen of spade on the first hand!"));
+         case ERRQUEEN: error(tr("You can't play the queen of spade on the first hand!"));
                         break;
-      }
-
-#ifdef __al_included_allegro5_allegro_audio_h
-      if (error && ui->actionSounds->isChecked())
-        al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
-#endif  
+      } 
     }
 
     ui->actionNew->setDisabled(false);
@@ -1196,13 +1191,9 @@ void MainWindow::online_pass_cards()
   if (online_passto == pNOPASS) return;
 
   if (online_num_selected != 3) {
-    message(tr("[Error]: You needs to select 3 cards to pass!"));
+    error(tr("You needs to select 3 cards to pass!"));
 
-#ifdef __al_included_allegro5_allegro_audio_h
-    if (ui->actionSounds->isChecked())
-      al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
-#endif
-      return;
+    return;
   }
 
   label[17]->setDisabled(true);
@@ -1235,12 +1226,7 @@ void MainWindow::on_label_18_clicked()
     return;
 
   if (!hearts->is_ready_to_pass()) {
-    message(tr("[Error]: You needs to select 3 cards to pass!"));
-
- #ifdef __al_included_allegro5_allegro_audio_h
-    if (ui->actionSounds->isChecked())
-      al_play_sample(snd_error, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
- #endif
+    error(tr("You needs to select 3 cards to pass!"));
 
     return;
   }
@@ -1318,7 +1304,7 @@ void MainWindow::message(QString mesg)
 
 void MainWindow::error(QString mesg)
 {
-  ui->textEdit->append(mesg);
+  ui->textEdit->append(tr("[Error]: ") + mesg);
 
 #ifdef __al_included_allegro5_allegro_audio_h
    if (ui->actionSounds->isChecked())
@@ -1969,7 +1955,7 @@ void MainWindow::online_action(unsigned int action, QString param)
            break;
     case ACTION_CHOOSE_CHAIR:
             if (pList.size() != 1) {
-              message("ERROR: ACTION_CHOOSE_CHAIR");
+              error("ACTION_CHOOSE_CHAIR");
               break;
             }
             online_can_sit = true;
@@ -1984,7 +1970,7 @@ void MainWindow::online_action(unsigned int action, QString param)
     case ACTION_SIT_CHAIR:
             // 0 = table_id   1 = n,s,w,e   2 = bool muted, 3 = player name
            if (pList.size() != 4) {
-             message("ERROR: ACTION_SIT_CHAIR");
+             error("ACTION_SIT_CHAIR");
              break;
            }
 
@@ -2005,7 +1991,7 @@ void MainWindow::online_action(unsigned int action, QString param)
            break;
     case ACTION_MY_CHAIR:
             if (pList.size() != 1) {
-              message("ERROR: ACTION_MY_CHAIR");
+              error("ACTION_MY_CHAIR");
               break;
              }
             online_my_turn = pList.at(0).toInt();
@@ -2016,7 +2002,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_STAND_CHAIR:
             if (pList.size() != 2) {
-              message("ERROR: ACTION_STAND_CHAIR");
+              error("ACTION_STAND_CHAIR");
               break;
             }
 
@@ -2041,7 +2027,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_CREATE_TABLE:
             if (pList.size() != 2) {
-               message("ERROR: ACTION_CREATE_TABLE");
+               error("ACTION_CREATE_TABLE");
                break;
              }
              table_list->AddRow(pList.at(0), pList.at(1));
@@ -2087,7 +2073,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_SET_CARDS:
             if (pList.size() != 15) {
-              message("ERROR: ACTION_SET_CARDS");
+              error("ACTION_SET_CARDS");
               break;
             }
 
@@ -2117,14 +2103,14 @@ void MainWindow::online_action(unsigned int action, QString param)
     case ACTION_FORCE_PASS:
             remove_timer();
             if (pList.size() != 3) {
-              message("ERROR: ACTION_FORCE_PASS(1)");
+              error("ACTION_FORCE_PASS(1)");
               return;
             }
             c1 = pList.at(0).toInt();
             c2 = pList.at(1).toInt();
             c3 = pList.at(2).toInt();
             if ((c1 < 0) || (c2 < 0) || (c3 < 0) || (c1 > 12) || (c2 > 12) || (c3 > 12)) {
-              message("ERROR: ACTION_FORCE_PASS(2)");
+              error("ACTION_FORCE_PASS(2)");
               break;
             }
             online_cards_received_pos[0] = c1;
@@ -2144,7 +2130,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_RECEIVE_CARDS:
             if (pList.size() != 3) {
-               message("ERRORE: ACTION_RECEIVE_CARDS");
+               error("ACTION_RECEIVE_CARDS");
                break;
             }
             pList.sort();
@@ -2175,7 +2161,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_YOUR_TURN:
             if (pList.size() != 1) {
-              message("ERROR: ACTION_YOUR_TURN");
+              error("ACTION_YOUR_TURN");
             } else
                 activate_timer(pList.at(0).toInt(), 4, pList.at(0).toInt());
             wait_delay = false;                        // enable card playing
@@ -2185,17 +2171,17 @@ void MainWindow::online_action(unsigned int action, QString param)
     case ACTION_PLAY:
             wait_delay = true;                         // disable card playing
             if (pList.size() != 2) {
-              message("ERROR: ACTION PLAY");
+              error("ACTION PLAY");
               break;
             }
             c1 = pList.at(0).toInt();
             if ((c1 < 0) || (c1 > 3)) {
-              message("ERROR: ACTION PLAY(2)");
+              error("ACTION PLAY(2)");
               break;
             }
             c2 = pList.at(1).toInt();
             if ((c2 < 0) || (c2 > DECK_SIZE - 1)) {
-              message("ERROR: ACTION PLAY(3)");
+              error("ACTION PLAY(3)");
               break;
             }
             if (!online_heart_broken && (c2 / 13 == HEART)) {
@@ -2204,17 +2190,17 @@ void MainWindow::online_action(unsigned int action, QString param)
             }
             play_card(c2, c1);
             for (int i=0; i<13; i++)
-                if (online_myCards[i] == c2) {
-                  online_myCards[i] = empty;
-                  online_num_cards--;
-                  break;
-                }
+               if (online_myCards[i] == c2) {
+                 online_myCards[i] = empty;
+                 online_num_cards--;
+                 break;
+               }
             remove_timer();
             show_deck(0, 0);
             break;
     case ACTION_HAND_SCORE:
             if (pList.size() != 2) {
-              message("ERROR: ACTION_HAND_SCORE");
+              error("ACTION_HAND_SCORE");
               break;
             }
             c1 = pList.at(0).toInt();
@@ -2225,7 +2211,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             clear_table();
 
             if (pList.size() != 4) {
-              message("ERROR: ACTION_SCORE");
+              error("ACTION_SCORE");
               break;
             }
             north = pList.at(0).toInt(); // score NORTH
@@ -2237,7 +2223,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_SHOOT_MOON:
             if (pList.size() != 2) {
-              message("ERROR: ACTION_SHOOT_MOON");
+              error("ACTION_SHOOT_MOON");
               break;
             }
             c1 = pList.at(0).toInt();
@@ -2248,7 +2234,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_BONUS_NO_TRICKS:
             if (pList.size() != 2) {
-              message("ERROR: ACTION_BONUS_NO_TRICKS");
+              error("ACTION_BONUS_NO_TRICKS");
               break;
             }
             c1 = pList.at(0).toInt();
@@ -2260,7 +2246,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_BONUS_OMNIBUS:
             if (pList.size() != 2) {
-              message("ERROR: ACTION_OMNIBUS");
+              error("ACTION_OMNIBUS");
               break;
             }
             c1 = pList.at(0).toInt();
@@ -2272,14 +2258,14 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_PERFECT_100:
             if (pList.size() != 2) {
-              message("ERROR: ACTION_PERFECT_100");
+              error("ACTION_PERFECT_100");
               break;
             }
             online_perfect_100(pList.at(0).toInt());
             break;
     case ACTION_GAMEOVER:
             if (pList.size() != 4) {
-              message("ERROR: ACTION_SCORE");
+              error("ACTION_SCORE");
               break;
             }
             remove_timer();
@@ -2295,7 +2281,7 @@ void MainWindow::online_action(unsigned int action, QString param)
               al_play_sample(snd_announcement, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
             if (param.isEmpty()) {
-              message("ERROR: ACTION_ANNOUNCEMENT");
+              error("ACTION_ANNOUNCEMENT");
               break;
             }
             m = tr("**** ANNOUNCEMENT from ") + param + " ****";
@@ -2304,7 +2290,7 @@ void MainWindow::online_action(unsigned int action, QString param)
     case ACTION_PLAYER_MOON:
             clear_table();
             if (pList.size() != 2) {
-              message("ERROR: ACTION_PLAYER_MOON");
+              error("ACTION_PLAYER_MOON");
               return;
             }
             c1 = pList.at(0).toInt(); // player
@@ -2342,7 +2328,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_STATS:
             if (pList.size() != 4) {
-               message("ERROR: ACTION_STATS");
+               error("ACTION_STATS");
                return;
             }
             s1 = pList.at(0).toLong();
@@ -2359,7 +2345,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_GAME_STARTED:
             if (pList.size() != 1) {
-              message("ERROR: ACTION_GAME_STARTED");
+              error("ACTION_GAME_STARTED");
               return;
             }
             clear_table();
@@ -2386,7 +2372,7 @@ void MainWindow::online_action(unsigned int action, QString param)
       // 17  = bool heart broken
       // 18 19 20 21 22 23 24 25 26 27 28 29 30 = my cards (empty card included)
             if (pList.size() != 31) {
-              message("ERROR: ACTION_RECONNECTED");
+              error("ACTION_RECONNECTED");
               return;
             }
             online_table_id = pList.at(0).toInt();
@@ -2456,7 +2442,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_WRONG_VALUE:
             if (pList.size() != 2) {
-              message("ERROR: ACTION_WRONG_VALUE");
+              error("ACTION_WRONG_VALUE");
               return;
             }
             m = tr("Wrong value ! The range is: [") + QString::number(pList.at(0).toInt()) + ", " + QString::number(pList.at(1).toInt()) + "]";
@@ -2464,7 +2450,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             break;
     case ACTION_TIME_BANK:
             if (pList.size() != 3) {
-               message("ERROR: ACTION_TIME_BANK");
+               error("ACTION_TIME_BANK");
                return;
             }
 
