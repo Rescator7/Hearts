@@ -59,3 +59,9 @@
 10 May 2020: Added: Menu help->Online.
 10 May 2020: Added: online button [Start] to start a game.
 10 May 2020: Added: confirmation to the online button [Exit]. 
+
+16 May 2020: Version 1.5.2b
+-------------------------------------------------------------------------------------------------
+16 May 2020: Added online time bank.
+16 May 2020: Added an error function.
+16 May 2020: Fix minor bugs, and code cleanup.
