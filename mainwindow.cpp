@@ -1633,7 +1633,9 @@ void MainWindow::set_language(int lang)
  table_list->Translate();
  stats->Translate();
 
-#ifndef DEBUG
+#ifdef DEBUG
+  debug->Translate();
+#else
   ui->menuDebug->setTitle("");
   ui->menuDebug->setEnabled(false);
 #endif

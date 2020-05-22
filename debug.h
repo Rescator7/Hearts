@@ -42,6 +42,7 @@ public:
     void save_card(const char *name, QImage *img);
     void reverse_order();
     void reset();
+    void Translate();
 
 public slots:
     void handle_bar(int value);
