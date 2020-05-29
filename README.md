@@ -1,4 +1,4 @@
-# Hearts 1.5b (Linux)
+# Hearts 1.5.3b (Linux)
 The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
 
 ## 1. Requirements:
@@ -41,7 +41,7 @@ The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
  - MIT for the software
  - Cards set: https://github.com/htdebeer/SVG-cards/blob/master/LICENSE
  - Sounds are CC 3.0 and 1.0
- - Icons: CC 1.0
+ - Icons: (read credits)
 <p>(read credits for more informations)</p>
 
 ![screenshoot](https://github.com/Rescator7/Hearts/blob/master/screenshot/SCR1-hearts-1.5.jpg)
