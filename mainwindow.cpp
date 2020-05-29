@@ -66,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     set_options();
 
     light_connected(false);
+    set_online_buttons_styles();
     online_show_buttons(false);
 
     connect(timer, SIGNAL(timeout()), this, SLOT(update_bar()));
@@ -1574,12 +1575,24 @@ void MainWindow::on_actionShow_2_triggered()
 #endif
 
 
-void MainWindow::fit_button(QPushButton *button, int x, int width)
+void MainWindow::set_online_buttons_styles()
 {
-  int y = ui->pushButton->y();
+  QColor color = QColor(63, 159, 82, 255);
+  QString style = QString("background-color: %1; border: none;").arg(color.name());
 
-  button->setFixedWidth(width);
-  button->move(x, y);
+  ui->pushButton->setFocusPolicy(Qt::NoFocus);
+  ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
+  ui->pushButton_3->setFocusPolicy(Qt::NoFocus);
+  ui->pushButton_4->setFocusPolicy(Qt::NoFocus);
+  ui->pushButton_5->setFocusPolicy(Qt::NoFocus);
+  ui->pushButton_7->setFocusPolicy(Qt::NoFocus);
+
+  ui->pushButton->setStyleSheet(style);
+  ui->pushButton_2->setStyleSheet(style);
+  ui->pushButton_3->setStyleSheet(style);
+  ui->pushButton_4->setStyleSheet(style);
+  ui->pushButton_5->setStyleSheet(style);
+  ui->pushButton_7->setStyleSheet(style);
 }
 
 void MainWindow::set_language(int lang)
@@ -1595,36 +1608,18 @@ void MainWindow::set_language(int lang)
                          qApp->installTranslator(&translator);
 
                          ui->actionEnglish->setChecked(true);
-                         fit_button(ui->pushButton, 10, 40);
-                         fit_button(ui->pushButton_2, 50, 55);
-                         fit_button(ui->pushButton_3, 105, 55);
-                         fit_button(ui->pushButton_4, 160, 100);
-                         fit_button(ui->pushButton_5, 260, 50);
-                         fit_button(ui->pushButton_7, 310, 50);
                        }
                        break;
     case LANG_FRENCH:  if (translator.load(QLocale(QLocale::French), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages"))) {
                          qApp->installTranslator(&translator);
 
                          ui->actionFrench->setChecked(true);
-                         fit_button(ui->pushButton, 10, 60);
-                         fit_button(ui->pushButton_2, 70, 65);
-                         fit_button(ui->pushButton_3, 135, 55);
-                         fit_button(ui->pushButton_4, 190, 90);
-                         fit_button(ui->pushButton_5, 280, 75);
-                         fit_button(ui->pushButton_7, 355, 80);
                        }
                        break;
     case LANG_RUSSIAN: if (translator.load(QLocale(QLocale::Russian), QLatin1String("translation"), QLatin1String("_"), QLatin1String(":/languages"))) {
                          qApp->installTranslator(&translator);
 
                          ui->actionRussian->setChecked(true);
-                         fit_button(ui->pushButton, 10, 60);
-                         fit_button(ui->pushButton_2, 70, 55);
-                         fit_button(ui->pushButton_3, 125, 80);
-                         fit_button(ui->pushButton_4, 205, 135);
-                         fit_button(ui->pushButton_5, 340, 80);
-                         fit_button(ui->pushButton_7, 420, 65);
                        }
                        break;
  }

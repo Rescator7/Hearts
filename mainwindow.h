@@ -224,7 +224,7 @@ public:
     void init_online_game();
     void shoot_moon(int plr, int delay);
     void light_connected(bool connected);
-    void fit_button(QPushButton *button, int x, int width);
+    void set_online_buttons_styles();
 
     void online_end_hand(int north, int south, int west, int east);
     void online_game_over(int north, int south, int west, int east);
