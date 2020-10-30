@@ -946,7 +946,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="4607"/>
         <source>&amp;Detect Tram</source>
-        <translation>Detetect Tram</translation>
+        <translation>Detect Tram</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4621"/>
