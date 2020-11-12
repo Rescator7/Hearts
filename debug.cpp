@@ -87,10 +87,8 @@ void CDebug::show_history(int slide)
   }
 }
 
-void CDebug::save_card(int card, const char *name, QImage *img)
+void CDebug::save_card(int card, const char *name)
 {
-  assert(img);
-
   if (history_size >= MAX_HISTORY_SIZE)
     reset();
 

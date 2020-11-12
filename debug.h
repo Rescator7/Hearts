@@ -47,7 +47,7 @@ public:
     CDebug(CDeck *d);
     ~CDebug();
 
-    void save_card(int card, const char *name, QImage *img);
+    void save_card(int card, const char *name);
     void reset();
     void refresh();
     void Translate();

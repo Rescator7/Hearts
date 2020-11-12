@@ -406,7 +406,7 @@ void MainWindow::load_saved_game()
     }
 
     for (int i=0; i<3; i++) {
-       debug->save_card(card_played[turn], names[plr_names_idx[turn]], deck->get_img_card(card_played[turn]));
+       debug->save_card(card_played[turn], names[plr_names_idx[turn]]);
        if (++turn > 3) turn = 0;
        if ((card_played[turn] == empty) || (card_played[turn] == your_turn)) break;
     }
@@ -854,7 +854,7 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
   stats->increase_stats(0, STATS_HANDS_PLAYED);
 
 #ifdef DEBUG
-  debug->save_card(empty, nullptr, deck->get_img_card(empty));
+  debug->save_card(empty, nullptr);
 #endif
 
   lcd_hand_score[0]->display(score1);
@@ -886,7 +886,7 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
 void MainWindow::online_end_hand(int north, int south, int west, int east) {
 
 #ifdef DEBUG
-  debug->save_card(empty, nullptr, deck->get_img_card(empty));
+  debug->save_card(empty, nullptr);
 #endif
 
   lcd_score[0]->display(south);
@@ -1168,9 +1168,9 @@ void MainWindow::play_card(int card, int idx)
 #ifdef DEBUG
  deck->set_card_played(card);
  if (online_connected)
-   debug->save_card(card, reinterpret_cast<const char *>(&online_names[idx]), deck->get_img_card(card));
+   debug->save_card(card, reinterpret_cast<const char *>(&online_names[idx]));
  else
-   debug->save_card(card, names[plr_names_idx[idx]], deck->get_img_card(card));
+   debug->save_card(card, names[plr_names_idx[idx]]);
 #endif
 
  card_played[idx] = card;
