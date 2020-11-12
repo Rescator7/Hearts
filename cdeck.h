@@ -1,8 +1,16 @@
 #ifndef CDECK_H
 #define CDECK_H
 
+#include "define.h"
 #include <QImage>
 #include "chearts.h"
+
+#ifdef DEBUG
+
+#include "ccardsplayed.h"
+
+class CCardsPlayed;
+#endif // DEBUG
 
 const int STANDARD_DECK = 0;
 const int ENGLISH_DECK  = 1;
@@ -21,6 +29,10 @@ private:
     QImage *img_back_card;
     QImage *img_sit_here;
 
+#ifdef DEBUG
+    CCardsPlayed *cards_played;
+#endif // DEBUG
+
     int current_deck;
 
     void delete_current_deck();
@@ -32,6 +44,13 @@ public:
     QImage *get_img_card(int card);
     void reverse_card_rgb(int card);
     void set_deck(int deck);
+
+#ifdef DEBUG
+    void set_card_played(int card);
+    void reset_cards_played();
+    void show_cards_played();
+    void Translate();
+#endif // DEBUG
 };
 
 #endif // CDECK_H

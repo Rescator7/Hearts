@@ -4360,7 +4360,7 @@
      </sizepolicy>
     </property>
     <property name="toolTip">
-     <string>leave</string>
+     <string>Leave</string>
     </property>
     <property name="text">
      <string/>
@@ -4696,6 +4696,7 @@
     <property name="title">
      <string>&amp;Debug</string>
     </property>
+    <addaction name="actionCards_Played"/>
     <addaction name="actionShow_2"/>
     <addaction name="actionCheat"/>
    </widget>
@@ -4950,6 +4951,11 @@
   <action name="actionOnline">
    <property name="text">
     <string>Online</string>
+   </property>
+  </action>
+  <action name="actionCards_Played">
+   <property name="text">
+    <string>Cards Played</string>
    </property>
   </action>
  </widget>

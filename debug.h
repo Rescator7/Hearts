@@ -4,6 +4,8 @@
 #include "define.h"
 
 #ifdef DEBUG
+
+#include "cdeck.h"
 #include <QWidget>
 #include <QLabel>
 #include <QScrollBar>
@@ -23,25 +25,31 @@ private: // variables;
     QHBoxLayout *box2;
     QScrollBar *bar;
 
+    CDeck *deck;
     QLabel *labels[14];
-    QImage *img_stack[MAX_HISTORY_SIZE];
-    QImage *img_empty;
 
     const char *plr_names[MAX_HISTORY_SIZE];
 
+    bool winners[MAX_HISTORY_SIZE];
+
+    int cards[MAX_HISTORY_SIZE];
     int ptr_screen;
     int history_size;
+    int cards_saved;
+    int suit;
+    int best;
+    int best_pos;
 
 private: // functions
     void show_history(int slide);
 
 public:
-    CDebug(QImage *_img_empty);
+    CDebug(CDeck *d);
     ~CDebug();
 
-    void save_card(const char *name, QImage *img);
-    void reverse_order();
+    void save_card(int card, const char *name, QImage *img);
     void reset();
+    void refresh();
     void Translate();
 
 public slots:

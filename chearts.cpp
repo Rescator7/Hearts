@@ -1329,7 +1329,8 @@ void CHearts::advance_turn()
        plr_jack_diamond = turn;            // if the bonus apply, it will be counted in process_next_pass
 
      emit sig_tram(turn);
-   }
+   } //else
+      // emit sig_your_turn(turn);
  } else {
      if (++turn > 3) {
        turn = 0;
@@ -1344,7 +1345,7 @@ void CHearts::advance_turn()
  if (turn != user_id)
    play_hand();
  else
-    emit sig_your_turn(user_id);
+   emit sig_your_turn(user_id);
 }
 
 int CHearts::play_card(int idx)
@@ -1743,18 +1744,18 @@ int CHearts::get_lowest_score()
 
 int CHearts::get_highest_score()
 {
- int highest_score = plr_score[0];
+  int highest_score = plr_score[0];
 
- for (int i=1; i<4; i++)
-   if (plr_score[i] > highest_score)
-     highest_score = plr_score[i];
+  for (int i=1; i<4; i++)
+    if (plr_score[i] > highest_score)
+      highest_score = plr_score[i];
 
- return highest_score;
+  return highest_score;
 }
 
 bool CHearts::is_ready_to_pass()
 {
- return cards_selected_count[user_id] == 3;
+  return cards_selected_count[user_id] == 3;
 }
 
 bool CHearts::is_game_over()
@@ -1769,22 +1770,27 @@ bool CHearts::is_no_pass()
 
 bool CHearts::is_mode_playing()
 {
- return mode_playing;
+  return mode_playing;
 }
 
 bool CHearts::is_it_my_turn()
 {
- return turn == user_id;
+  return turn == user_id;
 }
 
 bool CHearts::is_card_selected(int plr, int idx)
 {
- return cards_selected[plr][idx];
+  return cards_selected[plr][idx];
 }
 
 bool CHearts::is_card_selected(int idx)
 {
- return cards_selected[user_id][idx];
+  return cards_selected[user_id][idx];
+}
+
+bool CHearts::is_card_played(int card)
+{
+  return cards_played[card];
 }
 
 int CHearts::get_current_suit()
@@ -1799,7 +1805,12 @@ int CHearts::get_my_score()
 
 int CHearts::whoami()
 {
- return user_id;
+  return user_id;
+}
+
+int CHearts::get_turn()
+{
+  return turn;
 }
 
 int CHearts::get_card(int plr, int idx)

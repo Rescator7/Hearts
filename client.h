@@ -1,7 +1,6 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <Qt>
 #include <QWidget>
 #include <QTcpSocket>
 #include <QDataStream>

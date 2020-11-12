@@ -3,6 +3,7 @@
 #ifdef DEBUG
 
 #include "assert.h"
+#include "chearts.h"
 
 #include <QString>
 #include <QPalette>
@@ -11,13 +12,13 @@
 
 const char PLR_NOBODY[7] = "Nobody";
 
-CDebug::CDebug(QImage *_img_empty)
+CDebug::CDebug(CDeck *d)
 {
   setWindowTitle(tr("Cards history"));
 
   setAttribute( Qt::WA_QuitOnClose, false );
 
-  img_empty = _img_empty;
+  deck = d;
 
   box1 = new QHBoxLayout;
 
@@ -76,20 +77,50 @@ CDebug::~CDebug()
 void CDebug::show_history(int slide)
 {
   for (int i=0; i<7; i++) {
-    labels[i]->setPixmap(QPixmap::fromImage(img_stack[i + ptr_screen - slide]->scaledToHeight(100)));
+    labels[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(cards[i + ptr_screen - slide])->scaledToHeight(100)));
     labels[i+7]->setText(plr_names[i + ptr_screen - slide]);
+
+    if (winners[i + ptr_screen - slide])
+      labels[i+7]->setStyleSheet("QLabel { color : white; }");
+    else
+      labels[i+7]->setStyleSheet("QLabel { color : black; }");
   }
 }
 
-void CDebug::save_card(const char *name, QImage *img)
+void CDebug::save_card(int card, const char *name, QImage *img)
 {
   assert(img);
 
   if (history_size >= MAX_HISTORY_SIZE)
     reset();
 
-  img_stack[history_size] = img;
-  plr_names[history_size] = name ? name : reinterpret_cast<const char *>(&PLR_NOBODY);
+  cards[history_size] = card;
+
+  if (name)
+    plr_names[history_size] = name;
+  else
+    plr_names[history_size] = reinterpret_cast<const char *>(&PLR_NOBODY);
+
+  if (card == empty)
+    cards_saved = 0;
+  else
+    cards_saved++;
+
+  if (cards_saved == 1) {
+    suit = card / 13;
+    best_pos = 3;
+    best = card;
+  } else {
+      if ((card / 13 == suit) && (card > best)) {
+        best = card;
+        best_pos = 4 - cards_saved;
+      }
+      if (cards_saved == 4) {
+        cards_saved = 0;
+        winners[history_size - best_pos] = true;
+      }
+  }
+
   history_size++;
 
   if (history_size >= 7) {
@@ -106,52 +137,28 @@ void CDebug::save_card(const char *name, QImage *img)
 void CDebug::reset()
 {
   history_size = 0;
+  cards_saved = 0;
   ptr_screen = 0;
+  suit = 0;
+  best = 0;
+  best_pos = 0;
 
   bar->setMaximum(0);
   bar->setValue(0);
 
   // show 7 empty cards
   for (int i=0; i<7; i++) {
-    labels[i]->setPixmap(QPixmap::fromImage(img_empty->scaledToHeight(100)));
+    labels[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(100)));
     labels[i+7]->setText("Nobody");
+    labels[i+7]->setStyleSheet("QLabel { color : black; }");
   }
 
   // show 7 Nobody as names
   for (int i=0; i<MAX_HISTORY_SIZE; i++) {
-    img_stack[i] = img_empty;
+    winners[i] = false;
+    cards[i] = empty;
     plr_names[i] = reinterpret_cast<const char *>(&PLR_NOBODY);
   }
-}
-
-// This function is used only for saved games, reversing the order of the hands cards
-// played.
-void CDebug::reverse_order()
-{
-  int ptr;
-
-  if (history_size == 2)
-    ptr = 1;
-  else
-  if (history_size == 3)
-    ptr = 2;
-  else
-    return;
-
-  QImage *first_img = img_stack[0];
-  const char *first_name = plr_names[0];
-
-  labels[0]->setPixmap(QPixmap::fromImage(img_stack[ptr]->scaledToHeight(100)));
-  labels[ptr]->setPixmap(QPixmap::fromImage(img_stack[0]->scaledToHeight(100)));
-
-  img_stack[0] = img_stack[ptr];
-  img_stack[ptr] = first_img;
-
-  labels[7]->setText(plr_names[ptr]);
-  labels[7+ptr]->setText(first_name);
-
-  plr_names[0] = plr_names[ptr];
-  plr_names[ptr] = first_name;
 }
 
 void CDebug::handle_bar(int value)
@@ -159,10 +166,14 @@ void CDebug::handle_bar(int value)
   show_history(bar->maximum() - value);
 }
 
-
 void CDebug::Translate()
 {
   setWindowTitle(tr("Cards history"));
 }
 
-#endif
+void CDebug::refresh()
+{
+  show_history(bar->maximum() - bar->value());
+}
+
+#endif // DEBUG

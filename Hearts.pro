@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     cgame.cpp \
     ctable.cpp \
     cstatistics.cpp \
-    online.cpp
+    online.cpp \
+    ccardsplayed.cpp
 
 HEADERS  += mainwindow.h \
     clabel.h \
@@ -48,7 +49,8 @@ HEADERS  += mainwindow.h \
     cgame.h \
     ctable.h \
     cstatistics.h \
-    online.h
+    online.h \
+    ccardsplayed.h
 
 FORMS    += mainwindow.ui \
     rules.ui \

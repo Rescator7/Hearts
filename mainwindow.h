@@ -28,8 +28,6 @@
 #include "debug.h"
 #endif
 
-const int max_mainwindow_height = 915;
-
 const int mode_button_command   = 1;
 const int mode_button_help      = 2;
 const int mode_button_says      = 3;
@@ -92,6 +90,7 @@ private slots:
 #ifdef DEBUG
     void on_actionShow_2_triggered();
     void on_actionCheat_triggered();
+    void on_actionCards_Played_triggered();
 #endif
 
     void on_actionEnglish_triggered(bool checked);
@@ -233,6 +232,7 @@ public:
     void online_select_card(int num);
     void online_pass_cards();
     void online_show_buttons(bool enable);
+    void online_show_lineedit(bool enable);
     void online_show_deck();
     void online_hide_progress_bar();
 

@@ -1,5 +1,6 @@
 #include "cdeck.h"
 #include <assert.h>
+#include <QGroupBox>
 
 CDeck::CDeck(int deck)
 {
@@ -19,7 +20,33 @@ CDeck::CDeck(int deck)
 
      default: set_standard_deck();
   }
+
+#ifdef DEBUG
+  cards_played = new CCardsPlayed(this);
 }
+
+void CDeck::set_card_played(int card)
+{
+  cards_played->play(card);
+}
+
+void CDeck::reset_cards_played()
+{
+  cards_played->reset();
+}
+
+void CDeck::show_cards_played()
+{
+  cards_played->show();
+}
+
+void CDeck::Translate()
+{
+  cards_played->Translate();
+}
+#else
+}
+#endif // DEBUG
 
 void CDeck::set_standard_deck(){
   img_cards[0] = new QImage(":/SVG-cards/Default/club_2.png", "PNG");
@@ -202,6 +229,10 @@ CDeck::~CDeck()
   delete img_back_card;
   delete img_sit_here;
 
+#ifdef DEBUG
+  delete cards_played;
+#endif // DEBUG
+
   delete_current_deck();
 }
 
@@ -245,4 +276,8 @@ void CDeck::set_deck(int deck)
   }
 
   current_deck = deck;
+
+#ifdef DEBUG
+  cards_played->set_deck();
+#endif
 }

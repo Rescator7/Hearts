@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     client = new CClient();
 
 #ifdef DEBUG
-    debug = new CDebug(deck->get_img_card(empty));
+    debug = new CDebug(deck);
 #endif
 
     online_hide_progress_bar();
@@ -62,12 +62,12 @@ MainWindow::MainWindow(QWidget *parent) :
     timer = new QTimer();
 
     init_vars();
+    online_show_buttons(false);
     set_settings();
     set_options();
 
     light_connected(false);
     set_online_buttons_styles();
-    online_show_buttons(false);
 
     connect(timer, SIGNAL(timeout()), this, SLOT(update_bar()));
 
@@ -364,6 +364,15 @@ void MainWindow::save_files()
 void MainWindow::load_saved_game()
 {
   message(tr("[Info]: Previous saved game has been loaded!"));
+
+#ifdef DEBUG
+// set played card in the deck class
+    for (int i=0; i<DECK_SIZE; i++)
+      if (hearts->is_card_played(i)) {
+        deck->set_card_played(i);
+      }
+#endif // DEBUG
+
   for (int i=0; i<4; i++) {
     int name_id = hearts->get_plr_name_id(i);
 
@@ -385,12 +394,21 @@ void MainWindow::load_saved_game()
 
       label[13 + cpt]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
       card_played[cpt] = card;
-
-#ifdef DEBUG
-      debug->save_card(names[plr_names_idx[cpt]], deck->get_img_card(card));
     }
-    debug->reverse_order();
-#else
+
+// save the cards in the proper order in the debug cards history.
+#ifdef DEBUG
+    int turn = hearts->get_turn();
+    while ((card_played[turn] == empty) || (card_played[turn] == your_turn)) {
+      if (++turn > 3) turn = 0;
+      if (turn == hearts->get_turn())
+        return;
+    }
+
+    for (int i=0; i<3; i++) {
+       debug->save_card(card_played[turn], names[plr_names_idx[turn]], deck->get_img_card(card_played[turn]));
+       if (++turn > 3) turn = 0;
+       if ((card_played[turn] == empty) || (card_played[turn] == your_turn)) break;
     }
 #endif
   }
@@ -815,6 +833,10 @@ void MainWindow::pass_to(int pass_to)
   }
   label[17]->setPixmap(QPixmap::fromImage(img_pass[pass_to]->scaledToHeight(80)));
   label[17]->setDisabled(pass_to == pNOPASS);
+
+#ifdef DEBUG
+  deck->reset_cards_played();
+#endif // DEBUG
 }
 
 void MainWindow::refresh_score(int score, int idx)
@@ -832,7 +854,7 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
   stats->increase_stats(0, STATS_HANDS_PLAYED);
 
 #ifdef DEBUG
-  debug->save_card(nullptr, deck->get_img_card(empty));
+  debug->save_card(empty, nullptr, deck->get_img_card(empty));
 #endif
 
   lcd_hand_score[0]->display(score1);
@@ -864,7 +886,7 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
 void MainWindow::online_end_hand(int north, int south, int west, int east) {
 
 #ifdef DEBUG
-  debug->save_card(nullptr, deck->get_img_card(empty));
+  debug->save_card(empty, nullptr, deck->get_img_card(empty));
 #endif
 
   lcd_score[0]->display(south);
@@ -968,20 +990,17 @@ void MainWindow::online_show_deck()
 
 void MainWindow::set_info_channel_enabled(bool enable)
 {
- int new_height = height();
-
- if (enable) {
-    new_height += ui->textEdit->height() + ui->lineEdit->height();
-    if (new_height > max_mainwindow_height)
-      new_height = max_mainwindow_height;
-
-    setFixedHeight(new_height);
+  if (enable) {
+    if (height() + ui->textEdit->height() <= 915)
+      setFixedHeight(height() + ui->textEdit->height());
     ui->textEdit->show();
+    if (online_connected)
+      online_show_lineedit(true);
   } else {
       ui->textEdit->hide();
-
-      new_height -= ui->textEdit->height() + ui->lineEdit->height();
-      setFixedHeight(new_height);
+      setFixedHeight(height() - ui->textEdit->height());
+      if (ui->lineEdit->isVisible())
+        online_show_lineedit(false);
     }
 }
 
@@ -1147,10 +1166,11 @@ void MainWindow::play_card(int card, int idx)
     delay(400);
 
 #ifdef DEBUG
+ deck->set_card_played(card);
  if (online_connected)
-   debug->save_card(reinterpret_cast<const char *>(&online_names[idx]), deck->get_img_card(card));
+   debug->save_card(card, reinterpret_cast<const char *>(&online_names[idx]), deck->get_img_card(card));
  else
-   debug->save_card(names[plr_names_idx[idx]], deck->get_img_card(card));
+   debug->save_card(card, names[plr_names_idx[idx]], deck->get_img_card(card));
 #endif
 
  card_played[idx] = card;
@@ -1630,6 +1650,7 @@ void MainWindow::set_language(int lang)
 
 #ifdef DEBUG
   debug->Translate();
+  deck->Translate();
 #else
   ui->menuDebug->setTitle("");
   ui->menuDebug->setEnabled(false);
@@ -1694,13 +1715,14 @@ void MainWindow::on_actionStandard_triggered()
   if (config->get_deck_style() == STANDARD_DECK)
     return;
 
-#ifdef DEBUG
-  debug->reset();
-#endif
-
   flush_deck();
 
   deck->set_deck(STANDARD_DECK);
+
+#ifdef DEBUG
+  debug->refresh();
+#endif
+
   show_deck(active_deck, true);
   refresh_cards_played();
   config->set_deck_style(STANDARD_DECK);
@@ -1715,13 +1737,14 @@ void MainWindow::on_actionEnglish_2_triggered()
   if (config->get_deck_style() == ENGLISH_DECK)
     return;
 
-#ifdef DEBUG
-  debug->reset();
-#endif
-
   flush_deck();
 
   deck->set_deck(ENGLISH_DECK);
+
+#ifdef DEBUG
+  debug->refresh();
+#endif
+
   show_deck(active_deck, true);
   refresh_cards_played();
   config->set_deck_style(ENGLISH_DECK);
@@ -1736,13 +1759,14 @@ void MainWindow::on_actionRussian_2_triggered()
   if (config->get_deck_style() == RUSSIAN_DECK)
     return;
 
-#ifdef DEBUG
-  debug->reset();
-#endif
-
   flush_deck();
 
   deck->set_deck(RUSSIAN_DECK);
+
+#ifdef DEBUG
+  debug->refresh();
+#endif
+
   show_deck(active_deck, true);
   refresh_cards_played();
   config->set_deck_style(RUSSIAN_DECK);
@@ -2575,6 +2599,20 @@ void MainWindow::on_pushButton_6_clicked()
   }
 }
 
+// Show or hide the line edit, and the button_6
+void MainWindow::online_show_lineedit(bool enable)
+{
+ if (enable) {
+   setFixedHeight(height() + ui->lineEdit->height());
+   ui->pushButton_6->show();
+   ui->lineEdit->show();
+ } else {
+     setFixedHeight(height() - ui->lineEdit->height());
+     ui->pushButton_6->hide();
+     ui->lineEdit->hide();
+ }
+}
+
 // Show online buttons when connected.
 // Hide them when disconnecting.
 void MainWindow::online_show_buttons(bool enable)
@@ -2586,6 +2624,8 @@ void MainWindow::online_show_buttons(bool enable)
     ui->pushButton_4->show();
     ui->pushButton_5->show();
     ui->pushButton_7->show();
+    if (ui->actionInfo_Channel->isChecked())
+      online_show_lineedit(true);
   } else {
       ui->pushButton->hide();
       ui->pushButton_2->hide();
@@ -2593,6 +2633,8 @@ void MainWindow::online_show_buttons(bool enable)
       ui->pushButton_4->hide();
       ui->pushButton_5->hide();
       ui->pushButton_7->hide();
+      if (ui->actionInfo_Channel->isChecked())
+        online_show_lineedit(false);
     }
 }
 
@@ -2604,3 +2646,10 @@ void MainWindow::online_hide_progress_bar()
   progress_bar[3]->hide();
   progress_bar[4]->hide();
 }
+
+#ifdef DEBUG
+void MainWindow::on_actionCards_Played_triggered()
+{
+  deck->show_cards_played();
+}
+#endif // DEBUG

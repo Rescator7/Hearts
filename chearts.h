@@ -161,11 +161,13 @@ public: // functions
    bool is_card_selected(int plr, int idx);
    bool is_card_selected(int idx);
    bool is_card_selectable(int card);
+   bool is_card_played(int card);
 
    bool select_card(int idx);
    bool unselect_card(int idx);
 
    int  whoami();
+   int  get_turn();
    int  get_current_suit();
    int  play_card(int idx);
    int  get_card(int plr, int idx);
