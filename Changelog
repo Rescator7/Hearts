@@ -69,3 +69,11 @@
 29 May 2020: Version 1.5.3b
 -------------------------------------------------------------------------------------------------
 29 May 2020: Added online buttons icons.
+
+12 Nov 2020: Version 1.5.4
+-------------------------------------------------------------------------------------------------
+30 Nov 2020: Fixed a typo
+12 Nov 2020: [DEBUG] Cards history now highlight every hand winners.
+12 Nov 2020: [DEBUG] added a cards played list.
+12 Nov 2020: [DEBUG] Switching to a different cards deck doesn't erase the cards history anymore.
+12 Nov 2020: Hide the button (command, chat, help) and the line edit during offline play.
