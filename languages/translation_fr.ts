@@ -197,8 +197,8 @@
     </message>
     <message>
         <location filename="../client.cpp" line="392"/>
-        <source>help - Show the command list.
-help &lt;command&gt; - Show &lt;command&gt;&apos;s help.
+        <source>help - Show the command list.<byte value="xd"/>
+help &lt;command&gt; - Show &lt;command&gt;&apos;s help.<byte value="xd"/>
 </source>
         <translation>help - Affiche la liste des commandes.
 help &lt;command&gt; - Affiche l&apos;aide de &lt;command&gt;.
@@ -206,14 +206,14 @@ help &lt;command&gt; - Affiche l&apos;aide de &lt;command&gt;.
     </message>
     <message>
         <location filename="../client.cpp" line="396"/>
-        <source>join &lt;id&gt; - Join table #id.
+        <source>join &lt;id&gt; - Join table #id.<byte value="xd"/>
 join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</source>
-        <translation>join &lt;id&gt; - Rejoignez la table #id.
+        <translation>oin &lt;id&gt; - Rejoignez la table #id.
 join &lt;id&gt; &lt;chair&gt; - Rejoignez la table #id et asseyez-vous sur la chaise (n, s, e, w).</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="400"/>
-        <source>leave - Leave a table.
+        <source>leave - Leave a table.<byte value="xd"/>
 Please note: If you were playing that would make you finish in fourth place.</source>
         <translation>leave - Quitter une table.
 Remarque: si vous jouiez, cela vous ferait terminer à la quatrième place.</translation>
@@ -359,18 +359,6 @@ Remarque: si vous jouiez, cela vous ferait terminer à la quatrième place.</tra
         <translation>exit - Quittez le serveur et revenez au mode de jeu hors ligne.</translation>
     </message>
     <message>
-        <source>pass - Pass your 3 cards. Used by the client when you click button pass.
-Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
-        <translation type="vanished">pass - Passez vos 3 cartes. Utilisé par le client lorsque vous cliquez sur le bouton Passer.
-Utilisation: passer pos1 pos2 pos3. Les valeurs sont des positions de carte 0-12.</translation>
-    </message>
-    <message>
-        <source>admin - Make a user to admin level. Usage: Admin user.
-Note: require level super user.</source>
-        <translation type="vanished">admin - Mettre un joueur dans la liste des administrateurs. Utilisation: admin joueur.
-Remarque: nécessite le niveau de super utilisateur.</translation>
-    </message>
-    <message>
         <location filename="../client.cpp" line="404"/>
         <source>moon - Used during new moon to choose between add and substract. Usage: &quot;moon +&quot;  or &quot;mooon -&quot;.</source>
         <translation>moon - Utilisé pendant la nouvelle lune pour choisir entre ajouter et soustraire. Utilisation: &quot;moon +&quot; ou &quot;moon -&quot;.</translation>
@@ -384,6 +372,13 @@ Remarque: nécessite le niveau de super utilisateur.</translation>
         <location filename="../client.cpp" line="410"/>
         <source>new - Create a new table. Usage: New &lt;flags&gt;. Note: Use interface &quot;create table&quot;.</source>
         <translation>new - Crée une nouvelle table. Utilisation: new &lt;flags&gt;. Remarque: Utilisez l&apos;interface &quot;créer une table&quot;.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="413"/>
+        <source>pass - Pass your 3 cards. Used by the client when you click button pass.<byte value="xd"/>
+Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
+        <translation>pass - Passez vos 3 cartes. Utilisé par le client lorsque vous cliquez sur le bouton Passer.
+Utilisation: passer pos1 pos2 pos3. Les valeurs sont des positions de carte 0-12.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="417"/>
@@ -429,6 +424,13 @@ Remarque: nécessite le niveau de super utilisateur.</translation>
         <location filename="../client.cpp" line="441"/>
         <source>Start - Start the game. The empty chairs will be played by BOT.</source>
         <translation>Start - Démarre la partie. Les chaises vides seront jouées par des BOTs.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="445"/>
+        <source>admin - Make a user to admin level. Usage: Admin user.<byte value="xd"/>
+Note: require level super user.</source>
+        <translation>admin - Mettre un joueur dans la liste des administrateurs. Utilisation: admin joueur.
+Remarque: nécessite le niveau de super utilisateur.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="449"/>
@@ -480,7 +482,7 @@ Remarque: nécessite le niveau de super utilisateur.</translation>
     <name>CDebug</name>
     <message>
         <location filename="../debug.cpp" line="17"/>
-        <location filename="../debug.cpp" line="171"/>
+        <location filename="../debug.cpp" line="169"/>
         <source>Cards history</source>
         <translation>Historique de jeu</translation>
     </message>
@@ -703,11 +705,11 @@ Remarque: nécessite le niveau de super utilisateur.</translation>
     </message>
     <message>
         <location filename="../connect.cpp" line="63"/>
-        <source>The password will be sent unencrypted over the internet.
-It is also saved unencrypted in ~/.hearts
-
-DON&apos;T reuse this password !
-
+        <source>The password will be sent unencrypted over the internet.<byte value="xd"/>
+It is also saved unencrypted in ~/.hearts<byte value="xd"/>
+<byte value="xd"/>
+DON&apos;T reuse this password !<byte value="xd"/>
+<byte value="xd"/>
 Do you want to continue ?</source>
         <translation>Le mot de passe sera envoyé non crypté sur Internet.
 Il est également enregistré non chiffré dans ~ / .hearts
@@ -1105,14 +1107,6 @@ p, li { white-space: pre-wrap; }
         <translation>Cartes Jouées</translation>
     </message>
     <message>
-        <source>[Error]: The statistics file is corrupted!</source>
-        <translation type="vanished">[Erreur]: le fichier de statistiques est corrompu!</translation>
-    </message>
-    <message>
-        <source>[Error]: The saved game file is corrupted! Deleted!</source>
-        <translation type="vanished">[Erreur]: le fichier de jeu enregistré est endommagé! Il a été supprimé!</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="501"/>
         <source>You</source>
         <translation>Moi</translation>
@@ -1334,22 +1328,6 @@ p, li { white-space: pre-wrap; }
         <translation>[Info]: Nouveau pointages: &apos;</translation>
     </message>
     <message>
-        <source>[Error]: You can&apos;t break hearts yet!</source>
-        <translation type="vanished">[Erreur]: Vous ne pouvez pas briser les cœurs!</translation>
-    </message>
-    <message>
-        <source>[Error]: You must follow the suit! The lead is in </source>
-        <translation type="vanished">[Erreur]: vous devez suivre la couleur! Le couleur est en </translation>
-    </message>
-    <message>
-        <source>[Error]: You can&apos;t play the queen of spade on the first hand!</source>
-        <translation type="vanished">[Erreur]: Vous ne pouvez pas jouer la reine de pique dans la première main!</translation>
-    </message>
-    <message>
-        <source>[Error]: You needs to select 3 cards to pass!</source>
-        <translation type="vanished">[Erreur]: Vous devez sélectionner 3 cartes à passer!</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="1443"/>
         <source>[Info]: Starting a new game.</source>
         <translation>[Info]: Démarrage d&apos;une nouvelle partie.</translation>
@@ -1374,36 +1352,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../mainwindow.cpp" line="2308"/>
         <source>**** ANNOUNCEMENT from </source>
         <translation>**** ANNONCE de </translation>
-    </message>
-    <message>
-        <source>Your online statistics:
-</source>
-        <translation type="vanished">Vos statistiques en ligne:
-</translation>
-    </message>
-    <message>
-        <source>
-First  : </source>
-        <translation type="vanished">
-Premier : </translation>
-    </message>
-    <message>
-        <source>
-Second : </source>
-        <translation type="vanished">
-Deuxième : </translation>
-    </message>
-    <message>
-        <source>
-Third  : </source>
-        <translation type="vanished">
-Troisième  : </translation>
-    </message>
-    <message>
-        <source>
-Fourth : </source>
-        <translation type="vanished">
-Quatrième : </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2360"/>
@@ -1435,6 +1383,41 @@ Quatrième : </translation>
         <location filename="../mainwindow.cpp" line="1328"/>
         <source>[Error]: </source>
         <translation>[Erreur]: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="2359"/>
+        <source>Your online statistics:<byte value="xd"/>
+</source>
+        <translation>Vos statistiques en ligne:
+</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="2361"/>
+        <source><byte value="xd"/>
+First  : </source>
+        <translation>
+Premier : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="2362"/>
+        <source><byte value="xd"/>
+Second : </source>
+        <translation>
+Deuxième : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="2363"/>
+        <source><byte value="xd"/>
+Third  : </source>
+        <translation>
+Troisième  : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="2364"/>
+        <source><byte value="xd"/>
+Fourth : </source>
+        <translation>
+Quatrième : </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2469"/>
