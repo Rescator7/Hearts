@@ -77,3 +77,11 @@
 12 Nov 2020: [DEBUG] added a cards played list.
 12 Nov 2020: [DEBUG] Switching to a different cards deck doesn't erase the cards history anymore.
 12 Nov 2020: Hide the button (command, chat, help) and the line edit during offline play.
+
+17 Nov 2020: Version 1.5.5
+-------------------------------------------------------------------------------------------------
+17 Nov 2020: Moved menu About/Credits into menu Help
+17 Nov 2020: Moved menu Languages into menu Settings
+17 Nov 2020: Added Settings Game Speed: Slow, Normal, Fast. (Offline play only)
+17 Nov 2020: Added Settings Auto Start. This option set if the two of clubs is played
+             automatically or manually. (For human play)
