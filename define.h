@@ -1,7 +1,7 @@
 #ifndef DEFINE
 #define DEFINE
 
-const char version[80] = "Hearts 1.5.4";
+const char version[80] = "Hearts 1.5.5";
 
 // Compilation will use liballegro
 #define USE_LIBALLEGRO5

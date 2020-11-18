@@ -4640,12 +4640,6 @@
     <addaction name="actionConnect"/>
     <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>A&amp;bout</string>
-    </property>
-    <addaction name="actionCredits"/>
-   </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="title">
      <string>S&amp;ettings</string>
@@ -4658,13 +4652,32 @@
      <addaction name="actionEnglish_2"/>
      <addaction name="actionRussian_2"/>
     </widget>
+    <widget class="QMenu" name="menuGame_Speed">
+     <property name="title">
+      <string>Game Speed</string>
+     </property>
+     <addaction name="actionSlow"/>
+     <addaction name="actionNormal"/>
+     <addaction name="actionFast"/>
+    </widget>
+    <widget class="QMenu" name="menuLanguage_2">
+     <property name="title">
+      <string>Language</string>
+     </property>
+     <addaction name="actionEnglish"/>
+     <addaction name="actionFrench"/>
+     <addaction name="actionRussian"/>
+    </widget>
     <addaction name="actionAuto_Centering"/>
-    <addaction name="actionInfo_Channel"/>
-    <addaction name="actionSounds"/>
+    <addaction name="actionAuto_Start"/>
     <addaction name="actionTram"/>
     <addaction name="actionEasy_card_selection"/>
+    <addaction name="actionInfo_Channel"/>
     <addaction name="actionSave_Game_Quit"/>
+    <addaction name="actionSounds"/>
+    <addaction name="menuGame_Speed"/>
     <addaction name="menuDeck"/>
+    <addaction name="menuLanguage_2"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -4673,6 +4686,7 @@
     <addaction name="actionRules"/>
     <addaction name="actionSettings"/>
     <addaction name="actionOnline"/>
+    <addaction name="actionCredits"/>
    </widget>
    <widget class="QMenu" name="menuGame_Variations">
     <property name="title">
@@ -4700,21 +4714,11 @@
     <addaction name="actionShow_2"/>
     <addaction name="actionCheat"/>
    </widget>
-   <widget class="QMenu" name="menuLanguage">
-    <property name="title">
-     <string>&amp;Language</string>
-    </property>
-    <addaction name="actionEnglish"/>
-    <addaction name="actionFrench"/>
-    <addaction name="actionRussian"/>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGame_Variations"/>
    <addaction name="menuOptions"/>
    <addaction name="menuStats"/>
    <addaction name="menuHelp"/>
-   <addaction name="menuAbout"/>
-   <addaction name="menuLanguage"/>
    <addaction name="menuDebug"/>
   </widget>
   <action name="actionNew">
@@ -4956,6 +4960,38 @@
   <action name="actionCards_Played">
    <property name="text">
     <string>Cards Played</string>
+   </property>
+  </action>
+  <action name="actionSlow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Slow</string>
+   </property>
+  </action>
+  <action name="actionNormal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Normal</string>
+   </property>
+  </action>
+  <action name="actionFast">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fast</string>
+   </property>
+  </action>
+  <action name="actionAuto_Start">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto Start</string>
    </property>
   </action>
  </widget>

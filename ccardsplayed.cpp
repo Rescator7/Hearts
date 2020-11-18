@@ -10,17 +10,17 @@ CCardsPlayed::CCardsPlayed(CDeck *d)
 
   deck = d;
 
-  box_cubs = new QHBoxLayout;
+  box_clubs = new QHBoxLayout;
   box_spade = new QHBoxLayout;
   box_diamond = new QHBoxLayout;
   box_hearts = new QHBoxLayout;
 
-  for (int i=0; i<52; i++) {
+  for (int i=0; i<DECK_SIZE; i++) {
     labels[i] = new QLabel(this);
     labels[i]->resize(55, 100);
     labels[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(i)->scaledToHeight(100)));
     if (i <= 12)
-      box_cubs->addWidget(labels[i]);
+      box_clubs->addWidget(labels[i]);
     else
        if (i <= 25)
          box_spade->addWidget(labels[i]);
@@ -32,7 +32,7 @@ CCardsPlayed::CCardsPlayed(CDeck *d)
   }
 
   QGroupBox *grp1 = new QGroupBox;
-  grp1->setLayout(box_cubs);
+  grp1->setLayout(box_clubs);
 
   QGroupBox *grp2 = new QGroupBox;
   grp2->setLayout(box_spade);
@@ -64,7 +64,7 @@ CCardsPlayed::~CCardsPlayed()
   for (int i=0; i<DECK_SIZE; i++)
      delete labels[i];
 
-  delete box_cubs;
+  delete box_clubs;
   delete box_spade;
   delete box_diamond;
   delete box_hearts;

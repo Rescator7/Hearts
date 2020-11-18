@@ -43,6 +43,7 @@ const int NOERROR       = 0;
 const int ERRHEART      = 1;
 const int ERRSUIT       = 2;
 const int ERRQUEEN      = 3;
+const int ERR2CLUBS     = 4;
 
 const int OMNIBUS_BONUS        = 1;
 const int NO_TRICK_BONUS       = 2;
@@ -66,6 +67,7 @@ private: // variables
     bool mode_playing;                       // true = playing, false = selecting cards
     bool tram_enabled;
     bool fresh_game;
+    bool auto_start;
 
     bool perfect_100;
     bool omnibus;
@@ -162,6 +164,7 @@ public: // functions
    bool is_card_selected(int idx);
    bool is_card_selectable(int card);
    bool is_card_played(int card);
+   bool is_starting();
 
    bool select_card(int idx);
    bool unselect_card(int idx);
@@ -200,6 +203,7 @@ public: // functions
    void set_queen_spade_break_heart(bool enable);
    void set_new_moon(bool enable);
    void set_no_draw(bool enable);
+   void set_auto_start(bool enable);
    void set_moon_add_to_score(bool enable); 
 
 signals:

@@ -65,6 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
     online_show_buttons(false);
     set_settings();
     set_options();
+    set_language(config->get_language());
 
     light_connected(false);
     set_online_buttons_styles();
@@ -95,8 +96,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(aboutToQuit()));
     connect(ui->actionQuit, SIGNAL(triggered(bool)), this, SLOT(close()));
-
-    set_language(config->get_language());
 
     message(tr("Welcome to ") + QString(version));
 
@@ -158,12 +157,6 @@ void MainWindow::init_vars()
 
   card_height = 130;
   def_card_posy = ui->label->y();
-
-  switch (config->get_deck_style()) {
-    case STANDARD_DECK: ui->actionStandard->setChecked(true); break;
-    case ENGLISH_DECK:  ui->actionEnglish_2->setChecked(true); break;
-    case RUSSIAN_DECK:  ui->actionRussian_2->setChecked(true); break;
-  }
 }
 
 void MainWindow::load_sounds()
@@ -452,6 +445,7 @@ void MainWindow::set_settings()
   ui->actionSounds->setChecked(config->is_sounds());
   ui->actionTram->setChecked(config->is_detect_tram());
   ui->actionEasy_card_selection->setChecked(config->is_easy_card_selection());
+  ui->actionAuto_Start->setChecked(config->is_auto_start());
 
   ui->actionPerfect_100->setChecked(config->is_perfect_100());
   ui->actionOmnibus->setChecked(config->is_omnibus());
@@ -462,6 +456,18 @@ void MainWindow::set_settings()
   ui->actionSave_Game_Quit->setChecked(config->is_save_game());
 
   set_info_channel_enabled(config->is_info_channel());
+
+  switch (config->get_deck_style()) {
+    case STANDARD_DECK: ui->actionStandard->setChecked(true); break;
+    case ENGLISH_DECK:  ui->actionEnglish_2->setChecked(true); break;
+    case RUSSIAN_DECK:  ui->actionRussian_2->setChecked(true); break;
+  }
+
+  switch (config->get_speed()) {
+    case SPEED_SLOW:    ui->actionSlow->setChecked(true); break;
+    case SPEED_NORMAL:  ui->actionNormal->setChecked(true); break;
+    case SPEED_FAST:    ui->actionFast->setChecked(true); break;
+  }
 }
 
 void MainWindow::set_options()
@@ -473,6 +479,7 @@ void MainWindow::set_options()
   hearts->set_no_trick_bonus(config->is_no_trick_bonus());
   hearts->set_new_moon(config->is_new_moon());
   hearts->set_no_draw(config->is_no_draw());
+  hearts->set_auto_start(config->is_auto_start());
 }
 
 void MainWindow::set_plr_names()
@@ -878,7 +885,7 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
 #ifdef __al_included_allegro5_allegro_audio_h
   if (ui->actionSounds->isChecked() && !hearts->is_game_over()) {
     al_play_sample(snd_shuffling_cards, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
-    delay(1500);
+    delay(config->get_speed(SPEED_SHUFFLE));
   }
 #endif
 }
@@ -1053,7 +1060,7 @@ void MainWindow::clear_deck()
 
 void MainWindow::clear_table()
 {
-  delay(200);
+  delay(config->get_speed(SPEED_CLEAR_TABLE));
   for (int i=0; i<4; i++) {
     label[i+13]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(card_height)));
     card_played[i] = empty;
@@ -1136,6 +1143,8 @@ void MainWindow::select_card(int num)
                         break;
          case ERRQUEEN: error(tr("You can't play the queen of spade on the first hand!"));
                         break;
+         case ERR2CLUBS: error(tr("You must play the two of clubs!"));
+                         break;
       } 
     }
 
@@ -1161,9 +1170,9 @@ void MainWindow::select_card(int num)
 void MainWindow::play_card(int card, int idx)
 {
   if (card == two_clubs)
-    delay(700);
+    delay(config->get_speed(SPEED_PLAY_TWO_CLUBS));
   else
-    delay(400);
+    delay(config->get_speed(SPEED_PLAY_CARD));
 
 #ifdef DEBUG
  deck->set_card_played(card);
@@ -1189,7 +1198,7 @@ void MainWindow::play_card(int card, int idx)
 
 void MainWindow::show_your_turn(int idx)
 {
-  delay(200);
+  delay(config->get_speed(SPEED_YOUR_TURN));
 
   show_deck(active_deck, true);
 
@@ -1275,7 +1284,7 @@ void MainWindow::on_label_18_clicked()
     al_play_sample(snd_passing_cards, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
 #endif
 
-  delay(2000);
+  delay(config->get_speed(SPEED_PASS_CARDS));
 
   hearts->sort_plr_cards();
 
@@ -1706,6 +1715,17 @@ void MainWindow::on_actionEasy_card_selection_triggered()
  config->set_config_file(CONFIG_EASY_CARD_SELECTION, checked);
 }
 
+// Two of clubs auto start
+void MainWindow::on_actionAuto_Start_triggered()
+{
+  bool checked = ui->actionAuto_Start->isChecked();
+
+  config->set_config_file(CONFIG_AUTO_START, checked);
+  if (hearts->is_starting() && ui->actionEasy_card_selection->isChecked())
+    set_cards_disabled(false);
+  hearts->set_auto_start(checked);
+}
+
 void MainWindow::on_actionStandard_triggered()
 {
   ui->actionStandard->setChecked(true);
@@ -1770,6 +1790,36 @@ void MainWindow::on_actionRussian_2_triggered()
   show_deck(active_deck, true);
   refresh_cards_played();
   config->set_deck_style(RUSSIAN_DECK);
+}
+
+// Speed Slow
+void MainWindow::on_actionSlow_triggered()
+{
+ ui->actionSlow->setChecked(true);
+ ui->actionNormal->setChecked(false);
+ ui->actionFast->setChecked(false);
+
+ config->set_speed(SPEED_SLOW);
+}
+
+// Speed Normal
+void MainWindow::on_actionNormal_triggered()
+{
+ ui->actionSlow->setChecked(false);
+ ui->actionNormal->setChecked(true);
+ ui->actionFast->setChecked(false);
+
+ config->set_speed(SPEED_NORMAL);
+}
+
+// Speed Fast
+void MainWindow::on_actionFast_triggered()
+{
+ ui->actionSlow->setChecked(false);
+ ui->actionNormal->setChecked(false);
+ ui->actionFast->setChecked(true);
+
+ config->set_speed(SPEED_FAST);
 }
 
 void MainWindow::on_lineEdit_returnPressed()

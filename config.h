@@ -17,10 +17,29 @@ const int CONFIG_NO_DRAW                 = 10;
 const int CONFIG_SAVE_GAME               = 11;
 const int CONFIG_LANGUAGE                = 12;
 const int CONFIG_EASY_CARD_SELECTION     = 13;
-const int CONFIG_DECK_STYLE              = 14;
-const int CONFIG_USERNAME                = 15;
-const int CONFIG_PASSWORD                = 16;
-const int CONFIG_WARNING                 = 17;
+const int CONFIG_AUTO_START              = 14;
+const int CONFIG_DECK_STYLE              = 15;
+const int CONFIG_USERNAME                = 16;
+const int CONFIG_PASSWORD                = 17;
+const int CONFIG_WARNING                 = 18;
+
+const int SPEED_SLOW                     = 0;
+const int SPEED_NORMAL                   = 1;
+const int SPEED_FAST                     = 2;
+
+const int SPEED_PLAY_CARD                = 0;
+const int SPEED_PLAY_TWO_CLUBS           = 1;
+const int SPEED_SHUFFLE                  = 2;
+const int SPEED_CLEAR_TABLE              = 3;
+const int SPEED_YOUR_TURN                = 4;
+const int SPEED_PASS_CARDS               = 5;
+
+const int SPEED_PLAY_CARD_VALUES[3]      = {700, 400, 200};
+const int SPEED_PLAY_TWO_CLUBS_VALUES[3] = {1400, 700, 350};
+const int SPEED_SHUFFLE_VALUES[3]        = {2500, 1500, 800};
+const int SPEED_CLEAR_TABLE_VALUES[3]    = {350, 200, 100};
+const int SPEED_YOUR_TURN_VALUES[3]      = {300, 200, 100};
+const int SPEED_PASS_CARDS_VALUES[3]     = {3000, 2000, 1000};
 
 const char CONFIG_FILENAME[10]  = "/.hearts";
 
@@ -37,6 +56,7 @@ private:
 
     int language;
     int deck_style;
+    int speed;
 
     // game variants
     bool perfect_100;
@@ -45,6 +65,7 @@ private:
     bool no_trick_bonus;
     bool new_moon;
     bool no_draw;
+    bool auto_start;
 
     // settings
     bool auto_centering;
@@ -66,11 +87,15 @@ public:
     bool Warning();
 
     void set_online(QString u, QString p);
+
     int set_config_file(int param, bool enable);
     int set_language(int lang);
     int set_deck_style(int style);
+    int set_speed(int s);
     int get_language();
     int get_deck_style();
+    int get_speed();
+    int get_speed(int type);
 
     bool is_auto_centering();
     bool is_cheat_mode();
@@ -86,6 +111,7 @@ public:
     bool is_no_draw();
     bool is_save_game();
     bool is_easy_card_selection();
+    bool is_auto_start();
 };
 
 #endif // CONFIG_H

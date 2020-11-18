@@ -116,6 +116,10 @@ private slots:
     void on_pushButton_6_clicked();
     void on_pushButton_7_clicked();
     void on_actionOnline_triggered();
+    void on_actionAuto_Start_triggered();
+    void on_actionSlow_triggered();
+    void on_actionNormal_triggered();
+    void on_actionFast_triggered();
 
 private:
     Ui::MainWindow *ui;

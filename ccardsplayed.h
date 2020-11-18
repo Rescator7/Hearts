@@ -26,7 +26,7 @@ public:
 private: // variables;
     CDeck       *deck;
     QVBoxLayout *layout;
-    QHBoxLayout *box_cubs;
+    QHBoxLayout *box_clubs;
     QHBoxLayout *box_spade;
     QHBoxLayout *box_diamond;
     QHBoxLayout *box_hearts;

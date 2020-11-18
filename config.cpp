@@ -31,6 +31,7 @@ void CConfig::init_vars()
   detect_tram = true;
   easy_card_selection = true;
   save_game = true;
+  auto_start = false;
 
   perfect_100 = false;
   omnibus = false;
@@ -38,6 +39,8 @@ void CConfig::init_vars()
   no_trick_bonus = false;
   new_moon = false;
   no_draw = false;
+
+  speed = SPEED_NORMAL;
 
   username = "";
   password = "";
@@ -84,6 +87,19 @@ int CConfig::load_config_file() {
         else
         if (value == "russian")
           deck_style = RUSSIAN_DECK;
+
+        continue;
+      }
+
+      if (param == "Speed") {
+        if (value == "slow")
+          speed = SPEED_SLOW;
+        else
+        if (value == "normal")
+          speed = SPEED_NORMAL;
+        else
+        if (value == "fast")
+          speed = SPEED_FAST;
 
         continue;
       }
@@ -143,13 +159,17 @@ int CConfig::load_config_file() {
       else
       if (param == "Save_Game")
         save_game = enable;
+      else
       if (param == "Warning")
         warning = enable;
+      else
+      if (param == "Auto_Start")
+        auto_start = enable;
       else {
           // unknown param
       }
 
-      if (cpt > 18) break; // too many lines ?? corrupted file ??
+      if (cpt > 20) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
@@ -166,6 +186,12 @@ int CConfig::set_deck_style(int style) {
   deck_style = style;
 
   return save_config_file();
+}
+
+int CConfig::set_speed(int s) {
+   speed = s;
+
+   return save_config_file();
 }
 
 int CConfig::set_config_file(int param, bool enable)
@@ -185,6 +211,7 @@ int CConfig::set_config_file(int param, bool enable)
     case CONFIG_SAVE_GAME :               save_game = enable; break;
     case CONFIG_EASY_CARD_SELECTION :     easy_card_selection = enable; break;
     case CONFIG_WARNING :                 warning = enable; break;
+    case CONFIG_AUTO_START :              auto_start = enable; break;
   }
 
   return save_config_file();
@@ -224,6 +251,13 @@ int CConfig::save_config_file()
   out << "Sounds = " << (sounds ? "true" : "false") << endl;
   out << "Detect_Tram = " << (detect_tram ? "true" : "false") << endl;
   out << "Easy_Card_Selection = " << (easy_card_selection ? "true" : "false") << endl;
+  out << "Auto_Start = " << (auto_start ? "true" : "false") << endl;
+
+  switch (speed) {
+    case SPEED_SLOW : out << "Speed = slow" << endl; break;
+    case SPEED_FAST : out << "Speed = fast" << endl; break;
+    default :         out << "Speed = normal" << endl;
+  }
 
   out << "Perfect_100 = " << (perfect_100 ? "true" : "false") << endl;
   out << "Omnibus = " << (omnibus ? "true" : "false") << endl;
@@ -312,10 +346,30 @@ bool CConfig::is_easy_card_selection() {
   return easy_card_selection;
 }
 
+bool CConfig::is_auto_start() {
+  return auto_start;
+}
+
 int CConfig::get_language() {
   return language;
 }
 
 int CConfig::get_deck_style() {
   return deck_style;
+}
+
+int CConfig::get_speed() {
+  return speed;
+}
+
+int CConfig::get_speed(int type) {
+  switch (type) {
+    case SPEED_CLEAR_TABLE: return SPEED_CLEAR_TABLE_VALUES[speed]; break;
+    case SPEED_SHUFFLE:     return SPEED_SHUFFLE_VALUES[speed]; break;
+    case SPEED_PASS_CARDS:  return SPEED_PASS_CARDS_VALUES[speed]; break;
+    case SPEED_PLAY_CARD:   return SPEED_PLAY_CARD_VALUES[speed]; break;
+    case SPEED_PLAY_TWO_CLUBS: return SPEED_PLAY_TWO_CLUBS_VALUES[speed]; break;
+    case SPEED_YOUR_TURN:   return SPEED_YOUR_TURN_VALUES[speed]; break;
+  }
+  return 0;
 }

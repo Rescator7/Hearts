@@ -1381,8 +1381,12 @@ void CHearts::play_2clubs()
      turn = i;
      hand_turn = 0;
      current_suit = CLUB;
-     if (i == user_id)
-       play_card(two_clubs);
+     if (i == user_id) {
+       if (auto_start)
+         play_card(two_clubs);
+       else
+         emit sig_your_turn(i);
+     }
      else {
         plr_cards[i][0] = empty;
         process_card(two_clubs);
@@ -1685,6 +1689,9 @@ int CHearts::check_invalid_move(int plr, int card)
 {
   int card_suit = card / 13;
 
+  if ((card_left == DECK_SIZE) && (card != two_clubs))
+    return ERR2CLUBS;
+
   if ((card_suit == HEART) && !heart_broken && !can_break_heart(plr)) {
     return ERRHEART;
   }
@@ -1882,4 +1889,19 @@ void CHearts::set_new_moon(bool enable)
 void CHearts::set_no_draw(bool enable)
 {
   no_draw = enable;
+}
+
+void CHearts::set_auto_start(bool enable)
+{
+  auto_start = enable;
+  if (auto_start && is_starting())
+    play_card(two_clubs);
+}
+
+bool CHearts::is_starting()
+{
+  if (mode_playing && (card_left == DECK_SIZE))
+    return true;
+  else
+    return false;
 }

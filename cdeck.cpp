@@ -255,11 +255,8 @@ void CDeck::reverse_card_rgb(int card) {
 
 void CDeck::delete_current_deck()
 {
-  for (int i=0; i<DECK_SIZE; i++) {
-    assert(img_cards[i]);
-
+  for (int i=0; i<DECK_SIZE; i++)
     delete(img_cards[i]);
-  }
 }
 
 void CDeck::set_deck(int deck)
