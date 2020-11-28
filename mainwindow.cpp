@@ -925,13 +925,13 @@ void MainWindow::end_of_hand(int score1, int score2, int score3, int score4)
   QString mesg;
 
   mesg = tr("[Info]: New scores: '") + label_player_name[PLAYER_SOUTH]->text() + ": " +
-          QString::number(scores[0]) + " (" + QString::number(hand_scores[0]) + ")', '" +
+          QString::number(scores[PLAYER_SOUTH]) + " (" + QString::number(hand_scores[PLAYER_SOUTH]) + ")', '" +
                                    label_player_name[PLAYER_WEST]->text() + ": " +
-          QString::number(scores[1]) + " (" + QString::number(hand_scores[1]) + ")', '" +
+          QString::number(scores[PLAYER_WEST]) + " (" + QString::number(hand_scores[PLAYER_WEST]) + ")', '" +
                                    label_player_name[PLAYER_NORTH]->text() + ": " +
-          QString::number(scores[2]) + " (" + QString::number(hand_scores[2]) + ")', '" +
+          QString::number(scores[PLAYER_NORTH]) + " (" + QString::number(hand_scores[PLAYER_NORTH]) + ")', '" +
                                    label_player_name[PLAYER_EAST]->text() + ": " +
-          QString::number(scores[3]) + " (" + QString::number(hand_scores[3]) + ")'";
+          QString::number(scores[PLAYER_EAST]) + " (" + QString::number(hand_scores[PLAYER_EAST]) + ")'";
 
   message(mesg);
 
@@ -957,13 +957,13 @@ void MainWindow::online_end_hand(int north, int south, int west, int east) {
   QString mesg;
 
   mesg = tr("[Info]: New scores: '") + label_player_name[PLAYER_SOUTH]->text() + ": " +
-          QString::number(scores[0]) + " (" + QString::number(hand_scores[0]) + ")', '" +
+          QString::number(scores[PLAYER_SOUTH]) + " (" + QString::number(hand_scores[PLAYER_SOUTH]) + ")', '" +
                                    label_player_name[PLAYER_WEST]->text() + ": " +
-          QString::number(scores[1]) + " (" + QString::number(hand_scores[1]) + ")', '" +
+          QString::number(scores[PLAYER_WEST]) + " (" + QString::number(hand_scores[PLAYER_WEST]) + ")', '" +
                                    label_player_name[PLAYER_NORTH]->text() + ": " +
-          QString::number(scores[2]) + " (" + QString::number(hand_scores[2]) + ")', '" +
+          QString::number(scores[PLAYER_NORTH]) + " (" + QString::number(hand_scores[PLAYER_NORTH]) + ")', '" +
                                    label_player_name[PLAYER_EAST]->text() + ": " +
-          QString::number(scores[3]) + " (" + QString::number(hand_scores[3]) + ")'";
+          QString::number(scores[PLAYER_EAST]) + " (" + QString::number(hand_scores[PLAYER_EAST]) + ")'";
 
   message(mesg);
 
