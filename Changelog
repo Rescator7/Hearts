@@ -20,12 +20,12 @@
 ------------------------------------------------------------------------------------------------
 27 nov 2018: fixed elusive reentrant bug in new_moon substract. if you shoot the moon with
              a score of less 52 and choosed to susbtract. A bug was triggered.
-29 nov 2018: fixed autosave() not saving on "fresh game" instead of not saving on "fresh round"
+29 nov 2018: fixed autosave() not saving on "fresh game" instead of not saving on "fresh round".
 
 10 dec 2018: Version 1.2b
 ------------------------------------------------------------------------------------------------
 10 dec 2018: Redesign of the AI to make diffent computers playing styles. (an attempt)
-10 dec 2018: added: cards history as a debuging tools, cheat mode has been moved to debug section
+10 dec 2018: added: cards history as a debuging tools, cheat mode has been moved to debug section.
 
 26 Feb 2019: Version 1.2.1b "Unreleased"
 ------------------------------------------------------------------------------------------------
@@ -33,15 +33,15 @@
 
 11 Jul 2019: Version 1.3b
 ------------------------------------------------------------------------------------------------
-11 Jul 2019: Modified the GUI. The cards are now bigger and they fit on a single row. (overlapping).
-11 Jul 2019: Added: Basic language support for: French, Russian
+11 Jul 2019: Modified the GUI. The cards are now bigger and they fit on a single row. (overlapping)
+11 Jul 2019: Added: Basic language support for: French, Russian.
 11 jul 2019: Added a class for deck cards set. 
 
 15 Jul 2019: Version 1.4b
 ------------------------------------------------------------------------------------------------
-15 Jul 2019: Added Settings [Easy card selection]
-15 Jul 2019: Added Card deck support for (English, Russian)
-15 Jul 2019: Fixed a crash bug in Debug mode (spying)
+15 Jul 2019: Added Settings [Easy card selection].
+15 Jul 2019: Added Card deck support for (English, Russian).
+15 Jul 2019: Fixed a crash bug in Debug mode. (spying)
 
 03 May 2020: Version 1.5b
 ------------------------------------------------------------------------------------------------
@@ -72,7 +72,7 @@
 
 12 Nov 2020: Version 1.5.4
 -------------------------------------------------------------------------------------------------
-30 Nov 2020: Fixed a typo
+30 Nov 2020: Fixed a typo.
 12 Nov 2020: [DEBUG] Cards history now highlight every hand winners.
 12 Nov 2020: [DEBUG] added a cards played list.
 12 Nov 2020: [DEBUG] Switching to a different cards deck doesn't erase the cards history anymore.
@@ -80,8 +80,15 @@
 
 17 Nov 2020: Version 1.5.5
 -------------------------------------------------------------------------------------------------
-17 Nov 2020: Moved menu About/Credits into menu Help
-17 Nov 2020: Moved menu Languages into menu Settings
+17 Nov 2020: Moved menu About/Credits into menu Help.
+17 Nov 2020: Moved menu Languages into menu Settings.
 17 Nov 2020: Added Settings Game Speed: Slow, Normal, Fast. (Offline play only)
 17 Nov 2020: Added Settings Auto Start. This option set if the two of clubs is played
              automatically or manually. (For human play)
+
+28 Nov 2020: Version 1.6
+-------------------------------------------------------------------------------------------------
+28 Nov 2020: New game GUI. (showing all 4 players cards)
+28 Nov 2020: Animated play.
+28 Nov 2020: Speed tune-up.
+28 Nov 2020: Code clean-up.
