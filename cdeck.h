@@ -49,6 +49,7 @@ public:
     void set_card_played(int card);
     void reset_cards_played();
     void show_cards_played();
+    void hide_cards_played();
     void Translate();
 #endif // DEBUG
 };

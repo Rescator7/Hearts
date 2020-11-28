@@ -19,9 +19,10 @@ const int CONFIG_LANGUAGE                = 12;
 const int CONFIG_EASY_CARD_SELECTION     = 13;
 const int CONFIG_AUTO_START              = 14;
 const int CONFIG_DECK_STYLE              = 15;
-const int CONFIG_USERNAME                = 16;
-const int CONFIG_PASSWORD                = 17;
-const int CONFIG_WARNING                 = 18;
+const int CONFIG_ANIMATED_PLAY           = 16;
+const int CONFIG_USERNAME                = 17;
+const int CONFIG_PASSWORD                = 18;
+const int CONFIG_WARNING                 = 19;
 
 const int SPEED_SLOW                     = 0;
 const int SPEED_NORMAL                   = 1;
@@ -33,13 +34,17 @@ const int SPEED_SHUFFLE                  = 2;
 const int SPEED_CLEAR_TABLE              = 3;
 const int SPEED_YOUR_TURN                = 4;
 const int SPEED_PASS_CARDS               = 5;
+const int SPEED_ANIMATE_PASS_CARDS       = 6;
+const int SPEED_ANIMATE_PLAY_CARD        = 7;
 
-const int SPEED_PLAY_CARD_VALUES[3]      = {700, 400, 200};
-const int SPEED_PLAY_TWO_CLUBS_VALUES[3] = {1400, 700, 350};
-const int SPEED_SHUFFLE_VALUES[3]        = {2500, 1500, 800};
+const int SPEED_PLAY_CARD_VALUES[3]      = {550, 400, 200};
+const int SPEED_PLAY_TWO_CLUBS_VALUES[3] = {1000, 700, 350};
+const int SPEED_SHUFFLE_VALUES[3]        = {1550, 1200, 1050};
 const int SPEED_CLEAR_TABLE_VALUES[3]    = {350, 200, 100};
 const int SPEED_YOUR_TURN_VALUES[3]      = {300, 200, 100};
-const int SPEED_PASS_CARDS_VALUES[3]     = {3000, 2000, 1000};
+const int SPEED_PASS_CARDS_VALUES[3]     = {2500, 2000, 1000};
+const int SPEED_ANIMATE_PASS_CARDS_VALUES[3] = {22, 10, 4};
+const int SPEED_ANIMATE_PLAY_CARD_VALUES[3]  = {200, 170, 130};
 
 const char CONFIG_FILENAME[10]  = "/.hearts";
 
@@ -68,6 +73,7 @@ private:
     bool auto_start;
 
     // settings
+    bool animated_play;
     bool auto_centering;
     bool cheat_mode;
     bool info_channel;
@@ -112,6 +118,7 @@ public:
     bool is_save_game();
     bool is_easy_card_selection();
     bool is_auto_start();
+    bool is_animated_play();
 };
 
 #endif // CONFIG_H

@@ -175,10 +175,6 @@
         <file>icons/no_pass-icon.png</file>
         <file>icons/right-icon.png</file>
         <file>icons/up-icon.png</file>
-        <file>icons/left-icon(80x80).png</file>
-        <file>icons/no_pass-icon(80x80).png</file>
-        <file>icons/right-icon(80x80).png</file>
-        <file>icons/up-icon(80x80).png</file>
         <file>SVG-cards/Default/sithere.png</file>
         <file>sounds/322897__rhodesmas__connected-01.wav</file>
         <file>sounds/322895__rhodesmas__disconnected-01.wav</file>
@@ -189,10 +185,14 @@
         <file>languages/translation_en.qm</file>
         <file>languages/translation_ru.qm</file>
         <file>icons/Actions-player-play-icon.png</file>
-        <file>icons/Comment-delete-icon.png</file>
         <file>icons/Paomedia-Small-N-Flat-Sign-add.svg</file>
         <file>icons/Paomedia-Small-N-Flat-Sign-left.svg</file>
         <file>icons/Paomedia-Small-N-Flat-Sign-up.svg</file>
         <file>icons/table-icon.png</file>
+        <file>icons/deck_h.png</file>
+        <file>icons/deck_n.png</file>
+        <file>icons/deck_s.png</file>
+        <file>icons/heart.png</file>
+        <file>icons/muted.png</file>
     </qresource>
 </RCC>

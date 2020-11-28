@@ -115,7 +115,6 @@ private: // functions
 
    int  get_lowest_suit(int plr, int suit);
    int  get_lowest_suit_pos(int plr, int suit);
-   int  get_card_position(int plr, int card);
    int  get_highest_suit(int plr, int suit);
    int  get_highest_suit_pos(int plr, int suit);
    int  get_highest_card_table();
@@ -169,7 +168,6 @@ public: // functions
    bool select_card(int idx);
    bool unselect_card(int idx);
 
-   int  whoami();
    int  get_turn();
    int  get_current_suit();
    int  play_card(int idx);
@@ -186,8 +184,10 @@ public: // functions
    int  get_lowest_score();
    int  get_highest_score();
    int  get_plr_pass_to(int plr_from);
+   int  get_plr_num_cards(int plr);
+   int  get_card_position(int plr, int card);
 
-   void new_game();
+   void new_game(bool booting);
    void set_tram_enabled(bool enable);  
    void sort_plr_cards();
    void play_2clubs();
@@ -209,7 +209,7 @@ public: // functions
 signals:
    void sig_clear_table();
    void sig_play_card(int card, int idx);
-   void sig_refresh_deck(int plr, bool d);
+   void sig_refresh_deck(bool animate);
    void sig_score(int score, int idx);
    void sig_end_hand(int score1, int score2, int score3, int score4);
    void sig_hand_score(int score, int idx);
@@ -219,9 +219,11 @@ signals:
    void sig_perfect_100(int plr);
    void sig_tram(int plr);
    void sig_pass_to(int idx);
+   void sig_pass_cards(int w1, int w2, int w3, int n1, int n2, int n3, int e1, int e2, int e3);
    void sig_game_over(int score1, int score2, int score3, int score4);
    void sig_bonus(int plr, int bonus, int value);
    void sig_got_queen_spade(int plr);
+   void sig_new_game();
 };
 
 #endif // CHEARTS_H

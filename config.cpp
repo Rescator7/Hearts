@@ -24,6 +24,7 @@ CConfig::~CConfig()
 
 void CConfig::init_vars()
 {
+  animated_play = true;
   auto_centering = true;
   cheat_mode = false;
   info_channel = true;
@@ -121,6 +122,9 @@ int CConfig::load_config_file() {
       else
         enable = false;
 
+      if (param == "Animated_Play")
+        animated_play = enable;
+      else
       if (param == "Auto_Centering")
         auto_centering = enable;
       else
@@ -169,7 +173,7 @@ int CConfig::load_config_file() {
           // unknown param
       }
 
-      if (cpt > 20) break; // too many lines ?? corrupted file ??
+      if (cpt > 21) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
@@ -212,6 +216,7 @@ int CConfig::set_config_file(int param, bool enable)
     case CONFIG_EASY_CARD_SELECTION :     easy_card_selection = enable; break;
     case CONFIG_WARNING :                 warning = enable; break;
     case CONFIG_AUTO_START :              auto_start = enable; break;
+    case CONFIG_ANIMATED_PLAY :           animated_play = enable; break;
   }
 
   return save_config_file();
@@ -245,6 +250,7 @@ int CConfig::save_config_file()
     case RUSSIAN_DECK:  out << "Deck_Style = russian" << endl; break;
   }
 
+  out << "Animated_Play = " << (animated_play ? "true" : "false") << endl;
   out << "Auto_Centering = " << (auto_centering ? "true" : "false") << endl;
   out << "Cheat_Mode = " << (cheat_mode ? "true" : "false") << endl;
   out << "Info_Channel = " << (info_channel ? "true" : "false") << endl;
@@ -350,6 +356,10 @@ bool CConfig::is_auto_start() {
   return auto_start;
 }
 
+bool CConfig::is_animated_play() {
+  return animated_play;
+}
+
 int CConfig::get_language() {
   return language;
 }
@@ -370,6 +380,8 @@ int CConfig::get_speed(int type) {
     case SPEED_PLAY_CARD:   return SPEED_PLAY_CARD_VALUES[speed]; break;
     case SPEED_PLAY_TWO_CLUBS: return SPEED_PLAY_TWO_CLUBS_VALUES[speed]; break;
     case SPEED_YOUR_TURN:   return SPEED_YOUR_TURN_VALUES[speed]; break;
+    case SPEED_ANIMATE_PASS_CARDS: return SPEED_ANIMATE_PASS_CARDS_VALUES[speed]; break;
+    case SPEED_ANIMATE_PLAY_CARD: return SPEED_ANIMATE_PLAY_CARD_VALUES[speed]; break;
   }
   return 0;
 }

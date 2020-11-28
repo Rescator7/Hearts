@@ -40,6 +40,11 @@ void CDeck::show_cards_played()
   cards_played->show();
 }
 
+void CDeck::hide_cards_played()
+{
+  cards_played->hide();
+}
+
 void CDeck::Translate()
 {
   cards_played->Translate();

@@ -35,7 +35,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     clabel.h \
     chearts.h \
-    cardspos.h \
     config.h \
     variants.h \
     rules.h \

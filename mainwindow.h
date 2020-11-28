@@ -5,7 +5,6 @@
 #include <QImage>
 #include <QLabel>
 #include <QLCDNumber>
-#include <QRadioButton>
 #include <QPushButton>
 #include <QProgressBar>
 #include "define.h"
@@ -48,25 +47,19 @@ public:
     ~MainWindow();
 
 private slots:
-#ifdef DEBUG
-    void on_radioButton_clicked();
-    void on_radioButton_2_clicked();
-    void on_radioButton_3_clicked();
-    void on_radioButton_4_clicked();
-#endif
-    void on_label_clicked();
-    void on_label_2_clicked();
-    void on_label_3_clicked();
-    void on_label_4_clicked();
-    void on_label_5_clicked();
-    void on_label_6_clicked();
-    void on_label_7_clicked();
-    void on_label_8_clicked();
-    void on_label_9_clicked();
-    void on_label_10_clicked();
-    void on_label_11_clicked();
-    void on_label_12_clicked();
-    void on_label_13_clicked();
+    void on_label_card_s1_clicked();
+    void on_label_card_s2_clicked();
+    void on_label_card_s3_clicked();
+    void on_label_card_s4_clicked();
+    void on_label_card_s5_clicked();
+    void on_label_card_s6_clicked();
+    void on_label_card_s7_clicked();
+    void on_label_card_s8_clicked();
+    void on_label_card_s9_clicked();
+    void on_label_card_s10_clicked();
+    void on_label_card_s11_clicked();
+    void on_label_card_s12_clicked();
+    void on_label_card_s13_clicked();
     void on_label_18_clicked();
 
     void on_actionNew_triggered();
@@ -103,10 +96,10 @@ private slots:
     void on_lineEdit_returnPressed();
     void on_actionConnect_triggered();
     void on_actionCreate_Table_triggered();
-    void on_label_14_clicked();
-    void on_label_16_clicked();
-    void on_label_15_clicked();
-    void on_label_17_clicked();
+    void on_label_played_s_clicked();
+    void on_label_played_w_clicked();
+    void on_label_played_n_clicked();
+    void on_label_played_e_clicked();
     void on_actionTables_triggered();
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
@@ -120,21 +113,31 @@ private slots:
     void on_actionSlow_triggered();
     void on_actionNormal_triggered();
     void on_actionFast_triggered();
+    void on_actionAnimate_Play_triggered();
+    void on_label_heart_s_clicked();
+    void on_label_heart_w_clicked();
+    void on_label_heart_n_clicked();
+    void on_label_heart_e_clicked();
+    void on_label_score_s_clicked();
+    void on_label_name_s_clicked();
+    void on_label_score_w_clicked();
+    void on_label_name_w_clicked();
+    void on_label_score_n_clicked();
+    void on_label_name_n_clicked();
+    void on_label_score_e_clicked();
+    void on_label_name_e_clicked();
 
 private:
     Ui::MainWindow *ui;
     QImage *img_pass[4];
     QImage *img_connected;
     QImage *img_disconnected;
-    QLabel *label[22];
-    QLCDNumber *lcd_hand_score[4];
-    QLCDNumber *lcd_score[4];
+    QLabel *label_cards[4][13];
+    QLabel *label_scores[4];
+    QLabel *label_player_name[4];
+    QLabel *label_card_played[4];
     QTranslator translator;
-    QProgressBar *progress_bar[5];
-
-#ifdef DEBUG
-    QRadioButton *cheat_radio_button[4];
-#endif
+    QProgressBar *progress_bar_time[5];
 
 #ifdef __al_included_allegro5_allegro_audio_h
     ALLEGRO_SAMPLE *snd_shoot_moon;
@@ -169,17 +172,18 @@ private:
     bool wait_delay;
     bool stop_delay;
 
-    int active_deck;
     int cards_received[3];
     int plr_names_idx[4];
     int card_height;
-    int def_card_posy;
     int card_played[4];
+    int original_pos_cards[4];
+    int scores[4];
+    int hand_scores[4];
 
 // Online variables
     int  online_table_id;
     int  online_passto;
-    int  online_num_cards;
+    int  online_num_cards[4];
     int  online_num_selected;
     int  online_myCards[13];
     int  online_cards_received_pos[3];
@@ -196,27 +200,27 @@ private:
 
     char online_names[4][20];
 
+    int convert_chair(int chair);
+
     void clear_deck();
-    void show_deck(int plr, bool refresh);
+    void show_deck(bool animate, bool replace);
+
     void set_info_channel_enabled(bool enable);
     void set_language(int lang);
     void set_cards_disabled(bool d);
-    void flush_deck();
     void refresh_cards_played();
     void init_vars();
-
-#ifdef DEBUG
-    void set_cheat_mode_enabled(bool enable);
-#endif
-
     void load_sounds();
     void destroy_sounds();
     void init_pointers();
     void set_settings();
     void set_options();
     void load_saved_game();
-    void start_game();
-    void disable_cheat(bool full);
+    void start_game(bool booting);
+    void disable_cheat();
+    void check_easy_cards();
+    void online_set_settings(bool disable);
+    void online_rotate_players_name();
 
 public:
     int get_name_label(QString p);
@@ -242,15 +246,14 @@ public:
 
 public slots:
     void online_action(unsigned int action, QString param);
-
     void message(QString mesg);
     void error(QString mesg);
-    void refresh_deck(int plr, bool d);
-    void play_card(int card, int idx);
+    void refresh_deck(bool animate);
+    void play_card(int card, int plr);
     void clear_table();
-    void refresh_score(int score, int idx);
+    void refresh_score(int plr, int score);
     void end_of_hand(int score1, int score2, int score3, int score4);
-    void refresh_hand_score(int score, int idx);
+    void refresh_hand_score(int plr, int score);
     void show_your_turn(int idx);
     void pass_to(int pass_to);
     void tram(int plr);
@@ -267,6 +270,8 @@ public slots:
     void activate_timer(int cs, int bar, int max);
     void remove_timer();
     void aboutToQuit();
+    void animate_pass_cards(int w1, int w2, int w3, int n1, int n2, int n3, int e1, int e2, int e3);
+    void handle_new_game();
 };
 
 #endif // MAINWINDOW_H

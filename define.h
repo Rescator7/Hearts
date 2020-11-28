@@ -1,7 +1,7 @@
 #ifndef DEFINE
 #define DEFINE
 
-const char version[80] = "Hearts 1.5.5";
+const char version[80] = "Hearts 1.6";
 
 // Compilation will use liballegro
 #define USE_LIBALLEGRO5
@@ -10,6 +10,14 @@ const char version[80] = "Hearts 1.5.5";
 #define DEBUG
 
 //#define DEBUG_DATAGRAMS
+
+const int adjust_pos[14] = {0, 6, 6, 5, 4, 4, 3, 3, 2, 2, 1, 1, 0, 0};
+
+#define NOBODY        -1
+#define PLAYER_SOUTH   0
+#define PLAYER_WEST    1
+#define PLAYER_NORTH   2
+#define PLAYER_EAST    3
 
 #define QUEEN_SPADE_f    1
 #define PERFECT_100_f    1 << 1
@@ -28,12 +36,6 @@ const int ERROPENWO                      = 2;
 const int FCORRUPTED                     = 3;
 
 const int MAX_PLR_NAMES                  = 44;
-
-const int NOBODY                         = -1;
-const int PLAYER_SOUTH                   = 0;
-const int PLAYER_WEST                    = 1;
-const int PLAYER_NORTH                   = 2;
-const int PLAYER_EAST                    = 3;
 
 const int AI_flags_pass_hearts_zero      = 0x1;
 const int AI_flags_pass_hearts_high      = 0x2;

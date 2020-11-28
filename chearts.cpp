@@ -14,9 +14,12 @@ CHearts::~CHearts()
 {
 }
 
-void CHearts::new_game()
+void CHearts::new_game(bool booting)
 {
   init_vars();
+
+  if (!booting)
+    emit sig_new_game();
 
   reset_score();
   reset_hand_score();
@@ -29,10 +32,11 @@ void CHearts::new_game()
   reset_plr_has_card();
 
   random_deck();
-  user_id = turn;
+
+  user_id = PLAYER_SOUTH;
 
   emit sig_clear_table();
-  emit sig_refresh_deck(user_id, true);
+  emit sig_refresh_deck(true);
   emit sig_pass_to(passed_to);
 }
 
@@ -126,6 +130,8 @@ int CHearts::load_saved_game()
                       if (found_whoami)
                         return FCORRUPTED;
                       user_id = i;
+                      if (user_id != PLAYER_SOUTH)
+                        return FCORRUPTED; // version prior 1.6 saved game with user id != PLAYER_SOUTH is unsupported
                       found_whoami = true;
                     }
                  }
@@ -315,8 +321,8 @@ int CHearts::load_saved_game()
 
  // analyse the cards to find those that has been played.
  for (int i=0; i<DECK_SIZE; i++)
-   if (!plr_has_card[0][i] && !plr_has_card[1][i] &&
-       !plr_has_card[2][i] && !plr_has_card[3][i]) {
+   if (!plr_has_card[PLAYER_SOUTH][i] && !plr_has_card[PLAYER_WEST][i] &&
+       !plr_has_card[PLAYER_NORTH][i] && !plr_has_card[PLAYER_EAST][i]) {
      cards_played[i] = true;
   }
 
@@ -328,12 +334,12 @@ int CHearts::load_saved_game()
 
   // emit the new score/hand score of this game.
   for (int i=0; i<4; i++) {
-    emit sig_hand_score(plr_hand_score[i], i);
-    emit sig_score(plr_score[i], i);
+    emit sig_hand_score(i, plr_hand_score[i]);
+    emit sig_score(i, plr_score[i]);
   }
 
   emit sig_clear_table();
-  emit sig_refresh_deck(user_id, true);
+  emit sig_refresh_deck(false);
   emit sig_pass_to(passed_to);
 
   if (mode_playing)
@@ -366,7 +372,7 @@ void CHearts::reset_hand_score()
   for (int i=0; i<4; i++) {
     plr_hand_score[i] = 0;
 
-    emit sig_hand_score(plr_hand_score[i], i);
+    emit sig_hand_score(i, plr_hand_score[i]);
   }
 }
 
@@ -375,7 +381,7 @@ void CHearts::reset_score()
   for (int i=0; i<4; i++) {
     plr_score[i] = 0;
 
-    emit sig_score(plr_score[i], i);
+    emit sig_score(i, plr_score[i]);
   }
 }
 
@@ -409,10 +415,10 @@ void CHearts::reset_plr_has_card()
 
 void CHearts::random_deck()
 {
-  cpt_plr_cards[0] = 13;
-  cpt_plr_cards[1] = 13;
-  cpt_plr_cards[2] = 13;
-  cpt_plr_cards[3] = 13;
+  cpt_plr_cards[PLAYER_SOUTH] = 13;
+  cpt_plr_cards[PLAYER_WEST] = 13;
+  cpt_plr_cards[PLAYER_NORTH] = 13;
+  cpt_plr_cards[PLAYER_EAST] = 13;
 
   bool card_free[DECK_SIZE];
 
@@ -442,74 +448,91 @@ void CHearts::pass_cards()
   int a = -1, b = -1, c = -1, d = -1,
       w, x, y, z;
 
+  int save_pos[4][3] = {};
+
   for (int i=0; i<3; i++) {
-    while (!cards_selected[0][++a]) assert(a < 12);
-    while (!cards_selected[1][++b]) assert(b < 12);
-    while (!cards_selected[2][++c]) assert(c < 12);
-    while (!cards_selected[3][++d]) assert(d < 12);
+    while (!cards_selected[PLAYER_SOUTH][++a]) assert(a < 12);
+    while (!cards_selected[PLAYER_WEST][++b]) assert(b < 12);
+    while (!cards_selected[PLAYER_NORTH][++c]) assert(c < 12);
+    while (!cards_selected[PLAYER_EAST][++d]) assert(d < 12);
+    save_pos[PLAYER_SOUTH][i] = a;
+    save_pos[PLAYER_WEST][i] = b;
+    save_pos[PLAYER_NORTH][i] = c;
+    save_pos[PLAYER_EAST][i] = d;
+  }
 
-    w = plr_cards[0][a];
-    x = plr_cards[1][b];
-    y = plr_cards[2][c];
-    z = plr_cards[3][d];
+  emit sig_pass_cards(save_pos[PLAYER_WEST][0], save_pos[PLAYER_WEST][1], save_pos[PLAYER_WEST][2],
+                      save_pos[PLAYER_NORTH][0], save_pos[PLAYER_NORTH][1], save_pos[PLAYER_NORTH][2],
+                      save_pos[PLAYER_EAST][0], save_pos[PLAYER_EAST][1], save_pos[PLAYER_EAST][2]);
 
-    plr_cards_in_suit[0][w / 13]--;
-    plr_cards_in_suit[1][x / 13]--;
-    plr_cards_in_suit[2][y / 13]--;
-    plr_cards_in_suit[3][z / 13]--;
+  for (int i=0; i<3; i++) {
+    a = save_pos[PLAYER_SOUTH][i];
+    b = save_pos[PLAYER_WEST][i];
+    c = save_pos[PLAYER_NORTH][i];
+    d = save_pos[PLAYER_EAST][i];
 
-    plr_has_card[0][w] = false;
-    plr_has_card[1][x] = false;
-    plr_has_card[2][y] = false;
-    plr_has_card[3][z] = false;
+    w = plr_cards[PLAYER_SOUTH][a];
+    x = plr_cards[PLAYER_WEST][b];
+    y = plr_cards[PLAYER_NORTH][c];
+    z = plr_cards[PLAYER_EAST][d];
+
+    plr_cards_in_suit[PLAYER_SOUTH][w / 13]--;
+    plr_cards_in_suit[PLAYER_WEST][x / 13]--;
+    plr_cards_in_suit[PLAYER_NORTH][y / 13]--;
+    plr_cards_in_suit[PLAYER_EAST][z / 13]--;
+
+    plr_has_card[PLAYER_SOUTH][w] = false;
+    plr_has_card[PLAYER_WEST][x] = false;
+    plr_has_card[PLAYER_NORTH][y] = false;
+    plr_has_card[PLAYER_EAST][z] = false;
 
     switch (passed_to) {
-       case pLEFT:    plr_cards[0][a] = z;
-                      plr_cards[1][b] = w;
-                      plr_cards[2][c] = x;
-                      plr_cards[3][d] = y;
+       case pLEFT:    plr_cards[PLAYER_SOUTH][a] = z;
+                      plr_cards[PLAYER_WEST][b] = w;
+                      plr_cards[PLAYER_NORTH][c] = x;
+                      plr_cards[PLAYER_EAST][d] = y;
 
-                      plr_cards_in_suit[0][z / 13]++;
-                      plr_cards_in_suit[1][w / 13]++;
-                      plr_cards_in_suit[2][x / 13]++;
-                      plr_cards_in_suit[3][y / 13]++;
+                      plr_cards_in_suit[PLAYER_SOUTH][z / 13]++;
+                      plr_cards_in_suit[PLAYER_WEST][w / 13]++;
+                      plr_cards_in_suit[PLAYER_NORTH][x / 13]++;
+                      plr_cards_in_suit[PLAYER_EAST][y / 13]++;
 
-                      plr_has_card[0][z] = true;
-                      plr_has_card[1][w] = true;
-                      plr_has_card[2][x] = true;
-                      plr_has_card[3][y] = true;
+                      plr_has_card[PLAYER_SOUTH][z] = true;
+                      plr_has_card[PLAYER_WEST][w] = true;
+                      plr_has_card[PLAYER_NORTH][x] = true;
+                      plr_has_card[PLAYER_EAST][y] = true;
                       break;
 
-       case pRIGHT:   plr_cards[0][a] = x;
-                      plr_cards[1][b] = y;
-                      plr_cards[2][c] = z;
-                      plr_cards[3][d] = w;
+       case pRIGHT:   plr_cards[PLAYER_SOUTH][a] = x;
+                      plr_cards[PLAYER_WEST][b] = y;
+                      plr_cards[PLAYER_NORTH][c] = z;
+                      plr_cards[PLAYER_EAST][d] = w;
 
-                      plr_cards_in_suit[0][x / 13]++;
-                      plr_cards_in_suit[1][y / 13]++;
-                      plr_cards_in_suit[2][z / 13]++;
-                      plr_cards_in_suit[3][w / 13]++;
+                      plr_cards_in_suit[PLAYER_SOUTH][x / 13]++;
+                      plr_cards_in_suit[PLAYER_WEST][y / 13]++;
+                      plr_cards_in_suit[PLAYER_NORTH][z / 13]++;
+                      plr_cards_in_suit[PLAYER_EAST][w / 13]++;
 
-                      plr_has_card[0][x] = true;
-                      plr_has_card[1][y] = true;
-                      plr_has_card[2][z] = true;
-                      plr_has_card[3][w] = true;
+                      plr_has_card[PLAYER_SOUTH][x] = true;
+                      plr_has_card[PLAYER_WEST][y] = true;
+                      plr_has_card[PLAYER_NORTH][z] = true;
+                      plr_has_card[PLAYER_EAST][w] = true;
                       break;
 
-       case pACCROSS: plr_cards[0][a] = y;
-                      plr_cards[1][b] = z;
-                      plr_cards[2][c] = w;
-                      plr_cards[3][d] = x;
+       case pACCROSS: plr_cards[PLAYER_SOUTH][a] = y;
+                      plr_cards[PLAYER_WEST][b] = z;
+                      plr_cards[PLAYER_NORTH][c] = w;
+                      plr_cards[PLAYER_EAST][d] = x;
 
-                      plr_cards_in_suit[0][y / 13]++;
-                      plr_cards_in_suit[1][z / 13]++;
-                      plr_cards_in_suit[2][w / 13]++;
-                      plr_cards_in_suit[3][x / 13]++;
+                      plr_cards_in_suit[PLAYER_SOUTH][y / 13]++;
+                      plr_cards_in_suit[PLAYER_WEST][z / 13]++;
+                      plr_cards_in_suit[PLAYER_NORTH][w / 13]++;
+                      plr_cards_in_suit[PLAYER_EAST][x / 13]++;
 
-                      plr_has_card[0][y] = true;
-                      plr_has_card[1][z] = true;
-                      plr_has_card[2][w] = true;
-                      plr_has_card[3][x] = true;
+                      plr_has_card[PLAYER_SOUTH][y] = true;
+                      plr_has_card[PLAYER_WEST][z] = true;
+                      plr_has_card[PLAYER_NORTH][w] = true;
+                      plr_has_card[PLAYER_EAST][x] = true;
                       break;
     }
   }
@@ -1191,7 +1214,7 @@ void CHearts::process_next_pass(bool skip_moon_check)
      if (plr_score[i] >= game_over_score)
        game_over = true;
 
-     emit sig_score(plr_score[i], i);
+     emit sig_score(i, plr_score[i]);
   }
 
   moon_add_to_scores = true;         // reset to default: true. this is important.
@@ -1223,7 +1246,7 @@ void CHearts::process_next_pass(bool skip_moon_check)
     random_deck();
 
     mode_playing = false;
-    emit sig_refresh_deck(user_id, true);
+    emit sig_refresh_deck(true);
 
     heart_broken = false;
     if (passed_to == pNOPASS)
@@ -1279,6 +1302,8 @@ void CHearts::play_hand()
 
   assert((card >= 0) && (card < DECK_SIZE));
 
+  emit sig_play_card(card, turn);
+
   if (current_suit == FREESUIT)
     current_suit = card / 13;
 
@@ -1286,7 +1311,8 @@ void CHearts::play_hand()
   process_card(card);
   sort_plr_cards();
 
-  emit sig_play_card(card, turn);
+  emit sig_refresh_deck(false);
+
   advance_turn();
 }
 
@@ -1309,7 +1335,7 @@ void CHearts::advance_turn()
 
    plr_hand_score[turn] += hand_score;
 
-   emit sig_hand_score(plr_hand_score[turn], turn);
+   emit sig_hand_score(turn, plr_hand_score[turn]);
 
    hand_turn = 0;
    plr_best_hand = NOT_FOUND;
@@ -1329,8 +1355,7 @@ void CHearts::advance_turn()
        plr_jack_diamond = turn;            // if the bonus apply, it will be counted in process_next_pass
 
      emit sig_tram(turn);
-   } //else
-      // emit sig_your_turn(turn);
+   }
  } else {
      if (++turn > 3) {
        turn = 0;
@@ -1364,8 +1389,8 @@ int CHearts::play_card(int idx)
   process_card(card);
   sort_plr_cards();
 
-  emit sig_refresh_deck(user_id, false);
   emit sig_play_card(card, user_id);
+  emit sig_refresh_deck(false);
 
   advance_turn();
 
@@ -1445,10 +1470,10 @@ bool CHearts::is_moon_an_option()
   if (!(AI_cpu_flags[turn] & AI_flags_try_moon))
     return false;
 
-  if ((turn != 0) && (plr_hand_score[0] || (omnibus && (plr_jack_diamond == 0)))) return false;
-  if ((turn != 1) && (plr_hand_score[1] || (omnibus && (plr_jack_diamond == 1)))) return false;
-  if ((turn != 2) && (plr_hand_score[2] || (omnibus && (plr_jack_diamond == 2)))) return false;
-  if ((turn != 3) && (plr_hand_score[3] || (omnibus && (plr_jack_diamond == 3)))) return false;
+  if ((turn != PLAYER_SOUTH) && (plr_hand_score[PLAYER_SOUTH] || (omnibus && (plr_jack_diamond == PLAYER_SOUTH)))) return false;
+  if ((turn != PLAYER_WEST) && (plr_hand_score[PLAYER_WEST] || (omnibus && (plr_jack_diamond == PLAYER_WEST)))) return false;
+  if ((turn != PLAYER_NORTH) && (plr_hand_score[PLAYER_NORTH] || (omnibus && (plr_jack_diamond == PLAYER_NORTH)))) return false;
+  if ((turn != PLAYER_EAST) && (plr_hand_score[PLAYER_EAST] || (omnibus && (plr_jack_diamond == PLAYER_EAST)))) return false;
 
   if (plr_cards_in_suit[turn][HEART] && !plr_has_card[turn][ace_heart] && !cards_played[ace_heart])
     return false;
@@ -1810,11 +1835,6 @@ int CHearts::get_my_score()
   return plr_score[user_id];
 }
 
-int CHearts::whoami()
-{
-  return user_id;
-}
-
 int CHearts::get_turn()
 {
   return turn;
@@ -1830,6 +1850,11 @@ int CHearts::get_card(int idx)
   return plr_cards[user_id][idx];
 }
 
+int CHearts::get_plr_num_cards(int plr)
+{
+  return cpt_plr_cards[plr];
+}
+
 int CHearts::is_fresh_game()
 {
   return fresh_game;
@@ -1837,10 +1862,10 @@ int CHearts::is_fresh_game()
 
 int CHearts::get_plr_pass_to(int plr_from)
 {
-  const int plr_pass_to[4][4] = {{1, 2, 3, 0},   // pass to the left.
-                                 {3, 0, 1, 2},   // pass to the right.
-                                 {2, 3, 0, 1},   // pass accross.
-                                 {0, 1, 2, 3}};  // no pass.
+  const int plr_pass_to[4][4] = {{PLAYER_WEST, PLAYER_NORTH, PLAYER_EAST, PLAYER_SOUTH},   // pass to the left.
+                                 {PLAYER_EAST, PLAYER_SOUTH, PLAYER_WEST, PLAYER_NORTH},   // pass to the right.
+                                 {PLAYER_NORTH, PLAYER_EAST, PLAYER_SOUTH, PLAYER_WEST},   // pass accross.
+                                 {PLAYER_SOUTH, PLAYER_WEST, PLAYER_NORTH, PLAYER_EAST}};  // no pass.
 
   return plr_pass_to[passed_to][plr_from];
 }
