@@ -2218,6 +2218,8 @@ void MainWindow::online_set_settings(bool disable)
 #ifdef DEBUG
   ui->actionCards_Played->setDisabled(disable);
   ui->actionCheat->setDisabled(disable);
+  if (disable)
+    deck->hide_cards_played();
 #endif
 
   ui->actionConnect->setDisabled(disable);
@@ -2231,9 +2233,6 @@ void MainWindow::online_set_settings(bool disable)
   ui->menuGame_Speed->setDisabled(disable);
 
   ui->menuGame_Variations->setDisabled(disable);
-
-  if (disable)
-    deck->hide_cards_played();
 }
 
 void MainWindow::online_action(unsigned int action, QString param)
