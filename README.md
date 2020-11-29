@@ -1,6 +1,34 @@
 # Hearts 1.6 (Linux)
 The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
 
+## Game Features:
+- Support online and offline game play.
+- Support 3 languages. (English, French, Russian). 
+- Support 3 differents deck: Standard, English, Russian.
+- Helps [Rules, Online, Settings, Credits]
+- Sounds.
+- Easy cards selection.
+- Detect TRAM (The rest are mine).
+
+## Game Variants [Turn on/off]:
+- Queen of spade breaks heart.
+- Omnibus.   (Jack Diamond -10 pts).
+- No Tricks. (Bonus -5 pts).
+- New Moon. <p>(Allow human player who shoot the moon to choose between add 26 pts to the opponents, or 
+             substract 26 pts to his own score).</p>
+- Perfect 100. (A player who get the score of 100 pts have his score reduce to 50 pts).
+- No Draw.   (Disable multiple winners).
+
+### Offline Options:
+- Animated play.
+- Three game speed: Slow, Normal, Fast.
+- Autosave/Autoreload of the unfinished game.
+- Cheat mode. (Reveal your opponents's cards).
+- Cards history.
+- Cards played list.
+- Complete game statistics.
+<p>and more...</p>
+
 ## 1. Requirements:
 - Qt Creator (suggested)
 - QT Widget 5
