@@ -2365,6 +2365,8 @@ void MainWindow::online_action(unsigned int action, QString param)
             table_list->RemoveRow(param);
             if (online_table_id == param.toInt()) {
               init_online_game();
+
+              remove_timer();
             }
             break;
     case ACTION_DISCONNECTED:
