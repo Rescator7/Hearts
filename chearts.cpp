@@ -18,9 +18,6 @@ void CHearts::new_game(bool booting)
 {
   init_vars();
 
-  if (!booting)
-    emit sig_new_game();
-
   reset_score();
   reset_hand_score();
 
@@ -36,6 +33,10 @@ void CHearts::new_game(bool booting)
   user_id = PLAYER_SOUTH;
 
   emit sig_clear_table();
+
+  if (!booting)
+    emit sig_new_game();
+
   emit sig_refresh_deck(true);
   emit sig_pass_to(passed_to);
 }
