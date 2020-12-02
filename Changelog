@@ -92,3 +92,13 @@
 28 Nov 2020: Animated play.
 28 Nov 2020: Speed tune-up.
 28 Nov 2020: Code clean-up.
+
+TBA        : Latest
+-------------------------------------------------------------------------------------------------
+28 Nov 2020: Fix compilation error without DEBUG defined.
+30 Nov 2020: Fix online glitch. Timer not removed after a table purge.
+ 1 Dec 2020: Fix "new game" glitch: New players names appear and previous scores was shown for
+             1 or 2 seconds before being cleared.
+ 2 Dec 2020: Fix "Draw Glitch". If a game is draw, and "no draw" settings is set. The game
+             continue, but the shuffling cards sounds was muted.
+             
