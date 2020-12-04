@@ -1,3 +1,5 @@
+#ifdef ONLINE_PLAY
+
 #ifndef CLIENT_H
 #define CLIENT_H
 
@@ -201,3 +203,5 @@ public:
     void setPassword(QString p);
 };
 #endif // CLIENT_H
+
+#endif // ONLINE_PLAY

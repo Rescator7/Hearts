@@ -1,3 +1,5 @@
+#ifdef ONLINE_PLAY
+
 #ifndef CONNECT_H
 #define CONNECT_H
 
@@ -38,3 +40,5 @@ public slots:
 };
 
 #endif // CONNECT_H
+
+#endif // ONLINE_PLAY

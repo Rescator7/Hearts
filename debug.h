@@ -1,9 +1,9 @@
+#ifdef DEBUG
+
 #ifndef DEBUG_H
 #define DEBUG_H
 
 #include "define.h"
-
-#ifdef DEBUG
 
 #include "cdeck.h"
 #include <QWidget>
@@ -55,6 +55,6 @@ public:
 public slots:
     void handle_bar(int value);
 };
-#endif // DEBUG
-
 #endif // DEBUG_H
+
+#endif // DEBUG

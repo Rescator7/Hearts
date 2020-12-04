@@ -1,3 +1,5 @@
+#ifdef ONLINE_PLAY
+
 #include "ctable.h"
 #include "define.h"
 #include "ui_ctable.h"
@@ -104,3 +106,5 @@ void CTable::Translate()
 {
   ui->retranslateUi(this);
 }
+
+#endif // ONLINE_PLAY

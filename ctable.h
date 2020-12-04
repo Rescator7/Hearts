@@ -1,3 +1,5 @@
+#ifdef ONLINE_PLAY
+
 #ifndef CTABLE_H
 #define CTABLE_H
 
@@ -33,3 +35,5 @@ private slots:
 };
 
 #endif // CTABLE_H
+
+#endif // ONLINE_PLAY

@@ -1,3 +1,5 @@
+#ifdef ONLINE_PLAY
+
 #include "online.h"
 #include "ui_online.h"
 
@@ -12,3 +14,5 @@ online::~online()
 {
     delete ui;
 }
+
+#endif // ONLINE_PLAY

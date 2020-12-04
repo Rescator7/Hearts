@@ -7,6 +7,8 @@
 #include <QLCDNumber>
 #include <QPushButton>
 #include <QProgressBar>
+#include <QTranslator>
+
 #include "define.h"
 
 #ifdef USE_LIBALLEGRO5
@@ -60,7 +62,7 @@ private slots:
     void on_label_card_s11_clicked();
     void on_label_card_s12_clicked();
     void on_label_card_s13_clicked();
-    void on_label_18_clicked();
+    void on_label_pass_to_clicked();
 
     void on_actionNew_triggered();
     void on_actionAuto_Centering_triggered();
@@ -93,27 +95,29 @@ private slots:
     void on_actionStandard_triggered();
     void on_actionRussian_2_triggered();
     void on_actionEnglish_2_triggered();
-    void on_lineEdit_returnPressed();
-    void on_actionConnect_triggered();
-    void on_actionCreate_Table_triggered();
-    void on_label_played_s_clicked();
-    void on_label_played_w_clicked();
-    void on_label_played_n_clicked();
-    void on_label_played_e_clicked();
-    void on_actionTables_triggered();
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();
-    void on_pushButton_5_clicked();
-    void on_pushButton_6_clicked();
-    void on_pushButton_7_clicked();
-    void on_actionOnline_triggered();
     void on_actionAuto_Start_triggered();
     void on_actionSlow_triggered();
     void on_actionNormal_triggered();
     void on_actionFast_triggered();
     void on_actionAnimate_Play_triggered();
+
+#ifdef ONLINE_PLAY
+    void on_actionCreate_Table_triggered();
+    void on_actionOnline_triggered();
+    void on_actionConnect_triggered();
+    void on_lineEdit_returnPressed();
+    void on_actionTables_triggered();
+    void on_label_played_s_clicked();
+    void on_label_played_w_clicked();
+    void on_label_played_n_clicked();
+    void on_label_played_e_clicked();
+    void on_pushButton_exit_clicked();
+    void on_pushButton_leave_clicked();
+    void on_pushButton_tables_clicked();
+    void on_pushButton_create_table_clicked();
+    void on_pushButton_mute_clicked();
+    void on_pushButton_mode_clicked();
+    void on_pushButton_start_clicked();
     void on_label_heart_s_clicked();
     void on_label_heart_w_clicked();
     void on_label_heart_n_clicked();
@@ -126,6 +130,7 @@ private slots:
     void on_label_name_n_clicked();
     void on_label_score_e_clicked();
     void on_label_name_e_clicked();
+#endif // ONLINE_PLAY
 
 private:
     Ui::MainWindow *ui;
@@ -137,7 +142,14 @@ private:
     QLabel *label_player_name[4];
     QLabel *label_card_played[4];
     QTranslator translator;
+
+#ifdef ONLINE_PLAY
     QProgressBar *progress_bar_time[5];
+
+    CTable *table_list;
+    QTimer *timer;
+    CClient *client;
+#endif // ONLINE_PLAY
 
 #ifdef __al_included_allegro5_allegro_audio_h
     ALLEGRO_SAMPLE *snd_shoot_moon;
@@ -161,9 +173,6 @@ private:
     CConfig *config;
     CStatistics *stats;
     CDeck *deck;
-    CClient *client;
-    CTable *table_list;
-    QTimer *timer;
 
 #ifdef DEBUG
     CDebug  *debug;
@@ -180,7 +189,8 @@ private:
     int scores[4];
     int hand_scores[4];
 
-// Online variables
+#ifdef ONLINE_PLAY
+// private online variables
     int  online_table_id;
     int  online_passto;
     int  online_num_cards[4];
@@ -200,7 +210,11 @@ private:
 
     char online_names[4][20];
 
+
+// private online functions
     int convert_chair(int chair);
+
+#endif // ONLINE_PLAY
 
     void clear_deck();
     void show_deck(bool animate, bool replace);
@@ -223,7 +237,7 @@ private:
     void online_rotate_players_name();
 
 public:
-    int get_name_label(QString p);
+    int convert_char_to_player(QString p);
 
     void delay(int n);
     void set_plr_names();
@@ -233,6 +247,8 @@ public:
     void light_connected(bool connected);
     void set_online_buttons_styles();
 
+// public online functions.
+#ifdef ONLINE_PLAY
     void online_end_hand(int north, int south, int west, int east);
     void online_game_over(int north, int south, int west, int east);
     void online_receive_bonus(int plr, int bonus, int value);
@@ -243,16 +259,27 @@ public:
     void online_show_lineedit(bool enable);
     void online_show_deck();
     void online_hide_progress_bar();
+#endif // ONLINE_PLAY
 
 public slots:
+// public online slots.
+#ifdef ONLINE_PLAY
     void online_action(unsigned int action, QString param);
+    void update_bar();
+    void activate_timer(int cs, int bar, int max);
+    void remove_timer();
+    void join_game(int id, char chair);
+#else
+    void disable_online();
+#endif // ONLINE_PLAY
+
     void message(QString mesg);
     void error(QString mesg);
     void refresh_deck(bool animate);
     void play_card(int card, int plr);
     void clear_table();
     void refresh_score(int plr, int score);
-    void end_of_hand(int score1, int score2, int score3, int score4);
+    void end_of_hand(int score_s, int score_w, int score_n, int score_e);
     void refresh_hand_score(int plr, int score);
     void show_your_turn(int idx);
     void pass_to(int pass_to);
@@ -265,13 +292,9 @@ public slots:
     void receive_bonus(int plr, int bonus, int value);
     void got_queen_spade(int plr);
     void save_files();
-    void join_game(int id, char chair);
-    void update_bar();
-    void activate_timer(int cs, int bar, int max);
-    void remove_timer();
     void aboutToQuit();
     void animate_pass_cards(int w1, int w2, int w3, int n1, int n2, int n3, int e1, int e2, int e3);
-    void handle_new_game();
+    void handle_new_game(); 
 };
 
 #endif // MAINWINDOW_H

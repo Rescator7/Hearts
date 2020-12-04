@@ -3,14 +3,6 @@
 
 const char version[80] = "Hearts 1.6";
 
-// Compilation will use liballegro
-#define USE_LIBALLEGRO5
-
-// Compilation will create Debug menu
-#define DEBUG
-
-//#define DEBUG_DATAGRAMS
-
 const int adjust_pos[14] = {0, 6, 6, 5, 4, 4, 3, 3, 2, 2, 1, 1, 0, 0};
 
 #define NOBODY        -1

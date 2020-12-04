@@ -1,3 +1,5 @@
+#ifdef ONLINE_PLAY
+
 #include "connect.h"
 #include "ui_connect.h"
 #include <QMessageBox>
@@ -54,8 +56,8 @@ void Connect::config(QString &username, QString &password, bool warning)
 
 void Connect::diagButtonClicked(QAbstractButton* button)
 {
-  // QDialog return only: Accepted or Rejected. This hack allow me to return a 3rd value (3=register). This must done after close(), as close would set
-  // Result as Rejected.
+  // QDialog return only: Accepted or Rejected. This hack allow me to return a 3rd value (3=register).
+  // This must done after close(), as close would set Result as Rejected.
 
   if (!warning_disabled && ((button->text() == "Register") || (button->text() == "Connect"))) {
     QMessageBox msgBox(this);
@@ -89,3 +91,5 @@ bool Connect::WarningDisabled()
 {
   return warning_disabled;
 }
+
+#endif // ONLINE_PLAY

@@ -1,6 +1,6 @@
-#include "debug.h"
-
 #ifdef DEBUG
+
+#include "debug.h"
 
 #include "assert.h"
 #include "chearts.h"

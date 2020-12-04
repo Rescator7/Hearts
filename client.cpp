@@ -1,4 +1,6 @@
-﻿#include "client.h"
+﻿#ifdef ONLINE_PLAY
+
+#include "client.h"
 #include "define.h"
 
 CClient::CClient()
@@ -528,3 +530,5 @@ void CClient::setPassword(QString p)
 {
   password = p;
 }
+
+#endif // ONLINE_PLAY

@@ -56,7 +56,7 @@ void CHearts::init_vars()
   plr_best_hand = NOT_FOUND;
   hand_score = 0;
   best_hand = 0;
-  hand_turn = 0;
+  hand_turn = FIRST_CARD;
   current_suit = CLUB;
 }
 
@@ -80,14 +80,20 @@ int CHearts::save_game(int plr1, int plr2, int plr3, int plr4)
   out << heart_broken  << " " << hand_score   << " "             // heart_broken, hand_score, best_hand
       << best_hand     << " " << mode_playing << endl;           // mode_playing
 
-  out << plr_hand_score[0] << " " << plr_hand_score[1] << " "    // players hand_score
-      << plr_hand_score[2] << " " << plr_hand_score[3] << endl;
+  out << plr_hand_score[PLAYER_SOUTH] << " "
+      << plr_hand_score[PLAYER_WEST]  << " "                     // players hand_score
+      << plr_hand_score[PLAYER_NORTH] << " "
+      << plr_hand_score[PLAYER_EAST]  << endl;
 
-  out << plr_score[0]  << " " << plr_score[1] << " "             // players score
-      << plr_score[2]  << " " << plr_score[3] << endl;
+  out << plr_score[PLAYER_SOUTH] << " "
+      << plr_score[PLAYER_WEST]  << " "                          // players score
+      << plr_score[PLAYER_NORTH] << " "
+      << plr_score[PLAYER_EAST]  << endl;
 
-  out << hand_cards[0] << " " << hand_cards[1] << " "            // hand_cards
-      << hand_cards[2] << " " << hand_cards[3] << endl;
+  out << hand_cards[FIRST_CARD]  << " "
+      << hand_cards[SECOND_CARD] << " "                          // hand_cards
+      << hand_cards[THIRD_CARD]  << " "
+      << hand_cards[FOURTH_CARD] << endl;
 
   for (int i=0; i<4; i++) {                                      // player's cards
     for (int i2=0; i2<13; i2++) {
@@ -204,7 +210,7 @@ int CHearts::load_saved_game()
        case 6 : // extract hand_cards
                 for (int i=0; i<4; i++) {
                   value = line.section(' ', i, i).toInt();
-                  if ((value < two_clubs) || (value > DECK_SIZE - 1)) {
+                  if ((value < two_clubs) || (value >= DECK_SIZE)) {
                     if (value != empty)
                       return FCORRUPTED;
                   }
@@ -241,10 +247,11 @@ int CHearts::load_saved_game()
     return FCORRUPTED;
 
   // make sure there is no card played twice on the table.
-  if (((hand_cards[0] == hand_cards[1]) || (hand_cards[0] == hand_cards[2])) && (hand_cards[0] != empty))
+  if (((hand_cards[FIRST_CARD] == hand_cards[SECOND_CARD]) ||
+       (hand_cards[FIRST_CARD] == hand_cards[THIRD_CARD])) && (hand_cards[FIRST_CARD] != empty))
     return FCORRUPTED;
 
-  if ((hand_cards[1] == hand_cards[2]) && (hand_cards[1] != empty))
+  if ((hand_cards[SECOND_CARD] == hand_cards[THIRD_CARD]) && (hand_cards[SECOND_CARD] != empty))
     return FCORRUPTED;
 
   file.remove();
@@ -253,8 +260,8 @@ int CHearts::load_saved_game()
   game_over = false;
 
   // check if the jack of diamond is played in the current hand
-  if ((hand_cards[0] == jack_diamond) || (hand_cards[1] == jack_diamond) ||
-      (hand_cards[2] == jack_diamond) || (hand_cards[3] == jack_diamond))
+  if ((hand_cards[FIRST_CARD] == jack_diamond) || (hand_cards[SECOND_CARD] == jack_diamond) ||
+      (hand_cards[THIRD_CARD] == jack_diamond) || (hand_cards[FOURTH_CARD] == jack_diamond))
     jack_diamond_played = true;
   else
     jack_diamond_played = false;
@@ -353,10 +360,10 @@ int CHearts::load_saved_game()
 
 void CHearts::reset_cards_on_table()
 {
-  hand_cards[0] = empty;
-  hand_cards[1] = empty;
-  hand_cards[2] = empty;
-  hand_cards[3] = empty;
+  hand_cards[FIRST_CARD]  = empty;
+  hand_cards[SECOND_CARD] = empty;
+  hand_cards[THIRD_CARD]  = empty;
+  hand_cards[FOURTH_CARD] = empty;
 }
 
 void CHearts::reset_cards_passed()
@@ -980,7 +987,7 @@ int CHearts::AI_eval_lead_spade(int card)
 
   // last to talk, the queen is not in the trick.. throw your ace/king.
    if (!is_moon_an_option()) {
-     if ((hand_turn == 3) && !is_card_on_table(queen_spade) && ((card == ace_spade) || (card == king_spade)))
+     if ((hand_turn == FOURTH_CARD) && !is_card_on_table(queen_spade) && ((card == ace_spade) || (card == king_spade)))
        return 40;
    }
 
@@ -999,7 +1006,8 @@ int CHearts::AI_eval_lead_diamond(int card)
       if (is_card_on_table(queen_spade))
         return -65;
       else
-      if (cards_played[queen_spade] || plr_has_card[turn][queen_spade] || (hand_turn == 3) || is_moon_an_option())
+      if (cards_played[queen_spade] || plr_has_card[turn][queen_spade] ||
+         (hand_turn == FOURTH_CARD) || is_moon_an_option())
         return 25 + (card % 13);
      }
 
@@ -1013,7 +1021,7 @@ int CHearts::AI_eval_lead_diamond(int card)
 
   // You are the last one to play in the trick, try to use your Jack of diamond:
   // if it the strongest card of the trick.
-       if ((hand_turn == 3) && !is_card_on_table(queen_spade) && !is_card_on_table(ace_diamond) &&
+       if ((hand_turn == FOURTH_CARD) && !is_card_on_table(queen_spade) && !is_card_on_table(ace_diamond) &&
                                !is_card_on_table(king_diamond) && !is_card_on_table(queen_diamond))
          return 30;
 
@@ -1092,7 +1100,7 @@ int CHearts::AI_get_cpu_move()
          eval[i] = -63;
         else
         // we are the last one of the trick: play our bigger cards, but not in hearts, and not if queen spade is in
-         if ((hand_turn == 3) && (current_suit != HEART) && !is_card_on_table(queen_spade))
+         if ((hand_turn == FOURTH_CARD) && (current_suit != HEART) && !is_card_on_table(queen_spade))
            eval[i] = card % 13 + 2;
         else
         if (!is_moon_an_option() && (current_suit != FREESUIT)) {
@@ -1227,8 +1235,9 @@ void CHearts::process_next_pass(bool skip_moon_check)
                                      // the game shouldn't be over anymore !
 
   // This signal must be done after the no_draw check to fix a draw glitch,
-  // not having the shuffling card sound due to "game over = true".
-  emit sig_end_hand(plr_hand_score[0], plr_hand_score[1], plr_hand_score[2], plr_hand_score[3]);
+  // not having the shuffling card sound due to "game over = true", before the test.
+  emit sig_end_hand(plr_hand_score[PLAYER_SOUTH], plr_hand_score[PLAYER_WEST],
+                    plr_hand_score[PLAYER_NORTH], plr_hand_score[PLAYER_EAST]);
 
   if (!game_over) {
     card_left = DECK_SIZE;
@@ -1324,7 +1333,7 @@ void CHearts::advance_turn()
 {
  bool tram = false;
 
- if (++hand_turn > 3) {
+ if (++hand_turn > FOURTH_CARD) {
    if (is_card_on_table(queen_spade))
      emit sig_got_queen_spade(plr_best_hand);
 
@@ -1341,7 +1350,7 @@ void CHearts::advance_turn()
 
    emit sig_hand_score(turn, plr_hand_score[turn]);
 
-   hand_turn = 0;
+   hand_turn = FIRST_CARD;
    plr_best_hand = NOT_FOUND;
    best_hand = 0;
    hand_score = 0;
@@ -1408,7 +1417,7 @@ void CHearts::play_2clubs()
  for (int i=0; i<4; i++) {
    if (plr_cards[i][0] == two_clubs) {
      turn = i;
-     hand_turn = 0;
+     hand_turn = FIRST_CARD;
      current_suit = CLUB;
      if (i == user_id) {
        if (auto_start)
@@ -1687,10 +1696,14 @@ bool CHearts::select_card(int idx)
 
 bool CHearts::is_card_on_table(int card)
 {
-  if ((hand_turn == 4) && (hand_cards[3] == card)) return true;
-  if ((hand_turn >= 3) && (hand_cards[2] == card)) return true;
-  if ((hand_turn >= 2) && (hand_cards[1] == card)) return true;
-  if (hand_cards[0] == card) return true;
+// This function is always called after ++hand_turn, so
+// instead of doing e.g: if (hand_turn == FOURTH_CARD + 1)
+// I'll let the numeral check 4, 3, 2
+  if ((hand_turn == 4) && (hand_cards[FOURTH_CARD] == card)) return true;
+  if ((hand_turn >= 3) && (hand_cards[THIRD_CARD] == card)) return true;
+  if ((hand_turn >= 2) && (hand_cards[SECOND_CARD] == card)) return true;
+// if (hand_turn >= 1) && (hand_cards[FIRST_CARD] == card)) return true;
+     if (hand_cards[FIRST_CARD] == card) return true;
 
   return false;
 }
@@ -1750,20 +1763,20 @@ int CHearts::get_plr_hand_card(int plr)
 
 int CHearts::get_highest_card_table()
 {
-  int highest = hand_cards[0];
+  int highest = hand_cards[FIRST_CARD];
 
-  if (hand_turn == 3) {
-    if ((hand_cards[2] / 13 == current_suit) && (hand_cards[2] > highest))
-      highest = hand_cards[2];
+  if (hand_turn == FOURTH_CARD) {
+    if ((hand_cards[THIRD_CARD] / 13 == current_suit) && (hand_cards[THIRD_CARD] > highest))
+      highest = hand_cards[THIRD_CARD];
   }
 
-  if (hand_turn >= 2) {
-    if ((hand_cards[1] / 13 == current_suit) && (hand_cards[1] > highest))
-      highest = hand_cards[1];
+  if (hand_turn >= THIRD_CARD) {
+    if ((hand_cards[SECOND_CARD] / 13 == current_suit) && (hand_cards[SECOND_CARD] > highest))
+      highest = hand_cards[SECOND_CARD];
   }
 
-  // if (hand_turn == 1) highest = hand_cards[0];
-  // if (hand_turn == 4) doesn't apply, we already move to next round.
+  // if (hand_turn == SECOND_CARD) highest = hand_cards[FIRST_CARD];
+  // if (hand_turn == FOURTH_CARD) doesn't apply, we already move to next round.
   return highest;
 }
 

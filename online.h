@@ -1,3 +1,5 @@
+#ifdef ONLINE_PLAY
+
 #ifndef ONLINE_H
 #define ONLINE_H
 
@@ -20,3 +22,5 @@ private:
 };
 
 #endif // ONLINE_H
+
+#endif // ONLINE_PLAY

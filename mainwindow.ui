@@ -671,7 +671,7 @@
      <string notr="true">Card E</string>
     </property>
    </widget>
-   <widget class="CLabel" name="label_18">
+   <widget class="CLabel" name="label_pass_to">
     <property name="geometry">
      <rect>
       <x>405</x>
@@ -827,7 +827,7 @@
      <string notr="true"/>
     </property>
    </widget>
-   <widget class="QLabel" name="label_23">
+   <widget class="QLabel" name="label_online">
     <property name="geometry">
      <rect>
       <x>770</x>
@@ -843,7 +843,7 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_24">
+   <widget class="QLabel" name="label_connected_status">
     <property name="geometry">
      <rect>
       <x>855</x>
@@ -856,7 +856,7 @@
      <string notr="true">TextLabel</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_exit">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -889,7 +889,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="pushButton_leave">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -922,7 +922,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="pushButton_tables">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -955,7 +955,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="pushButton_create_table">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -1000,7 +1000,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="pushButton_mute">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1032,7 +1032,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="pushButton_mode">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -1045,7 +1045,7 @@
      <string notr="true">&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="pushButton_start">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -1872,7 +1872,7 @@
    <zorder>label_played_w</zorder>
    <zorder>label_played_n</zorder>
    <zorder>label_played_e</zorder>
-   <zorder>label_18</zorder>
+   <zorder>label_pass_to</zorder>
    <zorder>label_name_s</zorder>
    <zorder>label_name_w</zorder>
    <zorder>label_name_n</zorder>
@@ -1880,15 +1880,15 @@
    <zorder>textEdit</zorder>
    <zorder>lineEdit</zorder>
    <zorder>progressBar</zorder>
-   <zorder>label_23</zorder>
-   <zorder>label_24</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>pushButton_2</zorder>
-   <zorder>pushButton_3</zorder>
-   <zorder>pushButton_4</zorder>
-   <zorder>pushButton_5</zorder>
-   <zorder>pushButton_6</zorder>
-   <zorder>pushButton_7</zorder>
+   <zorder>label_online</zorder>
+   <zorder>label_connected_status</zorder>
+   <zorder>pushButton_exit</zorder>
+   <zorder>pushButton_leave</zorder>
+   <zorder>pushButton_tables</zorder>
+   <zorder>pushButton_create_table</zorder>
+   <zorder>pushButton_mute</zorder>
+   <zorder>pushButton_mode</zorder>
+   <zorder>pushButton_start</zorder>
    <zorder>progressBar_bank_s</zorder>
    <zorder>progressBar_bank_w</zorder>
    <zorder>progressBar_bank_n</zorder>

@@ -3,6 +3,11 @@
 
 #include <QObject>
 
+#define FIRST_CARD   0
+#define SECOND_CARD  1
+#define THIRD_CARD   2
+#define FOURTH_CARD  3
+
 const int DECK_SIZE     = 52;
 
 const int NOT_FOUND     = -1;
@@ -220,7 +225,7 @@ signals:
    void sig_tram(int plr);
    void sig_pass_to(int idx);
    void sig_pass_cards(int w1, int w2, int w3, int n1, int n2, int n3, int e1, int e2, int e3);
-   void sig_game_over(int score1, int score2, int score3, int score4);
+   void sig_game_over(int score_s, int score_w, int score_n, int score_e);
    void sig_bonus(int plr, int bonus, int value);
    void sig_got_queen_spade(int plr);
    void sig_new_game();
