@@ -101,4 +101,9 @@ TBA        : Latest
              1 or 2 seconds before being cleared.
  2 Dec 2020: Fix "Draw Glitch". If a game is draw, and "no draw" settings is set. The game
              continue, but the shuffling cards sounds was muted.
+ 4 Dec 2020: It's now possible to compile Hearts without online play support
+             (Edit Hearts.pro remove ONLINE_PLAY from DEFINES +=)
+             Code clean-up
+
+             
              
