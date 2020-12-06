@@ -1,4 +1,4 @@
-# Hearts 1.6 (Linux)
+# Hearts 1.6.1 (Linux)
 The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
 
 ## Game Features:
@@ -20,6 +20,7 @@ The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
 - No Draw.   (Disable multiple winners).
 
 ### Offline Options:
+- Undo. 
 - Animated play.
 - Three game speed: Slow, Normal, Fast.
 - Autosave/Autoreload of the unfinished game.
@@ -28,6 +29,9 @@ The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
 - Cards played list.
 - Complete game statistics.
 <p>and more...</p>
+<p>Note: Undo is only available when it's your turn to play. You must first have played a card before.
+  No undo available from a saved game. The undo will be purged every round or if you connect to a server. 
+  Not available online. Only 1 undo at a time is possible. e.g: No multiple undos in a row.</p>
 
 ## 1. Requirements:
 - Qt Creator (suggested)
