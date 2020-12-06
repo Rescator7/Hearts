@@ -10,6 +10,7 @@ CHearts::CHearts()
 {
   // load_save_game() doesn't call init_vars()
   undo_data = {};
+  moon_wait = false;
 }
 
 CHearts::~CHearts()
