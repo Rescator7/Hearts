@@ -93,7 +93,7 @@
 28 Nov 2020: Speed tune-up.
 28 Nov 2020: Code clean-up.
 
-TBA        : Latest
+ 6 Dec 2020: Version 1.6.1
 -------------------------------------------------------------------------------------------------
 28 Nov 2020: Fix compilation error without DEBUG defined.
 30 Nov 2020: Fix online glitch. Timer not removed after a table purge.
@@ -101,9 +101,11 @@ TBA        : Latest
              1 or 2 seconds before being cleared.
  2 Dec 2020: Fix "Draw Glitch". If a game is draw, and "no draw" settings is set. The game
              continue, but the shuffling cards sounds was muted.
- 4 Dec 2020: It's now possible to compile Hearts without online play support
-             (Edit Hearts.pro remove ONLINE_PLAY from DEFINES +=)
-             Code clean-up
-
+ 4 Dec 2020: 1) It's now possible to compile Hearts without online play support
+                (Edit Hearts.pro remove ONLINE_PLAY from DEFINES +=)
+             2) Code clean-up
+ 6 Dec 2020: Fix easy_cards_selection glitch when switching auto-centering on/off.
+             Fix a small reset statistics glitch. (3 old stats were still shown in the open statistics window).
+             Added new command Undo.
              
              
