@@ -81,6 +81,7 @@ private slots:
     void on_actionSave_Game_Quit_triggered();
     void on_actionReset_triggered();
     void on_actionShow_triggered();
+    void on_actionUndo_triggered();
 
 #ifdef DEBUG
     void on_actionShow_2_triggered();
@@ -166,6 +167,7 @@ private:
     ALLEGRO_SAMPLE *snd_connected;
     ALLEGRO_SAMPLE *snd_disconnected;
     ALLEGRO_SAMPLE *snd_announcement;
+    ALLEGRO_SAMPLE *snd_undo;
 #endif
 
 private:

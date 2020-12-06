@@ -65,6 +65,32 @@ public:
     ~CHearts();
 
 private: // variables
+    struct struct_undo_data {
+       bool undo_available;
+       bool heart_broken;
+       bool shoot_moon;
+       bool jack_diamond_played;
+       bool moon_add_to_scores;
+       bool cards_played[DECK_SIZE];
+
+       int passed_to;
+       int hand_score;
+       int best_hand;
+       int hand_turn;
+       int current_suit;
+       int card_left;
+       int plr_best_hand;
+       int plr_jack_diamond;
+       int plr_cards[4][13];
+       int plr_score[4];
+       int plr_hand_score[4];
+       int cpt_plr_cards[4];
+       int cards_left_in_suit[4];
+       int plr_cards_in_suit[4][4];
+       int plr_has_card[4][DECK_SIZE];
+       int hand_cards[4];
+    } undo_data;
+
     bool game_over;
     bool shoot_moon;
     bool heart_broken;
@@ -73,6 +99,7 @@ private: // variables
     bool tram_enabled;
     bool fresh_game;
     bool auto_start;
+    bool moon_wait;
 
     bool perfect_100;
     bool omnibus;
@@ -103,7 +130,7 @@ private: // variables
     int cards_selected_count[4];
     int cards_left_in_suit[4];
     int plr_cards_in_suit[4][4];
-    int plr_has_card[4][52];
+    int plr_has_card[4][DECK_SIZE];
     int cpu_cards[3];
     int hand_cards[4];
     int AI_cpu_flags[4];
@@ -156,6 +183,7 @@ private: // functions
    void process_next_pass(bool skip_moon_check);
    void set_cpu_passing_cards(int plr);
    void reset_plr_cards_in_suit();
+   void save_undo();
 
 public: // functions
    bool is_game_over();
@@ -169,10 +197,13 @@ public: // functions
    bool is_card_selectable(int card);
    bool is_card_played(int card);
    bool is_starting();
+   bool is_undo_available();
+   bool is_moon_wait();
 
    bool select_card(int idx);
    bool unselect_card(int idx);
 
+   int  undo();
    int  get_turn();
    int  get_current_suit();
    int  play_card(int idx);
@@ -215,9 +246,9 @@ signals:
    void sig_clear_table();
    void sig_play_card(int card, int idx);
    void sig_refresh_deck(bool animate);
-   void sig_score(int score, int idx);
+   void sig_score(int plr, int score);
    void sig_end_hand(int score1, int score2, int score3, int score4);
-   void sig_hand_score(int score, int idx);
+   void sig_hand_score(int plr, int score);
    void sig_your_turn(int idx);
    void sig_breaking_heart();
    void sig_shoot_moon(int plr);

@@ -170,7 +170,7 @@ void MainWindow::load_sounds()
 #ifdef __al_included_allegro5_allegro_audio_h
     al_install_audio();
     al_init_acodec_addon();
-    al_reserve_samples(14);
+    al_reserve_samples(15);
 
     QResource resource_snd1(":/sounds/34201__themfish__glass-house1.wav");
     QResource resource_snd2(":/sounds/240777__f4ngy__dealing-card.wav");
@@ -186,6 +186,7 @@ void MainWindow::load_sounds()
     QResource resource_snd12(":/sounds/322897__rhodesmas__connected-01.wav");
     QResource resource_snd13(":/sounds/322895__rhodesmas__disconnected-01.wav");
     QResource resource_snd14(":/sounds/493696__stib__bingbong.wav");
+    QResource resource_snd15(":/sounds/403013__inspectorj__ui-confirmation-alert-b5.wav");
 
     ALLEGRO_FILE *fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd1.data())), resource_snd1.size(), "rb");
     snd_breaking_heart = al_load_sample_f(fp, ".wav");
@@ -243,6 +244,10 @@ void MainWindow::load_sounds()
     snd_announcement = al_load_sample_f(fp, ".wav");
     al_fclose(fp);
 
+    fp = al_open_memfile(reinterpret_cast<void *>(const_cast<unsigned char *>(resource_snd15.data())), resource_snd15.size(), "rb");
+    snd_undo = al_load_sample_f(fp, ".wav");
+    al_fclose(fp);
+
     assert(snd_breaking_heart);
     assert(snd_dealing_card);
     assert(snd_error);
@@ -257,6 +262,7 @@ void MainWindow::load_sounds()
     assert(snd_connected);
     assert(snd_disconnected);
     assert(snd_announcement);
+    assert(snd_undo);
 #else
     ui->actionSounds->setDisabled(true);
 #endif
@@ -505,6 +511,8 @@ void MainWindow::start_game(bool booting)
 {
   int errnum = hearts->load_saved_game();
 
+  ui->actionUndo->setDisabled(true);
+
   if (errnum == NOERROR)
     load_saved_game();
   else {
@@ -664,6 +672,8 @@ void MainWindow::breaking_hearts()
 void MainWindow::game_over(int score1, int score2, int score3, int score4)
 {
   QString mesg, mesg2;
+
+  ui->actionUndo->setDisabled(true);
 
   stats->increase_stats(0, STATS_GAME_FINISHED);
 
@@ -1010,6 +1020,10 @@ void MainWindow::clear_table()
     label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(card_height)));
     card_played[i] = empty;
   }
+
+ // This is used by hearts->undo() when emiting sig_clear_table /to remove disabled cards.
+ if (ui->actionEasy_card_selection->isChecked())
+   set_cards_disabled(false);
 }
 
 void MainWindow::select_card(int num)
@@ -1186,6 +1200,7 @@ void MainWindow::show_your_turn(int idx)
     check_easy_cards();
     ui->actionNew->setDisabled(false);
     ui->actionConnect->setDisabled(false);
+    ui->actionUndo->setDisabled(false);
 
 #ifdef ONLINE_PLAY
   }
@@ -1402,8 +1417,11 @@ void MainWindow::on_actionAuto_Centering_triggered()
     online_show_deck();
   else
 #endif // ONLINE_PLAY
-    show_deck(false, false);
-
+    {
+      show_deck(false, false);
+      if (ui->actionEasy_card_selection->isChecked())
+        check_easy_cards();
+    }
   config->set_config_file(CONFIG_AUTO_CENTERING, ui->actionAuto_Centering->isChecked());
 }
 
@@ -1777,7 +1795,50 @@ void MainWindow::on_actionFast_triggered()
  config->set_speed(SPEED_FAST);
 }
 
+void MainWindow::on_actionUndo_triggered()
+{
+  if (hearts->is_moon_wait()) {
+    error(tr("Undo can't be used during a new moon!"));
+    return;
+  }
 
+  if (!hearts->is_it_my_turn() || !hearts->is_mode_playing()) {
+    error(tr("Undo is only available during your turn!"));
+    return;
+  }
+
+  if (hearts->is_undo_available()) {
+    stats->increase_stats(0, STATS_UNDO);
+
+#ifdef __al_included_allegro5_allegro_audio_h
+    if (ui->actionSounds->isChecked())
+      al_play_sample(snd_undo, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
+#endif
+
+#ifdef DEBUG
+    // Orange marker in cards history means Undo requested.
+    debug->save_card(your_turn, 0);
+#endif // DEBUG
+
+    int num_cards = hearts->undo();
+
+    message(tr("[Info]: Total cards(s) returned: ") + QString::number(num_cards));
+
+#ifdef DEBUG
+    deck->reset_cards_played();
+
+    // set played cards in the deck class
+    for (int i=0; i<DECK_SIZE; i++)
+      if (hearts->is_card_played(i)) {
+        deck->set_card_played(i);
+      }
+#endif // DEBUG
+
+    return;
+  }
+
+  error(tr("There is no undo available!"));
+}
 
 
 //***************************************************************************************************
@@ -2331,6 +2392,15 @@ void MainWindow::online_set_settings(bool disable)
 
   ui->actionConnect->setDisabled(disable);
   ui->actionNew->setDisabled(disable);
+
+  // (Disable only).
+  //
+  // Reason:
+  // On server connection the game is saved to file.
+  // On Disconnection the game is loaded from file.
+  // No undo available from hearts->load_saved_game().
+  if (disable)
+    ui->actionUndo->setDisabled(true);
 
   ui->actionAnimate_Play->setDisabled(disable);
   ui->actionAuto_Start->setDisabled(disable);
@@ -3165,3 +3235,4 @@ void MainWindow::online_hide_progress_bar()
   progress_bar_time[4]->hide();
 }
 #endif // ONLINE_PLAY
+

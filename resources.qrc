@@ -194,5 +194,6 @@
         <file>icons/deck_s.png</file>
         <file>icons/heart.png</file>
         <file>icons/muted.png</file>
+        <file>sounds/403013__inspectorj__ui-confirmation-alert-b5.wav</file>
     </qresource>
 </RCC>

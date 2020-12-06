@@ -8,6 +8,8 @@
 
 CHearts::CHearts()
 {
+  // load_save_game() doesn't call init_vars()
+  undo_data = {};
 }
 
 CHearts::~CHearts()
@@ -47,6 +49,7 @@ void CHearts::init_vars()
   fresh_game = true;
   game_over = false;
   shoot_moon = false;
+  moon_wait = false;
   heart_broken = false;
   jack_diamond_played = false;
   moon_add_to_scores = true;
@@ -1159,6 +1162,7 @@ void CHearts::process_next_pass(bool skip_moon_check)
           emit sig_shoot_moon(i);
 
           if (new_moon && (i == user_id) && (my_score >= 26)) {
+            moon_wait = true;
             return;                             // if new_moon is enabled, the score is above 26, and
                                                 // it's not a cpu who moon... we return, because
                                                 // we need to select [add] or [subtract]...
@@ -1375,7 +1379,9 @@ void CHearts::advance_turn()
      }
    }
 
- if (!--card_left || tram) {
+ if (!--card_left || tram) {  
+   undo_data.undo_available = false;
+
    process_next_pass(false);
    return;
  }
@@ -1394,6 +1400,8 @@ int CHearts::play_card(int idx)
 
   if (retc != NOERROR)
     return retc;
+
+  save_undo();
 
   if (current_suit == FREESUIT)
     current_suit = card / 13;
@@ -1437,6 +1445,237 @@ void CHearts::play_2clubs()
    break;
    }
  }
+}
+
+int CHearts::undo()
+{
+  if (!undo_data.undo_available || moon_wait)
+    return 0;
+
+  int num_cards = 0;
+
+  undo_data.undo_available = false;
+
+  // This part is unnecessary for now, but i'll keep it.
+  if (passed_to != undo_data.passed_to) {
+    passed_to = undo_data.passed_to;
+    emit sig_pass_to(passed_to);
+  }
+
+  turn = PLAYER_SOUTH;
+  game_over = false;
+  mode_playing = true;
+
+  heart_broken = undo_data.heart_broken;
+  hand_score = undo_data.hand_score;
+  best_hand = undo_data.best_hand;
+  jack_diamond_played = undo_data.jack_diamond_played;
+  moon_add_to_scores = undo_data.moon_add_to_scores;
+  shoot_moon = undo_data.shoot_moon;
+  hand_turn = undo_data.hand_turn;
+  current_suit = undo_data.current_suit;
+  card_left = undo_data.card_left;
+  plr_best_hand = undo_data.plr_best_hand;
+  plr_jack_diamond = undo_data.plr_jack_diamond;
+
+  for (int i=0; i<13; i++) {
+    plr_cards[PLAYER_SOUTH][i] = undo_data.plr_cards[PLAYER_SOUTH][i];
+    plr_cards[PLAYER_WEST][i] = undo_data.plr_cards[PLAYER_WEST][i];
+    plr_cards[PLAYER_NORTH][i] = undo_data.plr_cards[PLAYER_NORTH][i];
+    plr_cards[PLAYER_EAST][i] = undo_data.plr_cards[PLAYER_EAST][i];
+  }
+
+  if (plr_score[PLAYER_SOUTH] != undo_data.plr_score[PLAYER_SOUTH]) {
+    plr_score[PLAYER_SOUTH] = undo_data.plr_score[PLAYER_SOUTH];
+    emit sig_score(PLAYER_SOUTH, plr_score[PLAYER_SOUTH]);
+  }
+
+  if (plr_score[PLAYER_WEST] != undo_data.plr_score[PLAYER_WEST]) {
+    plr_score[PLAYER_WEST] = undo_data.plr_score[PLAYER_WEST];
+    emit sig_score(PLAYER_WEST, plr_score[PLAYER_WEST]);
+  }
+
+  if (plr_score[PLAYER_NORTH] != undo_data.plr_score[PLAYER_NORTH]) {
+    plr_score[PLAYER_NORTH] = undo_data.plr_score[PLAYER_NORTH];
+    emit sig_score(PLAYER_NORTH, plr_score[PLAYER_NORTH]);
+  }
+
+  if (plr_score[PLAYER_EAST] != undo_data.plr_score[PLAYER_EAST]) {
+    plr_score[PLAYER_EAST] = undo_data.plr_score[PLAYER_EAST];
+    emit sig_score(PLAYER_EAST, plr_score[PLAYER_EAST]);
+  }
+
+  if (plr_hand_score[PLAYER_SOUTH] != undo_data.plr_hand_score[PLAYER_SOUTH]) {
+    plr_hand_score[PLAYER_SOUTH] = undo_data.plr_hand_score[PLAYER_SOUTH];
+    emit sig_hand_score(PLAYER_SOUTH, plr_hand_score[PLAYER_SOUTH]);
+  }
+
+  if (plr_hand_score[PLAYER_WEST] != undo_data.plr_hand_score[PLAYER_WEST]) {
+    plr_hand_score[PLAYER_WEST] = undo_data.plr_hand_score[PLAYER_WEST];
+    emit sig_hand_score(PLAYER_WEST, plr_hand_score[PLAYER_WEST]);
+  }
+
+  if (plr_hand_score[PLAYER_NORTH] != undo_data.plr_hand_score[PLAYER_NORTH]) {
+    plr_hand_score[PLAYER_NORTH] = undo_data.plr_hand_score[PLAYER_NORTH];
+    emit sig_hand_score(PLAYER_NORTH, plr_hand_score[PLAYER_NORTH]);
+  }
+
+  if (plr_hand_score[PLAYER_EAST] != undo_data.plr_hand_score[PLAYER_EAST]) {
+    plr_hand_score[PLAYER_EAST] = undo_data.plr_hand_score[PLAYER_EAST];
+    emit sig_hand_score(PLAYER_EAST, plr_hand_score[PLAYER_EAST]);
+  }
+
+  cpt_plr_cards[PLAYER_SOUTH] = undo_data.cpt_plr_cards[PLAYER_SOUTH];
+  cpt_plr_cards[PLAYER_WEST] = undo_data.cpt_plr_cards[PLAYER_WEST];
+  cpt_plr_cards[PLAYER_NORTH] = undo_data.cpt_plr_cards[PLAYER_NORTH];
+  cpt_plr_cards[PLAYER_EAST] = undo_data.cpt_plr_cards[PLAYER_EAST];
+
+  cards_left_in_suit[CLUB] = undo_data.cards_left_in_suit[CLUB];
+  cards_left_in_suit[SPADE] = undo_data.cards_left_in_suit[SPADE];
+  cards_left_in_suit[DIAMOND] = undo_data.cards_left_in_suit[DIAMOND];
+  cards_left_in_suit[HEART] = undo_data.cards_left_in_suit[HEART];
+
+  for (int i=0; i<DECK_SIZE; i++) {
+    plr_has_card[PLAYER_SOUTH][i] = undo_data.plr_has_card[PLAYER_SOUTH][i];
+    plr_has_card[PLAYER_WEST][i] = undo_data.plr_has_card[PLAYER_WEST][i];
+    plr_has_card[PLAYER_NORTH][i] = undo_data.plr_has_card[PLAYER_NORTH][i];
+    plr_has_card[PLAYER_EAST][i] = undo_data.plr_has_card[PLAYER_EAST][i];
+
+    if (cards_played[i] != undo_data.cards_played[i]) {
+       num_cards++;
+       cards_played[i] = undo_data.cards_played[i];
+    }
+  }
+
+  plr_cards_in_suit[PLAYER_SOUTH][CLUB] = undo_data.plr_cards_in_suit[PLAYER_SOUTH][CLUB];
+  plr_cards_in_suit[PLAYER_SOUTH][SPADE] = undo_data.plr_cards_in_suit[PLAYER_SOUTH][SPADE];
+  plr_cards_in_suit[PLAYER_SOUTH][DIAMOND] = undo_data.plr_cards_in_suit[PLAYER_SOUTH][DIAMOND];
+  plr_cards_in_suit[PLAYER_SOUTH][HEART] = undo_data.plr_cards_in_suit[PLAYER_SOUTH][HEART];
+
+  plr_cards_in_suit[PLAYER_WEST][CLUB] = undo_data.plr_cards_in_suit[PLAYER_WEST][CLUB];
+  plr_cards_in_suit[PLAYER_WEST][SPADE] = undo_data.plr_cards_in_suit[PLAYER_WEST][SPADE];
+  plr_cards_in_suit[PLAYER_WEST][DIAMOND] = undo_data.plr_cards_in_suit[PLAYER_WEST][DIAMOND];
+  plr_cards_in_suit[PLAYER_WEST][HEART] = undo_data.plr_cards_in_suit[PLAYER_WEST][HEART];
+
+  plr_cards_in_suit[PLAYER_NORTH][CLUB] = undo_data.plr_cards_in_suit[PLAYER_NORTH][CLUB];
+  plr_cards_in_suit[PLAYER_NORTH][SPADE] = undo_data.plr_cards_in_suit[PLAYER_NORTH][SPADE];
+  plr_cards_in_suit[PLAYER_NORTH][DIAMOND] = undo_data.plr_cards_in_suit[PLAYER_NORTH][DIAMOND];
+  plr_cards_in_suit[PLAYER_NORTH][HEART] = undo_data.plr_cards_in_suit[PLAYER_NORTH][HEART];
+
+  plr_cards_in_suit[PLAYER_EAST][CLUB] = undo_data.plr_cards_in_suit[PLAYER_EAST][CLUB];
+  plr_cards_in_suit[PLAYER_EAST][SPADE] = undo_data.plr_cards_in_suit[PLAYER_EAST][SPADE];
+  plr_cards_in_suit[PLAYER_EAST][DIAMOND] = undo_data.plr_cards_in_suit[PLAYER_EAST][DIAMOND];
+  plr_cards_in_suit[PLAYER_EAST][HEART] = undo_data.plr_cards_in_suit[PLAYER_EAST][HEART];
+
+  hand_cards[FIRST_CARD] = undo_data.hand_cards[FIRST_CARD];
+  hand_cards[SECOND_CARD] = undo_data.hand_cards[SECOND_CARD];
+  hand_cards[THIRD_CARD] = undo_data.hand_cards[THIRD_CARD];
+  hand_cards[FOURTH_CARD] = undo_data.hand_cards[FOURTH_CARD];
+
+  emit sig_refresh_deck(false);
+  emit sig_clear_table();
+
+  int cpt = 0;
+
+  if (hand_cards[FIRST_CARD] != empty) cpt++;
+  if (hand_cards[SECOND_CARD] != empty) cpt++;
+  if (hand_cards[THIRD_CARD] != empty) cpt++;
+
+  if (cpt == 3) {
+    emit sig_play_card(hand_cards[FIRST_CARD], PLAYER_WEST);
+    emit sig_play_card(hand_cards[SECOND_CARD], PLAYER_NORTH);
+    emit sig_play_card(hand_cards[THIRD_CARD], PLAYER_EAST);
+  } else
+      if (cpt == 2) {
+        emit sig_play_card(hand_cards[FIRST_CARD], PLAYER_NORTH);
+        emit sig_play_card(hand_cards[SECOND_CARD], PLAYER_EAST);
+      } else
+          if (cpt == 1) {
+            emit sig_play_card(hand_cards[FIRST_CARD], PLAYER_EAST);
+          }
+
+  emit sig_your_turn(PLAYER_SOUTH);
+
+  return num_cards;
+}
+
+void CHearts::save_undo()
+{
+  undo_data.undo_available = true;
+
+  undo_data.passed_to = passed_to;
+  undo_data.heart_broken = heart_broken;
+  undo_data.hand_score = hand_score;
+  undo_data.best_hand = best_hand;
+  undo_data.jack_diamond_played = jack_diamond_played;
+  undo_data.moon_add_to_scores = moon_add_to_scores;
+  undo_data.shoot_moon = shoot_moon;
+  undo_data.hand_turn = hand_turn;
+  undo_data.current_suit = current_suit;
+  undo_data.card_left = card_left;
+  undo_data.plr_best_hand = plr_best_hand;
+  undo_data.plr_jack_diamond = plr_jack_diamond;
+
+  for (int i=0; i<13; i++) {
+    undo_data.plr_cards[PLAYER_SOUTH][i] = plr_cards[PLAYER_SOUTH][i];
+    undo_data.plr_cards[PLAYER_WEST][i] = plr_cards[PLAYER_WEST][i];
+    undo_data.plr_cards[PLAYER_NORTH][i] = plr_cards[PLAYER_NORTH][i];
+    undo_data.plr_cards[PLAYER_EAST][i] = plr_cards[PLAYER_EAST][i];
+  }
+
+  undo_data.plr_score[PLAYER_SOUTH] = plr_score[PLAYER_SOUTH];
+  undo_data.plr_score[PLAYER_WEST] = plr_score[PLAYER_WEST];
+  undo_data.plr_score[PLAYER_NORTH] = plr_score[PLAYER_NORTH];
+  undo_data.plr_score[PLAYER_EAST] = plr_score[PLAYER_EAST];
+
+  undo_data.plr_hand_score[PLAYER_SOUTH] = plr_hand_score[PLAYER_SOUTH];
+  undo_data.plr_hand_score[PLAYER_WEST] = plr_hand_score[PLAYER_WEST];
+  undo_data.plr_hand_score[PLAYER_NORTH] = plr_hand_score[PLAYER_NORTH];
+  undo_data.plr_hand_score[PLAYER_EAST] = plr_hand_score[PLAYER_EAST];
+
+  undo_data.cpt_plr_cards[PLAYER_SOUTH] = cpt_plr_cards[PLAYER_SOUTH];
+  undo_data.cpt_plr_cards[PLAYER_WEST] = cpt_plr_cards[PLAYER_WEST];
+  undo_data.cpt_plr_cards[PLAYER_NORTH] = cpt_plr_cards[PLAYER_NORTH];
+  undo_data.cpt_plr_cards[PLAYER_EAST] = cpt_plr_cards[PLAYER_EAST];
+
+  undo_data.cards_left_in_suit[CLUB] = cards_left_in_suit[CLUB];
+  undo_data.cards_left_in_suit[SPADE] = cards_left_in_suit[SPADE];
+  undo_data.cards_left_in_suit[DIAMOND] = cards_left_in_suit[DIAMOND];
+  undo_data.cards_left_in_suit[HEART] = cards_left_in_suit[HEART];
+
+  for (int i=0; i<DECK_SIZE; i++) {
+    undo_data.plr_has_card[PLAYER_SOUTH][i] = plr_has_card[PLAYER_SOUTH][i];
+    undo_data.plr_has_card[PLAYER_WEST][i] = plr_has_card[PLAYER_WEST][i];
+    undo_data.plr_has_card[PLAYER_NORTH][i] = plr_has_card[PLAYER_NORTH][i];
+    undo_data.plr_has_card[PLAYER_EAST][i] = plr_has_card[PLAYER_EAST][i];
+
+    undo_data.cards_played[i] = cards_played[i];
+  }
+
+  undo_data.plr_cards_in_suit[PLAYER_SOUTH][CLUB] = plr_cards_in_suit[PLAYER_SOUTH][CLUB];
+  undo_data.plr_cards_in_suit[PLAYER_SOUTH][SPADE] = plr_cards_in_suit[PLAYER_SOUTH][SPADE];
+  undo_data.plr_cards_in_suit[PLAYER_SOUTH][DIAMOND] = plr_cards_in_suit[PLAYER_SOUTH][DIAMOND];
+  undo_data.plr_cards_in_suit[PLAYER_SOUTH][HEART] = plr_cards_in_suit[PLAYER_SOUTH][HEART];
+
+  undo_data.plr_cards_in_suit[PLAYER_WEST][CLUB] = plr_cards_in_suit[PLAYER_WEST][CLUB];
+  undo_data.plr_cards_in_suit[PLAYER_WEST][SPADE] = plr_cards_in_suit[PLAYER_WEST][SPADE];
+  undo_data.plr_cards_in_suit[PLAYER_WEST][DIAMOND] = plr_cards_in_suit[PLAYER_WEST][DIAMOND];
+  undo_data.plr_cards_in_suit[PLAYER_WEST][HEART] = plr_cards_in_suit[PLAYER_WEST][HEART];
+
+  undo_data.plr_cards_in_suit[PLAYER_NORTH][CLUB] = plr_cards_in_suit[PLAYER_NORTH][CLUB];
+  undo_data.plr_cards_in_suit[PLAYER_NORTH][SPADE] = plr_cards_in_suit[PLAYER_NORTH][SPADE];
+  undo_data.plr_cards_in_suit[PLAYER_NORTH][DIAMOND] = plr_cards_in_suit[PLAYER_NORTH][DIAMOND];
+  undo_data.plr_cards_in_suit[PLAYER_NORTH][HEART] = plr_cards_in_suit[PLAYER_NORTH][HEART];
+
+  undo_data.plr_cards_in_suit[PLAYER_EAST][CLUB] = plr_cards_in_suit[PLAYER_EAST][CLUB];
+  undo_data.plr_cards_in_suit[PLAYER_EAST][SPADE] = plr_cards_in_suit[PLAYER_EAST][SPADE];
+  undo_data.plr_cards_in_suit[PLAYER_EAST][DIAMOND] = plr_cards_in_suit[PLAYER_EAST][DIAMOND];
+  undo_data.plr_cards_in_suit[PLAYER_EAST][HEART] = plr_cards_in_suit[PLAYER_EAST][HEART];
+
+  undo_data.hand_cards[FIRST_CARD] = hand_cards[FIRST_CARD];
+  undo_data.hand_cards[SECOND_CARD] = hand_cards[SECOND_CARD];
+  undo_data.hand_cards[THIRD_CARD] = hand_cards[THIRD_CARD];
+  undo_data.hand_cards[FOURTH_CARD] = hand_cards[FOURTH_CARD];
 }
 
 bool CHearts::is_tram(int plr) {
@@ -1895,6 +2134,7 @@ void CHearts::AI_set_cpu_flags(int cpu, int flags)
 void CHearts::set_moon_add_to_score(bool enable)
 {
   moon_add_to_scores = enable;
+  moon_wait = false;
   process_next_pass(true);
 }
 
@@ -1946,4 +2186,14 @@ bool CHearts::is_starting()
     return true;
   else
     return false;
+}
+
+bool CHearts::is_undo_available()
+{
+  return undo_data.undo_available;
+}
+
+bool CHearts::is_moon_wait()
+{
+  return moon_wait;
 }

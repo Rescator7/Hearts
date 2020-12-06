@@ -99,7 +99,7 @@ void CDebug::save_card(int card, const char *name)
   else
     plr_names[history_size] = reinterpret_cast<const char *>(&PLR_NOBODY);
 
-  if (card == empty)
+  if ((card == empty) || (card == your_turn))
     cards_saved = 0;
   else
     cards_saved++;

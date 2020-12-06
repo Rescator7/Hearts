@@ -44,6 +44,7 @@ void CStatistics::init_vars()
   game_started = 1;
   game_finished = 0;
   hands_played = 0;
+  undo = 0;
 
   for (int i=0; i<MAX_PLR_NAMES; i++) {
     first_place[i] = 0;
@@ -73,7 +74,7 @@ int CStatistics::save_stats_file()
 
   QTextStream out(&file);
 
-  out << game_started << " " << game_finished << " " << hands_played << endl;
+  out << game_started << " " << game_finished << " " << hands_played << " " << undo << endl;
 
   for (int i=0; i<MAX_PLR_NAMES; i++) {
      out << first_place[i]           << " " << second_place[i]        << " " <<
@@ -120,6 +121,13 @@ int CStatistics::load_stats_file()
     return FCORRUPTED;
   }
   hands_played = value;
+
+  value = line.section(' ', 3, 3).toInt();
+  if (value < 0) {
+    file.rename(QDir::homePath() + STATS_BACKUP_FILE);
+    return FCORRUPTED;
+  }
+  undo = value;
 
   int cpt = 0;
 
@@ -178,16 +186,23 @@ void CStatistics::update_window(int plr, int stats)
    case STATS_SCORES :      if (best_score[plr] != -1) {
                                item_best_score[plr]->setData(Qt::EditRole, best_score[plr]);
                                item_avg_score[plr]->setData(Qt::EditRole, total_score[plr] / total);
-                             }
+                             } else {
+                                 item_best_score[plr]->setData(Qt::EditRole, "");
+                                 item_avg_score[plr]->setData(Qt::EditRole, "");
+                               }
 
                              if (worst_score[plr] != -1)
                                item_worst_score[plr]->setData(Qt::EditRole, worst_score[plr]);
+                             else
+                               item_worst_score[plr]->setData(Qt::EditRole, "");
                              break;
    case STATS_GAME_STARTED :
+   case STATS_UNDO :
    case STATS_GAME_FINISHED :
-   case STATS_HANDS_PLAYED :  ui->label_4->setText(QString::number(game_started));
-                              ui->label_5->setText(QString::number(game_finished) + " (" + QString::number(double(game_finished * 100 / started), 'f', 1) + QString("%)") );
-                              ui->label_6->setText(QString::number(hands_played));
+   case STATS_HANDS_PLAYED :  ui->label_games_started->setText(QString::number(game_started));
+                              ui->label_games_finished->setText(QString::number(game_finished) + " (" + QString::number(double(game_finished * 100 / started), 'f', 1) + QString("%)") );
+                              ui->label_hands_played->setText(QString::number(hands_played));
+                              ui->label_undos->setText(QString::number(undo));
                               break;
    case STATS_FIRST_PLACE :
    case STATS_SECOND_PLACE :
@@ -224,6 +239,7 @@ void CStatistics::increase_stats(int plr, int stats)
   switch (stats) {
      case STATS_GAME_STARTED:  game_started++; break;
      case STATS_GAME_FINISHED: game_finished++; break;
+     case STATS_UNDO:          undo++; break;
      case STATS_HANDS_PLAYED:  hands_played++; break;
      case STATS_FIRST_PLACE:   first_place[plr]++; break;
      case STATS_SECOND_PLACE:  second_place[plr]++; break;

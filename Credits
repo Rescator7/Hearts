@@ -21,6 +21,12 @@ By: Bob <castillo7@hotmail.com>
 Used as: Direction buttons for passing cards.
 License: https://creativecommons.org/publicdomain/zero/1.0/
 
+Icons: deck_s.png, deck_h.png, deck_n.png
+By: Bob <castillo7@hotmail.com>
+Used as: Players under cards.
+Created using gimp. They are fill patern available in gimp 2.8.
+License: https://creativecommons.org/publicdomain/zero/1.0/
+
 Icons: Heart
 Used as: Player's name & scores
 Artist:  icojam
@@ -131,3 +137,10 @@ Used as: snd_announcement
 By: stib
 Website: https://freesound.org/people/stib/
 License: https://creativecommons.org/publicdomain/zero/1.0/
+
+Sound: 403013__inspectorj__ui-confirmation-alert-b5.wav
+Used as: snd_undo
+By: Inspector
+Info: "UI Confirmation Alert, B5.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
+Website: https://freesound.org/people/InspectorJ/sounds/403013/
+License: https://creativecommons.org/licenses/by/3.0/

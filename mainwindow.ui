@@ -1957,6 +1957,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actionNew"/>
+    <addaction name="actionUndo"/>
     <addaction name="actionConnect"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -2324,6 +2325,11 @@
    </property>
    <property name="text">
     <string>Animated Play</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
    </property>
   </action>
  </widget>

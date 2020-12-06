@@ -479,7 +479,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="label_games_started">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -492,12 +492,12 @@
     <string notr="true">TextLabel</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="label_games_finished">
    <property name="geometry">
     <rect>
      <x>150</x>
      <y>40</y>
-     <width>120</width>
+     <width>130</width>
      <height>17</height>
     </rect>
    </property>
@@ -505,7 +505,7 @@
     <string notr="true">TextLabel</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="label_hands_played">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -1245,6 +1245,35 @@
      <string>Perfect 100</string>
     </property>
    </column>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>20</y>
+     <width>130</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Undos:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_undos">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>20</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string notr="true">TextLabel</string>
+   </property>
   </widget>
  </widget>
  <resources/>

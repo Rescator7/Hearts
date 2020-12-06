@@ -9,19 +9,20 @@
 const char STATS_FILENAME[20] = "/.hearts.stats";
 const char STATS_BACKUP_FILE[20] = "/.hearts.stats.bak";
 
-const int STATS_GAME_STARTED  = 0;
-const int STATS_GAME_FINISHED = 1;
-const int STATS_HANDS_PLAYED  = 2;
-const int STATS_SCORES        = 3;
-const int STATS_FIRST_PLACE   = 4;
-const int STATS_SECOND_PLACE  = 5;
-const int STATS_THIRD_PLACE   = 6;
-const int STATS_FOURTH_PLACE  = 7;
-const int STATS_SHOOT_MOON    = 8;
-const int STATS_QUEEN_SPADE   = 9;
-const int STATS_OMNIBUS       = 10;
-const int STATS_NO_TRICKS     = 11;
-const int STATS_PERFECT_100   = 12;
+#define STATS_GAME_STARTED  0
+#define STATS_GAME_FINISHED 1
+#define STATS_HANDS_PLAYED  2
+#define STATS_SCORES        3
+#define STATS_FIRST_PLACE   4
+#define STATS_SECOND_PLACE  5
+#define STATS_THIRD_PLACE   6
+#define STATS_FOURTH_PLACE  7
+#define STATS_SHOOT_MOON    8
+#define STATS_QUEEN_SPADE   9
+#define STATS_OMNIBUS       10
+#define STATS_NO_TRICKS     11
+#define STATS_PERFECT_100   12
+#define STATS_UNDO          13
 
 namespace Ui {
 class CStatistics;
@@ -56,6 +57,7 @@ private:
     int game_started;
     int game_finished;
     int hands_played;
+    int undo;
 
     int first_place[MAX_PLR_NAMES];
     int second_place[MAX_PLR_NAMES];
