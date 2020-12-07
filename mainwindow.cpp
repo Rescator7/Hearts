@@ -271,18 +271,21 @@ void MainWindow::load_sounds()
 void MainWindow::destroy_sounds()
 {
 #ifdef __al_included_allegro5_allegro_audio_h
+    al_destroy_sample(snd_breaking_heart);
+    al_destroy_sample(snd_dealing_card);
+    al_destroy_sample(snd_error);
+    al_destroy_sample(snd_game_over);
     al_destroy_sample(snd_shoot_moon);
     al_destroy_sample(snd_your_turn);
-    al_destroy_sample(snd_game_over);
-    al_destroy_sample(snd_error);
-    al_destroy_sample(snd_dealing_card);
-    al_destroy_sample(snd_breaking_heart);
     al_destroy_sample(snd_queen_spade);
+    al_destroy_sample(snd_contact);
     al_destroy_sample(snd_passing_cards);
     al_destroy_sample(snd_shuffling_cards);
+    al_destroy_sample(snd_perfect_100);
     al_destroy_sample(snd_connected);
     al_destroy_sample(snd_disconnected);
     al_destroy_sample(snd_announcement);
+    al_destroy_sample(snd_undo);
 #endif
 }
 
