@@ -1160,10 +1160,9 @@ void CHearts::process_next_pass(bool skip_moon_check)
                                                 // preserve it, because it's a copy before emit, and we won't
                                                 // enter this because of skip_moon_check. (REENTRANT issue avoided)
 
-          emit sig_shoot_moon(i);
-
           if (new_moon && (i == user_id) && (my_score >= 26)) {
             moon_wait = true;
+            emit sig_shoot_moon(i);
             return;                             // if new_moon is enabled, the score is above 26, and
                                                 // it's not a cpu who moon... we return, because
                                                 // we need to select [add] or [subtract]...
@@ -1172,6 +1171,7 @@ void CHearts::process_next_pass(bool skip_moon_check)
                                                 // this part.
           }
           else {
+            emit sig_shoot_moon(i);
             break;                              // we found someone who moon. no need to look further.
           }
         }
