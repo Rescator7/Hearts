@@ -31,12 +31,33 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 contains(DEFINES, ONLINE_PLAY) {
 QT      += network
+
+FORMS   += connect.ui \
+     online.ui \
+     ctable.ui \
+
+SOURCES += client.cpp \
+    connect.cpp \
+    ctable.cpp \
+    online.cpp \
+
+HEADERS +=  client.h \
+    connect.h \
+    ctable.h \
+    online.h \
+}
+
+contains(DEFINES, DEBUG) {
+SOURCES += debug.cpp \
+    ccardsplayed.cpp \
+
+HEADERS += debug.h \
+    ccardsplayed.h \
 }
 
 contains(DEFINES, USE_LIBALLEGRO5) {
 unix:!macx: LIBS += -lallegro_audio -lallegro_acodec -lallegro_memfile -lallegro
 }
-
 
 TARGET = Hearts
 TEMPLATE = app
@@ -45,22 +66,16 @@ CONFIG += c++11
 TRANSLATIONS = languages/translation_en.ts languages/translation_fr.ts languages/translation_ru.ts
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     clabel.cpp \
     chearts.cpp \
     config.cpp \
     rules.cpp \
     credits.cpp \
     settings.cpp \
-    debug.cpp \
     cdeck.cpp \
-    client.cpp \
-    connect.cpp \
     cgame.cpp \
-    ctable.cpp \
-    cstatistics.cpp \
-    online.cpp \
-    ccardsplayed.cpp
+    cstatistics.cpp
 
 HEADERS  += mainwindow.h \
     clabel.h \
@@ -71,27 +86,16 @@ HEADERS  += mainwindow.h \
     credits.h \
     settings.h \
     define.h \
-    debug.h \
     cdeck.h \
-    client.h \
-    connect.h \
     cgame.h \
-    ctable.h \
     cstatistics.h \
-    online.h \
-    ccardsplayed.h
 
 FORMS    += mainwindow.ui \
     rules.ui \
     credits.ui \
     settings.ui \
-    connect.ui \
     cgame.ui \
-    ctable.ui \
-    cstatistics.ui \
-    online.ui
+    cstatistics.ui
 
 RESOURCES += \
     resources.qrc
-
-DISTFILES +=
