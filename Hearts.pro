@@ -35,16 +35,19 @@ QT      += network
 FORMS   += connect.ui \
      online.ui \
      ctable.ui \
+     cgame.ui \
 
 SOURCES += client.cpp \
     connect.cpp \
     ctable.cpp \
     online.cpp \
+    cgame.cpp \
 
 HEADERS +=  client.h \
     connect.h \
     ctable.h \
     online.h \
+    cgame.h \
 }
 
 contains(DEFINES, DEBUG) {
@@ -74,7 +77,6 @@ SOURCES += main.cpp\
     credits.cpp \
     settings.cpp \
     cdeck.cpp \
-    cgame.cpp \
     cstatistics.cpp
 
 HEADERS  += mainwindow.h \
@@ -87,14 +89,12 @@ HEADERS  += mainwindow.h \
     settings.h \
     define.h \
     cdeck.h \
-    cgame.h \
     cstatistics.h \
 
 FORMS    += mainwindow.ui \
     rules.ui \
     credits.ui \
     settings.ui \
-    cgame.ui \
     cstatistics.ui
 
 RESOURCES += \

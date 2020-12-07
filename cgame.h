@@ -1,3 +1,5 @@
+#ifdef ONLINE_PLAY
+
 #ifndef CGAME_H
 #define CGAME_H
 
@@ -27,3 +29,5 @@ private slots:
 };
 
 #endif // CGAME_H
+
+#endif // ONLINE_PLAY

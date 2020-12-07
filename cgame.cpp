@@ -1,3 +1,5 @@
+#ifdef ONLINE_PLAY
+
 #include "cgame.h"
 #include "ui_cgame.h"
 #include "define.h"
@@ -65,3 +67,5 @@ void CGame::on_buttonBox_accepted()
   if (ui->checkBox_6->isChecked())
     flags |= NO_DRAW_f;
 }
+
+#endif // ONLINE_PLAY
