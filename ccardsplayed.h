@@ -1,9 +1,9 @@
+#ifdef DEBUG
+
 #ifndef CCARDSPLAYED_H
 #define CCARDSPLAYED_H
 
 #include "define.h"
-
-#ifdef DEBUG
 
 #include <QWidget>
 #include <QLabel>
@@ -42,6 +42,6 @@ signals:
 
 public slots:
 };
-#endif // DEBUG
-
 #endif // CCARDSPLAYED_H
+
+#endif // DEBUG

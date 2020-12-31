@@ -1,6 +1,6 @@
-#include "ccardsplayed.h"
-
 #ifdef DEBUG
+
+#include "ccardsplayed.h"
 
 CCardsPlayed::CCardsPlayed(CDeck *d)
 {

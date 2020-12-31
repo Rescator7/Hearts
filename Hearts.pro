@@ -12,6 +12,8 @@
 #   Enable menu Debug including Cards History, Cards Played and Cheat mode.
 # DEBUG_DATAGRAMS
 #   provide online connection datagrans infos into the information channel. (For coders only)
+# FULL_SCREEN
+#   Enable application main windows resize, and full screen. (BETA)
 # ONLINE_PLAY
 #   Enable online play.
 #
@@ -23,7 +25,7 @@
 # ------------------------------------------------------------------------------------------------
 # NOTE: require a rebuild all when modifing the defines options. (QTCREATOR)
 #       or on the shell: make clean; qmake Hearts.pro; make
-DEFINES += ONLINE_PLAY USE_LIBALLEGRO5 DEBUG
+DEFINES += ONLINE_PLAY USE_LIBALLEGRO5 FULL_SCREEN DEBUG
 
 QT      += core gui
 

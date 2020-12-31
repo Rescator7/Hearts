@@ -10,6 +10,9 @@
 #include <QMessageBox>
 #include <QTime>
 #include <QResource>
+#include <QResizeEvent>
+#include <QRect>
+#include <QDesktopWidget>
 #include <string.h>
 
 #include "time.h"
@@ -29,6 +32,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     srand(static_cast<unsigned int>(time(nullptr)));
 
+ #ifndef FULL_SCREEN
+    setMinimumSize(900, 930);
+    setMaximumSize(900, 930);
+ #endif // FULL_SCREEN
+
     ui->textEdit->setTextColor(Qt::yellow);
     ui->textEdit->setTextBackgroundColor(Qt::black);
 
@@ -36,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle(version);
 
-    init_pointers();
+    init_pointers(); // must be called before init_vars()
 
     load_sounds();
 
@@ -59,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     timer = new QTimer();
 
-    online_show_buttons(false);  // must be done before set_settings
+    online_show_buttons(false);  // must be called before set_settings()
 #endif // ONLINE_PLAY
 
     init_vars();
@@ -111,6 +119,337 @@ MainWindow::MainWindow(QWidget *parent) :
     start_game(true);
 }
 
+#ifdef FULL_SCREEN
+void MainWindow::adjust_objs_distances(QResizeEvent *event)
+{
+  int s, x, y, z, ew;
+
+  int w = event->size().width();
+
+  if (event->size().height() > 930)
+    y_factor = (event->size().height() - 930) / 4;
+  else
+    y_factor = 0;
+
+  for (int i=0; i<13; i++) {
+    ew  = label_cards[PLAYER_WEST][i]->width();
+    y = orig_posy_cards[PLAYER_WEST][i];
+
+    if (!online_connected &&
+        !hearts->is_mode_playing() &&
+         hearts->is_card_selected(PLAYER_EAST, 12 - i))
+      label_cards[PLAYER_EAST][12 - i]->move(w - ew - 35, y + y_factor * 4);
+    else
+      label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20, y + y_factor * 4);
+
+    label_cards[PLAYER_WEST][i]->move(label_cards[PLAYER_WEST][i]->x(),
+                                      orig_posy_cards[PLAYER_WEST][i] + y_factor * 4);
+
+    orig_posx_cards[PLAYER_EAST][i] = w - ew - 20;
+
+    z = label_cards[PLAYER_NORTH][i]->width();
+    x = (w - (12 * 35 + z)) / 2;
+    label_cards[PLAYER_NORTH][12 - i]->move(x + i * 35,
+                                            label_cards[PLAYER_NORTH][12 - i]->y());
+
+    z = label_cards[PLAYER_SOUTH][i]->width();
+    x = (w - (12 * 35 + z)) / 2;
+
+    bool selected = false;
+    if (!online_connected) {
+      if (!hearts->is_mode_playing() && hearts->is_card_selected(PLAYER_SOUTH, i))
+         selected = true;
+    } else
+        if (!online_playing && online_selected[i])
+          selected = true;
+
+    if (selected)
+      label_cards[PLAYER_SOUTH][i]->move(x + i * 35,
+                                         orig_posy_cards[PLAYER_SOUTH][i] + y_factor * 4 - 20);
+    else
+      label_cards[PLAYER_SOUTH][i]->move(x + i * 35,
+                                         orig_posy_cards[PLAYER_SOUTH][i] + y_factor * 4);
+  }
+
+  // Move Under Deck WEST to Card W1
+  ui->label_deck_w->move(orig_posx_cards[PLAYER_WEST][0],
+                         label_cards[PLAYER_WEST][0]->y());
+
+  // Move Under Deck East to Card_E13
+  ui->label_deck_e->move(orig_posx_cards[PLAYER_EAST][0], label_cards[PLAYER_EAST][12]->y());
+
+  // Move Under Deck North to Card N13
+  ui->label_deck_n->move(label_cards[PLAYER_NORTH][12]->x(), orig_posy_cards[PLAYER_NORTH][12] + 8);
+
+  // Move Under Deck South to Card S1
+  ui->label_deck_s->move(label_cards[PLAYER_SOUTH][0]->x(), label_cards[PLAYER_SOUTH][0]->y());
+
+  // Move TextEit
+  x = (w - ui->textEdit->width()) / 2 - 1;
+  ui->textEdit->move(x, ui->textEdit->y());
+
+  // Move Command button, line edit
+  ui->pushButton_mode->move(x, ui->pushButton_mode->y());
+  ui->lineEdit->move(x + ui->pushButton_mode->width(),
+                     ui->lineEdit->y());
+
+  // move online, and connected label
+  y = label_cards[PLAYER_SOUTH][0]->y() +
+      label_cards[PLAYER_SOUTH][0]->height() -
+      ui->label_online->height();
+  ui->label_online->move(w - 130, y);
+  ui->label_connected_status->move(w - 45, y - 5);
+
+  x = orig_posx_cards[PLAYER_WEST][0] +
+      label_cards[PLAYER_WEST][0]->width();
+
+  s = ui->label_heart_w->width() +
+      label_card_played[PLAYER_WEST]->width() +
+      ui->label_pass_to->width() +
+      label_card_played[PLAYER_EAST]->width() +
+      ui->label_heart_e->width();
+
+  z = (orig_posx_cards[PLAYER_EAST][0] - x - s) / 6;
+
+  // Move Heart WEST
+  ui->label_heart_w->move(x + z - 8, orig_posy_heart[PLAYER_WEST] + y_factor);
+  x = ui->label_heart_w->x() +
+     ui->label_heart_w->width();
+
+  // Move card played WEST
+  label_card_played[PLAYER_WEST]->move(x + z,
+                                       orig_posy_played[PLAYER_WEST] + y_factor);
+  x = label_card_played[PLAYER_WEST]->x() +
+      label_card_played[PLAYER_WEST]->width();
+
+  // Move Pass To
+  ui->label_pass_to->move(x + z + 8,
+                          orig_posy_pass_to + y_factor);
+  x = ui->label_pass_to->x() +
+      ui->label_pass_to->width();
+
+  // Move card played EAST
+  label_card_played[PLAYER_EAST]->move(x + z,
+                                       orig_posy_played[PLAYER_EAST] + y_factor);
+  x = label_card_played[PLAYER_EAST]->x() +
+      label_card_played[PLAYER_EAST]->width();
+
+  // Move Heart EAST
+  ui->label_heart_e->move(x + z, orig_posy_heart[PLAYER_EAST] + y_factor);
+
+  x = label_card_played[PLAYER_WEST]->x() +
+      label_card_played[PLAYER_WEST]->width();
+
+  // Move card played NORTH
+  z = (label_card_played[PLAYER_EAST]->x() - label_card_played[PLAYER_NORTH]->width() - x) / 2;
+  label_card_played[PLAYER_NORTH]->move(x + z,
+                                        orig_posy_played[PLAYER_NORTH] + y_factor);
+
+  // Move card played SOUTH
+  z = (label_card_played[PLAYER_EAST]->x() - label_card_played[PLAYER_SOUTH]->width() - x) / 2;
+  label_card_played[PLAYER_SOUTH]->move(x + z,
+                                        orig_posy_played[PLAYER_SOUTH] + y_factor);
+  // Move North Heart
+  ui->label_heart_n->move(label_card_played[PLAYER_WEST]->x() - ui->label_heart_n->width() / 2,
+                          orig_posy_heart[PLAYER_NORTH] + y_factor);
+
+  // Move South Heart
+  ui->label_heart_s->move(label_card_played[PLAYER_EAST]->x() + 20,
+                          orig_posy_heart[PLAYER_SOUTH] + y_factor);
+
+  if (ui->label_heart_s->width() == 140) {
+    x = 30;
+    y = 45;
+  } else {
+      x = 12;
+      y = 33;
+  }
+
+  // Move all labels name into their own Heart
+  ui->label_name_s->move(ui->label_heart_s->x() + x,
+                         ui->label_heart_s->y() + y);
+  ui->label_name_w->move(ui->label_heart_w->x() + x,
+                         ui->label_heart_w->y() + y);
+  ui->label_name_n->move(ui->label_heart_n->x() + x,
+                         ui->label_heart_n->y() + y);
+  ui->label_name_e->move(ui->label_heart_e->x() + x,
+                         ui->label_heart_e->y() + y);
+
+  w = label_scores[PLAYER_SOUTH]->height() + 3;
+
+  // Move all scores into their Heart
+  label_scores[PLAYER_SOUTH]->move(ui->label_heart_s->x() + x + 2,
+                                   ui->label_heart_s->y() + y + w);
+  label_scores[PLAYER_WEST]->move(ui->label_heart_w->x() + x + 2,
+                                  ui->label_heart_w->y() + y + w);
+  label_scores[PLAYER_NORTH]->move(ui->label_heart_n->x() + x + 2,
+                                   ui->label_heart_n->y() + y + w);
+  label_scores[PLAYER_EAST]->move(ui->label_heart_e->x() + x + 2,
+                                  ui->label_heart_e->y() + y + w);
+
+  // Move progress bar under the Heart, normal progress bar under deck_s
+  x = ui->label_heart_s->x() +
+      ui->label_heart_s->width() / 2 -
+      progress_bar_time[PLAYER_SOUTH]->width() / 2;
+  y = ui->label_heart_s->y() +
+      ui->label_heart_s->height() - 8;
+  progress_bar_time[PLAYER_SOUTH]->move(x, y);
+
+  x = ui->label_heart_w->x() +
+      ui->label_heart_w->width() / 2 -
+      progress_bar_time[PLAYER_WEST]->width() / 2;
+  y = ui->label_heart_w->y() +
+      ui->label_heart_w->height() - 8;
+  progress_bar_time[PLAYER_WEST]->move(x, y);
+
+  x = ui->label_heart_n->x() +
+      ui->label_heart_n->width() / 2 -
+      progress_bar_time[PLAYER_NORTH]->width() / 2;
+  y = ui->label_heart_n->y() +
+      ui->label_heart_n->height() - 8;
+  progress_bar_time[PLAYER_NORTH]->move(x, y);
+
+  x = ui->label_heart_e->x() +
+      ui->label_heart_e->width() / 2 -
+      progress_bar_time[PLAYER_EAST]->width() / 2;
+  y = ui->label_heart_e->y() +
+      ui->label_heart_e->height() - 8;
+  progress_bar_time[PLAYER_EAST]->move(x, y);
+
+  x = ui->label_deck_s->x() +
+      ui->label_deck_s->width() / 2 -
+      progress_bar_time[4]->width() / 2;
+  y = ui->label_deck_s->y() +
+      ui->label_deck_s->height() + 1;
+  progress_bar_time[4]->move(x, y);
+
+  ui->textEdit->move(ui->textEdit->x(),
+                     ui->progressBar->y() + ui->progressBar->height());
+
+  y = ui->textEdit->y() + ui->textEdit->height();
+  ui->pushButton_mode->move(ui->pushButton_mode->x(), y);
+  ui->lineEdit->move(ui->lineEdit->x(), y);
+}
+
+void MainWindow::resizeWidth(int perc_h)
+{
+  int h = (130 * perc_h) / 100;
+
+  cards_played_height = h;
+
+  int nw = h * 90 / 130;
+
+  // Resize the window cards played 100% = 90w x 130h
+  label_card_played[PLAYER_SOUTH]->resize(nw, h);
+  label_card_played[PLAYER_WEST]->resize(nw, h);
+  label_card_played[PLAYER_NORTH]->resize(nw, h);
+  label_card_played[PLAYER_EAST]->resize(nw, h);
+
+  // Resize the image of the cards played
+  int card = card_played[PLAYER_SOUTH];
+  label_card_played[PLAYER_SOUTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
+
+  card = card_played[PLAYER_WEST];
+  label_card_played[PLAYER_WEST]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
+
+  card = card_played[PLAYER_NORTH];
+  label_card_played[PLAYER_NORTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
+
+  card = card_played[PLAYER_EAST];
+  label_card_played[PLAYER_EAST]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
+
+  // heart 100% = 140w x 140h
+  h = (140 * perc_h) / 100;
+
+  ui->label_heart_s->resize(h, h);
+  ui->label_heart_w->resize(h, h);
+  ui->label_heart_n->resize(h, h);
+  ui->label_heart_e->resize(h, h);
+
+  ui->label_heart_s->setPixmap(QPixmap::fromImage(img_heart->scaledToHeight(h)));
+  ui->label_heart_w->setPixmap(QPixmap::fromImage(img_heart->scaledToHeight(h)));
+  ui->label_heart_n->setPixmap(QPixmap::fromImage(img_heart->scaledToHeight(h)));
+  ui->label_heart_e->setPixmap(QPixmap::fromImage(img_heart->scaledToHeight(h)));
+}
+
+void MainWindow::resizeWidthSouth(int perc_h) {
+   int w, x, y, z,
+       h = (130 * perc_h) / 100;
+
+   cards_height_south = h;
+
+   int nw = h * 90 / 130;
+
+   for (int i=0; i<13; i++) {
+     label_cards[PLAYER_SOUTH][i]->resize(nw, h);
+     z = label_cards[PLAYER_SOUTH][i]->width();
+     x = (width() - (12 * 35 + z)) / 2;
+     label_cards[PLAYER_SOUTH][i]->move(x + i * 35,
+                                        label_cards[PLAYER_SOUTH][i]->y());
+   }
+   ui->label_deck_s->move(label_cards[PLAYER_SOUTH][0]->x(),
+                          ui->label_deck_s->y());
+
+   if (online_connected)
+     online_show_deck();
+   else
+     show_deck(false, false);
+
+   w =  label_cards[PLAYER_SOUTH][12]->x() +
+        label_cards[PLAYER_SOUTH][12]->width() -
+        label_cards[PLAYER_SOUTH][0]->x();
+
+   ui->label_deck_s->resize(w, h);
+
+   // Move the normal progress bar
+   x = ui->label_deck_s->x() +
+       ui->label_deck_s->width() / 2 -
+       progress_bar_time[4]->width() / 2;
+   y = ui->label_deck_s->y() +
+       ui->label_deck_s->height() + 1;
+   progress_bar_time[4]->move(progress_bar_time[4]->x(), y);
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+  int h = event->size().height();
+  int w = event->size().width();
+
+  // w-h 130
+  if ((w < 780) && (label_card_played[PLAYER_WEST]->height() >= 130)) {
+    resizeWidth(75);
+
+    orig_posy_pass_to -= 15;
+  } else
+  if ((w >= 780) && (label_card_played[PLAYER_WEST]->height() < 130)) {
+    resizeWidth(100);
+
+    orig_posy_pass_to += 15;
+  }
+
+  if ((h < 810) && (label_cards[PLAYER_SOUTH][0]->height() >= 130)) {
+    resizeWidthSouth(75);
+  } else
+  if ((h >= 810) && (label_cards[PLAYER_SOUTH][0]->height() < 130)) {
+    resizeWidthSouth(100);
+  }
+
+  if (w < 820) {
+    ui->pushButton_tables->move(ui->pushButton_mute->x(),
+                                ui->pushButton_mute->y() + ui->pushButton_mute->height());
+    ui->pushButton_create_table->move(ui->pushButton_start->x(),
+                                      ui->pushButton_start->y() + ui->pushButton_start->height());
+  } else {
+      ui->pushButton_tables->move(orig_posx_tables, orig_posy_tables);
+      ui->pushButton_create_table->move(orig_posx_create, orig_posy_create);
+    }
+
+  adjust_objs_distances(event);
+
+  QMainWindow::resizeEvent(event);
+}
+#endif // FULL_SCREEN
+
 MainWindow::~MainWindow()
 {
 #ifdef ONLINE_PLAY
@@ -129,6 +468,8 @@ MainWindow::~MainWindow()
 #endif
 
   delete ui;
+
+  delete img_heart;
   delete img_connected;
   delete img_disconnected;
 
@@ -157,12 +498,48 @@ void MainWindow::init_vars()
   card_played[PLAYER_EAST] = empty;
   card_played[PLAYER_WEST] = empty;
 
-  card_height = ui->label_card_s1->height();
+  cards_height_south = 130;
+  cards_played_height = 130;
+  cards_height_WNE = 60;
 
-  original_pos_cards[PLAYER_NORTH] = ui->label_card_n1->y();
-  original_pos_cards[PLAYER_SOUTH] = ui->label_card_s1->y();
-  original_pos_cards[PLAYER_EAST] = ui->label_card_e1->x();
-  original_pos_cards[PLAYER_WEST] = ui->label_card_w1->x();
+  y_factor = 0;
+
+  for (int i=0; i<13; i++) {
+    orig_posx_cards[PLAYER_SOUTH][i] = label_cards[PLAYER_SOUTH][i]->x();
+    orig_posy_cards[PLAYER_SOUTH][i] = label_cards[PLAYER_SOUTH][i]->y();
+    orig_posx_cards[PLAYER_WEST][i] = label_cards[PLAYER_WEST][i]->x();
+    orig_posy_cards[PLAYER_WEST][i] = label_cards[PLAYER_WEST][i]->y();
+    orig_posx_cards[PLAYER_NORTH][i] = label_cards[PLAYER_NORTH][i]->x();
+    orig_posy_cards[PLAYER_NORTH][i] = label_cards[PLAYER_NORTH][i]->y();
+    orig_posx_cards[PLAYER_EAST][i] = label_cards[PLAYER_EAST][i]->x();
+    orig_posy_cards[PLAYER_EAST][i] = label_cards[PLAYER_EAST][i]->y();
+  }
+
+  orig_posx_heart[PLAYER_SOUTH] = ui->label_heart_s->x();
+  orig_posy_heart[PLAYER_SOUTH] = ui->label_heart_s->y();
+  orig_posx_heart[PLAYER_WEST] = ui->label_heart_w->x();
+  orig_posy_heart[PLAYER_WEST] = ui->label_heart_w->y();
+  orig_posx_heart[PLAYER_NORTH] = ui->label_heart_n->x();
+  orig_posy_heart[PLAYER_NORTH] = ui->label_heart_n->y();
+  orig_posx_heart[PLAYER_EAST] = ui->label_heart_e->x();
+  orig_posy_heart[PLAYER_EAST] = ui->label_heart_e->y();
+
+  orig_posx_played[PLAYER_SOUTH] = ui->label_played_s->x();
+  orig_posy_played[PLAYER_SOUTH] = ui->label_played_s->y();
+  orig_posx_played[PLAYER_WEST] = ui->label_played_w->x();
+  orig_posy_played[PLAYER_WEST] = ui->label_played_w->y();
+  orig_posx_played[PLAYER_NORTH] = ui->label_played_n->x();
+  orig_posy_played[PLAYER_NORTH] = ui->label_played_n->y();
+  orig_posx_played[PLAYER_EAST] = ui->label_played_e->x();
+  orig_posy_played[PLAYER_EAST] = ui->label_played_e->y();
+
+  orig_posx_pass_to = ui->label_pass_to->x();
+  orig_posy_pass_to = ui->label_pass_to->y();
+
+  orig_posx_tables = ui->pushButton_tables->x();
+  orig_posy_tables = ui->pushButton_tables->y();
+  orig_posx_create = ui->pushButton_create_table->x();
+  orig_posy_create = ui->pushButton_create_table->y();
 }
 
 void MainWindow::load_sounds()
@@ -314,12 +691,15 @@ void MainWindow::disable_online()
   ui->actionConnect->setVisible(false);
   ui->actionOnline->setVisible(false);
 
+#ifndef FULL_SCREEN
   setFixedHeight(height() - ui->lineEdit->height());
+#endif // FULL_SCREEN
 }
 #endif // ONLINE_PLAY
 
 void MainWindow::init_pointers()
 {
+    img_heart = new QImage(":/icons/heart.png", "PNG");
     img_connected = new QImage(":/icons/connected.png", "PNG");
     img_disconnected = new QImage(":/icons/disconnected.png", "PNG");
     img_pass[pLEFT] = new QImage(":/icons/left-icon.png", "PNG");
@@ -464,7 +844,7 @@ void MainWindow::load_saved_game()
       if (--cpt < 0)
         cpt = 3;
 
-      label_card_played[cpt]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
+      label_card_played[cpt]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(cards_played_height)));
       card_played[cpt] = card;
     }
 
@@ -884,10 +1264,10 @@ void MainWindow::show_deck(bool animate, bool replace)
 {
   for (int i=0; i<13; i++) {
     if (replace) {
-      label_cards[PLAYER_SOUTH][i]->move(label_cards[PLAYER_SOUTH][i]->x(), original_pos_cards[PLAYER_SOUTH]);
-      label_cards[PLAYER_EAST][i]->move(original_pos_cards[PLAYER_EAST], label_cards[PLAYER_EAST][i]->y());
-      label_cards[PLAYER_NORTH][i]->move(label_cards[PLAYER_NORTH][i]->x(), original_pos_cards[PLAYER_NORTH]);
-      label_cards[PLAYER_WEST][i]->move(original_pos_cards[PLAYER_WEST], label_cards[PLAYER_WEST][i]->y());
+      label_cards[PLAYER_SOUTH][i]->move(label_cards[PLAYER_SOUTH][i]->x(), orig_posy_cards[PLAYER_SOUTH][i] + y_factor * 4);
+      label_cards[PLAYER_EAST][i]->move(orig_posx_cards[PLAYER_EAST][i], label_cards[PLAYER_EAST][i]->y());
+      label_cards[PLAYER_NORTH][i]->move(label_cards[PLAYER_NORTH][i]->x(), orig_posy_cards[PLAYER_NORTH][i]);
+      label_cards[PLAYER_WEST][i]->move(orig_posx_cards[PLAYER_WEST][i], label_cards[PLAYER_WEST][i]->y());
     }
 
     label_cards[PLAYER_SOUTH][i]->hide();
@@ -909,7 +1289,7 @@ void MainWindow::show_deck(bool animate, bool replace)
     if (show_card != empty) {
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_SOUTH)];
-      label_cards[PLAYER_SOUTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->scaledToHeight(card_height)));
+      label_cards[PLAYER_SOUTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->scaledToHeight(cards_height_south)));
       label_cards[PLAYER_SOUTH][i/4+adj]->show();
     } else
         total_empty++;
@@ -927,7 +1307,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_EAST)];
-      label_cards[PLAYER_EAST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm).scaledToHeight(60)));
+      label_cards[PLAYER_EAST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm).scaledToHeight(cards_height_WNE)));
       label_cards[PLAYER_EAST][i/4+adj]->show();
     } else
         total_empty++;
@@ -963,7 +1343,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_WEST)];
-      label_cards[PLAYER_WEST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm).scaledToHeight(60)));
+      label_cards[PLAYER_WEST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm).scaledToHeight(cards_height_WNE)));
       label_cards[PLAYER_WEST][i/4+adj]->show();
     } else
         total_empty++;
@@ -978,8 +1358,15 @@ void MainWindow::show_deck(bool animate, bool replace)
 void MainWindow::set_info_channel_enabled(bool enable)
 {
   if (enable) {
+
+#ifdef FULL_SCREEN
+    if (height() < 930)
+      resize(width(), 930);
+#else
     if (height() + ui->textEdit->height() <= 930)
       setFixedHeight(height() + ui->textEdit->height());
+#endif // FULL_SCREEN
+
     ui->textEdit->show();
 
 #ifdef ONLINE_PLAY
@@ -988,12 +1375,24 @@ void MainWindow::set_info_channel_enabled(bool enable)
 #endif // ONLINE_PLAY
   } else {
       ui->textEdit->hide();
-      setFixedHeight(height() - ui->textEdit->height());
 
 #ifdef ONLINE_PLAY
       if (ui->lineEdit->isVisible())
         online_show_lineedit(false);
 #endif // ONLINE_PLAY
+
+#ifdef FULL_SCREEN
+      QRect rec = QApplication::desktop()->screenGeometry();
+
+      // Qt 5.5.1 create a buggy window, if we try to resize a maximazed height window to a smaller
+      // height. Qt 5.11 don't create a bugyy window, but doesn't resize anyway. All version resize
+      // to a smaller height properly only if the application mainwindow is not using all the available
+      // screen height. The +55 is a tricky adjustement to get the available height.
+      if ((height() + 55) < rec.height())
+        resize(width(), 820);
+#else
+      setFixedHeight(height() - ui->textEdit->height());
+#endif // FULL_SCREEN
     }
 }
 
@@ -1020,7 +1419,7 @@ void MainWindow::clear_table()
 {
   delay(config->get_speed(SPEED_CLEAR_TABLE));
   for (int i=0; i<4; i++) {
-    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(card_height)));
+    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(cards_played_height)));
     card_played[i] = empty;
   }
 
@@ -1080,10 +1479,10 @@ void MainWindow::select_card(int num)
  }
 
  if (hearts->is_card_selected(card_id) && hearts->unselect_card(card_id))
-   label_cards[PLAYER_SOUTH][card_id]->move(label_cards[PLAYER_SOUTH][card_id]->x(), original_pos_cards[PLAYER_SOUTH]);
+   label_cards[PLAYER_SOUTH][card_id]->move(label_cards[PLAYER_SOUTH][card_id]->x(), orig_posy_cards[PLAYER_SOUTH][card_id] + y_factor * 4);
  else {
     if (!hearts->is_card_selected(card_id) && hearts->select_card(card_id)) {
-      label_cards[PLAYER_SOUTH][card_id]->move(label_cards[PLAYER_SOUTH][card_id]->x(), original_pos_cards[PLAYER_SOUTH] - 20);
+      label_cards[PLAYER_SOUTH][card_id]->move(label_cards[PLAYER_SOUTH][card_id]->x(), orig_posy_cards[PLAYER_SOUTH][card_id] + y_factor * 4 - 20);
 
 #ifdef __al_included_allegro5_allegro_audio_h
     if (ui->actionSounds->isChecked())
@@ -1148,7 +1547,7 @@ void MainWindow::play_card(int card, int plr)
 
  card_played[plr] = card;
 
- label_card_played[plr]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
+ label_card_played[plr]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(cards_played_height)));
 
 #ifdef __al_included_allegro5_allegro_audio_h
  if (ui->actionSounds->isChecked()) {
@@ -1188,7 +1587,7 @@ void MainWindow::show_your_turn(int idx)
 {
   delay(config->get_speed(SPEED_YOUR_TURN));
 
-  label_card_played[idx]->setPixmap(QPixmap::fromImage(deck->get_img_card(your_turn)->scaledToHeight(card_height)));
+  label_card_played[idx]->setPixmap(QPixmap::fromImage(deck->get_img_card(your_turn)->scaledToHeight(cards_played_height)));
   card_played[idx] = your_turn;
 
 #ifdef __al_included_allegro5_allegro_audio_h
@@ -1242,8 +1641,6 @@ void MainWindow::on_label_pass_to_clicked()
     if (hearts->is_card_selected(i))
       cards_received[ptr++] = hearts->get_card(i);
 
-  hearts->reset_cards_passed();
-
   reverse_cards_rgb();
   show_deck(false, false);
 
@@ -1281,7 +1678,7 @@ void MainWindow::refresh_cards_played()
   for (int i=0; i<4; i++) {
     int card = card_played[i];
 
-    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
+    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(cards_played_height)));
   }
 }
 
@@ -2037,7 +2434,7 @@ void MainWindow::online_show_deck()
   for (int i=0; i<online_num_cards[PLAYER_WEST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_WEST]];
-     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaledToHeight(60)));
+     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaledToHeight(cards_height_WNE)));
      label_cards[PLAYER_WEST][i + adj]->show();
   }
 
@@ -2051,7 +2448,7 @@ void MainWindow::online_show_deck()
   for (int i=0; i<online_num_cards[PLAYER_EAST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_EAST]];
-     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaledToHeight(60)));
+     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaledToHeight(cards_height_WNE)));
      label_cards[PLAYER_EAST][i + adj]->show();
   }
 
@@ -2061,13 +2458,13 @@ void MainWindow::online_show_deck()
     if (ui->actionAuto_Centering->isChecked())
       adj = adjust_pos[online_num_cards[PLAYER_SOUTH]];
 
-    label_cards[PLAYER_SOUTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(card_height)));
+    label_cards[PLAYER_SOUTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(cards_height_south)));
     label_cards[PLAYER_SOUTH][i + adj]->show();
 
     if (online_selected[i])
-      label_cards[PLAYER_SOUTH][i + adj]->move(label_cards[PLAYER_SOUTH][i + adj]->x(), original_pos_cards[PLAYER_SOUTH] - 20);
+      label_cards[PLAYER_SOUTH][i + adj]->move(label_cards[PLAYER_SOUTH][i + adj]->x(), orig_posy_cards[PLAYER_SOUTH][i] + y_factor * 4 - 20);
     else
-      label_cards[PLAYER_SOUTH][i + adj]->move(label_cards[PLAYER_SOUTH][i + adj]->x(), original_pos_cards[PLAYER_SOUTH]);
+      label_cards[PLAYER_SOUTH][i + adj]->move(label_cards[PLAYER_SOUTH][i + adj]->x(), orig_posy_cards[PLAYER_SOUTH][i] + y_factor * 4);
   }
 }
 
@@ -2093,12 +2490,12 @@ void MainWindow::online_select_card(int num)
  if (online_selected[card_id]) {
    online_selected[card_id] = false;
    online_num_selected--;
-   label_cards[PLAYER_SOUTH][card_id]->move(label_cards[PLAYER_SOUTH][card_id]->x(), original_pos_cards[PLAYER_SOUTH]);
+   label_cards[PLAYER_SOUTH][card_id]->move(label_cards[PLAYER_SOUTH][card_id]->x(), orig_posy_cards[PLAYER_SOUTH][card_id] + y_factor * 4);
  } else
      if (!online_selected[card_id] && (online_num_selected < 3)) {
        online_selected[card_id] = true;
        online_num_selected++;
-       label_cards[PLAYER_SOUTH][card_id]->move(label_cards[PLAYER_SOUTH][card_id]->x(), original_pos_cards[PLAYER_SOUTH] - 20);
+       label_cards[PLAYER_SOUTH][card_id]->move(label_cards[PLAYER_SOUTH][card_id]->x(), orig_posy_cards[PLAYER_SOUTH][card_id] + y_factor * 4 - 20);
 
 #ifdef __al_included_allegro5_allegro_audio_h
        if (ui->actionSounds->isChecked())
@@ -2466,7 +2863,7 @@ void MainWindow::online_action(unsigned int action, QString param)
 
             for (int i=0; i<4; i++) {
               card_played[i] = sit_here;
-              label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(card_height)));
+              label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(cards_played_height)));
             }
 
             break;
@@ -2531,7 +2928,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             label_player_name[c1]->setText(name);
 
             if (!online_game_started)
-              label_card_played[c1]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(card_height)));
+              label_card_played[c1]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(cards_played_height)));
 
             break;
     case ACTION_CREATE_TABLE:
@@ -2637,9 +3034,9 @@ void MainWindow::online_action(unsigned int action, QString param)
 
             online_show_deck(); // clear selected cards
 
-            label_cards[PLAYER_SOUTH][c1]->move(label_cards[PLAYER_SOUTH][c1]->x(), original_pos_cards[PLAYER_SOUTH] - 20);
-            label_cards[PLAYER_SOUTH][c2]->move(label_cards[PLAYER_SOUTH][c2]->x(), original_pos_cards[PLAYER_SOUTH] - 20);
-            label_cards[PLAYER_SOUTH][c3]->move(label_cards[PLAYER_SOUTH][c3]->x(), original_pos_cards[PLAYER_SOUTH] - 20);
+            label_cards[PLAYER_SOUTH][c1]->move(label_cards[PLAYER_SOUTH][c1]->x(), orig_posy_cards[PLAYER_SOUTH][c1] - 20);
+            label_cards[PLAYER_SOUTH][c2]->move(label_cards[PLAYER_SOUTH][c2]->x(), orig_posy_cards[PLAYER_SOUTH][c2] - 20);
+            label_cards[PLAYER_SOUTH][c3]->move(label_cards[PLAYER_SOUTH][c3]->x(), orig_posy_cards[PLAYER_SOUTH][c3] - 20);
             break;
     case ACTION_RECEIVE_CARDS:
             if (pList.size() != 3) {
@@ -2664,9 +3061,9 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_myCards[p2] = c2;
             online_myCards[p3] = c3;
 
-            label_cards[PLAYER_SOUTH][p1]->setPixmap(QPixmap::fromImage(deck->get_img_card(c1)->scaledToHeight(card_height)));
-            label_cards[PLAYER_SOUTH][p2]->setPixmap(QPixmap::fromImage(deck->get_img_card(c2)->scaledToHeight(card_height)));
-            label_cards[PLAYER_SOUTH][p3]->setPixmap(QPixmap::fromImage(deck->get_img_card(c3)->scaledToHeight(card_height)));
+            label_cards[PLAYER_SOUTH][p1]->setPixmap(QPixmap::fromImage(deck->get_img_card(c1)->scaledToHeight(cards_height_south)));
+            label_cards[PLAYER_SOUTH][p2]->setPixmap(QPixmap::fromImage(deck->get_img_card(c2)->scaledToHeight(cards_height_south)));
+            label_cards[PLAYER_SOUTH][p3]->setPixmap(QPixmap::fromImage(deck->get_img_card(c3)->scaledToHeight(cards_height_south)));
 
             for (int i=0; i<13; i++)
               online_selected[i] = false;
@@ -3194,11 +3591,19 @@ void MainWindow::on_pushButton_mode_clicked()
 void MainWindow::online_show_lineedit(bool enable)
 {
  if (enable) {
+
+#ifndef FULL_SCREEN
    setFixedHeight(height() + ui->lineEdit->height());
+#endif // FULL_SCREEN
+
    ui->pushButton_mode->show();
    ui->lineEdit->show();
  } else {
+
+#ifndef FULL_SCREEN
      setFixedHeight(height() - ui->lineEdit->height());
+#endif // FULL_SCREEN
+
      ui->pushButton_mode->hide();
      ui->lineEdit->hide();
  }

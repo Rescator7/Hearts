@@ -48,6 +48,11 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+#ifdef FULL_SCREEN
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+#endif // FULL_SCREEN
+
 private slots:
     void on_label_card_s1_clicked();
     void on_label_card_s2_clicked();
@@ -138,6 +143,7 @@ private:
     QImage *img_pass[4];
     QImage *img_connected;
     QImage *img_disconnected;
+    QImage *img_heart;
     QLabel *label_cards[4][13];
     QLabel *label_scores[4];
     QLabel *label_player_name[4];
@@ -185,11 +191,26 @@ private:
 
     int cards_received[3];
     int plr_names_idx[4];
-    int card_height;
+    int cards_height_south;
+    int cards_height_WNE;
+    int cards_played_height;
     int card_played[4];
-    int original_pos_cards[4];
     int scores[4];
     int hand_scores[4];
+
+    int y_factor;
+    int orig_posx_cards[4][13];
+    int orig_posy_cards[4][13];
+    int orig_posx_heart[4];
+    int orig_posy_heart[4];
+    int orig_posx_played[4];
+    int orig_posy_played[4];
+    int orig_posx_pass_to;
+    int orig_posy_pass_to;
+    int orig_posx_tables;
+    int orig_posy_tables;
+    int orig_posx_create;
+    int orig_posy_create;
 
 #ifdef ONLINE_PLAY
 // private online variables
@@ -218,9 +239,14 @@ private:
 
 #endif // ONLINE_PLAY
 
+#ifdef FULL_SCREEN
+    void adjust_objs_distances(QResizeEvent *event);
+    void resizeWidth(int perc_h);
+    void resizeWidthSouth(int perc_h);
+#endif // FULL_SCREEN
+
     void clear_deck();
     void show_deck(bool animate, bool replace);
-
     void set_info_channel_enabled(bool enable);
     void set_language(int lang);
     void set_cards_disabled(bool d);
