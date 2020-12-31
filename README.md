@@ -1,4 +1,4 @@
-# Hearts 1.6.1 (Linux)
+# Hearts 1.7 (Linux)
 The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
 
 ## Game Features:
