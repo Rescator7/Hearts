@@ -108,4 +108,8 @@
              Fix a small reset statistics glitch. (3 old stats were still shown in the open statistics window).
              Added new command Undo.
              
-             
+31 Dec 2020: Version 1.7
+-------------------------------------------------------------------------------------------------
+31 Dec 2020: This version allow the mainwindow resize, and full screen. (minimum size 715x780)
+             (This option doesn't support scaling yet, and is BETA. It can be disabled in Hearts.pro by
+             removing FULL_SCREEN from define. "qmake Hearts.pro and recompile".
