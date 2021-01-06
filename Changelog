@@ -113,3 +113,15 @@
 31 Dec 2020: This version allow the mainwindow resize, and full screen. (minimum size 715x780)
              (This option doesn't support scaling yet, and is BETA. It can be disabled in Hearts.pro by
              removing FULL_SCREEN from define. "qmake Hearts.pro and recompile".
+
+04 Jan 2021: Version 1.7.1 (Snap pack bug fix version only)
+
+?? Jan 2021: Version 1.7.2 (Coming soon)
+-------------------------------------------------------------------------------------------------
+?? Jan 2021: Fix a resize glitch: If you resize the width of the mainwindow while the first card
+             is selected and ready to be passed. The under deck move to a wrong y axis position.
+?? Jan 2021: The online connect windows buttons: Connect, Register and Cancel will be translatable.
+             The code is revamped, and the little hack removed.
+?? Jan 2021: Online play: Creating a table will now show: "Waiting for a player" on the empties
+             chairs, instead of "Sit Here" on every chair, because it was confusing. Also, "Sit Here"
+             wasn't translatable while the new text will be.
