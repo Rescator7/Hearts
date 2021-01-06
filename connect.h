@@ -5,6 +5,7 @@
 
 #include <QDialog>
 #include <QAbstractButton>
+#include <QPushButton>
 
 namespace Ui {
 class Connect;
@@ -26,11 +27,16 @@ public:
     void config(QString &username, QString &password, bool warning);
     bool WarningAccepted();
     bool WarningDisabled();
+    bool isUnRegistered();
 
 private:
+    QPushButton *button_Connect;
+    QPushButton *button_Register;
+    QPushButton *button_Cancel;
     Ui::Connect *ui;
     bool warning_accepted;
     bool warning_disabled;
+    bool UnRegistered;
 
 private slots:
     void on_checkBox_clicked();

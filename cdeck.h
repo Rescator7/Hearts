@@ -27,7 +27,6 @@ private:
     QImage *img_empty_card;
     QImage *img_your_turn;
     QImage *img_back_card;
-    QImage *img_sit_here;
 
 #ifdef DEBUG
     CCardsPlayed *cards_played;

@@ -30,7 +30,6 @@ const int king_heart    = 50;
 const int ace_heart     = 51;
 const int back_card     = 100;
 const int empty         = 127;
-const int sit_here      = 128;
 const int your_turn     = 255;
 
 const int pLEFT         = 0;

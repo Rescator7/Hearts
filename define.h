@@ -1,7 +1,7 @@
 #ifndef DEFINE
 #define DEFINE
 
-const char version[80] = "Hearts 1.7";
+const char version[80] = "Hearts 1.7.2";
 
 const int adjust_pos[14] = {0, 6, 6, 5, 4, 4, 3, 3, 2, 2, 1, 1, 0, 0};
 

@@ -1841,6 +1841,78 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="CLabel" name="label_waiting_s">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>490</y>
+      <width>90</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Waiting for
+ a player</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="CLabel" name="label_waiting_w">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>350</y>
+      <width>90</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Waiting for
+ a player</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="CLabel" name="label_waiting_n">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>210</y>
+      <width>90</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Waiting for
+ a player</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="CLabel" name="label_waiting_e">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>350</y>
+      <width>90</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Waiting for
+ a player</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <zorder>label_played_s</zorder>
+   <zorder>label_played_e</zorder>
+   <zorder>label_played_n</zorder>
+   <zorder>label_played_w</zorder>
    <zorder>label_deck_s</zorder>
    <zorder>label_heart_n</zorder>
    <zorder>label_heart_s</zorder>
@@ -1862,10 +1934,6 @@
    <zorder>label_card_s11</zorder>
    <zorder>label_card_s12</zorder>
    <zorder>label_card_s13</zorder>
-   <zorder>label_played_s</zorder>
-   <zorder>label_played_w</zorder>
-   <zorder>label_played_n</zorder>
-   <zorder>label_played_e</zorder>
    <zorder>label_pass_to</zorder>
    <zorder>label_name_s</zorder>
    <zorder>label_name_w</zorder>
@@ -1930,6 +1998,10 @@
    <zorder>label_score_n</zorder>
    <zorder>label_score_w</zorder>
    <zorder>label_score_e</zorder>
+   <zorder>label_waiting_s</zorder>
+   <zorder>label_waiting_w</zorder>
+   <zorder>label_waiting_n</zorder>
+   <zorder>label_waiting_e</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

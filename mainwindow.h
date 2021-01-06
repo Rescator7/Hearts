@@ -136,6 +136,10 @@ private slots:
     void on_label_name_n_clicked();
     void on_label_score_e_clicked();
     void on_label_name_e_clicked();
+    void on_label_waiting_s_clicked();
+    void on_label_waiting_w_clicked();
+    void on_label_waiting_n_clicked();
+    void on_label_waiting_e_clicked();
 #endif // ONLINE_PLAY
 
 private:
@@ -156,6 +160,7 @@ private:
     CTable *table_list;
     QTimer *timer;
     CClient *client;
+    QLabel *label_waiting[4];
 #endif // ONLINE_PLAY
 
 #ifdef __al_included_allegro5_allegro_audio_h
@@ -274,6 +279,7 @@ public:
     void shoot_moon(int plr, int delay);
     void light_connected(bool connected);
     void set_online_buttons_styles();
+    void hide_waiting();
 
 // public online functions.
 #ifdef ONLINE_PLAY

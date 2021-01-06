@@ -10,10 +10,20 @@ Connect::Connect(QWidget *parent) :
 {
   warning_accepted = false;
   warning_disabled = false;
+  UnRegistered = true;
 
   ui->setupUi(this);
-  ui->buttonBox->addButton(QString("Register"), QDialogButtonBox::YesRole);
-  ui->buttonBox->addButton(QString("Connect"), QDialogButtonBox::ActionRole);
+
+  button_Register = new QPushButton(tr("Register"));
+  ui->buttonBox->addButton(button_Register, QDialogButtonBox::AcceptRole);
+
+  button_Connect = new QPushButton(tr("Connect"));
+  button_Connect->setDefault(true);
+
+  ui->buttonBox->addButton(button_Connect, QDialogButtonBox::AcceptRole);
+
+  button_Cancel = new QPushButton(tr("Cancel"));
+  ui->buttonBox->addButton(button_Cancel, QDialogButtonBox::RejectRole);
 
   connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), SLOT(diagButtonClicked(QAbstractButton*)));
 }
@@ -21,6 +31,9 @@ Connect::Connect(QWidget *parent) :
 Connect::~Connect()
 {
   delete ui;
+  delete button_Register;
+  delete button_Connect;
+  delete button_Cancel;
 }
 
 QString Connect::getHost()
@@ -56,10 +69,7 @@ void Connect::config(QString &username, QString &password, bool warning)
 
 void Connect::diagButtonClicked(QAbstractButton* button)
 {
-  // QDialog return only: Accepted or Rejected. This hack allow me to return a 3rd value (3=register).
-  // This must done after close(), as close would set Result as Rejected.
-
-  if (!warning_disabled && ((button->text() == "Register") || (button->text() == "Connect"))) {
+  if (!warning_disabled && ((button == button_Register) || (button == button_Connect))) {
     QMessageBox msgBox(this);
     msgBox.setWindowTitle(tr("Warning!"));
     msgBox.setText(tr("The password will be sent unencrypted over the internet.\r\nIt is also saved unencrypted in ~/.hearts\r\n\r\n"
@@ -70,10 +80,8 @@ void Connect::diagButtonClicked(QAbstractButton* button)
       warning_accepted = true;
   }
 
-  if (button->text() == "Connect") {
-    close();
-    setResult(3);
-  }
+  if (button == button_Connect)
+    UnRegistered = false;
 }
 
 void Connect::on_checkBox_clicked()
@@ -90,6 +98,11 @@ bool Connect::WarningAccepted()
 bool Connect::WarningDisabled()
 {
   return warning_disabled;
+}
+
+bool Connect::isUnRegistered()
+{
+  return UnRegistered;
 }
 
 #endif // ONLINE_PLAY

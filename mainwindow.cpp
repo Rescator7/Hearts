@@ -74,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
     set_settings();
     set_options();
     set_language(config->get_language());
+    hide_waiting();
 
 #ifdef ONLINE_PLAY
     online_hide_progress_bar();
@@ -121,8 +122,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 #ifdef FULL_SCREEN
 void MainWindow::adjust_objs_distances(QResizeEvent *event)
-{
+{ 
   int s, x, y, z, ew;
+
+  int unselect_adj = 0;
 
   int w = event->size().width();
 
@@ -135,12 +138,19 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
     ew  = label_cards[PLAYER_WEST][i]->width();
     y = orig_posy_cards[PLAYER_WEST][i];
 
-    if (!online_connected &&
-        !hearts->is_mode_playing() &&
-         hearts->is_card_selected(PLAYER_EAST, 12 - i))
-      label_cards[PLAYER_EAST][12 - i]->move(w - ew - 35, y + y_factor * 4);
-    else
-      label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20, y + y_factor * 4);
+#ifdef ONLINE_PLAY
+    if (!online_connected) {
+#endif // ONLINE_PLAY
+       if (!hearts->is_mode_playing() &&
+           hearts->is_card_selected(PLAYER_EAST, 12 - i))
+         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 35, y + y_factor * 4);
+       else
+         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20, y + y_factor * 4);
+
+#ifdef ONLINE_PLAY
+    } else
+        label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20, y + y_factor * 4);
+#endif // ONLINE_PLAY
 
     label_cards[PLAYER_WEST][i]->move(label_cards[PLAYER_WEST][i]->x(),
                                       orig_posy_cards[PLAYER_WEST][i] + y_factor * 4);
@@ -156,16 +166,25 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
     x = (w - (12 * 35 + z)) / 2;
 
     bool selected = false;
-    if (!online_connected) {
+
+#ifdef ONLINE_PLAY
+    if (!online_connected)
+#endif // ONLINE_PLAY
       if (!hearts->is_mode_playing() && hearts->is_card_selected(PLAYER_SOUTH, i))
          selected = true;
-    } else
-        if (!online_playing && online_selected[i])
-          selected = true;
 
-    if (selected)
+#ifdef ONLINE_PLAY
+    if (online_connected)
+      if (!online_playing && online_selected[i])
+        selected = true;
+#endif // ONLINE_PLAY
+
+    if (selected) {
       label_cards[PLAYER_SOUTH][i]->move(x + i * 35,
                                          orig_posy_cards[PLAYER_SOUTH][i] + y_factor * 4 - 20);
+      if (i == 0)
+        unselect_adj = 20;
+    }
     else
       label_cards[PLAYER_SOUTH][i]->move(x + i * 35,
                                          orig_posy_cards[PLAYER_SOUTH][i] + y_factor * 4);
@@ -182,7 +201,11 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   ui->label_deck_n->move(label_cards[PLAYER_NORTH][12]->x(), orig_posy_cards[PLAYER_NORTH][12] + 8);
 
   // Move Under Deck South to Card S1
-  ui->label_deck_s->move(label_cards[PLAYER_SOUTH][0]->x(), label_cards[PLAYER_SOUTH][0]->y());
+
+  // Bug fix: I can not use orig_posy_cards[PLAYER_SOUTH][0] as resize to bigger height(), will
+  // moves the cards to higher y value. I must use the real label_cards[PLAYER_SOUTH][0]->y(), but
+  // adjusted if the card [0] is selected.
+  ui->label_deck_s->move(label_cards[PLAYER_SOUTH][0]->x(), label_cards[PLAYER_SOUTH][0]->y() + unselect_adj);
 
   // Move TextEit
   x = (w - ui->textEdit->width()) / 2 - 1;
@@ -222,6 +245,19 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   x = label_card_played[PLAYER_WEST]->x() +
       label_card_played[PLAYER_WEST]->width();
 
+#ifdef ONLINE_PLAY
+  int adj_x = 0, adj_y = 0;
+
+  if (label_waiting[PLAYER_SOUTH]->font().pointSize() == 9) {
+    adj_x = 11;
+    adj_y = 15;
+  }
+
+  // Move waiting label WEST
+  ui->label_waiting_w->move(label_card_played[PLAYER_WEST]->x() - adj_x,
+                            label_card_played[PLAYER_WEST]->y() + 40 - adj_y);
+#endif // ONLINE_PLAY
+
   // Move Pass To
   ui->label_pass_to->move(x + z + 8,
                           orig_posy_pass_to + y_factor);
@@ -234,6 +270,13 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   x = label_card_played[PLAYER_EAST]->x() +
       label_card_played[PLAYER_EAST]->width();
 
+#ifdef ONLINE_PLAY
+  // Move waiting label EAST
+  ui->label_waiting_e->move(label_card_played[PLAYER_EAST]->x() - adj_x,
+                            label_card_played[PLAYER_EAST]->y() + 40 - adj_y);
+#endif // ONLINE_PLAY
+
+
   // Move Heart EAST
   ui->label_heart_e->move(x + z, orig_posy_heart[PLAYER_EAST] + y_factor);
 
@@ -245,10 +288,23 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   label_card_played[PLAYER_NORTH]->move(x + z,
                                         orig_posy_played[PLAYER_NORTH] + y_factor);
 
+#ifdef ONLINE_PLAY
+  // Move waiting label NORTH
+  ui->label_waiting_n->move(label_card_played[PLAYER_NORTH]->x() - adj_x,
+                            label_card_played[PLAYER_NORTH]->y() + 40 - adj_y);
+#endif // ONLINE_PLAY
+
   // Move card played SOUTH
   z = (label_card_played[PLAYER_EAST]->x() - label_card_played[PLAYER_SOUTH]->width() - x) / 2;
   label_card_played[PLAYER_SOUTH]->move(x + z,
                                         orig_posy_played[PLAYER_SOUTH] + y_factor);
+
+#ifdef ONLINE_PLAY
+  // Move waiting label SOUTH
+  ui->label_waiting_s->move(label_card_played[PLAYER_SOUTH]->x() - adj_x,
+                            label_card_played[PLAYER_SOUTH]->y() + 40 - adj_y);
+#endif // ONLINE_PLAY
+
   // Move North Heart
   ui->label_heart_n->move(label_card_played[PLAYER_WEST]->x() - ui->label_heart_n->width() / 2,
                           orig_posy_heart[PLAYER_NORTH] + y_factor);
@@ -287,6 +343,7 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   label_scores[PLAYER_EAST]->move(ui->label_heart_e->x() + x + 2,
                                   ui->label_heart_e->y() + y + w);
 
+#ifdef ONLINE_PLAY
   // Move progress bar under the Heart, normal progress bar under deck_s
   x = ui->label_heart_s->x() +
       ui->label_heart_s->width() / 2 -
@@ -322,9 +379,12 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   y = ui->label_deck_s->y() +
       ui->label_deck_s->height() + 1;
   progress_bar_time[4]->move(x, y);
+#endif // ONLINE_PLAY
 
   ui->textEdit->move(ui->textEdit->x(),
-                     ui->progressBar->y() + ui->progressBar->height());
+                     ui->label_deck_s->y() +
+                     ui->label_deck_s->height() + 1 +
+                     ui->progressBar->height());
 
   y = ui->textEdit->y() + ui->textEdit->height();
   ui->pushButton_mode->move(ui->pushButton_mode->x(), y);
@@ -355,6 +415,20 @@ void MainWindow::resizeWidth(int perc_h)
   card = card_played[PLAYER_NORTH];
   label_card_played[PLAYER_NORTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
 
+#ifdef ONLINE_PLAY
+  // Adjust the waiting label font size.
+  QFont font = label_waiting[PLAYER_SOUTH]->font();
+  if (h == 130)
+    font.setPointSize(11);
+  else
+    font.setPointSize(9);
+
+  label_waiting[PLAYER_SOUTH]->setFont(font);
+  label_waiting[PLAYER_WEST]->setFont(font);
+  label_waiting[PLAYER_NORTH]->setFont(font);
+  label_waiting[PLAYER_EAST]->setFont(font);
+#endif // ONLINE_PLAY
+
   card = card_played[PLAYER_EAST];
   label_card_played[PLAYER_EAST]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
 
@@ -373,7 +447,7 @@ void MainWindow::resizeWidth(int perc_h)
 }
 
 void MainWindow::resizeWidthSouth(int perc_h) {
-   int w, x, y, z,
+   int w, x, z,
        h = (130 * perc_h) / 100;
 
    cards_height_south = h;
@@ -390,9 +464,11 @@ void MainWindow::resizeWidthSouth(int perc_h) {
    ui->label_deck_s->move(label_cards[PLAYER_SOUTH][0]->x(),
                           ui->label_deck_s->y());
 
+#ifdef ONLINE_PLAY
    if (online_connected)
      online_show_deck();
    else
+#endif // ONLINE_PLAY
      show_deck(false, false);
 
    w =  label_cards[PLAYER_SOUTH][12]->x() +
@@ -401,6 +477,9 @@ void MainWindow::resizeWidthSouth(int perc_h) {
 
    ui->label_deck_s->resize(w, h);
 
+#ifdef ONLINE_PLAY
+   int y;
+
    // Move the normal progress bar
    x = ui->label_deck_s->x() +
        ui->label_deck_s->width() / 2 -
@@ -408,6 +487,7 @@ void MainWindow::resizeWidthSouth(int perc_h) {
    y = ui->label_deck_s->y() +
        ui->label_deck_s->height() + 1;
    progress_bar_time[4]->move(progress_bar_time[4]->x(), y);
+#endif // ONLINE_PLAY
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -784,6 +864,11 @@ void MainWindow::init_pointers()
     progress_bar_time[PLAYER_WEST] = ui->progressBar_bank_w;  // time bank west
     progress_bar_time[PLAYER_EAST] = ui->progressBar_bank_e;  // time bank east
     progress_bar_time[4] = ui->progressBar;                   // regular time left
+
+    label_waiting[PLAYER_SOUTH] = ui->label_waiting_s;
+    label_waiting[PLAYER_WEST] = ui->label_waiting_w;
+    label_waiting[PLAYER_NORTH] = ui->label_waiting_n;
+    label_waiting[PLAYER_EAST] = ui->label_waiting_e;
 #endif // ONLINE_PLAY
 }
 
@@ -2240,6 +2325,14 @@ void MainWindow::on_actionUndo_triggered()
   error(tr("There is no undo available!"));
 }
 
+void MainWindow::hide_waiting()
+{
+  ui->label_waiting_s->hide();
+  ui->label_waiting_w->hide();
+  ui->label_waiting_n->hide();
+  ui->label_waiting_e->hide();
+}
+
 
 //***************************************************************************************************
 //****************************** ONLY ONLINE FUNCTIONS FROM HERE ************************************
@@ -2575,14 +2668,10 @@ void MainWindow::on_actionConnect_triggered()
   if (warning && connect_diag.WarningDisabled())
     config->set_config_file(CONFIG_WARNING, false);
 
-  if (connect_diag.WarningAccepted())
-    switch (connect_diag.result()) {
-      case QDialog::Accepted: client->socketConnect(true, connect_diag.getHost(), connect_diag.getPort());
-                              break;
-      case QDialog::Rejected:
-                              break;
-      default: client->socketConnect(false, connect_diag.getHost(), connect_diag.getPort());
-    }
+  if (connect_diag.WarningAccepted()) {
+    if (connect_diag.result() == QDialog::Accepted)
+      client->socketConnect(connect_diag.isUnRegistered(), connect_diag.getHost(), connect_diag.getPort());
+  }
 }
 
 void MainWindow::on_actionCreate_Table_triggered()
@@ -2730,9 +2819,31 @@ void MainWindow::on_label_name_e_clicked()
   on_label_played_e_clicked();
 }
 
+void MainWindow::on_label_waiting_s_clicked()
+{
+  on_label_played_s_clicked();
+}
+
+void MainWindow::on_label_waiting_w_clicked()
+{
+  on_label_played_w_clicked();
+}
+
+void MainWindow::on_label_waiting_n_clicked()
+{
+  on_label_played_n_clicked();
+}
+
+void MainWindow::on_label_waiting_e_clicked()
+{
+  on_label_played_e_clicked();
+}
+
 void MainWindow::init_online_game()
 {
   online_table_id = 0;
+
+  hide_waiting();
 
   for (int i=0; i<4; i++)
     card_played[i] = empty;
@@ -2861,10 +2972,10 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_can_sit = true;
             online_table_id = pList.at(0).toInt();
 
-            for (int i=0; i<4; i++) {
-              card_played[i] = sit_here;
-              label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(cards_played_height)));
-            }
+//          label_waiting[PLAYER_SOUTH]->show();
+            label_waiting[PLAYER_WEST]->show();
+            label_waiting[PLAYER_NORTH]->show();
+            label_waiting[PLAYER_EAST]->show();
 
             break;
     case ACTION_SIT_CHAIR:
@@ -2892,8 +3003,10 @@ void MainWindow::online_action(unsigned int action, QString param)
            // otherwise, we don't rotate the chair.
            if (online_game_started)
               label_player_name[convert_chair(c1)]->setText(pList.at(3));
-           else
+           else {
               label_player_name[c1]->setText(pList.at(3));
+              label_waiting[c1]->hide();
+           }
 
            break;
     case ACTION_MY_CHAIR:
@@ -2922,13 +3035,12 @@ void MainWindow::online_action(unsigned int action, QString param)
 
             if (online_game_started)
               name = "(" + label_player_name[c1]->text() + ")";
-            else
+            else {
               name = "";
+              label_waiting[c1]->show();
+            }
 
             label_player_name[c1]->setText(name);
-
-            if (!online_game_started)
-              label_card_played[c1]->setPixmap(QPixmap::fromImage(deck->get_img_card(sit_here)->scaledToHeight(cards_played_height)));
 
             break;
     case ACTION_CREATE_TABLE:
@@ -2964,6 +3076,7 @@ void MainWindow::online_action(unsigned int action, QString param)
 
             online_show_buttons(false);
             online_set_settings(false);
+            hide_waiting();
 
 #ifdef __al_included_allegro5_allegro_audio_h
             if (ui->actionSounds->isChecked())
@@ -3643,4 +3756,3 @@ void MainWindow::online_hide_progress_bar()
   progress_bar_time[4]->hide();
 }
 #endif // ONLINE_PLAY
-
