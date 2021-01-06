@@ -1,5 +1,10 @@
-# Hearts 1.7 (Linux)
-The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
+# Hearts 1.7 (Linux, C++)
+The card game Hearts for QT 5 and liballegro 5 (for sounds support)
+
+<p>Version 1.7 is available as a snap package.</p>
+<a href="https://snapcraft.io/hearts">
+  <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"/>
+</a>
 
 ## Game Features:
 - Support online and offline game play.
@@ -33,9 +38,12 @@ The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
   No undo available from a saved game. The undo will be purged every round or if you connect to a server. 
   Not available online. Only 1 undo at a time is possible. e.g: No multiple undos in a row.</p>
 
+# How to build the source code.
+
 ## 1. Requirements:
 - Qt Creator (suggested)
 - QT Widget 5
+- QT SVG 5
 - Liballegro 5
 
 ## 2. Install: (under ubuntu 16.04)
@@ -44,7 +52,8 @@ The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
  sudo apt-get install qtcreator 
  sudo apt-get install build-essential
  sudo apt-get install qt5-default
- sudo apt-get install liballegro5-dev</code></pre>
+ sudo apt-get install liballegro5-dev
+ sudo apt-get install libqt5svg5-dev</code></pre>
    
 <p>After that you need to download Hearts repertory</p>
 <pre><code> git clone https://github.com/Rescator7/Hearts.git</code></pre>
@@ -74,6 +83,6 @@ The card game Hearts for QT 5.x and liballegro 5 (for sounds support)
  - Cards set: https://github.com/htdebeer/SVG-cards/blob/master/LICENSE
  - Sounds are CC 3.0 and 1.0
  - Icons: (read credits)
-<p>(read credits for more informations)</p>
+ - read credits for all the licenses: https://github.com/Rescator7/Hearts/blob/master/Credits
 
 ![screenshoot](https://github.com/Rescator7/Hearts/blob/master/screenshot/SCR1-hearts-1.6.jpg)
