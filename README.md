@@ -1,4 +1,4 @@
-# Hearts 1.7 (Linux, C++)
+# Hearts 1.7.2 (Linux, C++)
 The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 
 <p>Version 1.7 is available as a snap package.</p>
