@@ -1,4 +1,4 @@
-# Hearts 1.7.2 (Linux, C++)
+# Hearts 1.8 (Linux, C++)
 The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 
 <p>Version 1.7 is available as a snap package.</p>
@@ -25,6 +25,7 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 - No Draw.   (Disable multiple winners).
 
 ### Offline Options:
+- 6 background images theme: Universe, Ocean, Mt. Fuji, Sakura, Desert, Forest. 
 - Undo. 
 - Animated play.
 - Three game speed: Slow, Normal, Fast.
@@ -46,6 +47,14 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 - QT SVG 5
 - Liballegro 5
 
+<p>NOTE: Version 1.8 and above require at lease 4G of ram to build.</p>
+<pre><code>g++ -c -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC -DONLINE_PLAY -DUSE_LIBALLEGRO5 -DFULL_SCREEN -DDEBUG -DQT_NO_DEBUG -DQT_SVG_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtSvg -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -o qrc_resources.o qrc_resources.cpp
+g++: fatal error: Killed signal terminated program cc1plus
+compilation terminated.
+make: *** [Makefile:902: qrc_resources.o] Error 1</code></pre>
+
+<p>If you encounter this message. It means the compiler is running out of Memory and can't build the application. Try to free some memory.</p>
+
 ## 2. Install: (under ubuntu 16.04)
 <pre><code> sudo apt-get update
  sudo apt-get install git
@@ -55,6 +64,8 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
  sudo apt-get install liballegro5-dev
  sudo apt-get install libqt5svg5-dev</code></pre>
    
+<p>NOTE: libqt5svg5-dev is required since version 1.7</p>
+
 <p>After that you need to download Hearts repertory</p>
 <pre><code> git clone https://github.com/Rescator7/Hearts.git</code></pre>
    
@@ -85,4 +96,4 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
  - Icons: (read credits)
  - read credits for all the licenses: https://github.com/Rescator7/Hearts/blob/master/Credits
 
-![screenshoot](https://github.com/Rescator7/Hearts/blob/master/screenshot/SCR1-hearts-1.6.jpg)
+![screenshoot](https://github.com/Rescator7/Hearts/blob/master/screenshot/SCR1-hearts-1.8.jpg)
