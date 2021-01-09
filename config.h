@@ -24,6 +24,15 @@ const int CONFIG_USERNAME                = 17;
 const int CONFIG_PASSWORD                = 18;
 const int CONFIG_WARNING                 = 19;
 
+const int BACKGROUND_UNSET               = -1;
+const int BACKGROUND_NONE                = 0;
+const int BACKGROUND_UNIVERSE            = 1;
+const int BACKGROUND_OCEAN               = 2;
+const int BACKGROUND_MT_FUJI             = 3;
+const int BACKGROUND_SAKURA              = 4;
+const int BACKGROUND_DESERT              = 5;
+const int BACKGROUND_FOREST              = 6;
+
 const int SPEED_SLOW                     = 0;
 const int SPEED_NORMAL                   = 1;
 const int SPEED_FAST                     = 2;
@@ -62,6 +71,7 @@ private:
     int language;
     int deck_style;
     int speed;
+    int background;
 
     // game variants
     bool perfect_100;
@@ -98,10 +108,12 @@ public:
     int set_language(int lang);
     int set_deck_style(int style);
     int set_speed(int s);
+    int set_background(int b);
     int get_language();
     int get_deck_style();
     int get_speed();
     int get_speed(int type);
+    int get_background();
 
     bool is_auto_centering();
     bool is_cheat_mode();

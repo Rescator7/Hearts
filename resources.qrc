@@ -194,5 +194,11 @@
         <file>icons/heart.png</file>
         <file>icons/muted.png</file>
         <file>sounds/403013__inspectorj__ui-confirmation-alert-b5.wav</file>
+        <file>backgrounds/john-fowler-7Ym9rpYtSdA-unsplash.jpg</file>
+        <file>backgrounds/david-edelstein-N4DbvTUDikw-unsplash.jpg</file>
+        <file>backgrounds/meric-dagli-7NBO76G5JsE-unsplash.jpg</file>
+        <file>backgrounds/cristiano-pinto-gQH0Jcz50V8-unsplash.jpg</file>
+        <file>backgrounds/patrick-hendry-_RYmx4Jz1UM-unsplash.jpg</file>
+        <file>backgrounds/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg</file>
     </qresource>
 </RCC>

@@ -142,6 +142,14 @@ private slots:
     void on_label_waiting_e_clicked();
 #endif // ONLINE_PLAY
 
+    void on_actionUnivers_triggered();
+    void on_actionOcean_triggered();
+    void on_actionNo_image_triggered();
+    void on_actionMt_Fuji_triggered();
+    void on_actionSakura_triggered();
+    void on_actionDesert_triggered();
+    void on_actionForest_triggered();
+
 private:
     Ui::MainWindow *ui;
     QImage *img_pass[4];
@@ -194,6 +202,7 @@ private:
     bool wait_delay;
     bool stop_delay;
 
+    int background;
     int cards_received[3];
     int plr_names_idx[4];
     int cards_height_south;
@@ -241,7 +250,8 @@ private:
 
 // private online functions
     int convert_chair(int chair);
-
+    void online_set_settings(bool disable);
+    void online_rotate_players_name();
 #endif // ONLINE_PLAY
 
 #ifdef FULL_SCREEN
@@ -254,6 +264,7 @@ private:
     void show_deck(bool animate, bool replace);
     void set_info_channel_enabled(bool enable);
     void set_language(int lang);
+    void set_background();
     void set_cards_disabled(bool d);
     void refresh_cards_played();
     void init_vars();
@@ -266,8 +277,6 @@ private:
     void start_game(bool booting);
     void disable_cheat();
     void check_easy_cards();
-    void online_set_settings(bool disable);
-    void online_rotate_players_name();
 
 public:
     int convert_char_to_player(QString p);
@@ -328,7 +337,9 @@ public slots:
     void save_files();
     void aboutToQuit();
     void animate_pass_cards(int w1, int w2, int w3, int n1, int n2, int n3, int e1, int e2, int e3);
-    void handle_new_game(); 
+    void handle_new_game();
+    void unset_bkg_checked();
+    void set_theme_colors(QString color1, QString color2, QString color3);
 };
 
 #endif // MAINWINDOW_H

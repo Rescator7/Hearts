@@ -49,6 +49,7 @@ void CConfig::init_vars()
 
   language = LANG_ENGLISH;
   deck_style = STANDARD_DECK;
+  background = BACKGROUND_NONE;
 }
 
 int CConfig::load_config_file() {
@@ -101,6 +102,31 @@ int CConfig::load_config_file() {
         else
         if (value == "fast")
           speed = SPEED_FAST;
+
+        continue;
+      }
+
+      if (param == "Background") {
+        if (value == "None")
+          background = BACKGROUND_NONE;
+        else
+        if (value == "Universe")
+          background = BACKGROUND_UNIVERSE;
+        else
+        if (value == "Ocean")
+          background = BACKGROUND_OCEAN;
+        else
+        if (value == "Mt_Fuji")
+          background = BACKGROUND_MT_FUJI;
+        else
+        if (value == "Sakura")
+          background = BACKGROUND_SAKURA;
+        else
+        if (value == "Desert")
+          background = BACKGROUND_DESERT;
+        else
+        if (value == "Forest")
+          background = BACKGROUND_FOREST;
 
         continue;
       }
@@ -173,7 +199,7 @@ int CConfig::load_config_file() {
           // unknown param
       }
 
-      if (cpt > 21) break; // too many lines ?? corrupted file ??
+      if (cpt > 22) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
@@ -193,9 +219,16 @@ int CConfig::set_deck_style(int style) {
 }
 
 int CConfig::set_speed(int s) {
-   speed = s;
+  speed = s;
 
-   return save_config_file();
+  return save_config_file();
+}
+
+int CConfig::set_background(int b)
+{
+  background = b;
+
+  return save_config_file();
 }
 
 int CConfig::set_config_file(int param, bool enable)
@@ -248,6 +281,16 @@ int CConfig::save_config_file()
     case STANDARD_DECK: out << "Deck_Style = standard" << endl; break;
     case ENGLISH_DECK:  out << "Deck_Style = english" << endl; break;
     case RUSSIAN_DECK:  out << "Deck_Style = russian" << endl; break;
+  }
+
+  switch (background) {
+    case BACKGROUND_NONE:     out << "Background = None" << endl; break;
+    case BACKGROUND_UNIVERSE: out << "Background = Universe" << endl; break;
+    case BACKGROUND_OCEAN:    out << "Background = Ocean" << endl; break;
+    case BACKGROUND_SAKURA:   out << "Background = Sakura" << endl; break;
+    case BACKGROUND_MT_FUJI:  out << "Background = Mt_Fuji" << endl; break;
+    case BACKGROUND_DESERT:   out << "Background = Desert" << endl; break;
+    case BACKGROUND_FOREST:   out << "Background = Forest" << endl; break;
   }
 
   out << "Animated_Play = " << (animated_play ? "true" : "false") << endl;
@@ -384,4 +427,9 @@ int CConfig::get_speed(int type) {
     case SPEED_ANIMATE_PLAY_CARD: return SPEED_ANIMATE_PLAY_CARD_VALUES[speed]; break;
   }
   return 0;
+}
+
+int CConfig::get_background()
+{
+  return background;
 }

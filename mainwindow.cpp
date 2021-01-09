@@ -71,6 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif // ONLINE_PLAY
 
     init_vars();
+    set_background();
     set_settings();
     set_options();
     set_language(config->get_language());
@@ -620,6 +621,8 @@ void MainWindow::init_vars()
   orig_posy_tables = ui->pushButton_tables->y();
   orig_posx_create = ui->pushButton_create_table->x();
   orig_posy_create = ui->pushButton_create_table->y();
+
+  background = BACKGROUND_UNSET;
 }
 
 void MainWindow::load_sounds()
@@ -2333,6 +2336,171 @@ void MainWindow::hide_waiting()
   ui->label_waiting_e->hide();
 }
 
+void MainWindow::unset_bkg_checked()
+{
+  ui->actionUnivers->setChecked(false);
+  ui->actionOcean->setChecked(false);
+  ui->actionNo_image->setChecked(false);
+  ui->actionSakura->setChecked(false);
+  ui->actionMt_Fuji->setChecked(false);
+  ui->actionDesert->setChecked(false);
+  ui->actionForest->setChecked(false);
+}
+
+void MainWindow::set_background()
+{
+  int background = config->get_background();
+
+  switch (background) {
+     case BACKGROUND_UNIVERSE: on_actionUnivers_triggered(); break;
+     case BACKGROUND_OCEAN:    on_actionOcean_triggered(); break;
+     case BACKGROUND_SAKURA:   on_actionSakura_triggered(); break;
+     case BACKGROUND_MT_FUJI:  on_actionMt_Fuji_triggered(); break;
+     case BACKGROUND_DESERT:   on_actionDesert_triggered(); break;
+     case BACKGROUND_FOREST:   on_actionForest_triggered(); break;
+
+     default: on_actionNo_image_triggered();
+  }
+}
+
+void MainWindow::set_theme_colors(QString color1, QString color2, QString color3)
+{
+   ui->label_pass_to->setStyleSheet(QString("background-color: " + color1));
+   for (int i=0; i<13; i++)
+     label_cards[PLAYER_SOUTH][i]->setStyleSheet(QString("background-color: ") + color2);
+   ui->label_online->setStyleSheet("color: " + color3);
+}
+
+void MainWindow::on_actionUnivers_triggered()
+{
+  unset_bkg_checked();
+  ui->actionUnivers->setChecked(true);
+
+  if (background == BACKGROUND_UNIVERSE)
+    return;
+
+  background = BACKGROUND_UNIVERSE;
+
+  config->set_background(BACKGROUND_UNIVERSE);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                  "border-image: url(:/backgrounds/john-fowler-7Ym9rpYtSdA-unsplash.jpg)"
+                  " 0 0 0 0 stretch;}");
+
+  set_theme_colors("transparent", "transparent", "yellow");
+}
+
+void MainWindow::on_actionOcean_triggered()
+{
+  unset_bkg_checked();
+  ui->actionOcean->setChecked(true);
+
+  if (background == BACKGROUND_OCEAN)
+    return;
+
+  background = BACKGROUND_OCEAN;
+
+  config->set_background(BACKGROUND_OCEAN);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                   "border-image: url(:/backgrounds/cristiano-pinto-gQH0Jcz50V8-unsplash.jpg)"
+                   " 0 0 0 0 stretch stretch; color: black; background-color: #3f9f52 }");
+
+  set_theme_colors("transparent", "#219f9b", "Yellow");
+}
+
+void MainWindow::on_actionNo_image_triggered()
+{
+  unset_bkg_checked();
+  ui->actionNo_image->setChecked(true);
+
+  if (background == BACKGROUND_NONE)
+    return;
+
+  background = BACKGROUND_NONE;
+
+  config->set_background(BACKGROUND_NONE);
+
+  centralWidget()->setStyleSheet("");
+
+  set_theme_colors("#3f9f52", "#3f9f52", "black");
+}
+
+void MainWindow::on_actionMt_Fuji_triggered()
+{
+  unset_bkg_checked();
+  ui->actionMt_Fuji->setChecked(true);
+
+  if (background == BACKGROUND_MT_FUJI)
+    return;
+
+  background = BACKGROUND_MT_FUJI;
+
+  config->set_background(BACKGROUND_MT_FUJI);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                   "border-image: url(:/backgrounds/david-edelstein-N4DbvTUDikw-unsplash.jpg)"
+                   " 0 0 0 0 stretch stretch; }");
+
+  set_theme_colors("transparent", "#3f9f52", "Yellow");
+}
+
+void MainWindow::on_actionSakura_triggered()
+{
+  unset_bkg_checked();
+  ui->actionSakura->setChecked(true);
+
+  if (background == BACKGROUND_SAKURA)
+    return;
+
+  background = BACKGROUND_SAKURA;
+
+  config->set_background(BACKGROUND_SAKURA);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                  "border-image: url(:/backgrounds/meric-dagli-7NBO76G5JsE-unsplash.jpg)"
+                  " 0 0 0 0 stretch stretch; }");
+
+  set_theme_colors("transparent", "#3f9f52", "Yellow");
+}
+
+void MainWindow::on_actionDesert_triggered()
+{
+  unset_bkg_checked();
+  ui->actionDesert->setChecked(true);
+
+  if (background == BACKGROUND_DESERT)
+    return;
+
+  background = BACKGROUND_DESERT;
+
+  config->set_background(BACKGROUND_DESERT);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                  "border-image: url(:/backgrounds/patrick-hendry-_RYmx4Jz1UM-unsplash.jpg)"
+                  " 0 0 0 0 stretch stretch; }");
+
+  set_theme_colors("transparent", "#9f3f2b", "Yellow");
+}
+
+void MainWindow::on_actionForest_triggered()
+{
+  unset_bkg_checked();
+  ui->actionForest->setChecked(true);
+
+  if (background == BACKGROUND_FOREST)
+    return;
+
+  background = BACKGROUND_FOREST;
+
+  config->set_background(BACKGROUND_FOREST);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                    "border-image: url(:/backgrounds/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg)"
+                    " 0 0 0 0 stretch stretch; }");
+
+  set_theme_colors("transparent", "#3f9f52", "Yellow");
+}
 
 //***************************************************************************************************
 //****************************** ONLY ONLINE FUNCTIONS FROM HERE ************************************
@@ -2713,8 +2881,7 @@ void MainWindow::on_actionCreate_Table_triggered()
 
 void MainWindow::set_online_buttons_styles()
 {
-  QColor color = QColor(63, 159, 82, 255);
-  QString style = QString("background-color: %1; border: none;").arg(color.name());
+  QString style = QString("background-color: transparent; border: none;");
 
   ui->pushButton_exit->setFocusPolicy(Qt::NoFocus);
   ui->pushButton_leave->setFocusPolicy(Qt::NoFocus);
