@@ -126,3 +126,8 @@
              chairs, instead of "Sit Here" on every chair, because it was confusing. Also, "Sit Here"
              wasn't translatable while the new text will be.
 06 Jan 2021: Fix 1.7 bug compile without ONLINE_PLAY defined
+
+09 Jan 2021: Version 1.8
+-------------------------------------------------------------------------------------------------
+09 Jan 2021: Added 6 images background theme. Universe, Ocean, Mt. Fuji, Sakura, Desert and
+             Forest. 
