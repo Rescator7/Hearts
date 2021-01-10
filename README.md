@@ -6,7 +6,7 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 <a href="https://snapcraft.io/hearts">
   <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"/></a>
 <p>Version 1.7 is available as Stable (1.7.1)<br>
-  Version 1.8 is available as Edged (1.7.1)</p>
+  Version 1.8 is available as Edge (1.7.1)</p>
 
 ## Game Features:
 - Support online and offline game play.
