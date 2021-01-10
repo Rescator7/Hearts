@@ -27,7 +27,7 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 - Perfect 100. (A player who get the score of 100 pts have his score reduce to 50 pts).
 - No Draw.   (Disable multiple winners).
 
-### Offline Options:
+## Offline Options:
 - Undo. 
 - Animated play.
 - Three game speed: Slow, Normal, Fast.
