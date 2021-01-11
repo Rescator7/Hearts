@@ -3620,7 +3620,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             card_played[convert_chair(PLAYER_EAST)]  = pList.at(12).toInt();
 
             refresh_cards_played();
-;
+
             c1 = pList.at(14).toInt(); // status
             c2 = pList.at(15).toInt(); // timeleft
 
