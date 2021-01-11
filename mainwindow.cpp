@@ -2881,7 +2881,8 @@ void MainWindow::on_actionCreate_Table_triggered()
 
 void MainWindow::set_online_buttons_styles()
 {
-  QString style = QString("background-color: transparent; border: none;");
+  QString style = QString("QPushButton { background-color: transparent; border: none;}"
+                          "QToolTip { color: #ffffff; background-color: #000000; border: none; }");
 
   ui->pushButton_exit->setFocusPolicy(Qt::NoFocus);
   ui->pushButton_leave->setFocusPolicy(Qt::NoFocus);
