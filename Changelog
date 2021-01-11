@@ -131,3 +131,10 @@
 -------------------------------------------------------------------------------------------------
 09 Jan 2021: Added 6 images background theme. Universe, Ocean, Mt. Fuji, Sakura, Desert and
              Forest. 
+
+11 Jan 2021: Version 1.8.1
+-------------------------------------------------------------------------------------------------
+11 Jan 2021: This version "should" fix a glitch present in Hearts snap pack, because it use
+             font size 9, while Hearts was coded using font size 11. That part of the code is also 
+             simplified.
+11 Jan 2021: Fix online button's tool tip invisible. (black on black).
