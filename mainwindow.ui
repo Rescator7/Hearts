@@ -2178,9 +2178,9 @@
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>490</y>
+      <y>450</y>
       <width>90</width>
-      <height>41</height>
+      <height>130</height>
      </rect>
     </property>
     <property name="palette">
@@ -2219,6 +2219,12 @@
        </colorrole>
       </disabled>
      </palette>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <italic>false</italic>
+     </font>
     </property>
     <property name="text">
      <string>Waiting for
@@ -2232,9 +2238,9 @@
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>350</y>
+      <y>310</y>
       <width>90</width>
-      <height>41</height>
+      <height>130</height>
      </rect>
     </property>
     <property name="palette">
@@ -2273,6 +2279,12 @@
        </colorrole>
       </disabled>
      </palette>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <italic>false</italic>
+     </font>
     </property>
     <property name="text">
      <string>Waiting for
@@ -2286,9 +2298,9 @@
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>210</y>
+      <y>170</y>
       <width>90</width>
-      <height>41</height>
+      <height>130</height>
      </rect>
     </property>
     <property name="palette">
@@ -2327,6 +2339,12 @@
        </colorrole>
       </disabled>
      </palette>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <italic>false</italic>
+     </font>
     </property>
     <property name="text">
      <string>Waiting for
@@ -2340,9 +2358,9 @@
     <property name="geometry">
      <rect>
       <x>520</x>
-      <y>350</y>
+      <y>310</y>
       <width>90</width>
-      <height>41</height>
+      <height>130</height>
      </rect>
     </property>
     <property name="palette">
@@ -2381,6 +2399,12 @@
        </colorrole>
       </disabled>
      </palette>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <italic>false</italic>
+     </font>
     </property>
     <property name="text">
      <string>Waiting for

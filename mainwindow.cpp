@@ -247,16 +247,9 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
       label_card_played[PLAYER_WEST]->width();
 
 #ifdef ONLINE_PLAY
-  int adj_x = 0, adj_y = 0;
-
-  if (label_waiting[PLAYER_SOUTH]->font().pointSize() == 9) {
-    adj_x = 11;
-    adj_y = 15;
-  }
-
   // Move waiting label WEST
-  ui->label_waiting_w->move(label_card_played[PLAYER_WEST]->x() - adj_x,
-                            label_card_played[PLAYER_WEST]->y() + 40 - adj_y);
+  ui->label_waiting_w->move(label_card_played[PLAYER_WEST]->x(),
+                            label_card_played[PLAYER_WEST]->y());
 #endif // ONLINE_PLAY
 
   // Move Pass To
@@ -273,8 +266,8 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
 
 #ifdef ONLINE_PLAY
   // Move waiting label EAST
-  ui->label_waiting_e->move(label_card_played[PLAYER_EAST]->x() - adj_x,
-                            label_card_played[PLAYER_EAST]->y() + 40 - adj_y);
+  ui->label_waiting_e->move(label_card_played[PLAYER_EAST]->x(),
+                            label_card_played[PLAYER_EAST]->y());
 #endif // ONLINE_PLAY
 
 
@@ -291,8 +284,8 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
 
 #ifdef ONLINE_PLAY
   // Move waiting label NORTH
-  ui->label_waiting_n->move(label_card_played[PLAYER_NORTH]->x() - adj_x,
-                            label_card_played[PLAYER_NORTH]->y() + 40 - adj_y);
+  ui->label_waiting_n->move(label_card_played[PLAYER_NORTH]->x(),
+                            label_card_played[PLAYER_NORTH]->y());
 #endif // ONLINE_PLAY
 
   // Move card played SOUTH
@@ -302,8 +295,8 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
 
 #ifdef ONLINE_PLAY
   // Move waiting label SOUTH
-  ui->label_waiting_s->move(label_card_played[PLAYER_SOUTH]->x() - adj_x,
-                            label_card_played[PLAYER_SOUTH]->y() + 40 - adj_y);
+  ui->label_waiting_s->move(label_card_played[PLAYER_SOUTH]->x(),
+                            label_card_played[PLAYER_SOUTH]->y());
 #endif // ONLINE_PLAY
 
   // Move North Heart
@@ -417,17 +410,10 @@ void MainWindow::resizeWidth(int perc_h)
   label_card_played[PLAYER_NORTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
 
 #ifdef ONLINE_PLAY
-  // Adjust the waiting label font size.
-  QFont font = label_waiting[PLAYER_SOUTH]->font();
-  if (h == 130)
-    font.setPointSize(11);
-  else
-    font.setPointSize(9);
-
-  label_waiting[PLAYER_SOUTH]->setFont(font);
-  label_waiting[PLAYER_WEST]->setFont(font);
-  label_waiting[PLAYER_NORTH]->setFont(font);
-  label_waiting[PLAYER_EAST]->setFont(font);
+  label_waiting[PLAYER_SOUTH]->resize(nw, h);
+  label_waiting[PLAYER_WEST]->resize(nw, h);
+  label_waiting[PLAYER_NORTH]->resize(nw, h);
+  label_waiting[PLAYER_EAST]->resize(nw, h);
 #endif // ONLINE_PLAY
 
   card = card_played[PLAYER_EAST];
