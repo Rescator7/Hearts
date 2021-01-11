@@ -1,15 +1,18 @@
 # Hearts 1.8 (Linux, C++)
 The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 
-<p>Version 1.7 is available as a snap package.</p>
+<p>You can download Hearts as a snap package from:</p>
+
 <a href="https://snapcraft.io/hearts">
-  <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"/>
-</a>
+  <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"/></a>
+<p>Version 1.7 is available as Stable (1.7.1)<br>
+  Version 1.8 is available as Edge (1.7.1)</p>
 
 ## Game Features:
 - Support online and offline game play.
 - Support 3 languages. (English, French, Russian). 
 - Support 3 differents deck: Standard, English, Russian.
+- 6 background images theme: Universe, Ocean, Mt. Fuji, Sakura, Desert, Forest.
 - Helps [Rules, Online, Settings, Credits]
 - Sounds.
 - Easy cards selection.
@@ -24,8 +27,7 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 - Perfect 100. (A player who get the score of 100 pts have his score reduce to 50 pts).
 - No Draw.   (Disable multiple winners).
 
-### Offline Options:
-- 6 background images theme: Universe, Ocean, Mt. Fuji, Sakura, Desert, Forest. 
+## Offline Options:
 - Undo. 
 - Animated play.
 - Three game speed: Slow, Normal, Fast.
