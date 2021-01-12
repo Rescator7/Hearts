@@ -183,7 +183,6 @@
         <file>languages/translation_fr.qm</file>
         <file>languages/translation_en.qm</file>
         <file>languages/translation_ru.qm</file>
-        <file>icons/Actions-player-play-icon.png</file>
         <file>icons/Paomedia-Small-N-Flat-Sign-add.svg</file>
         <file>icons/Paomedia-Small-N-Flat-Sign-left.svg</file>
         <file>icons/Paomedia-Small-N-Flat-Sign-up.svg</file>
@@ -200,5 +199,6 @@
         <file>backgrounds/cristiano-pinto-gQH0Jcz50V8-unsplash.jpg</file>
         <file>backgrounds/patrick-hendry-_RYmx4Jz1UM-unsplash.jpg</file>
         <file>backgrounds/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg</file>
+        <file>icons/Paomedia-Small-N-Flat-Sign-check.svg</file>
     </qresource>
 </RCC>

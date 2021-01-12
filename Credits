@@ -35,11 +35,11 @@ NOTE: card-base2.png and empty.pgn are color modified version of SVG-Card (card-
 
 Images: English card deck set
 Website: https://commons.wikimedia.org/wiki/File:English_pattern_playing_cards_deck.svg
-License: https://creativecommons.org/publicdomain/zero/1.0/
+License: https://creativecommons.org/publicdomain/zero/1.0/deed.en
 
 Images: Russian card deck set
 Website: https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%98%D0%B3%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%BA%D0%B0%D1%80%D1%82%D1%8B?uselang=ru
-License: https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A2%D0%B5%D0%BA%D1%81%D1%82_%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D0%B8_Creative_Commons_Attribution-ShareAlike_3.0_Unported
+License: https://creativecommons.org/publicdomain/zero/1.0/deed.en
 
 
 Icons: left-icon.png, right-icon.png, up-icon.png, no_pass-icon.png and (80x80 icons)
@@ -59,13 +59,8 @@ Artist:  icojam
 Website: https://www.iconarchive.com/artist/icojam.html
 License: (Public Domain) https://www.iconarchive.com/show/blue-bits-icons-by-icojam/love-heart-icon.html
 
-Icons: used as online_start_game
-Artist: Saki
-Iconset: NuoveXT Icons 
-Website: https://www.iconarchive.com/show/nuoveXT-icons-by-saki.html
-License: GNU General Public License
-
 Icons: used as online_exit, online_table_leave, online_create_table, online_mute_table
+       used as online_start_game
 Artist: paomedia
 Iconset: Small & Flat Icons
 Website: https://www.iconarchive.com/show/small-n-flat-icons-by-paomedia.html

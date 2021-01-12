@@ -1201,8 +1201,9 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="resources.qrc">
-      <normaloff>:/icons/muted.png</normaloff>:/icons/muted.png</iconset>
+     <iconset>
+      <normalon>:/icons/muted.png</normalon>
+     </iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -1250,7 +1251,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normalon>:/icons/Actions-player-play-icon.png</normalon>
+      <normalon>:/icons/Paomedia-Small-N-Flat-Sign-check.svg</normalon>
      </iconset>
     </property>
     <property name="iconSize">
@@ -2984,8 +2985,6 @@
    </slots>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
