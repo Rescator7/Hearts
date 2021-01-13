@@ -138,3 +138,9 @@
              font size 9, while Hearts was coded using font size 11. That part of the code is also 
              simplified.
 11 Jan 2021: Fix online button's tool tip invisible. (black on black).
+
+12 Jan 2021: Version 1.8.2
+-------------------------------------------------------------------------------------------------
+12 Jan 2021: Fixed the Russian deck license link.
+12 Jan 2021: Replaced the GNU online_start_game button icon by a Public domain icon.
+12 Jan 2021: Added a new card deck: Nicu (white)
