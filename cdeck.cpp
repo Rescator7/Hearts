@@ -11,11 +11,11 @@ CDeck::CDeck(int deck)
 
   img_empty_card = new QImage(":/SVG-cards/Default/empty.png", "PNG");
   img_your_turn = new QImage(":/SVG-cards/Default/card-base2.png", "PNG");
-  img_back_card = new QImage(":/SVG-cards/Default/back.png", "PNG");
 
   switch (deck) {
-     case ENGLISH_DECK: set_english_deck(); break;
-     case RUSSIAN_DECK: set_russian_deck(); break;
+     case ENGLISH_DECK:    set_english_deck(); break;
+     case RUSSIAN_DECK:    set_russian_deck(); break;
+     case NICU_WHITE_DECK: set_nicu_white_deck(); break;
 
      default: set_standard_deck();
   }
@@ -52,7 +52,8 @@ void CDeck::Translate()
 }
 #endif // DEBUG
 
-void CDeck::set_standard_deck(){
+void CDeck::set_standard_deck()
+{
   img_cards[0] = new QImage(":/SVG-cards/Default/club_2.png", "PNG");
   img_cards[1] = new QImage(":/SVG-cards/Default/club_3.png", "PNG");
   img_cards[2] = new QImage(":/SVG-cards/Default/club_4.png", "PNG");
@@ -108,9 +109,12 @@ void CDeck::set_standard_deck(){
   img_cards[49] = new QImage(":/SVG-cards/Default/heart_queen.png", "PNG");
   img_cards[50] = new QImage(":/SVG-cards/Default/heart_king.png", "PNG");
   img_cards[51] = new QImage(":/SVG-cards/Default/heart_1.png", "PNG");
+
+  img_back_card = new QImage(":/SVG-cards/Default/back.png", "PNG");
 }
 
-void CDeck::set_english_deck(){
+void CDeck::set_english_deck()
+{
   img_cards[0] = new QImage(":/SVG-cards/English/club_2.svg", "SVG");
   img_cards[1] = new QImage(":/SVG-cards/English/club_3.svg", "SVG");
   img_cards[2] = new QImage(":/SVG-cards/English/club_4.svg", "SVG");
@@ -166,9 +170,73 @@ void CDeck::set_english_deck(){
   img_cards[49] = new QImage(":/SVG-cards/English/heart_queen.svg", "SVG");
   img_cards[50] = new QImage(":/SVG-cards/English/heart_king.svg", "SVG");
   img_cards[51] = new QImage(":/SVG-cards/English/heart_1.svg", "SVG");
+
+  img_back_card = new QImage(":/SVG-cards/Default/back.png", "PNG");
 }
 
-void CDeck::set_russian_deck(){
+void CDeck::set_nicu_white_deck()
+{
+  img_cards[0] = new QImage(":/SVG-cards/white/white_c_2.svg", "SVG");
+  img_cards[1] = new QImage(":/SVG-cards/white/white_c_3.svg", "SVG");
+  img_cards[2] = new QImage(":/SVG-cards/white/white_c_4.svg", "SVG");
+  img_cards[3] = new QImage(":/SVG-cards/white/white_c_5.svg", "SVG");
+  img_cards[4] = new QImage(":/SVG-cards/white/white_c_6.svg", "SVG");
+  img_cards[5] = new QImage(":/SVG-cards/white/white_c_7.svg", "SVG");
+  img_cards[6] = new QImage(":/SVG-cards/white/white_c_8.svg", "SVG");
+  img_cards[7] = new QImage(":/SVG-cards/white/white_c_9.svg", "SVG");
+  img_cards[8] = new QImage(":/SVG-cards/white/white_c_10.svg", "SVG");
+  img_cards[9] = new QImage(":/SVG-cards/white/white_c_j.svg", "SVG");
+  img_cards[10] = new QImage(":/SVG-cards/white/white_c_q.svg", "SVG");
+  img_cards[11] = new QImage(":/SVG-cards/white/white_c_k.svg", "SVG");
+  img_cards[12] = new QImage(":/SVG-cards/white/white_c_a.svg", "SVG");
+
+  img_cards[13] = new QImage(":/SVG-cards/white/white_s_2.svg", "SVG");
+  img_cards[14] = new QImage(":/SVG-cards/white/white_s_3.svg", "SVG");
+  img_cards[15] = new QImage(":/SVG-cards/white/white_s_4.svg", "SVG");
+  img_cards[16] = new QImage(":/SVG-cards/white/white_s_5.svg", "SVG");
+  img_cards[17] = new QImage(":/SVG-cards/white/white_s_6.svg", "SVG");
+  img_cards[18] = new QImage(":/SVG-cards/white/white_s_7.svg", "SVG");
+  img_cards[19] = new QImage(":/SVG-cards/white/white_s_8.svg", "SVG");
+  img_cards[20] = new QImage(":/SVG-cards/white/white_s_9.svg", "SVG");
+  img_cards[21] = new QImage(":/SVG-cards/white/white_s_10.svg", "SVG");
+  img_cards[22] = new QImage(":/SVG-cards/white/white_s_j.svg", "SVG");
+  img_cards[23] = new QImage(":/SVG-cards/white/white_s_q.svg", "SVG");
+  img_cards[24] = new QImage(":/SVG-cards/white/white_s_k.svg", "SVG");
+  img_cards[25] = new QImage(":/SVG-cards/white/white_s_a.svg", "SVG");
+
+  img_cards[26] = new QImage(":/SVG-cards/white/white_d_2.svg", "SVG");
+  img_cards[27] = new QImage(":/SVG-cards/white/white_d_3.svg", "SVG");
+  img_cards[28] = new QImage(":/SVG-cards/white/white_d_4.svg", "SVG");
+  img_cards[29] = new QImage(":/SVG-cards/white/white_d_5.svg", "SVG");
+  img_cards[30] = new QImage(":/SVG-cards/white/white_d_6.svg", "SVG");
+  img_cards[31] = new QImage(":/SVG-cards/white/white_d_7.svg", "SVG");
+  img_cards[32] = new QImage(":/SVG-cards/white/white_d_8.svg", "SVG");
+  img_cards[33] = new QImage(":/SVG-cards/white/white_d_9.svg", "SVG");
+  img_cards[34] = new QImage(":/SVG-cards/white/white_d_10.svg", "SVG");
+  img_cards[35] = new QImage(":/SVG-cards/white/white_d_j.svg", "SVG");
+  img_cards[36] = new QImage(":/SVG-cards/white/white_d_q.svg", "SVG");
+  img_cards[37] = new QImage(":/SVG-cards/white/white_d_k.svg", "SVG");
+  img_cards[38] = new QImage(":/SVG-cards/white/white_d_a.svg", "SVG");
+
+  img_cards[39] = new QImage(":/SVG-cards/white/white_h_2.svg", "SVG");
+  img_cards[40] = new QImage(":/SVG-cards/white/white_h_3.svg", "SVG");
+  img_cards[41] = new QImage(":/SVG-cards/white/white_h_4.svg", "SVG");
+  img_cards[42] = new QImage(":/SVG-cards/white/white_h_5.svg", "SVG");
+  img_cards[43] = new QImage(":/SVG-cards/white/white_h_6.svg", "SVG");
+  img_cards[44] = new QImage(":/SVG-cards/white/white_h_7.svg", "SVG");
+  img_cards[45] = new QImage(":/SVG-cards/white/white_h_8.svg", "SVG");
+  img_cards[46] = new QImage(":/SVG-cards/white/white_h_9.svg", "SVG");
+  img_cards[47] = new QImage(":/SVG-cards/white/white_h_10.svg", "SVG");
+  img_cards[48] = new QImage(":/SVG-cards/white/white_h_j.svg", "SVG");
+  img_cards[49] = new QImage(":/SVG-cards/white/white_h_q.svg", "SVG");
+  img_cards[50] = new QImage(":/SVG-cards/white/white_h_k.svg", "SVG");
+  img_cards[51] = new QImage(":/SVG-cards/white/white_h_a.svg", "SVG");
+
+  img_back_card = new QImage(":/SVG-cards/white/back07.png", "PNG");
+}
+
+void CDeck::set_russian_deck()
+{
   img_cards[0] = new QImage(":/SVG-cards/Russian/club_2.svg", "SVG");
   img_cards[1] = new QImage(":/SVG-cards/Russian/club_3.svg", "SVG");
   img_cards[2] = new QImage(":/SVG-cards/Russian/club_4.svg", "SVG");
@@ -224,13 +292,14 @@ void CDeck::set_russian_deck(){
   img_cards[49] = new QImage(":/SVG-cards/Russian/heart_queen.svg", "SVG");
   img_cards[50] = new QImage(":/SVG-cards/Russian/heart_king.svg", "SVG");
   img_cards[51] = new QImage(":/SVG-cards/Russian/heart_1.svg", "SVG");
+
+  img_back_card = new QImage(":/SVG-cards/Default/back.png", "PNG");
 }
 
 CDeck::~CDeck()
 {
   delete img_empty_card;
   delete img_your_turn;
-  delete img_back_card;
 
 #ifdef DEBUG
   delete cards_played;
@@ -259,6 +328,8 @@ void CDeck::delete_current_deck()
 {
   for (int i=0; i<DECK_SIZE; i++)
     delete(img_cards[i]);
+
+  delete img_back_card;
 }
 
 void CDeck::set_deck(int deck)
@@ -269,9 +340,11 @@ void CDeck::set_deck(int deck)
   delete_current_deck();
 
   switch (deck) {
-     case STANDARD_DECK: set_standard_deck(); break;
-     case ENGLISH_DECK:  set_english_deck(); break;
-     case RUSSIAN_DECK:  set_russian_deck(); break;
+     case ENGLISH_DECK:    set_english_deck(); break;
+     case RUSSIAN_DECK:    set_russian_deck(); break;
+     case NICU_WHITE_DECK: set_nicu_white_deck(); break;
+
+     default: set_standard_deck();
   }
 
   current_deck = deck;

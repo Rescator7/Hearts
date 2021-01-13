@@ -2542,6 +2542,7 @@
       <string>De&amp;ck</string>
      </property>
      <addaction name="actionStandard"/>
+     <addaction name="actionNicu_white"/>
      <addaction name="actionEnglish_2"/>
      <addaction name="actionRussian_2"/>
     </widget>
@@ -2971,6 +2972,14 @@
    </property>
    <property name="text">
     <string>Forest</string>
+   </property>
+  </action>
+  <action name="actionNicu_white">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Nicu (white)</string>
    </property>
   </action>
  </widget>

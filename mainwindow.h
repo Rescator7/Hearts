@@ -149,6 +149,7 @@ private slots:
     void on_actionSakura_triggered();
     void on_actionDesert_triggered();
     void on_actionForest_triggered();
+    void on_actionNicu_white_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -206,6 +207,7 @@ private:
     int cards_received[3];
     int plr_names_idx[4];
     int cards_height_south;
+    int cards_width_south;
     int cards_height_WNE;
     int cards_played_height;
     int card_played[4];
@@ -339,7 +341,7 @@ public slots:
     void animate_pass_cards(int w1, int w2, int w3, int n1, int n2, int n3, int e1, int e2, int e3);
     void handle_new_game();
     void unset_bkg_checked();
-    void set_theme_colors(QString color1, QString color2, QString color3);
+    void set_theme_colors();
 };
 
 #endif // MAINWINDOW_H

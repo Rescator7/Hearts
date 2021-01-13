@@ -89,6 +89,9 @@ int CConfig::load_config_file() {
         else
         if (value == "russian")
           deck_style = RUSSIAN_DECK;
+        else
+        if (value == "nicu_white")
+          deck_style = NICU_WHITE_DECK;
 
         continue;
       }
@@ -278,9 +281,10 @@ int CConfig::save_config_file()
   }
 
   switch (deck_style) {
-    case STANDARD_DECK: out << "Deck_Style = standard" << endl; break;
-    case ENGLISH_DECK:  out << "Deck_Style = english" << endl; break;
-    case RUSSIAN_DECK:  out << "Deck_Style = russian" << endl; break;
+    case STANDARD_DECK:   out << "Deck_Style = standard" << endl; break;
+    case ENGLISH_DECK:    out << "Deck_Style = english" << endl; break;
+    case RUSSIAN_DECK:    out << "Deck_Style = russian" << endl; break;
+    case NICU_WHITE_DECK: out << "Deck_Style = nicu_white" << endl; break;
   }
 
   switch (background) {

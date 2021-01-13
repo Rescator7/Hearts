@@ -12,9 +12,10 @@
 class CCardsPlayed;
 #endif // DEBUG
 
-const int STANDARD_DECK = 0;
-const int ENGLISH_DECK  = 1;
-const int RUSSIAN_DECK  = 2;
+const int STANDARD_DECK   = 0;
+const int ENGLISH_DECK    = 1;
+const int RUSSIAN_DECK    = 2;
+const int NICU_WHITE_DECK = 3;
 
 class CDeck
 {
@@ -38,6 +39,7 @@ private:
     void set_standard_deck();
     void set_english_deck();
     void set_russian_deck();
+    void set_nicu_white_deck();
 
 public:
     QImage *get_img_card(int card);

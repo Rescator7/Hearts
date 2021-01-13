@@ -401,13 +401,13 @@ void MainWindow::resizeWidth(int perc_h)
 
   // Resize the image of the cards played
   int card = card_played[PLAYER_SOUTH];
-  label_card_played[PLAYER_SOUTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
+  label_card_played[PLAYER_SOUTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatio)));
 
   card = card_played[PLAYER_WEST];
-  label_card_played[PLAYER_WEST]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
+  label_card_played[PLAYER_WEST]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatio)));
 
   card = card_played[PLAYER_NORTH];
-  label_card_played[PLAYER_NORTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
+  label_card_played[PLAYER_NORTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatio)));
 
 #ifdef ONLINE_PLAY
   label_waiting[PLAYER_SOUTH]->resize(nw, h);
@@ -417,7 +417,7 @@ void MainWindow::resizeWidth(int perc_h)
 #endif // ONLINE_PLAY
 
   card = card_played[PLAYER_EAST];
-  label_card_played[PLAYER_EAST]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatioByExpanding)));
+  label_card_played[PLAYER_EAST]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatio)));
 
   // heart 100% = 140w x 140h
   h = (140 * perc_h) / 100;
@@ -440,6 +440,8 @@ void MainWindow::resizeWidthSouth(int perc_h) {
    cards_height_south = h;
 
    int nw = h * 90 / 130;
+
+   cards_width_south = nw;
 
    for (int i=0; i<13; i++) {
      label_cards[PLAYER_SOUTH][i]->resize(nw, h);
@@ -567,6 +569,7 @@ void MainWindow::init_vars()
 
   cards_height_south = 130;
   cards_played_height = 130;
+  cards_width_south = 90;
   cards_height_WNE = 60;
 
   y_factor = 0;
@@ -918,7 +921,7 @@ void MainWindow::load_saved_game()
       if (--cpt < 0)
         cpt = 3;
 
-      label_card_played[cpt]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(cards_played_height)));
+      label_card_played[cpt]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
       card_played[cpt] = card;
     }
 
@@ -1019,9 +1022,10 @@ void MainWindow::set_settings()
   set_info_channel_enabled(config->is_info_channel());
 
   switch (config->get_deck_style()) {
-    case STANDARD_DECK: ui->actionStandard->setChecked(true); break;
-    case ENGLISH_DECK:  ui->actionEnglish_2->setChecked(true); break;
-    case RUSSIAN_DECK:  ui->actionRussian_2->setChecked(true); break;
+    case STANDARD_DECK:   ui->actionStandard->setChecked(true); break;
+    case ENGLISH_DECK:    ui->actionEnglish_2->setChecked(true); break;
+    case RUSSIAN_DECK:    ui->actionRussian_2->setChecked(true); break;
+    case NICU_WHITE_DECK: ui->actionNicu_white->setChecked(true); break;
   }
 
   switch (config->get_speed()) {
@@ -1350,8 +1354,10 @@ void MainWindow::show_deck(bool animate, bool replace)
     label_cards[PLAYER_WEST][i]->hide();
   }
 
-  QMatrix rm;
-  rm.rotate(90);
+  QMatrix rm_e, rm_n, rm_w;
+  rm_e.rotate(270);
+  rm_n.rotate(180);
+  rm_w.rotate(90);
 
   int adj = 0, total_empty, card, show_card;
 
@@ -1363,7 +1369,7 @@ void MainWindow::show_deck(bool animate, bool replace)
     if (show_card != empty) {
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_SOUTH)];
-      label_cards[PLAYER_SOUTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->scaledToHeight(cards_height_south)));
+      label_cards[PLAYER_SOUTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->scaled(cards_width_south, cards_height_south, Qt::KeepAspectRatioByExpanding)));
       label_cards[PLAYER_SOUTH][i/4+adj]->show();
     } else
         total_empty++;
@@ -1381,7 +1387,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_EAST)];
-      label_cards[PLAYER_EAST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm).scaledToHeight(cards_height_WNE)));
+      label_cards[PLAYER_EAST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_e).scaled(88, cards_height_WNE, Qt::KeepAspectRatioByExpanding)));
       label_cards[PLAYER_EAST][i/4+adj]->show();
     } else
         total_empty++;
@@ -1399,7 +1405,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_NORTH)];
-      label_cards[PLAYER_NORTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->scaledToWidth(60)));
+      label_cards[PLAYER_NORTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_n).scaled(60, 87, Qt::KeepAspectRatioByExpanding)));
       label_cards[PLAYER_NORTH][i/4+adj]->show();
     } else
         total_empty++;
@@ -1417,7 +1423,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_WEST)];
-      label_cards[PLAYER_WEST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm).scaledToHeight(cards_height_WNE)));
+      label_cards[PLAYER_WEST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_w).scaled(88, cards_height_WNE, Qt::KeepAspectRatioByExpanding)));
       label_cards[PLAYER_WEST][i/4+adj]->show();
     } else
         total_empty++;
@@ -1493,7 +1499,7 @@ void MainWindow::clear_table()
 {
   delay(config->get_speed(SPEED_CLEAR_TABLE));
   for (int i=0; i<4; i++) {
-    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(cards_played_height)));
+    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
     card_played[i] = empty;
   }
 
@@ -1621,7 +1627,7 @@ void MainWindow::play_card(int card, int plr)
 
  card_played[plr] = card;
 
- label_card_played[plr]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(cards_played_height)));
+ label_card_played[plr]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
 
 #ifdef __al_included_allegro5_allegro_audio_h
  if (ui->actionSounds->isChecked()) {
@@ -1661,7 +1667,7 @@ void MainWindow::show_your_turn(int idx)
 {
   delay(config->get_speed(SPEED_YOUR_TURN));
 
-  label_card_played[idx]->setPixmap(QPixmap::fromImage(deck->get_img_card(your_turn)->scaledToHeight(cards_played_height)));
+  label_card_played[idx]->setPixmap(QPixmap::fromImage(deck->get_img_card(your_turn)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
   card_played[idx] = your_turn;
 
 #ifdef __al_included_allegro5_allegro_audio_h
@@ -1752,7 +1758,7 @@ void MainWindow::refresh_cards_played()
   for (int i=0; i<4; i++) {
     int card = card_played[i];
 
-    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(cards_played_height)));
+    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
   }
 }
 
@@ -2164,6 +2170,7 @@ void MainWindow::on_actionStandard_triggered()
   ui->actionStandard->setChecked(true);
   ui->actionEnglish_2->setChecked(false);
   ui->actionRussian_2->setChecked(false);
+  ui->actionNicu_white->setChecked(false);
 
   if (config->get_deck_style() == STANDARD_DECK)
     return;
@@ -2182,7 +2189,41 @@ void MainWindow::on_actionStandard_triggered()
     show_deck(false, true);
 
   refresh_cards_played();
+
   config->set_deck_style(STANDARD_DECK);
+
+  set_theme_colors(); // must be called after config->set_deck_style()
+}
+
+void MainWindow::on_actionNicu_white_triggered()
+{
+  ui->actionStandard->setChecked(false);
+  ui->actionEnglish_2->setChecked(false);
+  ui->actionRussian_2->setChecked(false);
+  ui->actionNicu_white->setChecked(true);
+
+  if (config->get_deck_style() == NICU_WHITE_DECK)
+    return;
+
+  deck->set_deck(NICU_WHITE_DECK);
+
+#ifdef DEBUG
+   debug->refresh();
+#endif
+
+#ifdef ONLINE_PLAY
+  if (online_connected)
+    online_show_deck();
+  else
+#endif // ONLINE_PLAY
+
+    show_deck(false, true);
+
+  refresh_cards_played();
+
+  config->set_deck_style(NICU_WHITE_DECK);
+
+  set_theme_colors();
 }
 
 void MainWindow::on_actionEnglish_2_triggered()
@@ -2190,6 +2231,7 @@ void MainWindow::on_actionEnglish_2_triggered()
   ui->actionStandard->setChecked(false);
   ui->actionEnglish_2->setChecked(true);
   ui->actionRussian_2->setChecked(false);
+  ui->actionNicu_white->setChecked(false);
 
   if (config->get_deck_style() == ENGLISH_DECK)
     return;
@@ -2209,7 +2251,10 @@ void MainWindow::on_actionEnglish_2_triggered()
     show_deck(false, true);
 
   refresh_cards_played();
+
   config->set_deck_style(ENGLISH_DECK);
+
+  set_theme_colors();
 }
 
 void MainWindow::on_actionRussian_2_triggered()
@@ -2217,6 +2262,7 @@ void MainWindow::on_actionRussian_2_triggered()
   ui->actionStandard->setChecked(false);
   ui->actionEnglish_2->setChecked(false);
   ui->actionRussian_2->setChecked(true);
+  ui->actionNicu_white->setChecked(false);
 
   if (config->get_deck_style() == RUSSIAN_DECK)
     return;
@@ -2236,7 +2282,10 @@ void MainWindow::on_actionRussian_2_triggered()
     show_deck(false, true);
 
   refresh_cards_played();
+
   config->set_deck_style(RUSSIAN_DECK);
+
+  set_theme_colors();
 }
 
 // Speed Slow
@@ -2349,11 +2398,28 @@ void MainWindow::set_background()
   }
 }
 
-void MainWindow::set_theme_colors(QString color1, QString color2, QString color3)
+void MainWindow::set_theme_colors()
 {
+   const char colors[7][3][15] = {{"#3f9f52", "#3f9f52", "black"},              // None
+                                  {"transparent", "transparent", "yellow"},     // Universe
+                                  {"transparent", "#219f9b", "Yellow"},         // Ocean
+                                  {"transparent", "#3f9f52", "Yellow"},         // Mt. Fuji
+                                  {"transparent", "#3f9f52", "Yellow"},         // Sakura
+                                  {"transparent", "#9f3f2b", "Yellow"},         // Desert
+                                  {"transparent", "#3f9f52", "Yellow"}};        // Forest
+
+   QString color1, color2, color3;
+
+   color1 = colors[background][0];
+   color2 = colors[background][1];
+   color3 = colors[background][2];
+
    ui->label_pass_to->setStyleSheet(QString("background-color: " + color1));
    for (int i=0; i<13; i++)
-     label_cards[PLAYER_SOUTH][i]->setStyleSheet(QString("background-color: ") + color2);
+      if (config->get_deck_style() == NICU_WHITE_DECK)
+        label_cards[PLAYER_SOUTH][i]->setStyleSheet(QString("background-color: transparent"));
+      else
+        label_cards[PLAYER_SOUTH][i]->setStyleSheet(QString("background-color: ") + color2);
    ui->label_online->setStyleSheet("color: " + color3);
 }
 
@@ -2373,7 +2439,7 @@ void MainWindow::on_actionUnivers_triggered()
                   "border-image: url(:/backgrounds/john-fowler-7Ym9rpYtSdA-unsplash.jpg)"
                   " 0 0 0 0 stretch;}");
 
-  set_theme_colors("transparent", "transparent", "yellow");
+  set_theme_colors();
 }
 
 void MainWindow::on_actionOcean_triggered()
@@ -2392,7 +2458,7 @@ void MainWindow::on_actionOcean_triggered()
                    "border-image: url(:/backgrounds/cristiano-pinto-gQH0Jcz50V8-unsplash.jpg)"
                    " 0 0 0 0 stretch stretch; color: black; background-color: #3f9f52 }");
 
-  set_theme_colors("transparent", "#219f9b", "Yellow");
+  set_theme_colors();
 }
 
 void MainWindow::on_actionNo_image_triggered()
@@ -2409,7 +2475,7 @@ void MainWindow::on_actionNo_image_triggered()
 
   centralWidget()->setStyleSheet("");
 
-  set_theme_colors("#3f9f52", "#3f9f52", "black");
+  set_theme_colors();
 }
 
 void MainWindow::on_actionMt_Fuji_triggered()
@@ -2428,7 +2494,7 @@ void MainWindow::on_actionMt_Fuji_triggered()
                    "border-image: url(:/backgrounds/david-edelstein-N4DbvTUDikw-unsplash.jpg)"
                    " 0 0 0 0 stretch stretch; }");
 
-  set_theme_colors("transparent", "#3f9f52", "Yellow");
+  set_theme_colors();
 }
 
 void MainWindow::on_actionSakura_triggered()
@@ -2447,7 +2513,7 @@ void MainWindow::on_actionSakura_triggered()
                   "border-image: url(:/backgrounds/meric-dagli-7NBO76G5JsE-unsplash.jpg)"
                   " 0 0 0 0 stretch stretch; }");
 
-  set_theme_colors("transparent", "#3f9f52", "Yellow");
+  set_theme_colors();
 }
 
 void MainWindow::on_actionDesert_triggered()
@@ -2466,7 +2532,7 @@ void MainWindow::on_actionDesert_triggered()
                   "border-image: url(:/backgrounds/patrick-hendry-_RYmx4Jz1UM-unsplash.jpg)"
                   " 0 0 0 0 stretch stretch; }");
 
-  set_theme_colors("transparent", "#9f3f2b", "Yellow");
+  set_theme_colors();
 }
 
 void MainWindow::on_actionForest_triggered()
@@ -2485,7 +2551,7 @@ void MainWindow::on_actionForest_triggered()
                     "border-image: url(:/backgrounds/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg)"
                     " 0 0 0 0 stretch stretch; }");
 
-  set_theme_colors("transparent", "#3f9f52", "Yellow");
+  set_theme_colors();
 }
 
 //***************************************************************************************************
@@ -2681,21 +2747,21 @@ void MainWindow::online_show_deck()
   for (int i=0; i<online_num_cards[PLAYER_WEST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_WEST]];
-     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaledToHeight(cards_height_WNE)));
+     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaled(88, cards_height_WNE, Qt::KeepAspectRatioByExpanding)));
      label_cards[PLAYER_WEST][i + adj]->show();
   }
 
   for (int i=0; i<online_num_cards[PLAYER_NORTH]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_NORTH]];
-     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->scaledToWidth(60)));
+     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->scaled(60, 87, Qt::KeepAspectRatioByExpanding)));
      label_cards[PLAYER_NORTH][i + adj]->show();
   }
 
   for (int i=0; i<online_num_cards[PLAYER_EAST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_EAST]];
-     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaledToHeight(cards_height_WNE)));
+     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaled(88, cards_height_WNE, Qt::KeepAspectRatioByExpanding)));
      label_cards[PLAYER_EAST][i + adj]->show();
   }
 
@@ -2705,7 +2771,7 @@ void MainWindow::online_show_deck()
     if (ui->actionAuto_Centering->isChecked())
       adj = adjust_pos[online_num_cards[PLAYER_SOUTH]];
 
-    label_cards[PLAYER_SOUTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaledToHeight(cards_height_south)));
+    label_cards[PLAYER_SOUTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(cards_width_south, cards_height_south, Qt::KeepAspectRatioByExpanding)));
     label_cards[PLAYER_SOUTH][i + adj]->show();
 
     if (online_selected[i])
