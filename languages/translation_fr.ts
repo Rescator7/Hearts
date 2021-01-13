@@ -777,14 +777,18 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;License: &lt;a href=&quot;https://github.com/htdebeer/SVG-cards/blob/master/LICENSE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://github.com/htdebeer/SVG-cards/blob/master/LICENSE&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;NOTE: card-base2.png and empty.pgn are color modified version of SVG-Card (card-base.png)&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Images:&lt;/span&gt; Nicu (white) card deck set&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Website: &lt;a href=&quot;http://nicubunu.ro/cards/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;by Nicu B. 2005 nicubunu.ro&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;License: &lt;a href=&quot;https://creativecommons.org/licenses/publicdomain/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://creativecommons.org/licenses/publicdomain/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;NOTE: back07.png is a hue modifed version of back07.svg from Nicu.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Images&lt;/span&gt;: English card deck set&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Website: &lt;a href=&quot;https://commons.wikimedia.org/wiki/File:English_pattern_playing_cards_deck.svg&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://commons.wikimedia.org/wiki/File:English_pattern_playing_cards_deck.svg&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;License: &lt;a href=&quot;https://creativecommons.org/publicdomain/zero/1.0/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://creativecommons.org/publicdomain/zero/1.0/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;License: &lt;a href=&quot;https://creativecommons.org/publicdomain/zero/1.0/deed.en&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://creativecommons.org/publicdomain/zero/1.0/deed.en&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#5555ff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Images&lt;/span&gt;: Russian card deck set&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Website: &lt;a href=&quot;https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%98%D0%B3%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%BA%D0%B0%D1%80%D1%82%D1%8B?uselang=ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%98%D0%B3%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%BA%D0%B0%D1%80%D1%82%D1%8B?uselang=ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;License: &lt;a href=&quot;https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A2%D0%B5%D0%BA%D1%81%D1%82_%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D0%B8_Creative_Commons_Attribution-ShareAlike_3.0_Unported&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%A2%D0%B5%D0%BA%D1%81%D1%82_%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D0%B8_Creative_Commons_Attribution-ShareAlike_3.0_Unported&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#5555ff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;License: &lt;a href=&quot;https://creativecommons.org/publicdomain/zero/1.0/deed.en&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://creativecommons.org/publicdomain/zero/1.0/deed.en&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#5555ff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Icons: left-icon.png, right-icon.png, up-icon.png, no_pass-icon.png&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
@@ -807,14 +811,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note: &lt;/span&gt;This is a&lt;span style=&quot; font-weight:600;&quot;&gt; &lt;/span&gt;derivative work using gimp to change the color.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/icons/Actions-player-play-icon.png&quot; /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Artist:&lt;/span&gt; &lt;a href=&quot;http://www.iconarchive.com/artist/saki.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;Saki&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Iconset:&lt;/span&gt; &lt;a href=&quot;http://www.iconarchive.com/show/nuoveXT-icons-by-saki.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;NuoveXT Icons&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;License:&lt;/span&gt; &lt;a href=&quot;http://en.wikipedia.org/wiki/GNU_General_Public_License&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;GNU General Public License&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#5555ff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/icons/Paomedia-Small-N-Flat-Sign-left.svg&quot; /&gt;&lt;img src=&quot;:/icons/Paomedia-Small-N-Flat-Sign-up.svg&quot; /&gt;&lt;img src=&quot;:/icons/Paomedia-Small-N-Flat-Sign-add.svg&quot; /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/icons/Paomedia-Small-N-Flat-Sign-left.svg&quot; /&gt;&lt;img src=&quot;:/icons/Paomedia-Small-N-Flat-Sign-up.svg&quot; /&gt;&lt;img src=&quot;:/icons/Paomedia-Small-N-Flat-Sign-add.svg&quot; /&gt;&lt;img src=&quot;:/icons/Paomedia-Small-N-Flat-Sign-check.svg&quot; /&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Artist:&lt;/span&gt; &lt;a href=&quot;http://www.iconarchive.com/artist/paomedia.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;paomedia&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Iconset:&lt;/span&gt; &lt;a href=&quot;http://www.iconarchive.com/show/small-n-flat-icons-by-paomedia.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;Small &amp;amp; Flat Icons&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
@@ -952,13 +949,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1120"/>
-        <location filename="../mainwindow.ui" line="2834"/>
+        <location filename="../mainwindow.ui" line="2860"/>
         <source>Tables</source>
         <translation>Tables</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1165"/>
-        <location filename="../mainwindow.ui" line="2829"/>
+        <location filename="../mainwindow.ui" line="2855"/>
         <source>Create Table</source>
         <translation>Créer table</translation>
     </message>
@@ -968,22 +965,22 @@ p, li { white-space: pre-wrap; }
         <translation>Sourdine</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1243"/>
+        <location filename="../mainwindow.ui" line="1244"/>
         <source>Start</source>
         <translation>Démarrer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2224"/>
-        <location filename="../mainwindow.ui" line="2278"/>
-        <location filename="../mainwindow.ui" line="2332"/>
-        <location filename="../mainwindow.ui" line="2386"/>
+        <location filename="../mainwindow.ui" line="2231"/>
+        <location filename="../mainwindow.ui" line="2291"/>
+        <location filename="../mainwindow.ui" line="2351"/>
+        <location filename="../mainwindow.ui" line="2411"/>
         <source>Waiting for
  a player</source>
         <translation>Joueur 
 en attente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2504"/>
+        <location filename="../mainwindow.ui" line="2529"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
@@ -992,47 +989,47 @@ en attente</translation>
         <translation type="vanished">À &amp;propos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2513"/>
+        <location filename="../mainwindow.ui" line="2538"/>
         <source>S&amp;ettings</source>
         <translation>&amp;Options</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2517"/>
+        <location filename="../mainwindow.ui" line="2542"/>
         <source>De&amp;ck</source>
         <translation>Jeu de cartes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2525"/>
+        <location filename="../mainwindow.ui" line="2551"/>
         <source>Game Speed</source>
         <translation>Vitesse du jeu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2533"/>
+        <location filename="../mainwindow.ui" line="2559"/>
         <source>Language</source>
         <translation>Langue</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2541"/>
+        <location filename="../mainwindow.ui" line="2567"/>
         <source>Background</source>
         <translation>Fond d&apos;écran</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2566"/>
+        <location filename="../mainwindow.ui" line="2592"/>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2575"/>
+        <location filename="../mainwindow.ui" line="2601"/>
         <source>Opt&amp;ions</source>
         <translation>&amp;Variantes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2586"/>
+        <location filename="../mainwindow.ui" line="2612"/>
         <source>Stats</source>
         <translation>Statistiques</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2593"/>
+        <location filename="../mainwindow.ui" line="2619"/>
         <source>&amp;Debug</source>
         <translation>&amp;Débuggage</translation>
     </message>
@@ -1041,302 +1038,307 @@ en attente</translation>
         <translation type="vanished">&amp;Langues</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2608"/>
+        <location filename="../mainwindow.ui" line="2634"/>
         <source>&amp;New</source>
         <translation>Nouvelle partie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2613"/>
+        <location filename="../mainwindow.ui" line="2639"/>
         <source>&amp;Quit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2618"/>
+        <location filename="../mainwindow.ui" line="2644"/>
         <source>&amp;Credits</source>
         <translation>Remerciements</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2629"/>
+        <location filename="../mainwindow.ui" line="2655"/>
         <source>&amp;Detect Tram</source>
         <translation>Détection de la fin d&apos;un tour</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2643"/>
+        <location filename="../mainwindow.ui" line="2669"/>
         <source>&amp;Sounds</source>
         <translation>Activations des sons</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2654"/>
+        <location filename="../mainwindow.ui" line="2680"/>
         <source>&amp;Auto Centering</source>
         <translation>Recentrage des cartes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2662"/>
+        <location filename="../mainwindow.ui" line="2688"/>
         <source>Cheat &amp;Mode</source>
         <translation>Espionner</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2673"/>
+        <location filename="../mainwindow.ui" line="2699"/>
         <source>&amp;Info Channel</source>
         <translation>Canal d&apos;informations</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2678"/>
+        <location filename="../mainwindow.ui" line="2704"/>
         <source>&amp;Rules</source>
         <translation>Les règles</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2686"/>
+        <location filename="../mainwindow.ui" line="2712"/>
         <source>&amp;Perfect 100</source>
         <translation>Les pointages de 100 sont réduit de moitié</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2694"/>
+        <location filename="../mainwindow.ui" line="2720"/>
         <source>&amp;Omnibus</source>
         <translation>Omnibus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2702"/>
+        <location filename="../mainwindow.ui" line="2728"/>
         <source>&amp;Queen Spade Break Heart</source>
         <translation>La dame de pique brise le coeur</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2710"/>
+        <location filename="../mainwindow.ui" line="2736"/>
         <source>&amp;No Trick Bonus</source>
         <translation>Bonus zéro pénalité</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2718"/>
+        <location filename="../mainwindow.ui" line="2744"/>
         <source>New &amp;Moon</source>
         <translation>Nouvelle lune</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2726"/>
+        <location filename="../mainwindow.ui" line="2752"/>
         <source>No &amp;Draw</source>
         <translation>Bris d&apos;égalité</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2731"/>
+        <location filename="../mainwindow.ui" line="2757"/>
         <source>&amp;Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2742"/>
+        <location filename="../mainwindow.ui" line="2768"/>
         <source>Save &amp;Game (Quit)</source>
         <translation>Sauvegarde automatique</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2747"/>
+        <location filename="../mainwindow.ui" line="2773"/>
         <source>&amp;Show</source>
         <translation>Montrer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2752"/>
+        <location filename="../mainwindow.ui" line="2778"/>
         <source>&amp;Reset</source>
         <translation>Effacer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2757"/>
+        <location filename="../mainwindow.ui" line="2783"/>
         <source>&amp;Cards History</source>
         <translation>L&apos;historique des cartes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2765"/>
-        <location filename="../mainwindow.ui" line="2819"/>
+        <location filename="../mainwindow.ui" line="2791"/>
+        <location filename="../mainwindow.ui" line="2845"/>
         <source>&amp;English</source>
         <translation>Anglais</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2773"/>
-        <location filename="../mainwindow.ui" line="2811"/>
+        <location filename="../mainwindow.ui" line="2799"/>
+        <location filename="../mainwindow.ui" line="2837"/>
         <source>&amp;Russian</source>
         <translation>Russe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2781"/>
+        <location filename="../mainwindow.ui" line="2807"/>
         <source>&amp;French</source>
         <translation>Français</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2792"/>
+        <location filename="../mainwindow.ui" line="2818"/>
         <source>&amp;Easy card selection</source>
         <translation>Sélection de carte assistée</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2803"/>
+        <location filename="../mainwindow.ui" line="2829"/>
         <source>&amp;Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2824"/>
+        <location filename="../mainwindow.ui" line="2850"/>
         <source>Connect</source>
         <translation>Se connecter</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2839"/>
+        <location filename="../mainwindow.ui" line="2865"/>
         <source>Online</source>
         <translation>En ligne</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2844"/>
+        <location filename="../mainwindow.ui" line="2870"/>
         <source>Cards Played</source>
         <translation>Cartes Jouées</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2852"/>
+        <location filename="../mainwindow.ui" line="2878"/>
         <source>Slow</source>
         <translation>Lent</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2860"/>
+        <location filename="../mainwindow.ui" line="2886"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2868"/>
+        <location filename="../mainwindow.ui" line="2894"/>
         <source>Fast</source>
         <translation>Vite</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2876"/>
+        <location filename="../mainwindow.ui" line="2902"/>
         <source>Auto Start</source>
         <translation>Démarrage automatique</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2887"/>
+        <location filename="../mainwindow.ui" line="2913"/>
         <source>Animated Play</source>
         <translation>Jeu Animé</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2892"/>
+        <location filename="../mainwindow.ui" line="2918"/>
         <source>Undo</source>
         <translation>Reprendre</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2900"/>
+        <location filename="../mainwindow.ui" line="2926"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2908"/>
+        <location filename="../mainwindow.ui" line="2934"/>
         <source>Univers</source>
         <translation>Univers</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2916"/>
+        <location filename="../mainwindow.ui" line="2942"/>
         <source>Ocean</source>
         <translation>Océan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2924"/>
+        <location filename="../mainwindow.ui" line="2950"/>
         <source>Mt. Fuji</source>
         <translation>Mt. Fuji</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2932"/>
+        <location filename="../mainwindow.ui" line="2958"/>
         <source>Sakura</source>
         <translation>Sakura</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2940"/>
+        <location filename="../mainwindow.ui" line="2966"/>
         <source>Desert</source>
         <translation>Désert</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2948"/>
+        <location filename="../mainwindow.ui" line="2974"/>
         <source>Forest</source>
         <translation>Forêt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1081"/>
+        <location filename="../mainwindow.ui" line="2982"/>
+        <source>Nicu (white)</source>
+        <translation>Nicu (white)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1071"/>
         <source>You</source>
         <translation>Moi</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1095"/>
-        <location filename="../mainwindow.cpp" line="2514"/>
+        <location filename="../mainwindow.cpp" line="1085"/>
+        <location filename="../mainwindow.cpp" line="2566"/>
         <source>omnibus </source>
         <translation>omnibus </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1098"/>
-        <location filename="../mainwindow.cpp" line="2516"/>
+        <location filename="../mainwindow.cpp" line="1088"/>
+        <location filename="../mainwindow.cpp" line="2568"/>
         <source>no trick bonus </source>
         <translation>bonus (zéro pénalité) </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1101"/>
-        <location filename="../mainwindow.cpp" line="2518"/>
+        <location filename="../mainwindow.cpp" line="1091"/>
+        <location filename="../mainwindow.cpp" line="2570"/>
         <source>&lt;unknown&gt; </source>
         <translation>&lt;inconnu&gt; </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1105"/>
-        <location filename="../mainwindow.cpp" line="2522"/>
+        <location filename="../mainwindow.cpp" line="1095"/>
+        <location filename="../mainwindow.cpp" line="2574"/>
         <source>[Info]: You receive the bonus: </source>
         <translation>[Info]: Vous recevez le bonus: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1105"/>
-        <location filename="../mainwindow.cpp" line="1108"/>
-        <location filename="../mainwindow.cpp" line="2522"/>
-        <location filename="../mainwindow.cpp" line="2525"/>
+        <location filename="../mainwindow.cpp" line="1095"/>
+        <location filename="../mainwindow.cpp" line="1098"/>
+        <location filename="../mainwindow.cpp" line="2574"/>
+        <location filename="../mainwindow.cpp" line="2577"/>
         <source> point(s)</source>
         <translation> point(s)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1107"/>
-        <location filename="../mainwindow.cpp" line="1122"/>
-        <location filename="../mainwindow.cpp" line="1219"/>
-        <location filename="../mainwindow.cpp" line="1259"/>
-        <location filename="../mainwindow.cpp" line="2524"/>
-        <location filename="../mainwindow.cpp" line="2537"/>
-        <location filename="../mainwindow.cpp" line="2642"/>
+        <location filename="../mainwindow.cpp" line="1097"/>
+        <location filename="../mainwindow.cpp" line="1112"/>
+        <location filename="../mainwindow.cpp" line="1209"/>
+        <location filename="../mainwindow.cpp" line="1249"/>
+        <location filename="../mainwindow.cpp" line="2576"/>
+        <location filename="../mainwindow.cpp" line="2589"/>
+        <location filename="../mainwindow.cpp" line="2694"/>
         <source>[Info]: Player &apos;</source>
         <translation>[Info]: Le joueur &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1107"/>
-        <location filename="../mainwindow.cpp" line="2524"/>
+        <location filename="../mainwindow.cpp" line="1097"/>
+        <location filename="../mainwindow.cpp" line="2576"/>
         <source>&apos; receive the bonus: </source>
         <translation>&apos; recoit le bonus: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1120"/>
-        <location filename="../mainwindow.cpp" line="2535"/>
+        <location filename="../mainwindow.cpp" line="1110"/>
+        <location filename="../mainwindow.cpp" line="2587"/>
         <source>[Info]: You got the perfect 100!
 [Info]: Your score has been set to 50.</source>
         <translation>[Info]: Vous avez obtenu le score parfait 100!
 [Info]: Votre score a été fixé à 50.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1122"/>
-        <location filename="../mainwindow.cpp" line="2537"/>
+        <location filename="../mainwindow.cpp" line="1112"/>
+        <location filename="../mainwindow.cpp" line="2589"/>
         <source>&apos; got the perfect 100!
 [Info]: Player &apos;</source>
         <translation>&apos; a obtenu le score parfait 100!
 [Info]: Joueur &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1123"/>
-        <location filename="../mainwindow.cpp" line="2538"/>
+        <location filename="../mainwindow.cpp" line="1113"/>
+        <location filename="../mainwindow.cpp" line="2590"/>
         <source>&apos; score has been set to 50.</source>
         <translation>&apos; score a été fixé à 50.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1135"/>
+        <location filename="../mainwindow.cpp" line="1125"/>
         <source>[Info]: Hearts has been broken!</source>
         <translation>[Info]: Le cœur a été brisé!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1156"/>
-        <location filename="../mainwindow.cpp" line="2577"/>
+        <location filename="../mainwindow.cpp" line="1146"/>
+        <location filename="../mainwindow.cpp" line="2629"/>
         <source>Drew !</source>
         <translation>Nulle !</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1154"/>
-        <location filename="../mainwindow.cpp" line="2579"/>
+        <location filename="../mainwindow.cpp" line="1144"/>
+        <location filename="../mainwindow.cpp" line="2631"/>
         <source>Won !</source>
         <translation>Gagne !</translation>
     </message>
@@ -1351,247 +1353,247 @@ en attente</translation>
         <translation>Le fichier de statistiques est corrompu!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="906"/>
+        <location filename="../mainwindow.cpp" line="895"/>
         <source>[Info]: Previous saved game has been loaded!</source>
         <translation>[Info]: La partie enregistrée précédente a été chargée!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="991"/>
+        <location filename="../mainwindow.cpp" line="980"/>
         <source>The saved game file is corrupted! Deleted!</source>
         <translation>Le fichier de jeu enregistré est endommagé! Il a été supprimé!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1190"/>
-        <location filename="../mainwindow.cpp" line="2581"/>
+        <location filename="../mainwindow.cpp" line="1180"/>
+        <location filename="../mainwindow.cpp" line="2633"/>
         <source>[Info]: GAME OVER!
 [Info]: Player &apos;</source>
         <translation>[Info]: Partie Terminé!
 [Info]: Joueur &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1191"/>
-        <location filename="../mainwindow.cpp" line="1193"/>
-        <location filename="../mainwindow.cpp" line="1195"/>
-        <location filename="../mainwindow.cpp" line="1197"/>
-        <location filename="../mainwindow.cpp" line="2582"/>
-        <location filename="../mainwindow.cpp" line="2584"/>
-        <location filename="../mainwindow.cpp" line="2586"/>
-        <location filename="../mainwindow.cpp" line="2588"/>
+        <location filename="../mainwindow.cpp" line="1181"/>
+        <location filename="../mainwindow.cpp" line="1183"/>
+        <location filename="../mainwindow.cpp" line="1185"/>
+        <location filename="../mainwindow.cpp" line="1187"/>
+        <location filename="../mainwindow.cpp" line="2634"/>
+        <location filename="../mainwindow.cpp" line="2636"/>
+        <location filename="../mainwindow.cpp" line="2638"/>
+        <location filename="../mainwindow.cpp" line="2640"/>
         <source> point(s) </source>
         <translation> point(s) </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1192"/>
-        <location filename="../mainwindow.cpp" line="1194"/>
-        <location filename="../mainwindow.cpp" line="1196"/>
-        <location filename="../mainwindow.cpp" line="2583"/>
-        <location filename="../mainwindow.cpp" line="2585"/>
-        <location filename="../mainwindow.cpp" line="2587"/>
+        <location filename="../mainwindow.cpp" line="1182"/>
+        <location filename="../mainwindow.cpp" line="1184"/>
+        <location filename="../mainwindow.cpp" line="1186"/>
+        <location filename="../mainwindow.cpp" line="2635"/>
+        <location filename="../mainwindow.cpp" line="2637"/>
+        <location filename="../mainwindow.cpp" line="2639"/>
         <source>
 [Info]: Player &apos;</source>
         <translation>
 [Info]: Joueur &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1207"/>
-        <location filename="../mainwindow.cpp" line="2598"/>
+        <location filename="../mainwindow.cpp" line="1197"/>
+        <location filename="../mainwindow.cpp" line="2650"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1217"/>
+        <location filename="../mainwindow.cpp" line="1207"/>
         <source>[Info]: You takes the rest!</source>
         <translation>[Info]: Vous prenez le reste!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1219"/>
+        <location filename="../mainwindow.cpp" line="1209"/>
         <source>&apos; takes the rest!</source>
         <translation>&apos; prends les cartes restantes!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1237"/>
-        <location filename="../mainwindow.cpp" line="2612"/>
+        <location filename="../mainwindow.cpp" line="1227"/>
+        <location filename="../mainwindow.cpp" line="2664"/>
         <source>[Info]: You shoot the moon!</source>
         <translation>[Info]: Vous avez réuissi le Grand Chelem!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1243"/>
-        <location filename="../mainwindow.cpp" line="2620"/>
+        <location filename="../mainwindow.cpp" line="1233"/>
+        <location filename="../mainwindow.cpp" line="2672"/>
         <source>You shoot the moon!</source>
         <translation>Vous avez réussi le grand chelem!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1244"/>
-        <location filename="../mainwindow.cpp" line="2621"/>
+        <location filename="../mainwindow.cpp" line="1234"/>
+        <location filename="../mainwindow.cpp" line="2673"/>
         <source>What is your choice ?</source>
         <translation>Quel est ton choix ?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1245"/>
-        <location filename="../mainwindow.cpp" line="2622"/>
+        <location filename="../mainwindow.cpp" line="1235"/>
+        <location filename="../mainwindow.cpp" line="2674"/>
         <source>Add</source>
         <translation>Ajouter</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1246"/>
-        <location filename="../mainwindow.cpp" line="2624"/>
+        <location filename="../mainwindow.cpp" line="1236"/>
+        <location filename="../mainwindow.cpp" line="2676"/>
         <source>Subtract</source>
         <translation>Soustraire</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1250"/>
-        <location filename="../mainwindow.cpp" line="2628"/>
+        <location filename="../mainwindow.cpp" line="1240"/>
+        <location filename="../mainwindow.cpp" line="2680"/>
         <source>[Info]: You added 26 pts to everyone&apos;s scores!</source>
         <translation>[Info]: Vous avez ajouté 26 points aux scores de tout le monde!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1253"/>
-        <location filename="../mainwindow.cpp" line="2632"/>
+        <location filename="../mainwindow.cpp" line="1243"/>
+        <location filename="../mainwindow.cpp" line="2684"/>
         <source>[Info]: You substracted 26 pts to your score!</source>
         <translation>[Info]: Vous avez soustrait 26 pts à votre score!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1259"/>
-        <location filename="../mainwindow.cpp" line="2642"/>
+        <location filename="../mainwindow.cpp" line="1249"/>
+        <location filename="../mainwindow.cpp" line="2694"/>
         <source>&apos; shoot the moon!</source>
         <translation>&apos; a réussi le grand chelem!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1265"/>
-        <location filename="../mainwindow.cpp" line="2648"/>
+        <location filename="../mainwindow.cpp" line="1255"/>
+        <location filename="../mainwindow.cpp" line="2700"/>
         <source>information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1314"/>
-        <location filename="../mainwindow.cpp" line="2664"/>
+        <location filename="../mainwindow.cpp" line="1304"/>
+        <location filename="../mainwindow.cpp" line="2716"/>
         <source>[Info]: New scores: &apos;</source>
         <translation>[Info]: Nouveau pointages: &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1559"/>
+        <location filename="../mainwindow.cpp" line="1551"/>
         <source>You must play the two of clubs!</source>
         <translation>Vous devez jouer le deux de trèfle!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1878"/>
+        <location filename="../mainwindow.cpp" line="1870"/>
         <source>[Info]: Starting a new game.</source>
         <translation>[Info]: Démarrage d&apos;une nouvelle partie.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2014"/>
+        <location filename="../mainwindow.cpp" line="2006"/>
         <source>Do you want to reset statistics?</source>
         <translation>Voulez-vous réinitialiser les statistiques?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2015"/>
-        <location filename="../mainwindow.cpp" line="3815"/>
+        <location filename="../mainwindow.cpp" line="2007"/>
+        <location filename="../mainwindow.cpp" line="3868"/>
         <source>Are you sure?</source>
         <translation>Êtes-vous sûr?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2021"/>
+        <location filename="../mainwindow.cpp" line="2013"/>
         <source>[Info]: You resetted the statistics!</source>
         <translation>[Info]: Vous avez réinitialiser les statistiques!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2289"/>
+        <location filename="../mainwindow.cpp" line="2324"/>
         <source>Undo can&apos;t be used during a new moon!</source>
         <translation>La reprise n&apos;est pas possible pour le moment!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2294"/>
+        <location filename="../mainwindow.cpp" line="2329"/>
         <source>Undo is only available during your turn!</source>
         <translation>La reprise n&apos;est possible que lorsque vous devez jouer une carte!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2313"/>
+        <location filename="../mainwindow.cpp" line="2348"/>
         <source>[Info]: Total cards(s) returned: </source>
         <translation>[Info]: nombre total de cartes retournées: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2328"/>
+        <location filename="../mainwindow.cpp" line="2363"/>
         <source>There is no undo available!</source>
         <translation>Il n&apos;y a pas d&apos;annulation disponible!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3504"/>
+        <location filename="../mainwindow.cpp" line="3557"/>
         <source>**** ANNOUNCEMENT from </source>
         <translation>**** ANNONCE de </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3556"/>
+        <location filename="../mainwindow.cpp" line="3609"/>
         <source>Games  : </source>
         <translation>Parties : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1552"/>
+        <location filename="../mainwindow.cpp" line="1544"/>
         <source>You can&apos;t break hearts yet!</source>
         <translation>Vous ne pouvez pas briser les cœurs!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1554"/>
+        <location filename="../mainwindow.cpp" line="1546"/>
         <source>You must follow the suit! The lead is in </source>
         <translation>Vous devez suivre la couleur! Le couleur est en </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1557"/>
+        <location filename="../mainwindow.cpp" line="1549"/>
         <source>You can&apos;t play the queen of spade on the first hand!</source>
         <translation>Vous ne pouvez pas jouer la reine de pique dans la première main!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1714"/>
-        <location filename="../mainwindow.cpp" line="2773"/>
+        <location filename="../mainwindow.cpp" line="1706"/>
+        <location filename="../mainwindow.cpp" line="2825"/>
         <source>You needs to select 3 cards to pass!</source>
         <translation>Vous devez sélectionner 3 cartes à passer!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1780"/>
+        <location filename="../mainwindow.cpp" line="1772"/>
         <source>[Error]: </source>
         <translation>[Erreur]: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3555"/>
+        <location filename="../mainwindow.cpp" line="3608"/>
         <source>Your online statistics:<byte value="xd"/>
 </source>
         <translation>Vos statistiques en ligne:
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3557"/>
+        <location filename="../mainwindow.cpp" line="3610"/>
         <source><byte value="xd"/>
 First  : </source>
         <translation>
 Premier : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3558"/>
+        <location filename="../mainwindow.cpp" line="3611"/>
         <source><byte value="xd"/>
 Second : </source>
         <translation>
 Deuxième : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3559"/>
+        <location filename="../mainwindow.cpp" line="3612"/>
         <source><byte value="xd"/>
 Third  : </source>
         <translation>
 Troisième  : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3560"/>
+        <location filename="../mainwindow.cpp" line="3613"/>
         <source><byte value="xd"/>
 Fourth : </source>
         <translation>
 Quatrième : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3689"/>
+        <location filename="../mainwindow.cpp" line="3742"/>
         <source>Wrong value ! The range is: [</source>
         <translation>Mauvaise valeur! La limite est: [</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3814"/>
+        <location filename="../mainwindow.cpp" line="3867"/>
         <source>Do you want to leave the server?</source>
         <translation>Voulez-vous quitter le serveur?</translation>
     </message>
