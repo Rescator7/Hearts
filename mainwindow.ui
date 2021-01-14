@@ -2415,6 +2415,65 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="label_credit">
+    <property name="geometry">
+     <rect>
+      <x>636</x>
+      <y>10</y>
+      <width>241</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>190</red>
+          <green>190</green>
+          <blue>190</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>190</red>
+          <green>190</green>
+          <blue>190</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>31</red>
+          <green>79</green>
+          <blue>41</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <italic>true</italic>
+     </font>
+    </property>
+    <property name="text">
+     <string>credit</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
    <zorder>label_played_s</zorder>
    <zorder>label_played_e</zorder>
    <zorder>label_played_n</zorder>
@@ -2508,6 +2567,7 @@
    <zorder>label_waiting_w</zorder>
    <zorder>label_waiting_n</zorder>
    <zorder>label_waiting_e</zorder>
+   <zorder>label_credit</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -2568,11 +2628,10 @@
      </property>
      <addaction name="actionNo_image"/>
      <addaction name="actionUnivers"/>
-     <addaction name="actionOcean"/>
+     <addaction name="actionEverest"/>
      <addaction name="actionMt_Fuji"/>
-     <addaction name="actionSakura"/>
+     <addaction name="actionOcean"/>
      <addaction name="actionDesert"/>
-     <addaction name="actionForest"/>
     </widget>
     <addaction name="actionAnimate_Play"/>
     <addaction name="actionAuto_Centering"/>
@@ -2950,14 +3009,6 @@
     <string>Mt. Fuji</string>
    </property>
   </action>
-  <action name="actionSakura">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Sakura</string>
-   </property>
-  </action>
   <action name="actionDesert">
    <property name="checkable">
     <bool>true</bool>
@@ -2966,20 +3017,20 @@
     <string>Desert</string>
    </property>
   </action>
-  <action name="actionForest">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Forest</string>
-   </property>
-  </action>
   <action name="actionNicu_white">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>Nicu (white)</string>
+   </property>
+  </action>
+  <action name="actionEverest">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Everest</string>
    </property>
   </action>
  </widget>

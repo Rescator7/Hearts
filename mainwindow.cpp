@@ -71,10 +71,12 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif // ONLINE_PLAY
 
     init_vars();
-    set_background();
+
     set_settings();
     set_options();
     set_language(config->get_language());
+    set_background(); // must be called after set_language to set the credit
+
     hide_waiting();
 
 #ifdef ONLINE_PLAY
@@ -383,6 +385,10 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   y = ui->textEdit->y() + ui->textEdit->height();
   ui->pushButton_mode->move(ui->pushButton_mode->x(), y);
   ui->lineEdit->move(ui->lineEdit->x(), y);
+
+  // Move background credits
+  ui->label_credit->move(width() -
+                         ui->label_credit->width() - 30, ui->label_credit->y());
 }
 
 void MainWindow::resizeWidth(int perc_h)
@@ -2057,6 +2063,8 @@ void MainWindow::set_language(int lang)
 
  ui->retranslateUi(this);
 
+ set_credit();
+
  stats->Translate();
 
 #ifdef ONLINE_PLAY
@@ -2070,7 +2078,6 @@ void MainWindow::set_language(int lang)
   ui->menuDebug->setTitle("");
   ui->menuDebug->setEnabled(false);
 #endif // DEBUG
-
 }
 
 void MainWindow::on_actionEnglish_triggered(bool checked)
@@ -2376,10 +2383,9 @@ void MainWindow::unset_bkg_checked()
   ui->actionUnivers->setChecked(false);
   ui->actionOcean->setChecked(false);
   ui->actionNo_image->setChecked(false);
-  ui->actionSakura->setChecked(false);
   ui->actionMt_Fuji->setChecked(false);
   ui->actionDesert->setChecked(false);
-  ui->actionForest->setChecked(false);
+  ui->actionEverest->setChecked(false);
 }
 
 void MainWindow::set_background()
@@ -2389,30 +2395,47 @@ void MainWindow::set_background()
   switch (background) {
      case BACKGROUND_UNIVERSE: on_actionUnivers_triggered(); break;
      case BACKGROUND_OCEAN:    on_actionOcean_triggered(); break;
-     case BACKGROUND_SAKURA:   on_actionSakura_triggered(); break;
+     case BACKGROUND_EVEREST:  on_actionEverest_triggered(); break;
      case BACKGROUND_MT_FUJI:  on_actionMt_Fuji_triggered(); break;
      case BACKGROUND_DESERT:   on_actionDesert_triggered(); break;
-     case BACKGROUND_FOREST:   on_actionForest_triggered(); break;
 
      default: on_actionNo_image_triggered();
   }
 }
 
+void MainWindow::set_credit()
+{
+  switch (background) {
+     case BACKGROUND_UNIVERSE: ui->label_credit->setText(tr("Image by: ESO/G. Beccari")); break;
+     case BACKGROUND_EVEREST:  ui->label_credit->setText(tr("Image by: Hiroki Ogawa")); break;
+     case BACKGROUND_MT_FUJI:  ui->label_credit->setText(tr("Image by: Jack Soma")); break;
+     case BACKGROUND_OCEAN:    ui->label_credit->setText(tr("Image by: grumpylumixuser")); break;
+     case BACKGROUND_DESERT:   ui->label_credit->setText(tr("Image by: Peter Chisholm")); break;
+
+     default: ui->label_credit->setText("");
+  }
+}
+
 void MainWindow::set_theme_colors()
 {
-   const char colors[7][3][15] = {{"#3f9f52", "#3f9f52", "black"},              // None
+   const char colors[6][3][15] = {{"#3f9f52", "#3f9f52", "black"},              // None
                                   {"transparent", "transparent", "yellow"},     // Universe
                                   {"transparent", "#219f9b", "Yellow"},         // Ocean
-                                  {"transparent", "#3f9f52", "Yellow"},         // Mt. Fuji
-                                  {"transparent", "#3f9f52", "Yellow"},         // Sakura
-                                  {"transparent", "#9f3f2b", "Yellow"},         // Desert
-                                  {"transparent", "#3f9f52", "Yellow"}};        // Forest
+                                  {"transparent", "#ef955c", "Yellow"},         // Mt. Fuji
+                                  {"transparent", "#219f9b", "Yellow"},         // Everest
+                                  {"transparent", "#9f3f2b", "Yellow"}};        // Desert
 
    QString color1, color2, color3;
 
-   color1 = colors[background][0];
-   color2 = colors[background][1];
-   color3 = colors[background][2];
+   if ((background >= 0) && (background < 6)) {
+     color1 = colors[background][0];
+     color2 = colors[background][1];
+     color3 = colors[background][2];
+   } else {
+       color1 = colors[0][0];
+       color2 = colors[0][1];
+       color3 = colors[0][2];
+     }
 
    ui->label_pass_to->setStyleSheet(QString("background-color: " + color1));
    for (int i=0; i<13; i++)
@@ -2436,9 +2459,30 @@ void MainWindow::on_actionUnivers_triggered()
   config->set_background(BACKGROUND_UNIVERSE);
 
   centralWidget()->setStyleSheet("#centralWidget {"
-                  "border-image: url(:/backgrounds/john-fowler-7Ym9rpYtSdA-unsplash.jpg)"
+                  "border-image: url(:/backgrounds/eso1723a.jpg)"
                   " 0 0 0 0 stretch;}");
 
+  set_credit();
+  set_theme_colors();
+}
+
+void MainWindow::on_actionEverest_triggered()
+{
+  unset_bkg_checked();
+  ui->actionEverest->setChecked(true);
+
+  if (background == BACKGROUND_EVEREST)
+    return;
+
+  background = BACKGROUND_EVEREST;
+
+  config->set_background(BACKGROUND_EVEREST);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                  "border-image: url(:/backgrounds/8,848m_Everest_8,516m_Lhotse_Himalaya_Mountain_Flights_Nepal_-_panoramio_(2).jpg)"
+                  " 0 0 0 0 stretch;}");
+
+  set_credit();
   set_theme_colors();
 }
 
@@ -2455,9 +2499,10 @@ void MainWindow::on_actionOcean_triggered()
   config->set_background(BACKGROUND_OCEAN);
 
   centralWidget()->setStyleSheet("#centralWidget {"
-                   "border-image: url(:/backgrounds/cristiano-pinto-gQH0Jcz50V8-unsplash.jpg)"
-                   " 0 0 0 0 stretch stretch; color: black; background-color: #3f9f52 }");
+                   "border-image: url(:/backgrounds/_Palm_ _Beach._Port_Douglas._-_panoramio.jpg)"
+                   " 0 0 0 0 stretch stretch; }");
 
+  set_credit();
   set_theme_colors();
 }
 
@@ -2475,6 +2520,7 @@ void MainWindow::on_actionNo_image_triggered()
 
   centralWidget()->setStyleSheet("");
 
+  set_credit();
   set_theme_colors();
 }
 
@@ -2491,28 +2537,10 @@ void MainWindow::on_actionMt_Fuji_triggered()
   config->set_background(BACKGROUND_MT_FUJI);
 
   centralWidget()->setStyleSheet("#centralWidget {"
-                   "border-image: url(:/backgrounds/david-edelstein-N4DbvTUDikw-unsplash.jpg)"
+                   "border-image: url(:/backgrounds/Mount._Fuji_early_in_the_morning_早朝の富士山_-_panoramio.jpg)"
                    " 0 0 0 0 stretch stretch; }");
 
-  set_theme_colors();
-}
-
-void MainWindow::on_actionSakura_triggered()
-{
-  unset_bkg_checked();
-  ui->actionSakura->setChecked(true);
-
-  if (background == BACKGROUND_SAKURA)
-    return;
-
-  background = BACKGROUND_SAKURA;
-
-  config->set_background(BACKGROUND_SAKURA);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                  "border-image: url(:/backgrounds/meric-dagli-7NBO76G5JsE-unsplash.jpg)"
-                  " 0 0 0 0 stretch stretch; }");
-
+  set_credit();
   set_theme_colors();
 }
 
@@ -2529,30 +2557,13 @@ void MainWindow::on_actionDesert_triggered()
   config->set_background(BACKGROUND_DESERT);
 
   centralWidget()->setStyleSheet("#centralWidget {"
-                  "border-image: url(:/backgrounds/patrick-hendry-_RYmx4Jz1UM-unsplash.jpg)"
+                  "border-image: url(:/backgrounds/Wadi_rum_desert.jpg)"
                   " 0 0 0 0 stretch stretch; }");
 
+  set_credit();
   set_theme_colors();
 }
 
-void MainWindow::on_actionForest_triggered()
-{
-  unset_bkg_checked();
-  ui->actionForest->setChecked(true);
-
-  if (background == BACKGROUND_FOREST)
-    return;
-
-  background = BACKGROUND_FOREST;
-
-  config->set_background(BACKGROUND_FOREST);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                    "border-image: url(:/backgrounds/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg)"
-                    " 0 0 0 0 stretch stretch; }");
-
-  set_theme_colors();
-}
 
 //***************************************************************************************************
 //****************************** ONLY ONLINE FUNCTIONS FROM HERE ************************************

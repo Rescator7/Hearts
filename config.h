@@ -29,9 +29,8 @@ const int BACKGROUND_NONE                = 0;
 const int BACKGROUND_UNIVERSE            = 1;
 const int BACKGROUND_OCEAN               = 2;
 const int BACKGROUND_MT_FUJI             = 3;
-const int BACKGROUND_SAKURA              = 4;
+const int BACKGROUND_EVEREST             = 4;
 const int BACKGROUND_DESERT              = 5;
-const int BACKGROUND_FOREST              = 6;
 
 const int SPEED_SLOW                     = 0;
 const int SPEED_NORMAL                   = 1;

@@ -99,6 +99,7 @@ private slots:
     void on_actionFrench_triggered(bool checked);
     void on_actionEasy_card_selection_triggered();
     void on_actionStandard_triggered();
+    void on_actionNicu_white_triggered();
     void on_actionRussian_2_triggered();
     void on_actionEnglish_2_triggered();
     void on_actionAuto_Start_triggered();
@@ -146,10 +147,8 @@ private slots:
     void on_actionOcean_triggered();
     void on_actionNo_image_triggered();
     void on_actionMt_Fuji_triggered();
-    void on_actionSakura_triggered();
     void on_actionDesert_triggered();
-    void on_actionForest_triggered();
-    void on_actionNicu_white_triggered();
+    void on_actionEverest_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -266,6 +265,7 @@ private:
     void show_deck(bool animate, bool replace);
     void set_info_channel_enabled(bool enable);
     void set_language(int lang);
+    void set_credit();
     void set_background();
     void set_cards_disabled(bool d);
     void refresh_cards_played();

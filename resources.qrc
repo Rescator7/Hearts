@@ -193,12 +193,6 @@
         <file>icons/heart.png</file>
         <file>icons/muted.png</file>
         <file>sounds/403013__inspectorj__ui-confirmation-alert-b5.wav</file>
-        <file>backgrounds/john-fowler-7Ym9rpYtSdA-unsplash.jpg</file>
-        <file>backgrounds/david-edelstein-N4DbvTUDikw-unsplash.jpg</file>
-        <file>backgrounds/meric-dagli-7NBO76G5JsE-unsplash.jpg</file>
-        <file>backgrounds/cristiano-pinto-gQH0Jcz50V8-unsplash.jpg</file>
-        <file>backgrounds/patrick-hendry-_RYmx4Jz1UM-unsplash.jpg</file>
-        <file>backgrounds/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg</file>
         <file>icons/Paomedia-Small-N-Flat-Sign-check.svg</file>
         <file>SVG-cards/white/white_c_2.svg</file>
         <file>SVG-cards/white/white_c_3.svg</file>
@@ -253,5 +247,10 @@
         <file>SVG-cards/white/white_s_k.svg</file>
         <file>SVG-cards/white/white_s_q.svg</file>
         <file>SVG-cards/white/back07.png</file>
+        <file>backgrounds/eso1723a.jpg</file>
+        <file>backgrounds/8,848m_Everest_8,516m_Lhotse_Himalaya_Mountain_Flights_Nepal_-_panoramio_(2).jpg</file>
+        <file>backgrounds/Mount._Fuji_early_in_the_morning_早朝の富士山_-_panoramio.jpg</file>
+        <file>backgrounds/Wadi_rum_desert.jpg</file>
+        <file>backgrounds/_Palm_ _Beach._Port_Douglas._-_panoramio.jpg</file>
     </qresource>
 </RCC>

@@ -122,14 +122,11 @@ int CConfig::load_config_file() {
         if (value == "Mt_Fuji")
           background = BACKGROUND_MT_FUJI;
         else
-        if (value == "Sakura")
-          background = BACKGROUND_SAKURA;
+        if (value == "Everest")
+          background = BACKGROUND_EVEREST;
         else
         if (value == "Desert")
           background = BACKGROUND_DESERT;
-        else
-        if (value == "Forest")
-          background = BACKGROUND_FOREST;
 
         continue;
       }
@@ -291,10 +288,9 @@ int CConfig::save_config_file()
     case BACKGROUND_NONE:     out << "Background = None" << endl; break;
     case BACKGROUND_UNIVERSE: out << "Background = Universe" << endl; break;
     case BACKGROUND_OCEAN:    out << "Background = Ocean" << endl; break;
-    case BACKGROUND_SAKURA:   out << "Background = Sakura" << endl; break;
+    case BACKGROUND_EVEREST:  out << "Background = Everest" << endl; break;
     case BACKGROUND_MT_FUJI:  out << "Background = Mt_Fuji" << endl; break;
     case BACKGROUND_DESERT:   out << "Background = Desert" << endl; break;
-    case BACKGROUND_FOREST:   out << "Background = Forest" << endl; break;
   }
 
   out << "Animated_Play = " << (animated_play ? "true" : "false") << endl;
