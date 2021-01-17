@@ -148,3 +148,12 @@
 13 Jan 2021: Version 1.8.3
 -------------------------------------------------------------------------------------------------
 13 Jan 2021: Replaced all the background images by new CC-BY images.
+
+17 Jan 2021: Version 1.8.4
+-------------------------------------------------------------------------------------------------
+17 Jan 2021: Fix the rendering of the deck Nicu (white). (see before and after)
+                 1.8.3: https://github.com/Rescator7/Hearts/blob/master/screenshot/SCR2-hearts-1.8.jpg
+                 1.8.4: https://github.com/Rescator7/Hearts/blob/master/screenshot/SCR1-hearts-1.8.4.jpg
+17 Jan 2021: Updated Backgound images list in Menu->Help->Settings. 
+17 Jan 2021: Corrupted saved game now create a backup ~/.hearts.saved.bak (For analyse)
+

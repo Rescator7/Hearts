@@ -202,6 +202,7 @@ private:
     bool wait_delay;
     bool stop_delay;
 
+    int perc_height_cards_s;
     int background;
     int cards_received[3];
     int plr_names_idx[4];
@@ -212,6 +213,7 @@ private:
     int card_played[4];
     int scores[4];
     int hand_scores[4];
+    Qt::AspectRatioMode aspect_ratio_flag;
 
     int y_factor;
     int orig_posx_cards[4][13];
@@ -226,6 +228,12 @@ private:
     int orig_posy_tables;
     int orig_posx_create;
     int orig_posy_create;
+    int orig_width_deck_h;
+    int orig_width_deck_s;
+    int orig_height_deck_s;
+    int orig_height_deck_n;
+    int orig_posy_deck_s;
+    int orig_posy_deck_n;
 
 #ifdef ONLINE_PLAY
 // private online variables
@@ -279,6 +287,7 @@ private:
     void start_game(bool booting);
     void disable_cheat();
     void check_easy_cards();
+    void adjust_under_deck();
 
 public:
     int convert_char_to_player(QString p);

@@ -117,8 +117,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     message(tr("Welcome to ") + QString(version));
 
-    if (stats->is_file_corrupted())
+    if (stats->is_file_corrupted()) {
       error(tr("The statistics file is corrupted!"));
+
+      // Remove any previous backup of corrupted statistics file.
+      // Or file_stats.rename() will fail, and we'll always start a game
+      // with a corrupted file.
+      QFile file_corrupted(QDir::homePath() + STATS_BACKUP_FILE);
+      if (file_corrupted.exists())
+        file_corrupted.remove();
+
+      QFile file_stats(QDir::homePath() + STATS_FILENAME);
+      file_stats.rename(QDir::homePath() + STATS_BACKUP_FILE);
+    }
 
     start_game(true);
 }
@@ -126,7 +137,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #ifdef FULL_SCREEN
 void MainWindow::adjust_objs_distances(QResizeEvent *event)
 { 
-  int s, x, y, z, ew;
+  int s, x, y, z, ew, adj_deck_n, adj_deck_s, adj_nicu = 0;
 
   int unselect_adj = 0;
 
@@ -141,24 +152,27 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
     ew  = label_cards[PLAYER_WEST][i]->width();
     y = orig_posy_cards[PLAYER_WEST][i];
 
+    if (config->get_deck_style() == NICU_WHITE_DECK)
+      adj_nicu = 10;
+
 #ifdef ONLINE_PLAY
     if (!online_connected) {
 #endif // ONLINE_PLAY
        if (!hearts->is_mode_playing() &&
            hearts->is_card_selected(PLAYER_EAST, 12 - i))
-         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 35, y + y_factor * 4);
+         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 35 + adj_nicu, y + y_factor * 4);
        else
-         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20, y + y_factor * 4);
+         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20 + adj_nicu, y + y_factor * 4);
 
 #ifdef ONLINE_PLAY
     } else
-        label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20, y + y_factor * 4);
+        label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20 + adj_nicu, y + y_factor * 4);
 #endif // ONLINE_PLAY
 
     label_cards[PLAYER_WEST][i]->move(label_cards[PLAYER_WEST][i]->x(),
                                       orig_posy_cards[PLAYER_WEST][i] + y_factor * 4);
 
-    orig_posx_cards[PLAYER_EAST][i] = w - ew - 20;
+    orig_posx_cards[PLAYER_EAST][i] = w - ew - 20 + adj_nicu;
 
     z = label_cards[PLAYER_NORTH][i]->width();
     x = (w - (12 * 35 + z)) / 2;
@@ -200,15 +214,32 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   // Move Under Deck East to Card_E13
   ui->label_deck_e->move(orig_posx_cards[PLAYER_EAST][0], label_cards[PLAYER_EAST][12]->y());
 
+  switch (config->get_deck_style()) {
+    case NICU_WHITE_DECK: adj_deck_n = 10;
+                          if (perc_height_cards_s == 100)
+                            adj_deck_s = 5;
+                          else
+                            adj_deck_s = 2;
+                          break;
+    case ENGLISH_DECK:
+    case RUSSIAN_DECK: adj_deck_s = 0;
+                       adj_deck_n = 6;
+                       break;
+    default: adj_deck_n = 8;
+             adj_deck_s = 0;
+  }
+
   // Move Under Deck North to Card N13
-  ui->label_deck_n->move(label_cards[PLAYER_NORTH][12]->x(), orig_posy_cards[PLAYER_NORTH][12] + 8);
+  ui->label_deck_n->move(label_cards[PLAYER_NORTH][12]->x(), orig_posy_cards[PLAYER_NORTH][12] + adj_deck_n);
 
   // Move Under Deck South to Card S1
 
   // Bug fix: I can not use orig_posy_cards[PLAYER_SOUTH][0] as resize to bigger height(), will
   // moves the cards to higher y value. I must use the real label_cards[PLAYER_SOUTH][0]->y(), but
   // adjusted if the card [0] is selected.
-  ui->label_deck_s->move(label_cards[PLAYER_SOUTH][0]->x(), label_cards[PLAYER_SOUTH][0]->y() + unselect_adj);
+
+  ui->label_deck_s->move(label_cards[PLAYER_SOUTH][0]->x(),
+                         label_cards[PLAYER_SOUTH][0]->y() + unselect_adj + adj_deck_s);
 
   // Move TextEit
   x = (w - ui->textEdit->width()) / 2 - 1;
@@ -238,7 +269,17 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   z = (orig_posx_cards[PLAYER_EAST][0] - x - s) / 6;
 
   // Move Heart WEST
-  ui->label_heart_w->move(x + z - 8, orig_posy_heart[PLAYER_WEST] + y_factor);
+  int adj_heart_w;
+
+  switch (config->get_deck_style()) {
+     case NICU_WHITE_DECK : adj_heart_w = 12; break;
+     case ENGLISH_DECK:
+     case RUSSIAN_DECK: adj_heart_w = 9; break;
+
+     default: adj_heart_w = 11;
+  }
+
+  ui->label_heart_w->move(x + z - adj_heart_w, orig_posy_heart[PLAYER_WEST] + y_factor);
   x = ui->label_heart_w->x() +
      ui->label_heart_w->width();
 
@@ -456,8 +497,20 @@ void MainWindow::resizeWidthSouth(int perc_h) {
      label_cards[PLAYER_SOUTH][i]->move(x + i * 35,
                                         label_cards[PLAYER_SOUTH][i]->y());
    }
-   ui->label_deck_s->move(label_cards[PLAYER_SOUTH][0]->x(),
-                          ui->label_deck_s->y());
+
+   w =  label_cards[PLAYER_SOUTH][12]->x() +
+        label_cards[PLAYER_SOUTH][12]->width() -
+        label_cards[PLAYER_SOUTH][0]->x();
+
+   int adj = 0;
+
+   if (config->get_deck_style() == NICU_WHITE_DECK) {
+     if (perc_h == 100)
+       adj = 10;
+     else
+       adj = 7;
+   }
+   ui->label_deck_s->resize(w, h - adj);
 
 #ifdef ONLINE_PLAY
    if (online_connected)
@@ -465,12 +518,6 @@ void MainWindow::resizeWidthSouth(int perc_h) {
    else
 #endif // ONLINE_PLAY
      show_deck(false, false);
-
-   w =  label_cards[PLAYER_SOUTH][12]->x() +
-        label_cards[PLAYER_SOUTH][12]->width() -
-        label_cards[PLAYER_SOUTH][0]->x();
-
-   ui->label_deck_s->resize(w, h);
 
 #ifdef ONLINE_PLAY
    int y;
@@ -483,6 +530,8 @@ void MainWindow::resizeWidthSouth(int perc_h) {
        ui->label_deck_s->height() + 1;
    progress_bar_time[4]->move(progress_bar_time[4]->x(), y);
 #endif // ONLINE_PLAY
+
+   perc_height_cards_s = perc_h;
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -502,10 +551,10 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     orig_posy_pass_to += 15;
   }
 
-  if ((h < 810) && (label_cards[PLAYER_SOUTH][0]->height() >= 130)) {
+  if ((h < 810) && (perc_height_cards_s == 100)) {
     resizeWidthSouth(75);
   } else
-  if ((h >= 810) && (label_cards[PLAYER_SOUTH][0]->height() < 130)) {
+  if ((h >= 810) && (perc_height_cards_s == 75)) {
     resizeWidthSouth(100);
   }
 
@@ -617,7 +666,19 @@ void MainWindow::init_vars()
   orig_posx_create = ui->pushButton_create_table->x();
   orig_posy_create = ui->pushButton_create_table->y();
 
+  orig_width_deck_h = ui->label_deck_e->width();
+  orig_height_deck_n = ui->label_deck_n->height();
+  orig_width_deck_s = ui->label_deck_s->width();
+  orig_height_deck_s = ui->label_deck_s->height();
+
+  perc_height_cards_s = 100;
+
+  aspect_ratio_flag = Qt::KeepAspectRatio;
+
   background = BACKGROUND_UNSET;
+
+  orig_posy_deck_n = ui->label_deck_n->y();
+  orig_posy_deck_s = ui->label_deck_s->y();
 }
 
 void MainWindow::load_sounds()
@@ -985,8 +1046,16 @@ void MainWindow::start_game(bool booting)
     if (errnum == FCORRUPTED) {
       error(tr("The saved game file is corrupted! Deleted!"));
 
+      // Remove any previous backup of saved game file.
+      // Or file.rename() will fail, and we'll always start a game
+      // with a corrupted saved game.
+      QFile file_corrupted(QDir::homePath() + SAVEDGAME_CORRUPTED);
+      if (file_corrupted.exists())
+        file_corrupted.remove();
+
+      // Make a backup of the current corrupted game. (for analyze)
       QFile file(QDir::homePath() + SAVEDGAME_FILENAME);
-      file.remove();
+      file.rename(QDir::homePath() + SAVEDGAME_CORRUPTED);
     }
     stats->increase_stats(0, STATS_GAME_STARTED);
 
@@ -1028,11 +1097,18 @@ void MainWindow::set_settings()
   set_info_channel_enabled(config->is_info_channel());
 
   switch (config->get_deck_style()) {
-    case STANDARD_DECK:   ui->actionStandard->setChecked(true); break;
-    case ENGLISH_DECK:    ui->actionEnglish_2->setChecked(true); break;
-    case RUSSIAN_DECK:    ui->actionRussian_2->setChecked(true); break;
-    case NICU_WHITE_DECK: ui->actionNicu_white->setChecked(true); break;
+    case ENGLISH_DECK:    aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+                          ui->actionEnglish_2->setChecked(true); break;
+    case RUSSIAN_DECK:    aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+                          ui->actionRussian_2->setChecked(true); break;
+    case NICU_WHITE_DECK: aspect_ratio_flag = Qt::KeepAspectRatio;
+                          ui->actionNicu_white->setChecked(true); break;
+
+    default: aspect_ratio_flag = Qt::KeepAspectRatio;
+             ui->actionStandard->setChecked(true);
   }
+
+  adjust_under_deck();
 
   switch (config->get_speed()) {
     case SPEED_SLOW:    ui->actionSlow->setChecked(true); break;
@@ -1375,7 +1451,7 @@ void MainWindow::show_deck(bool animate, bool replace)
     if (show_card != empty) {
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_SOUTH)];
-      label_cards[PLAYER_SOUTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->scaled(cards_width_south, cards_height_south, Qt::KeepAspectRatioByExpanding)));
+      label_cards[PLAYER_SOUTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->scaled(cards_width_south, cards_height_south, aspect_ratio_flag)));
       label_cards[PLAYER_SOUTH][i/4+adj]->show();
     } else
         total_empty++;
@@ -1393,7 +1469,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_EAST)];
-      label_cards[PLAYER_EAST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_e).scaled(88, cards_height_WNE, Qt::KeepAspectRatioByExpanding)));
+      label_cards[PLAYER_EAST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_e).scaled(88, cards_height_WNE, aspect_ratio_flag)));
       label_cards[PLAYER_EAST][i/4+adj]->show();
     } else
         total_empty++;
@@ -1411,7 +1487,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_NORTH)];
-      label_cards[PLAYER_NORTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_n).scaled(60, 87, Qt::KeepAspectRatioByExpanding)));
+      label_cards[PLAYER_NORTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_n).scaled(60, 87, aspect_ratio_flag)));
       label_cards[PLAYER_NORTH][i/4+adj]->show();
     } else
         total_empty++;
@@ -1429,7 +1505,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_WEST)];
-      label_cards[PLAYER_WEST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_w).scaled(88, cards_height_WNE, Qt::KeepAspectRatioByExpanding)));
+      label_cards[PLAYER_WEST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_w).scaled(88, cards_height_WNE, aspect_ratio_flag)));
       label_cards[PLAYER_WEST][i/4+adj]->show();
     } else
         total_empty++;
@@ -2172,6 +2248,67 @@ void MainWindow::on_actionCards_Played_triggered()
 }
 #endif // DEBUG
 
+void MainWindow::adjust_under_deck()
+{
+  int adj = 0;
+  int adj_deck_size_s = 0,
+      adj_move_deck_s = 0,
+      adj_move_deck_n = 0;
+
+  switch (config->get_deck_style()) {
+     case NICU_WHITE_DECK:  adj_move_deck_s = 4;
+                            adj_move_deck_n = 2;
+                            adj = 5;
+                            if (perc_height_cards_s == 100)
+                              adj_deck_size_s = 10;
+                            else {
+                              adj_deck_size_s = 7;
+                              adj_move_deck_s--;
+                            }
+                            break;
+     case ENGLISH_DECK:
+     case RUSSIAN_DECK:     adj = -3;
+                            adj_move_deck_n = -2;
+  }
+
+  ui->label_deck_e->resize(orig_width_deck_h - adj,
+                           ui->label_deck_e->height());
+
+  ui->label_deck_w->resize(orig_width_deck_h - adj,
+                           ui->label_deck_w->height());
+
+  ui->label_deck_n->resize(ui->label_deck_n->width(),
+                           orig_height_deck_n - adj);
+
+  ui->label_deck_s->resize(ui->label_deck_s->width(),
+                           ui->label_card_s1->height() - adj_deck_size_s);
+
+  ui->label_deck_n->move(ui->label_deck_n->x(),
+                         orig_posy_deck_n + adj_move_deck_n);
+
+  ui->label_deck_s->move(ui->label_deck_s->x(),
+                         orig_posy_deck_s + adj_move_deck_s);
+
+ // Reminder:
+ // (a) update() is not working
+ // (b) resize(widht(), height()) is not working
+ // (c) QMainWindow::resizeEvent(&event) is not working
+ //
+ // Test 1) use standard deck
+ //      2) resize the height to 75% cards size
+ //      3) switch to deck Nicu (white)
+ //      4) quickly raise the height of the window
+ //      5) switch to deck standard
+ //  (a)(b)(c) move the southern under deck to a wrong position.
+ // but, this below refresh correctly.
+ // I must call my override resizeEvent function directly.
+#ifdef FULL_SCREEN
+  QSize size(width(), height());
+  QResizeEvent event(size, size);
+  resizeEvent(&event);
+#endif
+}
+
 void MainWindow::on_actionStandard_triggered()
 {
   ui->actionStandard->setChecked(true);
@@ -2181,6 +2318,8 @@ void MainWindow::on_actionStandard_triggered()
 
   if (config->get_deck_style() == STANDARD_DECK)
     return;
+
+  aspect_ratio_flag = Qt::KeepAspectRatio;
 
   deck->set_deck(STANDARD_DECK);
 
@@ -2199,6 +2338,7 @@ void MainWindow::on_actionStandard_triggered()
 
   config->set_deck_style(STANDARD_DECK);
 
+  adjust_under_deck();
   set_theme_colors(); // must be called after config->set_deck_style()
 }
 
@@ -2211,6 +2351,8 @@ void MainWindow::on_actionNicu_white_triggered()
 
   if (config->get_deck_style() == NICU_WHITE_DECK)
     return;
+
+  aspect_ratio_flag = Qt::KeepAspectRatio;
 
   deck->set_deck(NICU_WHITE_DECK);
 
@@ -2230,6 +2372,7 @@ void MainWindow::on_actionNicu_white_triggered()
 
   config->set_deck_style(NICU_WHITE_DECK);
 
+  adjust_under_deck();
   set_theme_colors();
 }
 
@@ -2242,6 +2385,8 @@ void MainWindow::on_actionEnglish_2_triggered()
 
   if (config->get_deck_style() == ENGLISH_DECK)
     return;
+
+  aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
 
   deck->set_deck(ENGLISH_DECK);
 
@@ -2261,6 +2406,7 @@ void MainWindow::on_actionEnglish_2_triggered()
 
   config->set_deck_style(ENGLISH_DECK);
 
+  adjust_under_deck();
   set_theme_colors();
 }
 
@@ -2273,6 +2419,8 @@ void MainWindow::on_actionRussian_2_triggered()
 
   if (config->get_deck_style() == RUSSIAN_DECK)
     return;
+
+  aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
 
   deck->set_deck(RUSSIAN_DECK);
 
@@ -2292,6 +2440,7 @@ void MainWindow::on_actionRussian_2_triggered()
 
   config->set_deck_style(RUSSIAN_DECK);
 
+  adjust_under_deck();
   set_theme_colors();
 }
 
@@ -2442,7 +2591,9 @@ void MainWindow::set_theme_colors()
       if (config->get_deck_style() == NICU_WHITE_DECK)
         label_cards[PLAYER_SOUTH][i]->setStyleSheet(QString("background-color: transparent"));
       else
-        label_cards[PLAYER_SOUTH][i]->setStyleSheet(QString("background-color: ") + color2);
+        label_cards[PLAYER_SOUTH][i]->setStyleSheet(QString("QWidget {background-color: transparent;}"
+                                                            "QWidget:disabled {background-color: ") + color2 + ";}");
+
    ui->label_online->setStyleSheet("color: " + color3);
 }
 
@@ -2758,21 +2909,21 @@ void MainWindow::online_show_deck()
   for (int i=0; i<online_num_cards[PLAYER_WEST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_WEST]];
-     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaled(88, cards_height_WNE, Qt::KeepAspectRatioByExpanding)));
+     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaled(88, cards_height_WNE, aspect_ratio_flag)));
      label_cards[PLAYER_WEST][i + adj]->show();
   }
 
   for (int i=0; i<online_num_cards[PLAYER_NORTH]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_NORTH]];
-     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->scaled(60, 87, Qt::KeepAspectRatioByExpanding)));
+     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->scaled(60, 87, aspect_ratio_flag)));
      label_cards[PLAYER_NORTH][i + adj]->show();
   }
 
   for (int i=0; i<online_num_cards[PLAYER_EAST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_EAST]];
-     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaled(88, cards_height_WNE, Qt::KeepAspectRatioByExpanding)));
+     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaled(88, cards_height_WNE, aspect_ratio_flag)));
      label_cards[PLAYER_EAST][i + adj]->show();
   }
 
@@ -2782,7 +2933,7 @@ void MainWindow::online_show_deck()
     if (ui->actionAuto_Centering->isChecked())
       adj = adjust_pos[online_num_cards[PLAYER_SOUTH]];
 
-    label_cards[PLAYER_SOUTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(cards_width_south, cards_height_south, Qt::KeepAspectRatioByExpanding)));
+    label_cards[PLAYER_SOUTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(cards_width_south, cards_height_south, aspect_ratio_flag)));
     label_cards[PLAYER_SOUTH][i + adj]->show();
 
     if (online_selected[i])

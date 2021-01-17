@@ -103,30 +103,34 @@ int CStatistics::load_stats_file()
 
   value = line.section(' ', 0, 0).toInt();
   if (value < 1) {
-    file.rename(QDir::homePath() + STATS_BACKUP_FILE);             // rename also close the file
+    file.close();
     return FCORRUPTED;
   }
+
   game_started = value;
 
   value = line.section(' ', 1, 1).toInt();
   if (value < 0) {
-    file.rename(QDir::homePath() + STATS_BACKUP_FILE);
+    file.close();
     return FCORRUPTED;
   }
+
   game_finished = value;
 
   value = line.section(' ', 2, 2).toInt();
   if (value < 0) {
-    file.rename(QDir::homePath() + STATS_BACKUP_FILE);
+    file.close();
     return FCORRUPTED;
   }
+
   hands_played = value;
 
   value = line.section(' ', 3, 3).toInt();
   if (value < 0) {
-    file.rename(QDir::homePath() + STATS_BACKUP_FILE);
+    file.close();
     return FCORRUPTED;
   }
+
   undo = value;
 
   int cpt = 0;
@@ -138,7 +142,7 @@ int CStatistics::load_stats_file()
        value = line.section(' ', i, i).toInt();
 
        if ((value < 0) && (i != 5) && (i != 6)) {
-         file.rename(QDir::homePath() + STATS_BACKUP_FILE);
+         file.close();
          return FCORRUPTED;
        }
 
@@ -161,13 +165,15 @@ int CStatistics::load_stats_file()
   }
 
  if (cpt != MAX_PLR_NAMES) {
-   file.rename(QDir::homePath() + STATS_BACKUP_FILE);
+   file.close();
    return FCORRUPTED;
  }
 
  file.close();
+
  return FNOERR;
 }
+
 void CStatistics::update_window(int plr, int stats)
 {
  double total = first_place[plr] + second_place[plr] + third_place[plr] + fourth_place[plr];

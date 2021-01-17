@@ -54,6 +54,7 @@ const int NO_TRICK_BONUS       = 2;
 
 const char suit_names[4][10]   = {"club", "spade", "diamond", "heart"};
 const char SAVEDGAME_FILENAME[20]  = "/.hearts.saved";
+const char SAVEDGAME_CORRUPTED[20] = "/.hearts.saved.bak";
 
 class CHearts : public QObject
 {
