@@ -7,6 +7,7 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
   <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"/></a>
 <br>
 <p>Alternatively, you can download an AppImage from https://www.linux-apps.com/p/1275760/ in the files section.</p>
+<p>Or see below "How to build the source code" on your computer.</p>
 
 ## Game Features:
 - Support online and offline game play.
@@ -59,7 +60,6 @@ make: *** [Makefile:902: qrc_resources.o] Error 1</code></pre>
 ## 2. Install requirements: (under ubuntu 16.04)
 <pre><code> sudo apt-get update
  sudo apt-get install git
- sudo apt-get install qtcreator 
  sudo apt-get install build-essential
  sudo apt-get install qt5-default
  sudo apt-get install liballegro5-dev
