@@ -5,6 +5,8 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 
 <a href="https://snapcraft.io/hearts">
   <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"/></a>
+<br>
+<p>Alternatively, you can download an AppImage from https://www.linux-apps.com/p/1275760/ in the files section.</p>
 
 ## Game Features:
 - Support online and offline game play.
@@ -13,8 +15,8 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 - 5 background images theme: Universe, Ocean, Mt. Fuji, Everest, Desert.
 - Helps [Rules, Online, Settings, Credits]
 - Sounds.
-- Easy cards selection.
-- Detect TRAM (The rest are mine).
+- Easy card selection. (offline only)
+- Detect TRAM "The rest are mine" (offline only).
 
 ## Game Variants [Turn on/off]:
 - Queen of spade breaks heart.
@@ -42,7 +44,6 @@ The card game Hearts for QT 5 and liballegro 5 (for sounds support)
 # How to build the source code.
 
 ## 1. Requirements:
-- Qt Creator (suggested)
 - QT Widget 5
 - QT SVG 5
 - Liballegro 5
@@ -55,7 +56,7 @@ make: *** [Makefile:902: qrc_resources.o] Error 1</code></pre>
 
 <p>If you encounter this message. It means the compiler is running out of Memory and can't build the application. Try to free some memory.</p>
 
-## 2. Install: (under ubuntu 16.04)
+## 2. Install requirements: (under ubuntu 16.04)
 <pre><code> sudo apt-get update
  sudo apt-get install git
  sudo apt-get install qtcreator 
@@ -66,34 +67,21 @@ make: *** [Makefile:902: qrc_resources.o] Error 1</code></pre>
    
 <p>NOTE: libqt5svg5-dev is required since version 1.7</p>
 
-<p>After that you need to download Hearts repertory</p>
+## 3. Download the source code
 <pre><code> git clone https://github.com/Rescator7/Hearts.git</code></pre>
    
-### Option #1: (without QtCreator)
+### 3a. Build the code
 <pre><code> cd Hearts
  qmake Hearts.pro
  make</code></pre>
    
-### Option #2: 
-   <p>Start up qtcreator</p>
-   <pre><code>qtcreator</code></pre>
-   
-   - Open Project (Locate the directory Hearts, and open Hearts/Hearts.pro)
-   - Settings file for "Hearts" from a diffrent environment. Choose: Yes.
-   
-   <p>Maximize window (on the top bar select)</p>
-   
-   - build -> run QMake
-   - build -> build all (wait for about 5 mins to compilation process)
-   - build -> run (if you want)
-   
-   <p>After that the executable of Hearts should be located in a directory like build-Heart-Desktop-Debug/Hearts</p>
-   
-## 3. Licenses: 
- - MIT for the software
- - Cards set: https://github.com/htdebeer/SVG-cards/blob/master/LICENSE
+## 4. Licenses: 
+ - MIT for the software (source code)
+ - Standard cards deck: https://github.com/htdebeer/SVG-cards/blob/master/LICENSE
+ - Nicu (white) cards deck: https://creativecommons.org/licenses/publicdomain/
  - Sounds are CC 3.0 and 1.0
+ - Background images are CC 3.0 and 1.0
  - Icons: (read credits)
- - read credits for all the licenses: https://github.com/Rescator7/Hearts/blob/master/Credits
+ - READ CREDITS for all the licenses details: https://github.com/Rescator7/Hearts/blob/master/Credits
 
 ![screenshoot](https://github.com/Rescator7/Hearts/blob/master/screenshot/SCR1-hearts-1.8.jpg)
