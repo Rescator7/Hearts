@@ -157,3 +157,10 @@
 17 Jan 2021: Updated Backgound images list in Menu->Help->Settings. 
 17 Jan 2021: Corrupted saved game now create a backup ~/.hearts.saved.bak (For analyse)
 
+19 Jan 2021: Version 1.8.5
+-------------------------------------------------------------------------------------------------
+19 Jan 2021: Online play: Rotate the Nicu (white)'s back cards.
+19 Jan 2021: Online play: fixed the rendering of the 3 received cards.
+19 Jan 2021: Updated menu->help->online.
+
+

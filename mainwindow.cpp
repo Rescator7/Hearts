@@ -2901,29 +2901,31 @@ void MainWindow::online_show_deck()
     label_cards[PLAYER_EAST][i]->hide();
   }
 
-  QMatrix rm;
-  rm.rotate(90);
+  QMatrix rm_e, rm_n, rm_w;
+  rm_e.rotate(270);
+  rm_n.rotate(180);
+  rm_w.rotate(90);
 
   int adj = 0;
 
   for (int i=0; i<online_num_cards[PLAYER_WEST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_WEST]];
-     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaled(88, cards_height_WNE, aspect_ratio_flag)));
+     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm_w).scaled(88, cards_height_WNE, aspect_ratio_flag)));
      label_cards[PLAYER_WEST][i + adj]->show();
   }
 
   for (int i=0; i<online_num_cards[PLAYER_NORTH]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_NORTH]];
-     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->scaled(60, 87, aspect_ratio_flag)));
+     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm_n).scaled(60, 87, aspect_ratio_flag)));
      label_cards[PLAYER_NORTH][i + adj]->show();
   }
 
   for (int i=0; i<online_num_cards[PLAYER_EAST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_EAST]];
-     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm).scaled(88, cards_height_WNE, aspect_ratio_flag)));
+     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm_e).scaled(88, cards_height_WNE, aspect_ratio_flag)));
      label_cards[PLAYER_EAST][i + adj]->show();
   }
 
@@ -3556,9 +3558,9 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_myCards[p2] = c2;
             online_myCards[p3] = c3;
 
-            label_cards[PLAYER_SOUTH][p1]->setPixmap(QPixmap::fromImage(deck->get_img_card(c1)->scaledToHeight(cards_height_south)));
-            label_cards[PLAYER_SOUTH][p2]->setPixmap(QPixmap::fromImage(deck->get_img_card(c2)->scaledToHeight(cards_height_south)));
-            label_cards[PLAYER_SOUTH][p3]->setPixmap(QPixmap::fromImage(deck->get_img_card(c3)->scaledToHeight(cards_height_south)));
+            label_cards[PLAYER_SOUTH][p1]->setPixmap(QPixmap::fromImage(deck->get_img_card(c1)->scaled(cards_width_south, cards_height_south, aspect_ratio_flag)));
+            label_cards[PLAYER_SOUTH][p2]->setPixmap(QPixmap::fromImage(deck->get_img_card(c2)->scaled(cards_width_south, cards_height_south, aspect_ratio_flag)));
+            label_cards[PLAYER_SOUTH][p3]->setPixmap(QPixmap::fromImage(deck->get_img_card(c3)->scaled(cards_width_south, cards_height_south, aspect_ratio_flag)));
 
             for (int i=0; i<13; i++)
               online_selected[i] = false;
