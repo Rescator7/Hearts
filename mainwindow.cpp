@@ -3226,6 +3226,7 @@ void MainWindow::on_label_waiting_e_clicked()
 void MainWindow::init_online_game()
 {
   online_table_id = 0;
+  online_game_started = false;
 
   hide_waiting();
 
@@ -3356,7 +3357,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_can_sit = true;
             online_table_id = pList.at(0).toInt();
 
-//          label_waiting[PLAYER_SOUTH]->show();
+            label_waiting[PLAYER_SOUTH]->show();
             label_waiting[PLAYER_WEST]->show();
             label_waiting[PLAYER_NORTH]->show();
             label_waiting[PLAYER_EAST]->show();
@@ -3417,8 +3418,10 @@ void MainWindow::online_action(unsigned int action, QString param)
 
             c1 = convert_char_to_player(pList.at(1));
 
-            if (online_game_started)
+            if (online_game_started) {
+              c1 = convert_chair(c1);
               name = "(" + label_player_name[c1]->text() + ")";
+            }
             else {
               name = "";
               label_waiting[c1]->show();
