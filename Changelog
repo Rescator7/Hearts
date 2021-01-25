@@ -170,3 +170,13 @@
              - "Waiting for a player" not showing on chair SOUTH when joining a table.
              - variable online_game_started not set to false after leaving a table created issue.
 
+23 Jan 2021: Version 1.8.7
+-------------------------------------------------------------------------------------------------
+23 Jan 2021: Hearts is now Qt 6.0 ready.
+             The game can be built using either Qt5, or Qt6.
+
+24 Jan 2021: Online: create table dialogbox buttons are now translatable.
+             Online: leaving server warning buttons are now translatable.
+             Offline: Name in the southern heart "You" is now translatable.
+             Offline: Statistics Reset buttons are now translatable. 
+24 Jan 2021: Added: Tigullio modern card deck.              

@@ -13,9 +13,10 @@ CDeck::CDeck(int deck)
   img_your_turn = new QImage(":/SVG-cards/Default/card-base2.png", "PNG");
 
   switch (deck) {
-     case ENGLISH_DECK:    set_english_deck(); break;
-     case RUSSIAN_DECK:    set_russian_deck(); break;
-     case NICU_WHITE_DECK: set_nicu_white_deck(); break;
+     case ENGLISH_DECK:          set_english_deck(); break;
+     case RUSSIAN_DECK:          set_russian_deck(); break;
+     case NICU_WHITE_DECK:       set_nicu_white_deck(); break;
+     case TIGULLIO_MODERN_DECK : set_tigullio_modern_deck(); break;
 
      default: set_standard_deck();
   }
@@ -296,6 +297,66 @@ void CDeck::set_russian_deck()
   img_back_card = new QImage(":/SVG-cards/Default/back.png", "PNG");
 }
 
+void CDeck::set_tigullio_modern_deck()
+{
+  img_cards[0] = new QImage(":/SVG-cards/tigullio-modern/club_2.png", "PNG");
+  img_cards[1] = new QImage(":/SVG-cards/tigullio-modern/club_3.png", "PNG");
+  img_cards[2] = new QImage(":/SVG-cards/tigullio-modern/club_4.png", "PNG");
+  img_cards[3] = new QImage(":/SVG-cards/tigullio-modern/club_5.png", "PNG");
+  img_cards[4] = new QImage(":/SVG-cards/tigullio-modern/club_6.png", "PNG");
+  img_cards[5] = new QImage(":/SVG-cards/tigullio-modern/club_7.png", "PNG");
+  img_cards[6] = new QImage(":/SVG-cards/tigullio-modern/club_8.png", "PNG");
+  img_cards[7] = new QImage(":/SVG-cards/tigullio-modern/club_9.png", "PNG");
+  img_cards[8] = new QImage(":/SVG-cards/tigullio-modern/club_10.png", "PNG");
+  img_cards[9] = new QImage(":/SVG-cards/tigullio-modern/club_jack.png", "PNG");
+  img_cards[10] = new QImage(":/SVG-cards/tigullio-modern/club_queen.png", "PNG");
+  img_cards[11] = new QImage(":/SVG-cards/tigullio-modern/club_king.png", "PNG");
+  img_cards[12] = new QImage(":/SVG-cards/tigullio-modern/club_1.png", "PNG");
+
+  img_cards[13] = new QImage(":/SVG-cards/tigullio-modern/spade_2.png", "PNG");
+  img_cards[14] = new QImage(":/SVG-cards/tigullio-modern/spade_3.png", "PNG");
+  img_cards[15] = new QImage(":/SVG-cards/tigullio-modern/spade_4.png", "PNG");
+  img_cards[16] = new QImage(":/SVG-cards/tigullio-modern/spade_5.png", "PNG");
+  img_cards[17] = new QImage(":/SVG-cards/tigullio-modern/spade_6.png", "PNG");
+  img_cards[18] = new QImage(":/SVG-cards/tigullio-modern/spade_7.png", "PNG");
+  img_cards[19] = new QImage(":/SVG-cards/tigullio-modern/spade_8.png", "PNG");
+  img_cards[20] = new QImage(":/SVG-cards/tigullio-modern/spade_9.png", "PNG");
+  img_cards[21] = new QImage(":/SVG-cards/tigullio-modern/spade_10.png", "PNG");
+  img_cards[22] = new QImage(":/SVG-cards/tigullio-modern/spade_jack.png", "PNG");
+  img_cards[23] = new QImage(":/SVG-cards/tigullio-modern/spade_queen.png", "PNG");
+  img_cards[24] = new QImage(":/SVG-cards/tigullio-modern/spade_king.png", "PNG");
+  img_cards[25] = new QImage(":/SVG-cards/tigullio-modern/spade_1.png", "PNG");
+
+  img_cards[26] = new QImage(":/SVG-cards/tigullio-modern/diamond_2.png", "PNG");
+  img_cards[27] = new QImage(":/SVG-cards/tigullio-modern/diamond_3.png", "PNG");
+  img_cards[28] = new QImage(":/SVG-cards/tigullio-modern/diamond_4.png", "PNG");
+  img_cards[29] = new QImage(":/SVG-cards/tigullio-modern/diamond_5.png", "PNG");
+  img_cards[30] = new QImage(":/SVG-cards/tigullio-modern/diamond_6.png", "PNG");
+  img_cards[31] = new QImage(":/SVG-cards/tigullio-modern/diamond_7.png", "PNG");
+  img_cards[32] = new QImage(":/SVG-cards/tigullio-modern/diamond_8.png", "PNG");
+  img_cards[33] = new QImage(":/SVG-cards/tigullio-modern/diamond_9.png", "PNG");
+  img_cards[34] = new QImage(":/SVG-cards/tigullio-modern/diamond_10.png", "PNG");
+  img_cards[35] = new QImage(":/SVG-cards/tigullio-modern/diamond_jack.png", "PNG");
+  img_cards[36] = new QImage(":/SVG-cards/tigullio-modern/diamond_queen.png", "PNG");
+  img_cards[37] = new QImage(":/SVG-cards/tigullio-modern/diamond_king.png", "PNG");
+  img_cards[38] = new QImage(":/SVG-cards/tigullio-modern/diamond_1.png", "PNG");
+
+  img_cards[39] = new QImage(":/SVG-cards/tigullio-modern/heart_2.png", "PNG");
+  img_cards[40] = new QImage(":/SVG-cards/tigullio-modern/heart_3.png", "PNG");
+  img_cards[41] = new QImage(":/SVG-cards/tigullio-modern/heart_4.png", "PNG");
+  img_cards[42] = new QImage(":/SVG-cards/tigullio-modern/heart_5.png", "PNG");
+  img_cards[43] = new QImage(":/SVG-cards/tigullio-modern/heart_6.png", "PNG");
+  img_cards[44] = new QImage(":/SVG-cards/tigullio-modern/heart_7.png", "PNG");
+  img_cards[45] = new QImage(":/SVG-cards/tigullio-modern/heart_8.png", "PNG");
+  img_cards[46] = new QImage(":/SVG-cards/tigullio-modern/heart_9.png", "PNG");
+  img_cards[47] = new QImage(":/SVG-cards/tigullio-modern/heart_10.png", "PNG");
+  img_cards[48] = new QImage(":/SVG-cards/tigullio-modern/heart_jack.png", "PNG");
+  img_cards[49] = new QImage(":/SVG-cards/tigullio-modern/heart_queen.png", "PNG");
+  img_cards[50] = new QImage(":/SVG-cards/tigullio-modern/heart_king.png", "PNG");
+  img_cards[51] = new QImage(":/SVG-cards/tigullio-modern/heart_1.png", "PNG");
+
+  img_back_card = new QImage(":/SVG-cards/tigullio-modern/back.png", "PNG");
+}
 CDeck::~CDeck()
 {
   delete img_empty_card;
@@ -340,9 +401,10 @@ void CDeck::set_deck(int deck)
   delete_current_deck();
 
   switch (deck) {
-     case ENGLISH_DECK:    set_english_deck(); break;
-     case RUSSIAN_DECK:    set_russian_deck(); break;
-     case NICU_WHITE_DECK: set_nicu_white_deck(); break;
+     case ENGLISH_DECK:         set_english_deck(); break;
+     case RUSSIAN_DECK:         set_russian_deck(); break;
+     case NICU_WHITE_DECK:      set_nicu_white_deck(); break;
+     case TIGULLIO_MODERN_DECK: set_tigullio_modern_deck(); break;
 
      default: set_standard_deck();
   }

@@ -1,5 +1,7 @@
 #ifdef ONLINE_PLAY
 
+#include <QPushButton>
+
 #include "cgame.h"
 #include "ui_cgame.h"
 #include "define.h"
@@ -9,6 +11,9 @@ CGame::CGame(QWidget *parent) :
     ui(new Ui::CGame)
 {
   ui->setupUi(this);
+
+  ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+  ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
 
   flags = 0;
 }

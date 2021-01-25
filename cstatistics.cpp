@@ -74,7 +74,7 @@ int CStatistics::save_stats_file()
 
   QTextStream out(&file);
 
-  out << game_started << " " << game_finished << " " << hands_played << " " << undo << endl;
+  out << game_started << " " << game_finished << " " << hands_played << " " << undo << EOL;
 
   for (int i=0; i<MAX_PLR_NAMES; i++) {
      out << first_place[i]           << " " << second_place[i]        << " " <<
@@ -82,7 +82,7 @@ int CStatistics::save_stats_file()
             total_score[i]           << " " << best_score[i]          << " " <<
             worst_score[i]           << " " << shoot_moon[i]          << " " <<
             queen_spade_taken[i]     << " " << omnibus_bonus_taken[i] << " " <<
-            no_tricks_bonus_taken[i] << " " << perfect_100_bonus_taken[i] << endl;
+            no_tricks_bonus_taken[i] << " " << perfect_100_bonus_taken[i] << EOL;
   }
 
   file.close();
@@ -304,7 +304,7 @@ void CStatistics::create_window()
   for (int i=0; i<MAX_PLR_NAMES; i++) {
      item_names[i] = new QTableWidgetItem(QString(names[i]));
      item_names[i]->setFlags(item_names[i]->flags() & ~Qt::ItemIsEditable);
-     item_names[i]->setBackgroundColor(color1);
+     item_names[i]->setBackground(color1);
      ui->tableWidget->setItem(i, 0, item_names[i]);
 
      double total = first_place[i] + second_place[i] + third_place[i] + fourth_place[i];
@@ -320,28 +320,28 @@ void CStatistics::create_window()
                   item_first_place[i] = new QTableWidgetItem(QString::number(value) + " (" +
                                                              QString::number(double(value * 100 / total), 'f', 1) + "%)");
                   item_first_place[i]->setFlags(item_first_place[i]->flags() & ~Qt::ItemIsEditable);
-                  item_first_place[i]->setBackgroundColor(color2);
+                  item_first_place[i]->setBackground(color2);
                   ui->tableWidget->setItem(i, 1, item_first_place[i]);
                   break;
          case 1 : value = second_place[i];
                   item_second_place[i] = new QTableWidgetItem(QString::number(value) + " (" +
                                                               QString::number((value * 100 / total), 'f', 1) + "%)");
                   item_second_place[i]->setFlags(item_second_place[i]->flags() & ~Qt::ItemIsEditable);
-                  item_second_place[i]->setBackgroundColor(color1);
+                  item_second_place[i]->setBackground(color1);
                   ui->tableWidget->setItem(i, 2, item_second_place[i]);
                   break;
          case 2 : value = third_place[i];
                   item_third_place[i] = new QTableWidgetItem(QString::number(value) + " (" +
                                                              QString::number(double(value * 100 / total), 'f', 1) + "%)");
                   item_third_place[i]->setFlags(item_third_place[i]->flags() & ~Qt::ItemIsEditable);
-                  item_third_place[i]->setBackgroundColor(color2);
+                  item_third_place[i]->setBackground(color2);
                   ui->tableWidget->setItem(i, 3, item_third_place[i]);
                   break;
          case 3 : value = fourth_place[i];
                   item_fourth_place[i] = new QTableWidgetItem(QString::number(value) + " (" +
                                                               QString::number(double(value * 100 / total), 'f', 1) + "%)");
                   item_fourth_place[i]->setFlags(item_fourth_place[i]->flags() & ~Qt::ItemIsEditable);
-                  item_fourth_place[i]->setBackgroundColor(color1);
+                  item_fourth_place[i]->setBackground(color1);
                   ui->tableWidget->setItem(i, 4, item_fourth_place[i]);
                   break;
        }
@@ -384,14 +384,14 @@ void CStatistics::create_window()
      item_no_tricks[i]->setFlags(item_no_tricks[i]->flags() & ~Qt::ItemIsEditable);
      item_perfect_100[i]->setFlags(item_perfect_100[i]->flags() & ~Qt::ItemIsEditable);
 
-     item_avg_score[i]->setBackgroundColor(color2);
-     item_best_score[i]->setBackgroundColor(color1);
-     item_worst_score[i]->setBackgroundColor(color2);
-     item_shoot_moon[i]->setBackgroundColor(color1);
-     item_queen_spade[i]->setBackgroundColor(color2);
-     item_omnibus[i]->setBackgroundColor(color1);
-     item_no_tricks[i]->setBackgroundColor(color2);
-     item_perfect_100[i]->setBackgroundColor(color1);
+     item_avg_score[i]->setBackground(color2);
+     item_best_score[i]->setBackground(color1);
+     item_worst_score[i]->setBackground(color2);
+     item_shoot_moon[i]->setBackground(color1);
+     item_queen_spade[i]->setBackground(color2);
+     item_omnibus[i]->setBackground(color1);
+     item_no_tricks[i]->setBackground(color2);
+     item_perfect_100[i]->setBackground(color1);
 
      ui->tableWidget->setItem(i, 5, item_avg_score[i]);
      ui->tableWidget->setItem(i, 6, item_best_score[i]);

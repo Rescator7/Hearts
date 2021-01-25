@@ -100,6 +100,7 @@ private slots:
     void on_actionEasy_card_selection_triggered();
     void on_actionStandard_triggered();
     void on_actionNicu_white_triggered();
+    void on_actionTigullio_modern_triggered();
     void on_actionRussian_2_triggered();
     void on_actionEnglish_2_triggered();
     void on_actionAuto_Start_triggered();
@@ -270,6 +271,7 @@ private:
 #endif // FULL_SCREEN
 
     void clear_deck();
+    void set_checked_deck(int deck);
     void show_deck(bool animate, bool replace);
     void set_info_channel_enabled(bool enable);
     void set_language(int lang);

@@ -11,7 +11,13 @@ CClient::CClient()
   init_var();
 
   connect(tcpSocket, &QIODevice::readyRead, this, &CClient::readData);
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+  connect(tcpSocket, SIGNAL(errorOccurred(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
+#else
   connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
+#endif // QT_VERSION
+
   connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
 }
 
@@ -494,8 +500,7 @@ void CClient::socketDisconnected() {
 }
 
 void CClient::send(QString mesg) {
-  QByteArray out;
-  out += mesg;
+  QByteArray out(mesg.toLatin1());
 
   if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
     tcpSocket->write(out);

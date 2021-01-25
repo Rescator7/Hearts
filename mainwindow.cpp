@@ -11,8 +11,12 @@
 #include <QTime>
 #include <QResource>
 #include <QResizeEvent>
-#include <QRect>
-#include <QDesktopWidget>
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+  #include <QRect>
+  #include <QDesktopWidget>
+#endif
+
 #include <string.h>
 
 #include "time.h"
@@ -214,6 +218,7 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
   // Move Under Deck East to Card_E13
   ui->label_deck_e->move(orig_posx_cards[PLAYER_EAST][0], label_cards[PLAYER_EAST][12]->y());
 
+  adj_deck_s = 0;
   switch (config->get_deck_style()) {
     case NICU_WHITE_DECK: adj_deck_n = 10;
                           if (perc_height_cards_s == 100)
@@ -222,11 +227,11 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
                             adj_deck_s = 2;
                           break;
     case ENGLISH_DECK:
-    case RUSSIAN_DECK: adj_deck_s = 0;
-                       adj_deck_n = 6;
+    case RUSSIAN_DECK: adj_deck_n = 6;
                        break;
+    case TIGULLIO_MODERN_DECK: adj_deck_n = 6;
+                               break;
     default: adj_deck_n = 8;
-             adj_deck_s = 0;
   }
 
   // Move Under Deck North to Card N13
@@ -1097,12 +1102,14 @@ void MainWindow::set_settings()
   set_info_channel_enabled(config->is_info_channel());
 
   switch (config->get_deck_style()) {
-    case ENGLISH_DECK:    aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
-                          ui->actionEnglish_2->setChecked(true); break;
-    case RUSSIAN_DECK:    aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
-                          ui->actionRussian_2->setChecked(true); break;
-    case NICU_WHITE_DECK: aspect_ratio_flag = Qt::KeepAspectRatio;
-                          ui->actionNicu_white->setChecked(true); break;
+    case ENGLISH_DECK:         aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+                               ui->actionEnglish_2->setChecked(true); break;
+    case RUSSIAN_DECK:         aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+                               ui->actionRussian_2->setChecked(true); break;
+    case NICU_WHITE_DECK:      aspect_ratio_flag = Qt::KeepAspectRatio;
+                               ui->actionNicu_white->setChecked(true); break;
+    case TIGULLIO_MODERN_DECK: aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+                               ui->actionTigullio_modern->setChecked(true); break;
 
     default: aspect_ratio_flag = Qt::KeepAspectRatio;
              ui->actionStandard->setChecked(true);
@@ -1436,10 +1443,10 @@ void MainWindow::show_deck(bool animate, bool replace)
     label_cards[PLAYER_WEST][i]->hide();
   }
 
-  QMatrix rm_e, rm_n, rm_w;
-  rm_e.rotate(270);
-  rm_n.rotate(180);
-  rm_w.rotate(90);
+  QTransform trf_e, trf_n, trf_w;
+  trf_e.rotate(270, Qt::ZAxis);
+  trf_n.rotate(180, Qt::ZAxis);
+  trf_w.rotate(90, Qt::ZAxis);
 
   int adj = 0, total_empty, card, show_card;
 
@@ -1469,7 +1476,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_EAST)];
-      label_cards[PLAYER_EAST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_e).scaled(88, cards_height_WNE, aspect_ratio_flag)));
+      label_cards[PLAYER_EAST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(trf_e).scaled(88, cards_height_WNE, aspect_ratio_flag)));
       label_cards[PLAYER_EAST][i/4+adj]->show();
     } else
         total_empty++;
@@ -1487,7 +1494,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_NORTH)];
-      label_cards[PLAYER_NORTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_n).scaled(60, 87, aspect_ratio_flag)));
+      label_cards[PLAYER_NORTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(trf_n).scaled(60, 87, aspect_ratio_flag)));
       label_cards[PLAYER_NORTH][i/4+adj]->show();
     } else
         total_empty++;
@@ -1505,7 +1512,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_WEST)];
-      label_cards[PLAYER_WEST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(rm_w).scaled(88, cards_height_WNE, aspect_ratio_flag)));
+      label_cards[PLAYER_WEST][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(trf_w).scaled(88, cards_height_WNE, aspect_ratio_flag)));
       label_cards[PLAYER_WEST][i/4+adj]->show();
     } else
         total_empty++;
@@ -1543,6 +1550,7 @@ void MainWindow::set_info_channel_enabled(bool enable)
         online_show_lineedit(false);
 #endif // ONLINE_PLAY
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #ifdef FULL_SCREEN
       QRect rec = QApplication::desktop()->screenGeometry();
 
@@ -1555,6 +1563,7 @@ void MainWindow::set_info_channel_enabled(bool enable)
 #else
       setFixedHeight(height() - ui->textEdit->height());
 #endif // FULL_SCREEN
+#endif // QT_VERSION
     }
 }
 
@@ -1668,8 +1677,8 @@ void MainWindow::play_card(int card, int plr)
   if ((plr != PLAYER_SOUTH) && (ui->actionAnimate_Play->isChecked())) {
     int pos = hearts->get_card_position(plr, card);
     if (pos != NOT_FOUND) {
-      QMatrix rm;
-      rm.rotate(90);
+      QTransform trf;
+      trf.rotate(90, Qt::ZAxis);
 
       int adj = 0;
 
@@ -1677,7 +1686,7 @@ void MainWindow::play_card(int card, int plr)
          case PLAYER_WEST: if (ui->actionAuto_Centering->isChecked())
                              adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_WEST)];
                            label_cards[PLAYER_WEST][pos+adj]->move(label_cards[PLAYER_WEST][pos+adj]->x() + 15, label_cards[PLAYER_WEST][pos+adj]->y());
-                           label_cards[PLAYER_WEST][pos+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->transformed(rm).scaledToHeight(60)));
+                           label_cards[PLAYER_WEST][pos+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->transformed(trf).scaledToHeight(60)));
                            break;
          case PLAYER_NORTH: if (ui->actionAuto_Centering->isChecked())
                               adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_NORTH)];
@@ -1687,7 +1696,7 @@ void MainWindow::play_card(int card, int plr)
          case PLAYER_EAST:  if (ui->actionAuto_Centering->isChecked())
                               adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_EAST)];
                            label_cards[PLAYER_EAST][pos+adj]->move(label_cards[PLAYER_EAST][pos+adj]->x() - 15, label_cards[PLAYER_EAST][pos+adj]->y());
-                           label_cards[PLAYER_EAST][pos+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->transformed(rm).scaledToHeight(60)));
+                           label_cards[PLAYER_EAST][pos+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->transformed(trf).scaledToHeight(60)));
       }
       delay(config->get_speed(SPEED_ANIMATE_PLAY_CARD));
     }
@@ -2089,6 +2098,8 @@ void MainWindow::on_actionReset_triggered()
   msgBox.setInformativeText(tr("Are you sure?"));
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
   msgBox.setDefaultButton(QMessageBox::No);
+  msgBox.setButtonText(QMessageBox::Yes, tr("Yes"));
+  msgBox.setButtonText(QMessageBox::No, tr("No"));
   int ret = msgBox.exec();
   if (ret == QMessageBox::Yes) {
      stats->reset();
@@ -2145,7 +2156,9 @@ void MainWindow::set_language(int lang)
 
 #ifdef ONLINE_PLAY
  table_list->Translate();
+ if (!online_connected)
 #endif // ONLINE_PLAY
+   label_player_name[PLAYER_SOUTH]->setText(tr("You"));
 
 #ifdef DEBUG
   debug->Translate();
@@ -2269,6 +2282,10 @@ void MainWindow::adjust_under_deck()
      case ENGLISH_DECK:
      case RUSSIAN_DECK:     adj = -3;
                             adj_move_deck_n = -2;
+                            break;
+     case TIGULLIO_MODERN_DECK:
+                            adj = -2;
+                            adj_move_deck_n = -2;
   }
 
   ui->label_deck_e->resize(orig_width_deck_h - adj,
@@ -2309,12 +2326,29 @@ void MainWindow::adjust_under_deck()
 #endif
 }
 
-void MainWindow::on_actionStandard_triggered()
+void MainWindow::set_checked_deck(int deck)
 {
-  ui->actionStandard->setChecked(true);
+  // uncheck all deck
+  ui->actionStandard->setChecked(false);
   ui->actionEnglish_2->setChecked(false);
   ui->actionRussian_2->setChecked(false);
   ui->actionNicu_white->setChecked(false);
+  ui->actionTigullio_modern->setChecked(false);
+
+  // set the selected deck
+  switch (deck) {
+    case ENGLISH_DECK: ui->actionEnglish_2->setChecked(true); break;
+    case RUSSIAN_DECK: ui->actionRussian_2->setChecked(true); break;
+    case NICU_WHITE_DECK: ui->actionNicu_white->setChecked(true); break;
+    case TIGULLIO_MODERN_DECK: ui->actionTigullio_modern->setChecked(true); break;
+
+    default: ui->actionStandard->setChecked(true);
+  }
+}
+
+void MainWindow::on_actionStandard_triggered()
+{
+  set_checked_deck(STANDARD_DECK);
 
   if (config->get_deck_style() == STANDARD_DECK)
     return;
@@ -2344,10 +2378,7 @@ void MainWindow::on_actionStandard_triggered()
 
 void MainWindow::on_actionNicu_white_triggered()
 {
-  ui->actionStandard->setChecked(false);
-  ui->actionEnglish_2->setChecked(false);
-  ui->actionRussian_2->setChecked(false);
-  ui->actionNicu_white->setChecked(true);
+  set_checked_deck(NICU_WHITE_DECK);
 
   if (config->get_deck_style() == NICU_WHITE_DECK)
     return;
@@ -2378,10 +2409,7 @@ void MainWindow::on_actionNicu_white_triggered()
 
 void MainWindow::on_actionEnglish_2_triggered()
 {
-  ui->actionStandard->setChecked(false);
-  ui->actionEnglish_2->setChecked(true);
-  ui->actionRussian_2->setChecked(false);
-  ui->actionNicu_white->setChecked(false);
+  set_checked_deck(ENGLISH_DECK);
 
   if (config->get_deck_style() == ENGLISH_DECK)
     return;
@@ -2412,10 +2440,7 @@ void MainWindow::on_actionEnglish_2_triggered()
 
 void MainWindow::on_actionRussian_2_triggered()
 {
-  ui->actionStandard->setChecked(false);
-  ui->actionEnglish_2->setChecked(false);
-  ui->actionRussian_2->setChecked(true);
-  ui->actionNicu_white->setChecked(false);
+  set_checked_deck(RUSSIAN_DECK);
 
   if (config->get_deck_style() == RUSSIAN_DECK)
     return;
@@ -2439,6 +2464,37 @@ void MainWindow::on_actionRussian_2_triggered()
   refresh_cards_played();
 
   config->set_deck_style(RUSSIAN_DECK);
+
+  adjust_under_deck();
+  set_theme_colors();
+}
+
+void MainWindow::on_actionTigullio_modern_triggered()
+{
+  set_checked_deck(TIGULLIO_MODERN_DECK);
+
+  if (config->get_deck_style() == TIGULLIO_MODERN_DECK)
+    return;
+
+  aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+
+  deck->set_deck(TIGULLIO_MODERN_DECK);
+
+#ifdef DEBUG
+  debug->refresh();
+#endif
+
+#ifdef ONLINE_PLAY
+  if (online_connected)
+    online_show_deck();
+  else
+#endif // ONLINE_PLAY
+
+    show_deck(false, true);
+
+  refresh_cards_played();
+
+  config->set_deck_style(TIGULLIO_MODERN_DECK);
 
   adjust_under_deck();
   set_theme_colors();
@@ -2834,7 +2890,11 @@ void MainWindow::shoot_moon(int plr, int delay)
       msgBox.setWindowTitle(tr("You shoot the moon!"));
       msgBox.setText(tr("What is your choice ?"));
       QPushButton *button_add = msgBox.addButton(tr("Add"), QMessageBox::YesRole);
-      button_add->animateClick(delay * 10); // delay is in cs, animateClick require in ms
+
+      QTimer *timer = new QTimer(this);
+      connect(timer, SIGNAL(timeout()), button_add, SLOT(click()));
+      timer->start(delay * 10); // delay is in cs, and timer in ms
+
       msgBox.addButton(tr("Subtract"), QMessageBox::NoRole);
       msgBox.setDefaultButton(button_add);
       msgBox.exec();
@@ -2901,31 +2961,31 @@ void MainWindow::online_show_deck()
     label_cards[PLAYER_EAST][i]->hide();
   }
 
-  QMatrix rm_e, rm_n, rm_w;
-  rm_e.rotate(270);
-  rm_n.rotate(180);
-  rm_w.rotate(90);
+  QTransform trf_e, trf_n, trf_w;
+  trf_e.rotate(270, Qt::ZAxis);
+  trf_n.rotate(180, Qt::ZAxis);
+  trf_w.rotate(90, Qt::ZAxis);
 
   int adj = 0;
 
   for (int i=0; i<online_num_cards[PLAYER_WEST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_WEST]];
-     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm_w).scaled(88, cards_height_WNE, aspect_ratio_flag)));
+     label_cards[PLAYER_WEST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(trf_w).scaled(88, cards_height_WNE, aspect_ratio_flag)));
      label_cards[PLAYER_WEST][i + adj]->show();
   }
 
   for (int i=0; i<online_num_cards[PLAYER_NORTH]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_NORTH]];
-     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm_n).scaled(60, 87, aspect_ratio_flag)));
+     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(trf_n).scaled(60, 87, aspect_ratio_flag)));
      label_cards[PLAYER_NORTH][i + adj]->show();
   }
 
   for (int i=0; i<online_num_cards[PLAYER_EAST]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_EAST]];
-     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(rm_e).scaled(88, cards_height_WNE, aspect_ratio_flag)));
+     label_cards[PLAYER_EAST][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(trf_e).scaled(88, cards_height_WNE, aspect_ratio_flag)));
      label_cards[PLAYER_EAST][i + adj]->show();
   }
 
@@ -3090,7 +3150,8 @@ void MainWindow::on_actionCreate_Table_triggered()
   if (table.result() == QDialog::Accepted) {
     QString m;
 
-    m.sprintf("new %d", table.get_flags());
+    m = QString("new ") + QString::number(table.get_flags());
+
     client->send(m);
   }
 }
@@ -3980,14 +4041,14 @@ void MainWindow::join_game(int id, char chair)
 
   if (id == online_table_id) {
     if (chair != ' ')
-      m.sprintf("sit %c", chair);
+      m = QString("sit ") + chair;
     else
       return;
   } else {
       if (chair == ' ')
-        m.sprintf("join %d", id);
+        m = QString("join ") + QString::number(id);
       else
-        m.sprintf("join %d %c", id, chair);
+        m = QString("join ") + QString::number(id) + " " + chair;
     }
   client->send(m);
 }
@@ -4035,6 +4096,9 @@ void MainWindow::on_pushButton_exit_clicked()
   msgBox.setInformativeText(tr("Are you sure?"));
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
   msgBox.setDefaultButton(QMessageBox::No);
+  msgBox.setButtonText(QMessageBox::Yes, tr("Yes"));
+  msgBox.setButtonText(QMessageBox::No, tr("No"));
+
   int ret = msgBox.exec();
   if (ret == QMessageBox::Yes) {
     client->send("exit");

@@ -1,9 +1,17 @@
 #ifndef DEFINE
 #define DEFINE
 
-const char version[80] = "Hearts 1.8.6";
+#include <QtGlobal>
+
+const char version[80] = "Hearts 1.8.7";
 
 const int adjust_pos[14] = {0, 6, 6, 5, 4, 4, 3, 3, 2, 2, 1, 1, 0, 0};
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+  #define EOL Qt::endl
+#else
+  #define EOL endl
+#endif
 
 #define NOBODY        -1
 #define PLAYER_SOUTH   0

@@ -2605,6 +2605,7 @@
      <addaction name="actionNicu_white"/>
      <addaction name="actionEnglish_2"/>
      <addaction name="actionRussian_2"/>
+     <addaction name="actionTigullio_modern"/>
     </widget>
     <widget class="QMenu" name="menuGame_Speed">
      <property name="title">
@@ -3031,6 +3032,14 @@
    </property>
    <property name="text">
     <string>Everest</string>
+   </property>
+  </action>
+  <action name="actionTigullio_modern">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Tigullio (modern)</string>
    </property>
   </action>
  </widget>

@@ -178,7 +178,6 @@ public:
 private:
     QTcpSocket *tcpSocket;
     QDataStream in;
-    QNetworkSession *networkSession;
     bool bRegister;
     QString handle;
     QString password;

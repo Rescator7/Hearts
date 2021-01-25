@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QString>
 #include <QTextStream>
+#include <QtGlobal>
 #include "config.h"
 #include "define.h"
 #include "cdeck.h"
@@ -92,6 +93,9 @@ int CConfig::load_config_file() {
         else
         if (value == "nicu_white")
           deck_style = NICU_WHITE_DECK;
+        else
+        if (value == "tigullio_modern")
+          deck_style = TIGULLIO_MODERN_DECK;
 
         continue;
       }
@@ -266,55 +270,56 @@ int CConfig::save_config_file()
   QTextStream out(&file);
 
   if (username.size() && password.size()) {
-    out << "Username = " << username << endl;
-    out << "Password = " << password << endl;
-    out << "Warning = " << (warning ? "true" : "false") << endl;
+    out << "Username = " << username << EOL;
+    out << "Password = " << password << EOL;
+    out << "Warning = " << (warning ? "true" : "false") << EOL;
   }
 
   switch (language) {
-    case LANG_ENGLISH: out << "Language = english" << endl; break;
-    case LANG_FRENCH:  out << "Language = french"  << endl; break;
-    case LANG_RUSSIAN: out << "Language = russian" << endl; break;
+    case LANG_ENGLISH: out << "Language = english" << EOL; break;
+    case LANG_FRENCH:  out << "Language = french"  << EOL; break;
+    case LANG_RUSSIAN: out << "Language = russian" << EOL; break;
   }
 
   switch (deck_style) {
-    case STANDARD_DECK:   out << "Deck_Style = standard" << endl; break;
-    case ENGLISH_DECK:    out << "Deck_Style = english" << endl; break;
-    case RUSSIAN_DECK:    out << "Deck_Style = russian" << endl; break;
-    case NICU_WHITE_DECK: out << "Deck_Style = nicu_white" << endl; break;
+    case STANDARD_DECK:        out << "Deck_Style = standard" << EOL; break;
+    case ENGLISH_DECK:         out << "Deck_Style = english" << EOL; break;
+    case RUSSIAN_DECK:         out << "Deck_Style = russian" << EOL; break;
+    case NICU_WHITE_DECK:      out << "Deck_Style = nicu_white" << EOL; break;
+    case TIGULLIO_MODERN_DECK: out << "Deck_Style = tigullio_modern" << EOL; break;
   }
 
   switch (background) {
-    case BACKGROUND_NONE:     out << "Background = None" << endl; break;
-    case BACKGROUND_UNIVERSE: out << "Background = Universe" << endl; break;
-    case BACKGROUND_OCEAN:    out << "Background = Ocean" << endl; break;
-    case BACKGROUND_EVEREST:  out << "Background = Everest" << endl; break;
-    case BACKGROUND_MT_FUJI:  out << "Background = Mt_Fuji" << endl; break;
-    case BACKGROUND_DESERT:   out << "Background = Desert" << endl; break;
+    case BACKGROUND_NONE:     out << "Background = None" << EOL; break;
+    case BACKGROUND_UNIVERSE: out << "Background = Universe" << EOL; break;
+    case BACKGROUND_OCEAN:    out << "Background = Ocean" << EOL; break;
+    case BACKGROUND_EVEREST:  out << "Background = Everest" << EOL; break;
+    case BACKGROUND_MT_FUJI:  out << "Background = Mt_Fuji" << EOL; break;
+    case BACKGROUND_DESERT:   out << "Background = Desert" << EOL; break;
   }
 
-  out << "Animated_Play = " << (animated_play ? "true" : "false") << endl;
-  out << "Auto_Centering = " << (auto_centering ? "true" : "false") << endl;
-  out << "Cheat_Mode = " << (cheat_mode ? "true" : "false") << endl;
-  out << "Info_Channel = " << (info_channel ? "true" : "false") << endl;
-  out << "Sounds = " << (sounds ? "true" : "false") << endl;
-  out << "Detect_Tram = " << (detect_tram ? "true" : "false") << endl;
-  out << "Easy_Card_Selection = " << (easy_card_selection ? "true" : "false") << endl;
-  out << "Auto_Start = " << (auto_start ? "true" : "false") << endl;
+  out << "Animated_Play = " << (animated_play ? "true" : "false") << EOL;
+  out << "Auto_Centering = " << (auto_centering ? "true" : "false") << EOL;
+  out << "Cheat_Mode = " << (cheat_mode ? "true" : "false") << EOL;
+  out << "Info_Channel = " << (info_channel ? "true" : "false") << EOL;
+  out << "Sounds = " << (sounds ? "true" : "false") << EOL;
+  out << "Detect_Tram = " << (detect_tram ? "true" : "false") << EOL;
+  out << "Easy_Card_Selection = " << (easy_card_selection ? "true" : "false") << EOL;
+  out << "Auto_Start = " << (auto_start ? "true" : "false") << EOL;
 
   switch (speed) {
-    case SPEED_SLOW : out << "Speed = slow" << endl; break;
-    case SPEED_FAST : out << "Speed = fast" << endl; break;
-    default :         out << "Speed = normal" << endl;
+    case SPEED_SLOW : out << "Speed = slow" << EOL; break;
+    case SPEED_FAST : out << "Speed = fast" << EOL; break;
+    default :         out << "Speed = normal" << EOL;
   }
 
-  out << "Perfect_100 = " << (perfect_100 ? "true" : "false") << endl;
-  out << "Omnibus = " << (omnibus ? "true" : "false") << endl;
-  out << "Queen_Spade_Break_Heart = " << (queen_spade_break_heart ? "true" : "false") << endl;
-  out << "No_Trick_Bonus = " << (no_trick_bonus ? "true" : "false") << endl;
-  out << "New_Moon = " << (new_moon ? "true" : "false") << endl;
-  out << "No_Draw = " << (no_draw ? "true" : "false") << endl;
-  out << "Save_Game = " << (save_game ? "true" : "false") << endl;
+  out << "Perfect_100 = " << (perfect_100 ? "true" : "false") << EOL;
+  out << "Omnibus = " << (omnibus ? "true" : "false") << EOL;
+  out << "Queen_Spade_Break_Heart = " << (queen_spade_break_heart ? "true" : "false") << EOL;
+  out << "No_Trick_Bonus = " << (no_trick_bonus ? "true" : "false") << EOL;
+  out << "New_Moon = " << (new_moon ? "true" : "false") << EOL;
+  out << "No_Draw = " << (no_draw ? "true" : "false") << EOL;
+  out << "Save_Game = " << (save_game ? "true" : "false") << EOL;
 
   file.close();
   return FNOERR;

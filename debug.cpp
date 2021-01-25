@@ -54,7 +54,7 @@ CDebug::CDebug(CDeck *d)
   setLayout(layout);
 
   QPalette pal = palette();
-  pal.setColor(QPalette::Background, QColor(63, 159, 82));
+  pal.setColor(QPalette::Window, QColor(63, 159, 82));
   pal.setColor(QPalette::WindowText, Qt::black);
   setPalette(pal);
 

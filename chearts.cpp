@@ -75,35 +75,35 @@ int CHearts::save_game(int plr1, int plr2, int plr3, int plr4)
   QTextStream out(&file);
 
   out << plr1 << " " << plr2 << " "
-      << plr3 << " " << plr4 << endl;                            // plr names idx (0 = whoami)
+      << plr3 << " " << plr4 << EOL;                             // plr names idx (0 = whoami)
 
   out << turn          << " " << hand_turn << " "                // turn, hand turn, plr_best_hand,
       << plr_best_hand << " " << plr_jack_diamond << " "         // plr_jack_diamond, passed_to, current_suit
-      << passed_to     << " " << current_suit << " " << endl;
+      << passed_to     << " " << current_suit << " " << EOL;
 
   out << heart_broken  << " " << hand_score   << " "             // heart_broken, hand_score, best_hand
-      << best_hand     << " " << mode_playing << endl;           // mode_playing
+      << best_hand     << " " << mode_playing << EOL;           // mode_playing
 
   out << plr_hand_score[PLAYER_SOUTH] << " "
       << plr_hand_score[PLAYER_WEST]  << " "                     // players hand_score
       << plr_hand_score[PLAYER_NORTH] << " "
-      << plr_hand_score[PLAYER_EAST]  << endl;
+      << plr_hand_score[PLAYER_EAST]  << EOL;
 
   out << plr_score[PLAYER_SOUTH] << " "
       << plr_score[PLAYER_WEST]  << " "                          // players score
       << plr_score[PLAYER_NORTH] << " "
-      << plr_score[PLAYER_EAST]  << endl;
+      << plr_score[PLAYER_EAST]  << EOL;
 
   out << hand_cards[FIRST_CARD]  << " "
       << hand_cards[SECOND_CARD] << " "                          // hand_cards
       << hand_cards[THIRD_CARD]  << " "
-      << hand_cards[FOURTH_CARD] << endl;
+      << hand_cards[FOURTH_CARD] << EOL;
 
   for (int i=0; i<4; i++) {                                      // player's cards
     for (int i2=0; i2<13; i2++) {
        out << plr_cards[i][i2] << " ";
      }
-     out << endl;
+     out << EOL;
   }
 
   file.close();
