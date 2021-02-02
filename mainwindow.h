@@ -235,6 +235,7 @@ private:
     int orig_height_deck_n;
     int orig_posy_deck_s;
     int orig_posy_deck_n;
+    int orig_posx_deck_e;
 
 #ifdef ONLINE_PLAY
 // private online variables

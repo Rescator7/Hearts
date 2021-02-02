@@ -229,7 +229,8 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
     case ENGLISH_DECK:
     case RUSSIAN_DECK: adj_deck_n = 6;
                        break;
-    case TIGULLIO_MODERN_DECK: adj_deck_n = 6;
+    case TIGULLIO_MODERN_DECK: adj_deck_n = 8;
+                               adj_deck_s = 1;
                                break;
     default: adj_deck_n = 8;
   }
@@ -509,12 +510,16 @@ void MainWindow::resizeWidthSouth(int perc_h) {
 
    int adj = 0;
 
-   if (config->get_deck_style() == NICU_WHITE_DECK) {
-     if (perc_h == 100)
-       adj = 10;
-     else
-       adj = 7;
+   switch (config->get_deck_style()) {
+      case NICU_WHITE_DECK:  if (perc_h == 100)
+                               adj = 10;
+                             else
+                               adj = 7;
+                             break;
+      case TIGULLIO_MODERN_DECK: adj = 3;
+                                 break;
    }
+
    ui->label_deck_s->resize(w, h - adj);
 
 #ifdef ONLINE_PLAY
@@ -684,6 +689,7 @@ void MainWindow::init_vars()
 
   orig_posy_deck_n = ui->label_deck_n->y();
   orig_posy_deck_s = ui->label_deck_s->y();
+  orig_posx_deck_e = ui->label_deck_e->x();
 }
 
 void MainWindow::load_sounds()
@@ -1108,7 +1114,7 @@ void MainWindow::set_settings()
                                ui->actionRussian_2->setChecked(true); break;
     case NICU_WHITE_DECK:      aspect_ratio_flag = Qt::KeepAspectRatio;
                                ui->actionNicu_white->setChecked(true); break;
-    case TIGULLIO_MODERN_DECK: aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+    case TIGULLIO_MODERN_DECK: aspect_ratio_flag = Qt::KeepAspectRatio;
                                ui->actionTigullio_modern->setChecked(true); break;
 
     default: aspect_ratio_flag = Qt::KeepAspectRatio;
@@ -1812,7 +1818,9 @@ void MainWindow::on_label_pass_to_clicked()
     if (hearts->is_card_selected(i))
       cards_received[ptr++] = hearts->get_card(i);
 
+  ui->menuDeck->setDisabled(true);
   reverse_cards_rgb();
+
   show_deck(false, false);
 
 #ifdef __al_included_allegro5_allegro_audio_h
@@ -1825,6 +1833,7 @@ void MainWindow::on_label_pass_to_clicked()
   hearts->sort_plr_cards();
 
   reverse_cards_rgb();
+  ui->menuDeck->setDisabled(false);
 
   show_deck(false, true);
 
@@ -2266,7 +2275,8 @@ void MainWindow::adjust_under_deck()
   int adj = 0;
   int adj_deck_size_s = 0,
       adj_move_deck_s = 0,
-      adj_move_deck_n = 0;
+      adj_move_deck_n = 0,
+      adj_move_deck_e = 0;
 
   switch (config->get_deck_style()) {
      case NICU_WHITE_DECK:  adj_move_deck_s = 4;
@@ -2284,8 +2294,11 @@ void MainWindow::adjust_under_deck()
                             adj_move_deck_n = -2;
                             break;
      case TIGULLIO_MODERN_DECK:
-                            adj = -2;
-                            adj_move_deck_n = -2;
+                            adj = 2;
+                            adj_move_deck_n = 0;
+                            adj_move_deck_s = 1;
+                            adj_move_deck_e = 1;
+                            adj_deck_size_s = 3;
   }
 
   ui->label_deck_e->resize(orig_width_deck_h - adj,
@@ -2300,11 +2313,16 @@ void MainWindow::adjust_under_deck()
   ui->label_deck_s->resize(ui->label_deck_s->width(),
                            ui->label_card_s1->height() - adj_deck_size_s);
 
+
+  // Needed for !FULL_SCREEN mode
   ui->label_deck_n->move(ui->label_deck_n->x(),
                          orig_posy_deck_n + adj_move_deck_n);
 
   ui->label_deck_s->move(ui->label_deck_s->x(),
                          orig_posy_deck_s + adj_move_deck_s);
+
+  ui->label_deck_e->move(orig_posx_deck_e + adj_move_deck_e,
+                         ui->label_deck_e->y());
 
  // Reminder:
  // (a) update() is not working
@@ -2476,7 +2494,7 @@ void MainWindow::on_actionTigullio_modern_triggered()
   if (config->get_deck_style() == TIGULLIO_MODERN_DECK)
     return;
 
-  aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+  aspect_ratio_flag = Qt::KeepAspectRatio;
 
   deck->set_deck(TIGULLIO_MODERN_DECK);
 
@@ -2644,7 +2662,8 @@ void MainWindow::set_theme_colors()
 
    ui->label_pass_to->setStyleSheet(QString("background-color: " + color1));
    for (int i=0; i<13; i++)
-      if (config->get_deck_style() == NICU_WHITE_DECK)
+      if ((config->get_deck_style() == NICU_WHITE_DECK) ||
+          (config->get_deck_style() == TIGULLIO_MODERN_DECK))
         label_cards[PLAYER_SOUTH][i]->setStyleSheet(QString("background-color: transparent"));
       else
         label_cards[PLAYER_SOUTH][i]->setStyleSheet(QString("QWidget {background-color: transparent;}"

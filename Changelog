@@ -180,3 +180,12 @@
              Offline: Name in the southern heart "You" is now translatable.
              Offline: Statistics Reset buttons are now translatable. 
 24 Jan 2021: Added: Tigullio modern card deck.              
+
+02 Feb 2021: Version 1.8.8
+-------------------------------------------------------------------------------------------------
+31 Jan 2021: Converted the Russian deck from .svg to .pgn
+             Orignal russian deck was too big 4.8M in size. Typically a deck is about 1M in size.
+31 Jan 2021: Fixed this issue: Although difficult. It was possible to switch deck during the
+             ~2 seconds delay when receiving the 3 cards after the pass button was triggered. Those
+             3 cards would stay RGB reversed...  
+31 Jan 2021: Adjusted Tigullio modern deck rendering. 
