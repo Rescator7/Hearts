@@ -17,7 +17,7 @@ Connect::Connect(QWidget *parent) :
   button_Register = new QPushButton(tr("Register"));
   ui->buttonBox->addButton(button_Register, QDialogButtonBox::AcceptRole);
 
-  button_Connect = new QPushButton(tr("Connect"));
+  button_Connect = new QPushButton(tr("Connect 2"));
   button_Connect->setDefault(true);
 
   ui->buttonBox->addButton(button_Connect, QDialogButtonBox::AcceptRole);

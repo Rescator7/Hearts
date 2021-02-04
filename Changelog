@@ -189,3 +189,8 @@
              ~2 seconds delay when receiving the 3 cards after the pass button was triggered. Those
              3 cards would stay RGB reversed...  
 31 Jan 2021: Adjusted Tigullio modern deck rendering. 
+
+04 Feb 2021: Version 1.8.9
+-------------------------------------------------------------------------------------------------
+04 Feb 2021: Applied the russian translation fixes (+90 changes) from hearts_ru.ts.patch by Андрей Алыпов (AndnoVember)
+             https://build.opensuse.org/package/show/home:AndnoVember:LXQt/hearts 

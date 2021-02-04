@@ -92,7 +92,7 @@
     <message>
         <location filename="../client.cpp" line="236"/>
         <source>&apos; constains illegal characters. Only alphabetic, numeric &apos;_&apos; and &apos;-&apos; is accepted.</source>
-        <translation>&apos; constains illegal characters. Only alphabetic, numeric &apos;_&apos; and &apos;-&apos; is accepted.</translation>
+        <translation>&apos; contains illegal characters. Only alphabetic, numeric &apos;_&apos; and &apos;-&apos; is accepted.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="240"/>
@@ -265,7 +265,7 @@ Please note: If you were playing that would make you finish in fourth place.</tr
     <message>
         <location filename="../client.cpp" line="331"/>
         <source>Passing card is over. We are now playing.</source>
-        <translation>Passing card is over. We are now playing.</translation>
+        <translation>Passing cards is over. We are now playing.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="334"/>
@@ -642,8 +642,7 @@ Note: require level super user.</translation>
     <message>
         <location filename="../ctable.ui" line="432"/>
         <source>Table list</source>
-        <translatorcomment>Table list</translatorcomment>
-        <translation></translation>
+        <translation>Tables list</translation>
     </message>
     <message>
         <location filename="../ctable.ui" line="860"/>
@@ -685,9 +684,8 @@ Note: require level super user.</translation>
     <name>Connect</name>
     <message>
         <location filename="../connect.ui" line="432"/>
-        <location filename="../connect.cpp" line="20"/>
         <source>Connect</source>
-        <translation>Connect</translation>
+        <translation>Connection</translation>
     </message>
     <message>
         <location filename="../connect.ui" line="460"/>
@@ -718,6 +716,11 @@ Note: require level super user.</translation>
         <location filename="../connect.cpp" line="17"/>
         <source>Register</source>
         <translation>Register</translation>
+    </message>
+    <message>
+        <location filename="../connect.cpp" line="20"/>
+        <source>Connect 2</source>
+        <translation>Connect</translation>
     </message>
     <message>
         <location filename="../connect.cpp" line="25"/>
@@ -945,7 +948,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sound: 403013__inspectorj__ui-confirmation-alert-b5.wav&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Used as: snd_undo&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By: Inspector&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By: InspectorJ&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Info: &amp;quot;UI Confirmation Alert, B5.wav&amp;quot; by InspectorJ (&lt;a href=&quot;http://www.jshaw.co.uk&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;www.jshaw.co.uk&lt;/span&gt;&lt;/a&gt;) of &lt;a href=&quot;http://Freesound.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;Freesound.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Website: &lt;a href=&quot;https://freesound.org/people/InspectorJ/sounds/403013/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://freesound.org/people/InspectorJ/sounds/403013/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;License: &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://creativecommons.org/licenses/by/3.0/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
@@ -1286,96 +1289,96 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Forest</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1160"/>
-        <location filename="../mainwindow.cpp" line="2161"/>
+        <location filename="../mainwindow.cpp" line="1166"/>
+        <location filename="../mainwindow.cpp" line="2170"/>
         <source>You</source>
         <translation>You</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1174"/>
-        <location filename="../mainwindow.cpp" line="2784"/>
+        <location filename="../mainwindow.cpp" line="1180"/>
+        <location filename="../mainwindow.cpp" line="2803"/>
         <source>omnibus </source>
         <translation>omnibus </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1177"/>
-        <location filename="../mainwindow.cpp" line="2786"/>
+        <location filename="../mainwindow.cpp" line="1183"/>
+        <location filename="../mainwindow.cpp" line="2805"/>
         <source>no trick bonus </source>
         <translation>no trick bonus </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1180"/>
-        <location filename="../mainwindow.cpp" line="2788"/>
+        <location filename="../mainwindow.cpp" line="1186"/>
+        <location filename="../mainwindow.cpp" line="2807"/>
         <source>&lt;unknown&gt; </source>
         <translation>&lt;unknown&gt; </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1184"/>
-        <location filename="../mainwindow.cpp" line="2792"/>
+        <location filename="../mainwindow.cpp" line="1190"/>
+        <location filename="../mainwindow.cpp" line="2811"/>
         <source>[Info]: You receive the bonus: </source>
         <translation>[Info]: You receive the bonus: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1184"/>
-        <location filename="../mainwindow.cpp" line="1187"/>
-        <location filename="../mainwindow.cpp" line="2792"/>
-        <location filename="../mainwindow.cpp" line="2795"/>
+        <location filename="../mainwindow.cpp" line="1190"/>
+        <location filename="../mainwindow.cpp" line="1193"/>
+        <location filename="../mainwindow.cpp" line="2811"/>
+        <location filename="../mainwindow.cpp" line="2814"/>
         <source> point(s)</source>
         <translation> point(s)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1186"/>
-        <location filename="../mainwindow.cpp" line="1201"/>
-        <location filename="../mainwindow.cpp" line="1298"/>
-        <location filename="../mainwindow.cpp" line="1338"/>
-        <location filename="../mainwindow.cpp" line="2794"/>
-        <location filename="../mainwindow.cpp" line="2807"/>
-        <location filename="../mainwindow.cpp" line="2916"/>
+        <location filename="../mainwindow.cpp" line="1192"/>
+        <location filename="../mainwindow.cpp" line="1207"/>
+        <location filename="../mainwindow.cpp" line="1304"/>
+        <location filename="../mainwindow.cpp" line="1344"/>
+        <location filename="../mainwindow.cpp" line="2813"/>
+        <location filename="../mainwindow.cpp" line="2826"/>
+        <location filename="../mainwindow.cpp" line="2935"/>
         <source>[Info]: Player &apos;</source>
         <translation>[Info]: Player &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1186"/>
-        <location filename="../mainwindow.cpp" line="2794"/>
+        <location filename="../mainwindow.cpp" line="1192"/>
+        <location filename="../mainwindow.cpp" line="2813"/>
         <source>&apos; receive the bonus: </source>
         <translation>&apos; receive the bonus: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1199"/>
-        <location filename="../mainwindow.cpp" line="2805"/>
+        <location filename="../mainwindow.cpp" line="1205"/>
+        <location filename="../mainwindow.cpp" line="2824"/>
         <source>[Info]: You got the perfect 100!
 [Info]: Your score has been set to 50.</source>
         <translation>[Info]: You got the perfect 100!
 [Info]: Your score has been set to 50.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1201"/>
-        <location filename="../mainwindow.cpp" line="2807"/>
+        <location filename="../mainwindow.cpp" line="1207"/>
+        <location filename="../mainwindow.cpp" line="2826"/>
         <source>&apos; got the perfect 100!
 [Info]: Player &apos;</source>
         <translation>&apos; got the perfect 100!
 [Info]: Player &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1202"/>
-        <location filename="../mainwindow.cpp" line="2808"/>
+        <location filename="../mainwindow.cpp" line="1208"/>
+        <location filename="../mainwindow.cpp" line="2827"/>
         <source>&apos; score has been set to 50.</source>
         <translation>&apos; score has been set to 50.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1214"/>
+        <location filename="../mainwindow.cpp" line="1220"/>
         <source>[Info]: Hearts has been broken!</source>
         <translation>[Info]: Hearts has been broken!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1235"/>
-        <location filename="../mainwindow.cpp" line="2847"/>
+        <location filename="../mainwindow.cpp" line="1241"/>
+        <location filename="../mainwindow.cpp" line="2866"/>
         <source>Drew !</source>
         <translation>Drew !</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1233"/>
-        <location filename="../mainwindow.cpp" line="2849"/>
+        <location filename="../mainwindow.cpp" line="1239"/>
+        <location filename="../mainwindow.cpp" line="2868"/>
         <source>Won !</source>
         <translation>Won !</translation>
     </message>
@@ -1390,284 +1393,284 @@ p, li { white-space: pre-wrap; }
         <translation>The statistics file is corrupted!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="967"/>
+        <location filename="../mainwindow.cpp" line="973"/>
         <source>[Info]: Previous saved game has been loaded!</source>
         <translation>[Info]: Previous saved game has been loaded!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1052"/>
+        <location filename="../mainwindow.cpp" line="1058"/>
         <source>The saved game file is corrupted! Deleted!</source>
         <translation>The saved game file is corrupted! Deleted!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1269"/>
-        <location filename="../mainwindow.cpp" line="2851"/>
+        <location filename="../mainwindow.cpp" line="1275"/>
+        <location filename="../mainwindow.cpp" line="2870"/>
         <source>[Info]: GAME OVER!
 [Info]: Player &apos;</source>
         <translation>[Info]: GAME OVER!
 [Info]: Player &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1270"/>
-        <location filename="../mainwindow.cpp" line="1272"/>
-        <location filename="../mainwindow.cpp" line="1274"/>
         <location filename="../mainwindow.cpp" line="1276"/>
-        <location filename="../mainwindow.cpp" line="2852"/>
-        <location filename="../mainwindow.cpp" line="2854"/>
-        <location filename="../mainwindow.cpp" line="2856"/>
-        <location filename="../mainwindow.cpp" line="2858"/>
+        <location filename="../mainwindow.cpp" line="1278"/>
+        <location filename="../mainwindow.cpp" line="1280"/>
+        <location filename="../mainwindow.cpp" line="1282"/>
+        <location filename="../mainwindow.cpp" line="2871"/>
+        <location filename="../mainwindow.cpp" line="2873"/>
+        <location filename="../mainwindow.cpp" line="2875"/>
+        <location filename="../mainwindow.cpp" line="2877"/>
         <source> point(s) </source>
         <translation> point(s) </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1271"/>
-        <location filename="../mainwindow.cpp" line="1273"/>
-        <location filename="../mainwindow.cpp" line="1275"/>
-        <location filename="../mainwindow.cpp" line="2853"/>
-        <location filename="../mainwindow.cpp" line="2855"/>
-        <location filename="../mainwindow.cpp" line="2857"/>
+        <location filename="../mainwindow.cpp" line="1277"/>
+        <location filename="../mainwindow.cpp" line="1279"/>
+        <location filename="../mainwindow.cpp" line="1281"/>
+        <location filename="../mainwindow.cpp" line="2872"/>
+        <location filename="../mainwindow.cpp" line="2874"/>
+        <location filename="../mainwindow.cpp" line="2876"/>
         <source>
 [Info]: Player &apos;</source>
         <translation>
 [Info]: Player &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1286"/>
-        <location filename="../mainwindow.cpp" line="2868"/>
+        <location filename="../mainwindow.cpp" line="1292"/>
+        <location filename="../mainwindow.cpp" line="2887"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1296"/>
+        <location filename="../mainwindow.cpp" line="1302"/>
         <source>[Info]: You takes the rest!</source>
         <translation>[Info]: You takes the rest!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1298"/>
+        <location filename="../mainwindow.cpp" line="1304"/>
         <source>&apos; takes the rest!</source>
         <translation>&apos; takes the rest!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1316"/>
-        <location filename="../mainwindow.cpp" line="2882"/>
+        <location filename="../mainwindow.cpp" line="1322"/>
+        <location filename="../mainwindow.cpp" line="2901"/>
         <source>[Info]: You shoot the moon!</source>
         <translation>[Info]: You shoot the moon!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1322"/>
-        <location filename="../mainwindow.cpp" line="2890"/>
+        <location filename="../mainwindow.cpp" line="1328"/>
+        <location filename="../mainwindow.cpp" line="2909"/>
         <source>You shoot the moon!</source>
         <translation>You shoot the moon!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1323"/>
-        <location filename="../mainwindow.cpp" line="2891"/>
+        <location filename="../mainwindow.cpp" line="1329"/>
+        <location filename="../mainwindow.cpp" line="2910"/>
         <source>What is your choice ?</source>
         <translation>What is your choice ?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1324"/>
-        <location filename="../mainwindow.cpp" line="2892"/>
+        <location filename="../mainwindow.cpp" line="1330"/>
+        <location filename="../mainwindow.cpp" line="2911"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1325"/>
-        <location filename="../mainwindow.cpp" line="2898"/>
+        <location filename="../mainwindow.cpp" line="1331"/>
+        <location filename="../mainwindow.cpp" line="2917"/>
         <source>Subtract</source>
         <translation>Subtract</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1329"/>
-        <location filename="../mainwindow.cpp" line="2902"/>
+        <location filename="../mainwindow.cpp" line="1335"/>
+        <location filename="../mainwindow.cpp" line="2921"/>
         <source>[Info]: You added 26 pts to everyone&apos;s scores!</source>
         <translation>[Info]: You added 26 pts to everyone&apos;s scores!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1332"/>
-        <location filename="../mainwindow.cpp" line="2906"/>
+        <location filename="../mainwindow.cpp" line="1338"/>
+        <location filename="../mainwindow.cpp" line="2925"/>
         <source>[Info]: You substracted 26 pts to your score!</source>
         <translation>[Info]: You substracted 26 pts to your score!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1338"/>
-        <location filename="../mainwindow.cpp" line="2916"/>
+        <location filename="../mainwindow.cpp" line="1344"/>
+        <location filename="../mainwindow.cpp" line="2935"/>
         <source>&apos; shoot the moon!</source>
         <translation>&apos; shoot the moon!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1344"/>
-        <location filename="../mainwindow.cpp" line="2922"/>
+        <location filename="../mainwindow.cpp" line="1350"/>
+        <location filename="../mainwindow.cpp" line="2941"/>
         <source>information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1393"/>
-        <location filename="../mainwindow.cpp" line="2938"/>
+        <location filename="../mainwindow.cpp" line="1399"/>
+        <location filename="../mainwindow.cpp" line="2957"/>
         <source>[Info]: New scores: &apos;</source>
         <translation>[Info]: New scores: &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1642"/>
+        <location filename="../mainwindow.cpp" line="1648"/>
         <source>You must play the two of clubs!</source>
         <translation>You must play the two of clubs!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1961"/>
+        <location filename="../mainwindow.cpp" line="1970"/>
         <source>[Info]: Starting a new game.</source>
         <translation>[Info]: Starting a new game.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2097"/>
+        <location filename="../mainwindow.cpp" line="2106"/>
         <source>Do you want to reset statistics?</source>
         <translation>Do you want to reset statistics?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2098"/>
-        <location filename="../mainwindow.cpp" line="4096"/>
+        <location filename="../mainwindow.cpp" line="2107"/>
+        <location filename="../mainwindow.cpp" line="4115"/>
         <source>Are you sure?</source>
         <translation>Are you sure?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2101"/>
-        <location filename="../mainwindow.cpp" line="4099"/>
+        <location filename="../mainwindow.cpp" line="2110"/>
+        <location filename="../mainwindow.cpp" line="4118"/>
         <source>Yes</source>
         <translation>Yes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2102"/>
-        <location filename="../mainwindow.cpp" line="4100"/>
+        <location filename="../mainwindow.cpp" line="2111"/>
+        <location filename="../mainwindow.cpp" line="4119"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2106"/>
+        <location filename="../mainwindow.cpp" line="2115"/>
         <source>[Info]: You resetted the statistics!</source>
         <translation>[Info]: You have reset the statistics!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2536"/>
+        <location filename="../mainwindow.cpp" line="2554"/>
         <source>Undo can&apos;t be used during a new moon!</source>
         <translation>Undo can&apos;t be used during a new moon!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2541"/>
+        <location filename="../mainwindow.cpp" line="2559"/>
         <source>Undo is only available during your turn!</source>
         <translation>Undo is only available during your turn!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2560"/>
+        <location filename="../mainwindow.cpp" line="2578"/>
         <source>[Info]: Total cards(s) returned: </source>
         <translation>[Info]: Total cards(s) returned: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2575"/>
+        <location filename="../mainwindow.cpp" line="2593"/>
         <source>There is no undo available!</source>
         <translation>There is no undo available!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2614"/>
+        <location filename="../mainwindow.cpp" line="2632"/>
         <source>Image by: ESO/G. Beccari</source>
         <translation>Image by: ESO/G. Beccari</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2615"/>
+        <location filename="../mainwindow.cpp" line="2633"/>
         <source>Image by: Hiroki Ogawa</source>
         <translation>Image by: Hiroki Ogawa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2617"/>
+        <location filename="../mainwindow.cpp" line="2635"/>
         <source>Image by: grumpylumixuser</source>
         <translation>Image by: grumpylumixuser</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2616"/>
+        <location filename="../mainwindow.cpp" line="2634"/>
         <source>Image by: Jack Soma</source>
         <translation>Image by: Jack Soma</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2618"/>
+        <location filename="../mainwindow.cpp" line="2636"/>
         <source>Image by: Peter Chisholm</source>
         <translation>Image by: Peter Chisholm</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3785"/>
+        <location filename="../mainwindow.cpp" line="3804"/>
         <source>**** ANNOUNCEMENT from </source>
         <translation>**** ANNOUNCEMENT from </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3837"/>
+        <location filename="../mainwindow.cpp" line="3856"/>
         <source>Games  : </source>
         <translation>Games  : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1635"/>
+        <location filename="../mainwindow.cpp" line="1641"/>
         <source>You can&apos;t break hearts yet!</source>
         <translation>You can&apos;t break hearts yet!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1637"/>
+        <location filename="../mainwindow.cpp" line="1643"/>
         <source>You must follow the suit! The lead is in </source>
         <translation>You must follow the suit! The lead is in </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1640"/>
+        <location filename="../mainwindow.cpp" line="1646"/>
         <source>You can&apos;t play the queen of spade on the first hand!</source>
         <translation>You can&apos;t play the queen of spade on the first hand!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1797"/>
-        <location filename="../mainwindow.cpp" line="3049"/>
+        <location filename="../mainwindow.cpp" line="1803"/>
+        <location filename="../mainwindow.cpp" line="3068"/>
         <source>You needs to select 3 cards to pass!</source>
         <translation>You needs to select 3 cards to pass!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1863"/>
+        <location filename="../mainwindow.cpp" line="1872"/>
         <source>[Error]: </source>
         <translation>[Error]: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3836"/>
+        <location filename="../mainwindow.cpp" line="3855"/>
         <source>Your online statistics:<byte value="xd"/>
 </source>
         <translation>Your online statistics:
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3838"/>
+        <location filename="../mainwindow.cpp" line="3857"/>
         <source><byte value="xd"/>
 First  : </source>
         <translation>
 First : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3839"/>
+        <location filename="../mainwindow.cpp" line="3858"/>
         <source><byte value="xd"/>
 Second : </source>
         <translation>
 Second : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3840"/>
+        <location filename="../mainwindow.cpp" line="3859"/>
         <source><byte value="xd"/>
 Third  : </source>
         <translation>
 Third  : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3841"/>
+        <location filename="../mainwindow.cpp" line="3860"/>
         <source><byte value="xd"/>
 Fourth : </source>
         <translation>
 Fourth : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3970"/>
+        <location filename="../mainwindow.cpp" line="3989"/>
         <source>Wrong value ! The range is: [</source>
         <translation>Wrong value ! The range is: [</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4095"/>
+        <location filename="../mainwindow.cpp" line="4114"/>
         <source>Do you want to leave the server?</source>
         <translation>Do you want to leave the server?</translation>
     </message>
