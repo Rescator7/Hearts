@@ -194,3 +194,13 @@
 -------------------------------------------------------------------------------------------------
 04 Feb 2021: Applied the russian translation fixes (+90 changes) from hearts_ru.ts.patch by Андрей Алыпов (AndnoVember)
              https://build.opensuse.org/package/show/home:AndnoVember:LXQt/hearts 
+
+01 Apr 2022: Version 1.8.10
+-------------------------------------------------------------------------------------------------
+05 Feb 2021: Debug: (Nobody) is now translatable.
+05 Feb 2021: CClient::~CClient delete tcpSocket.
+05 Feb 2021: Typo in credits.
+06 Feb 2021: New moon: Computers can now subtract -26.
+31 Mar 2022: New setting: settings->Game_Speed->Customized (Expert mode) 
+             https://github.com/Rescator7/Hearts/issues/3
+

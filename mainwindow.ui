@@ -2614,6 +2614,8 @@
      <addaction name="actionSlow"/>
      <addaction name="actionNormal"/>
      <addaction name="actionFast"/>
+     <addaction name="separator"/>
+     <addaction name="actionCustom_Expert"/>
     </widget>
     <widget class="QMenu" name="menuLanguage_2">
      <property name="title">
@@ -3040,6 +3042,14 @@
    </property>
    <property name="text">
     <string>Tigullio (modern)</string>
+   </property>
+  </action>
+  <action name="actionCustom_Expert">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Customized (Expert)</string>
    </property>
   </action>
  </widget>

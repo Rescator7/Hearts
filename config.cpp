@@ -42,6 +42,15 @@ void CConfig::init_vars()
   new_moon = false;
   no_draw = false;
 
+  expert_speeds[SPEED_PLAY_CARD] = 0;
+  expert_speeds[SPEED_PLAY_TWO_CLUBS] = 0;
+  expert_speeds[SPEED_SHUFFLE] = 0;
+  expert_speeds[SPEED_CLEAR_TABLE] = 0;
+  expert_speeds[SPEED_YOUR_TURN] = 0;
+  expert_speeds[SPEED_PASS_CARDS] = 0;
+  expert_speeds[SPEED_ANIMATE_PASS_CARDS] = 0;
+  expert_speeds[SPEED_ANIMATE_PLAY_CARD] = 0;
+
   speed = SPEED_NORMAL;
 
   username = "";
@@ -109,6 +118,57 @@ int CConfig::load_config_file() {
         else
         if (value == "fast")
           speed = SPEED_FAST;
+        else
+        if (value == "expert")
+          speed = SPEED_EXPERT;
+
+        continue;
+      }
+
+      if (param == "Speed_play_card") {
+        expert_speeds[SPEED_PLAY_CARD] = value.toInt();
+
+        continue;
+      }
+
+      if (param == "Speed_play_two_clubs") {
+        expert_speeds[SPEED_PLAY_TWO_CLUBS] = value.toInt();
+
+        continue;
+      }
+
+      if (param == "Speed_shuffle") {
+        expert_speeds[SPEED_SHUFFLE] = value.toInt();
+
+        continue;
+      }
+
+      if (param == "Speed_clear_table") {
+        expert_speeds[SPEED_CLEAR_TABLE] = value.toInt();
+
+        continue;
+      }
+
+      if (param == "Speed_your_turn") {
+        expert_speeds[SPEED_YOUR_TURN] = value.toInt();
+
+        continue;
+      }
+
+      if (param == "Speed_pass_cards") {
+        expert_speeds[SPEED_PASS_CARDS] = value.toInt();
+
+        continue;
+      }
+
+      if (param == "Speed_animate_pass_cards") {
+        expert_speeds[SPEED_ANIMATE_PASS_CARDS] = value.toInt();
+
+        continue;
+      }
+
+      if (param == "Speed_animate_play_card") {
+        expert_speeds[SPEED_ANIMATE_PLAY_CARD] = value.toInt();
 
         continue;
       }
@@ -203,7 +263,7 @@ int CConfig::load_config_file() {
           // unknown param
       }
 
-      if (cpt > 22) break; // too many lines ?? corrupted file ??
+      if (cpt > 30) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
@@ -224,6 +284,22 @@ int CConfig::set_deck_style(int style) {
 
 int CConfig::set_speed(int s) {
   speed = s;
+
+  return save_config_file();
+}
+
+int CConfig::set_expert_speeds(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8)
+{
+  speed = SPEED_EXPERT;
+
+  expert_speeds[SPEED_PLAY_CARD] = v1;
+  expert_speeds[SPEED_PLAY_TWO_CLUBS] = v2;
+  expert_speeds[SPEED_SHUFFLE] = v3;
+  expert_speeds[SPEED_CLEAR_TABLE] = v4;
+  expert_speeds[SPEED_YOUR_TURN] = v5;
+  expert_speeds[SPEED_PASS_CARDS] = v6;
+  expert_speeds[SPEED_ANIMATE_PASS_CARDS] = v7;
+  expert_speeds[SPEED_ANIMATE_PLAY_CARD] = v8;
 
   return save_config_file();
 }
@@ -310,7 +386,19 @@ int CConfig::save_config_file()
   switch (speed) {
     case SPEED_SLOW : out << "Speed = slow" << EOL; break;
     case SPEED_FAST : out << "Speed = fast" << EOL; break;
-    default :         out << "Speed = normal" << EOL;
+    case SPEED_EXPERT : out << "Speed = expert" << EOL;
+
+                        out << "Speed_play_card = " << expert_speeds[SPEED_PLAY_CARD] << EOL;
+                        out << "Speed_play_two_clubs = " << expert_speeds[SPEED_PLAY_TWO_CLUBS] << EOL;
+                        out << "Speed_shuffle = " << expert_speeds[SPEED_SHUFFLE] << EOL;
+                        out << "Speed_clear_table = " << expert_speeds[SPEED_CLEAR_TABLE] << EOL;
+                        out << "Speed_your_turn = " << expert_speeds[SPEED_YOUR_TURN] << EOL;
+                        out << "Speed_pass_cards = " << expert_speeds[SPEED_PASS_CARDS] << EOL;
+                        out << "Speed_animate_pass_cards = " << expert_speeds[SPEED_ANIMATE_PASS_CARDS] << EOL;
+                        out << "Speed_animate_play_card = " << expert_speeds[SPEED_ANIMATE_PLAY_CARD] << EOL;
+
+                        break;
+    default :           out << "Speed = normal" << EOL;
   }
 
   out << "Perfect_100 = " << (perfect_100 ? "true" : "false") << EOL;
@@ -421,6 +509,9 @@ int CConfig::get_speed() {
 }
 
 int CConfig::get_speed(int type) {
+  if (speed == SPEED_EXPERT)
+    return expert_speeds[type];
+
   switch (type) {
     case SPEED_CLEAR_TABLE: return SPEED_CLEAR_TABLE_VALUES[speed]; break;
     case SPEED_SHUFFLE:     return SPEED_SHUFFLE_VALUES[speed]; break;

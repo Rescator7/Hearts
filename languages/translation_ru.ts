@@ -13,189 +13,189 @@
 <context>
     <name>CClient</name>
     <message>
-        <location filename="../client.cpp" line="110"/>
+        <location filename="../client.cpp" line="112"/>
         <source> says</source>
         <translation> говорит</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="135"/>
+        <location filename="../client.cpp" line="137"/>
         <source>You must play the two of clubs.</source>
         <translation>Вы начинаете игру с двойки треф.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="162"/>
+        <location filename="../client.cpp" line="164"/>
         <source>Command set: </source>
         <translation>Набор команды: </translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="169"/>
+        <location filename="../client.cpp" line="171"/>
         <source>The table is paused</source>
         <translation>Стол остановлен</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="172"/>
+        <location filename="../client.cpp" line="174"/>
         <source>The table is unpaused</source>
         <translation>Стол возобновлён</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="184"/>
-        <location filename="../client.cpp" line="370"/>
-        <location filename="../client.cpp" line="374"/>
+        <location filename="../client.cpp" line="186"/>
+        <location filename="../client.cpp" line="372"/>
+        <location filename="../client.cpp" line="376"/>
         <source>The user &apos;</source>
         <translation>Пользователь &apos;</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="184"/>
+        <location filename="../client.cpp" line="186"/>
         <source>&apos; has been set to level admin!</source>
         <translation>&apos; был установлен на уровне администратора!</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="194"/>
+        <location filename="../client.cpp" line="196"/>
         <source>New password has been set.</source>
         <translation>Новый пароль установлен.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="217"/>
-        <location filename="../client.cpp" line="221"/>
-        <location filename="../client.cpp" line="228"/>
-        <location filename="../client.cpp" line="232"/>
-        <location filename="../client.cpp" line="236"/>
-        <location filename="../client.cpp" line="249"/>
+        <location filename="../client.cpp" line="219"/>
+        <location filename="../client.cpp" line="223"/>
+        <location filename="../client.cpp" line="230"/>
+        <location filename="../client.cpp" line="234"/>
+        <location filename="../client.cpp" line="238"/>
+        <location filename="../client.cpp" line="251"/>
         <source>The Handle &apos;</source>
         <translation>Ручка &apos;</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="217"/>
+        <location filename="../client.cpp" line="219"/>
         <source>&apos; is already registered!</source>
         <translation>&apos; уже зарегистрирован(а)!</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="221"/>
+        <location filename="../client.cpp" line="223"/>
         <source>&apos; is reserved.</source>
         <translation>&apos; зарезервирован(а).</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="225"/>
+        <location filename="../client.cpp" line="227"/>
         <source>Wrong password!</source>
         <translation>Неверный пароль!</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="228"/>
+        <location filename="../client.cpp" line="230"/>
         <source>&apos; is too short. It should contains atlease 3 characters.</source>
         <translation>&apos; слишком короткий. Должен содержать не менее 3 символов.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="232"/>
+        <location filename="../client.cpp" line="234"/>
         <source>&apos; is too long. It should contains a maximum of 8 characters.</source>
         <translation>&apos; слишком длинный. Должен содержать не более 8 символов.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="236"/>
+        <location filename="../client.cpp" line="238"/>
         <source>&apos; constains illegal characters. Only alphabetic, numeric &apos;_&apos; and &apos;-&apos; is accepted.</source>
         <translation>&apos; содержит недопустимые символы. Допускаются только буквенные, числовые, &apos;_&apos; и &apos;-&apos;.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="240"/>
+        <location filename="../client.cpp" line="242"/>
         <source>Your password is too short. It should contains atlease 4 characters.</source>
         <translation>Ваш пароль слишком короткий. Он должен содержать не менее 4 символов.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="243"/>
+        <location filename="../client.cpp" line="245"/>
         <source>Your password is too long. It should contains a maximum of 16 characters.</source>
         <translation>Ваш пароль слишком длинный. Он должен содержать не более 16 символов.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="246"/>
+        <location filename="../client.cpp" line="248"/>
         <source>Your password doesn&apos;t match.</source>
         <translation>Ваш пароль не совпадает.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="249"/>
+        <location filename="../client.cpp" line="251"/>
         <source>&apos; is not registered.</source>
         <translation>&apos; не зарегистрирован.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="255"/>
+        <location filename="../client.cpp" line="257"/>
         <source> second</source>
         <translation> второй</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="257"/>
+        <location filename="../client.cpp" line="259"/>
         <source> hour</source>
         <translation> час</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="262"/>
+        <location filename="../client.cpp" line="264"/>
         <source> minute</source>
         <translation> минут</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="264"/>
+        <location filename="../client.cpp" line="266"/>
         <source>**** Auto-logout because you were idle more than </source>
         <translation>**** Автоматический выход из системы, потому что вы простаивали более </translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="272"/>
+        <location filename="../client.cpp" line="274"/>
         <source>The server is shuting down soon for maintenance.</source>
         <translation>Сервер скоро отключится для обслуживания.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="275"/>
+        <location filename="../client.cpp" line="277"/>
         <source>The server is shuting down now.</source>
         <translation>Сервер отключается.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="278"/>
+        <location filename="../client.cpp" line="280"/>
         <source>This connection is lost due to a reconnection.</source>
         <translation>Это соединение потеряно из-за переподключения.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="281"/>
+        <location filename="../client.cpp" line="283"/>
         <source>The server failed to load your player.</source>
         <translation>Серверу не удалось загрузить вашу учетную запись игрока.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="284"/>
+        <location filename="../client.cpp" line="286"/>
         <source>The server detected flood. Disconnecting.</source>
         <translation>Сервер обнаружил большой поток данных. Разрыв соединения.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="287"/>
+        <location filename="../client.cpp" line="289"/>
         <source>You are already at a table.</source>
         <translation>Вы уже за столом.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="290"/>
+        <location filename="../client.cpp" line="292"/>
         <source>You didn&apos;t join any tables.</source>
         <translation>Вы не присоединились ни к одному столу.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="293"/>
+        <location filename="../client.cpp" line="295"/>
         <source>You can&apos;t sit on that chair. It&apos;s already used.</source>
         <translation>Вы не можете сидеть на этом стуле. Стул уже занят.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="296"/>
+        <location filename="../client.cpp" line="298"/>
         <source>Wait delay. Switching from chair to chair.</source>
         <translation>Задержка. Переход со стула на стул.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="299"/>
+        <location filename="../client.cpp" line="301"/>
         <source>Too many connection from this ip.</source>
         <translation>Слишком много подключений с этого IP.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="302"/>
+        <location filename="../client.cpp" line="304"/>
         <source>Table </source>
         <translation>Стол </translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="302"/>
+        <location filename="../client.cpp" line="304"/>
         <source> not found.</source>
         <translation> не найден.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="400"/>
+        <location filename="../client.cpp" line="402"/>
         <source>help - Show the command list.<byte value="xd"/>
 help &lt;command&gt; - Show &lt;command&gt;&apos;s help.<byte value="xd"/>
 </source>
@@ -204,275 +204,275 @@ help &lt;команда&gt; - Показать справку &lt;команды
 </translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="404"/>
+        <location filename="../client.cpp" line="406"/>
         <source>join &lt;id&gt; - Join table #id.<byte value="xd"/>
 join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</source>
         <translation>join &lt;id&gt; - Присоединиться к столу #id.
 join &lt;id&gt; &lt;стул&gt; - присоединиться к столу #id и сесть на стул (n, s, e, w).</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="408"/>
+        <location filename="../client.cpp" line="410"/>
         <source>leave - Leave a table.<byte value="xd"/>
 Please note: If you were playing that would make you finish in fourth place.</source>
         <translation>leave - Покинуть стол.
 Обратите внимание: если бы вы играли, это заставило бы вас занять четвертое место.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="269"/>
+        <location filename="../client.cpp" line="271"/>
         <source>Unknown command or help file.</source>
         <translation>Неизвестный файл справки или команды.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="306"/>
+        <location filename="../client.cpp" line="308"/>
         <source>The command or help matches: </source>
         <translation>Команда или справка совпадает: </translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="310"/>
+        <location filename="../client.cpp" line="312"/>
         <source>The table is muted.</source>
         <translation>Стол приостановлен.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="313"/>
+        <location filename="../client.cpp" line="315"/>
         <source>You needs to sit to perform this command.</source>
         <translation>Вам нужно сесть, чтобы выполнить эту команду.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="316"/>
+        <location filename="../client.cpp" line="318"/>
         <source>You needs to pass 3 cards.</source>
         <translation>Вам нужно сдать 3 карты.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="319"/>
+        <location filename="../client.cpp" line="321"/>
         <source>The cards has already been passed.</source>
         <translation>Карты уже были сданы.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="322"/>
+        <location filename="../client.cpp" line="324"/>
         <source>Illegal card.</source>
         <translation>Лишняя карта.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="325"/>
+        <location filename="../client.cpp" line="327"/>
         <source>Card not found.</source>
         <translation>Карта не найдена.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="328"/>
+        <location filename="../client.cpp" line="330"/>
         <source>Same card passed twice</source>
         <translation>Одна и та же карта прошла дважды</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="331"/>
+        <location filename="../client.cpp" line="333"/>
         <source>Passing card is over. We are now playing.</source>
         <translation>Передача карт закончена. Мы начинаем игру.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="334"/>
+        <location filename="../client.cpp" line="336"/>
         <source>That game has already started.</source>
         <translation>Эта игра уже началась.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="337"/>
+        <location filename="../client.cpp" line="339"/>
         <source>Can&apos;t join the table is full.</source>
         <translation>Не могу присоединиться к столу - заполнен.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="340"/>
+        <location filename="../client.cpp" line="342"/>
         <source>The game hasn&apos;t started yet.</source>
         <translation>Игра еще не началась.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="343"/>
+        <location filename="../client.cpp" line="345"/>
         <source>It&apos;s not your turn.</source>
         <translation>Это не ваша очередь.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="346"/>
+        <location filename="../client.cpp" line="348"/>
         <source>You can&apos;t break heart yet.</source>
         <translation>Вы пока не можете играть с червей.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="349"/>
+        <location filename="../client.cpp" line="351"/>
         <source>You can&apos;t play the queen of spade.</source>
         <translation>Вы пока не можете играть с Дамы пик.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="352"/>
+        <location filename="../client.cpp" line="354"/>
         <source>Wrong suit.</source>
         <translation>Не та масть.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="355"/>
+        <location filename="../client.cpp" line="357"/>
         <source>You can&apos;t register. The maximum registration from your ip has been reached.</source>
         <translation>Вы не можете зарегистрироваться. Максимальная регистрация с вашего IP была достигнута.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="358"/>
+        <location filename="../client.cpp" line="360"/>
         <source>You already played.</source>
         <translation>Вы уже играли.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="361"/>
+        <location filename="../client.cpp" line="363"/>
         <source>Socket illegal input.</source>
         <translation>Сокет незаконного ввода.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="364"/>
+        <location filename="../client.cpp" line="366"/>
         <source>You did not shoot the moon.</source>
         <translation>Вы не крутили динамо.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="367"/>
+        <location filename="../client.cpp" line="369"/>
         <source>Wrong parameters</source>
         <translation>Неверные параметры</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="370"/>
+        <location filename="../client.cpp" line="372"/>
         <source>&apos; has not been found!</source>
         <translation>&apos; не был найден!</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="374"/>
+        <location filename="../client.cpp" line="376"/>
         <source>&apos; is already an admin!</source>
         <translation>&apos; уже админ!</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="378"/>
+        <location filename="../client.cpp" line="380"/>
         <source>The table is corrupted. Game aborted!</source>
         <translation>Стол повреждён. Игра прервана!</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="384"/>
+        <location filename="../client.cpp" line="386"/>
         <source>You are not the owner of the table!</source>
         <translation>Вы не являетесь владельцем стола!</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="394"/>
+        <location filename="../client.cpp" line="396"/>
         <source>date - Show the current server date.</source>
         <translation>date - Показать текущую дату сервера.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="397"/>
+        <location filename="../client.cpp" line="399"/>
         <source>exit - Exit the server and return to offline playing mode.</source>
         <translation>exit - Выход с сервера и возврат в режим автономной игры.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="412"/>
+        <location filename="../client.cpp" line="414"/>
         <source>moon - Used during new moon to choose between add and substract. Usage: &quot;moon +&quot;  or &quot;mooon -&quot;.</source>
         <translation>moon - используется во время динамо для выбора между сложением и вычитанием. Применение: &apos;moon +&apos; или &apos;moon -&apos;.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="415"/>
+        <location filename="../client.cpp" line="417"/>
         <source>mute - Mute your table. Turn the table in quiet mode play.</source>
         <translation>mute - Приостановите ваш стол. В паузе игры поверните стол.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="418"/>
+        <location filename="../client.cpp" line="420"/>
         <source>new - Create a new table. Usage: New &lt;flags&gt;. Note: Use interface &quot;create table&quot;.</source>
         <translation>new - Создать новый стол. Применение: Новый &lt;flags&gt;. Примечание: используйте интерфейс «Создать стол».</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="421"/>
+        <location filename="../client.cpp" line="423"/>
         <source>pass - Pass your 3 cards. Used by the client when you click button pass.<byte value="xd"/>
 Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
         <translation>pass - Передайте свои 3 карты. Используется клиентом при нажатии на кнопку прохождения.
 Применение: пройти pos1 pos2 pos3. Значения позиций 0-12.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="425"/>
+        <location filename="../client.cpp" line="427"/>
         <source>password - Change your password. Usage: password old new.</source>
         <translation>password - Измените ваш пароль. Применение: пароль старый, затем новый.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="428"/>
+        <location filename="../client.cpp" line="430"/>
         <source>play - Play a card. Usage: play card.</source>
         <translation>play - Сыграйте в карты. Применение: игра в карты.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="431"/>
+        <location filename="../client.cpp" line="433"/>
         <source>say - Say &lt;text&gt; at your table.</source>
         <translation>say - Скажи &lt;текст&gt; за вашим столом.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="434"/>
+        <location filename="../client.cpp" line="436"/>
         <source>sit - Sit on a chair. Usage: Sit &lt;chair&gt;. Values: n,s,w,e</source>
         <translation>sit - Сядьте на стул. Применение: Сядьте &lt;на стул&gt;. Значения: n, s, w, e</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="437"/>
+        <location filename="../client.cpp" line="439"/>
         <source>stats - Show your online statistics.</source>
         <translation>stats - Просмотр вашей статистики онлайн.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="440"/>
+        <location filename="../client.cpp" line="442"/>
         <source>tables - Show the list of tables.</source>
         <translation>tables - Отображает список столов.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="443"/>
+        <location filename="../client.cpp" line="445"/>
         <source>uptime - Show the server version and uptime.</source>
         <translation>uptime - Выводит версию сервера и время выполнения.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="446"/>
+        <location filename="../client.cpp" line="448"/>
         <source>who - Show the list of connected players.</source>
         <translation>who - Показывает список подключенных игроков.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="449"/>
+        <location filename="../client.cpp" line="451"/>
         <source>Start - Start the game. The empty chairs will be played by BOT.</source>
         <translation>Start - Начать игру. Пустые стулья будут заняты ботами.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="453"/>
+        <location filename="../client.cpp" line="455"/>
         <source>admin - Make a user to admin level. Usage: Admin user.<byte value="xd"/>
 Note: require level super user.</source>
         <translation>admin - Сделать пользователя администратором. Применение: Админ пользователь.
 Примечание: Требуется уровень суперпользователя.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="457"/>
+        <location filename="../client.cpp" line="459"/>
         <source>announce - Make a server announcement. Shown to all players.</source>
         <translation>announce - Сделайте объявление на сервере. Показывается всем игрокам.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="460"/>
+        <location filename="../client.cpp" line="462"/>
         <source>pause - Put a table on pause. This must be used for debuging purpose only.</source>
         <translation>pause - Поставьте стол на паузу. Следует использовать только для целей отладки.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="463"/>
+        <location filename="../client.cpp" line="465"/>
         <source>set - Show or set the list of server configuration parameters.</source>
         <translation>set - Отображает или устанавливает список параметров конфигурации сервера.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="466"/>
+        <location filename="../client.cpp" line="468"/>
         <source>shutdown - Shutdown the server.</source>
         <translation>shutdown - Отключение сервера.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="469"/>
+        <location filename="../client.cpp" line="471"/>
         <source>shutoff - Disable create games, and shutdown the server after all current games are finished.</source>
         <translation>shutoff - Отключить создание игры и остановить сервер после завершения всех запущенных игр.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="472"/>
+        <location filename="../client.cpp" line="474"/>
         <source>test - Test a new feature, or bugs. This is a debugging tool. It action may differ, or do nothings.</source>
         <translation>test - Проверка новой функции или ошибки. Это инструмент отладки. Это действие может различаться или ничего не делать.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="517"/>
+        <location filename="../client.cpp" line="519"/>
         <source>The host was not found. Please check the host name and port settings.</source>
         <translation>Сервер не найден. Пожалуйста, проверьте имя хоста и настройки порта.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="520"/>
+        <location filename="../client.cpp" line="522"/>
         <source>The connection was refused by the peer. Make sure the host name and port settings are correct.</source>
         <translation>Соединение было отклонено сервером. Убедитесь, что имя хоста и настройки порта верны.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="525"/>
+        <location filename="../client.cpp" line="527"/>
         <source>The following error occurred: %1.</source>
         <translation>Произошла следующая ошибка: %1.</translation>
     </message>
@@ -480,10 +480,21 @@ Note: require level super user.</source>
 <context>
     <name>CDebug</name>
     <message>
-        <location filename="../debug.cpp" line="17"/>
-        <location filename="../debug.cpp" line="169"/>
+        <location filename="../debug.cpp" line="15"/>
+        <location filename="../debug.cpp" line="177"/>
         <source>Cards history</source>
         <translation>История карт</translation>
+    </message>
+    <message>
+        <location filename="../debug.cpp" line="85"/>
+        <source>You</source>
+        <translation>Вы</translation>
+    </message>
+    <message>
+        <location filename="../debug.cpp" line="90"/>
+        <location filename="../debug.cpp" line="158"/>
+        <source>Nobody</source>
+        <translation>Никто</translation>
     </message>
 </context>
 <context>
@@ -537,6 +548,69 @@ Note: require level super user.</source>
         <location filename="../cgame.cpp" line="16"/>
         <source>Ok</source>
         <translation>Хорошо</translation>
+    </message>
+</context>
+<context>
+    <name>CSpeed</name>
+    <message>
+        <location filename="../speed.ui" line="444"/>
+        <source>Customized speed (Expert mode)</source>
+        <translation>Индивидуальная скорость (экспертный режим)</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="544"/>
+        <source>Play a card</source>
+        <translation>Разыграть карту</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="557"/>
+        <source>Play the two of clubs</source>
+        <translation>Вы начинаете игру с двойки треф</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="576"/>
+        <source>Shuffle the deck</source>
+        <translation>Перемешайте карты</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="589"/>
+        <source>Clear table</source>
+        <translation>Очистить таблицу</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="602"/>
+        <source>Your turn</source>
+        <translation>Твоя очередь</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="615"/>
+        <source>Pass cards</source>
+        <translation>Передайте свои 3 карты</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="628"/>
+        <source>Animate deal cards</source>
+        <translation>Распределенные карты с анимацией</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="644"/>
+        <source>Animate play card</source>
+        <translation>Сыграна анимированная карта</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="852"/>
+        <source>Save</source>
+        <translation>Сохранять</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="865"/>
+        <source>Cancel</source>
+        <translation>Отменять</translation>
+    </message>
+    <message>
+        <location filename="../speed.ui" line="878"/>
+        <source>ms</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -810,7 +884,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Website: &lt;a href=&quot;https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%98%D0%B3%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%BA%D0%B0%D1%80%D1%82%D1%8B?uselang=ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%98%D0%B3%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%BA%D0%B0%D1%80%D1%82%D1%8B?uselang=ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;License: &lt;a href=&quot;https://creativecommons.org/publicdomain/zero/1.0/deed.en&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;https://creativecommons.org/publicdomain/zero/1.0/deed.en&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Images: &lt;/span&gt;Tigullio modern card desck set&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Images: &lt;/span&gt;Tigullio modern card deck set&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Website: &lt;a href=&quot;https://www.opendesktop.org/p/1112687/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;Tigullio Modern &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;License: &lt;a href=&quot;http://www.gnu.org/licenses/lgpl.html
 &quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#5555ff;&quot;&gt;http://www.gnu.org/licenses/lgpl.html &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
@@ -975,13 +1049,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1120"/>
-        <location filename="../mainwindow.ui" line="2920"/>
+        <location filename="../mainwindow.ui" line="2922"/>
         <source>Tables</source>
         <translation>Все столы</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1165"/>
-        <location filename="../mainwindow.ui" line="2915"/>
+        <location filename="../mainwindow.ui" line="2917"/>
         <source>Create Table</source>
         <translation>Создать стол</translation>
     </message>
@@ -1008,7 +1082,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="2471"/>
         <source>credit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2589"/>
@@ -1035,32 +1109,32 @@ p, li { white-space: pre-wrap; }
         <translation>Скорость игры</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2620"/>
+        <location filename="../mainwindow.ui" line="2622"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2628"/>
+        <location filename="../mainwindow.ui" line="2630"/>
         <source>Background</source>
         <translation>Обои на стену</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2652"/>
+        <location filename="../mainwindow.ui" line="2654"/>
         <source>&amp;Help</source>
         <translation>По&amp;мощь</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2661"/>
+        <location filename="../mainwindow.ui" line="2663"/>
         <source>Opt&amp;ions</source>
         <translation>&amp;Параметры</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2672"/>
+        <location filename="../mainwindow.ui" line="2674"/>
         <source>Stats</source>
         <translation>Статистика</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2679"/>
+        <location filename="../mainwindow.ui" line="2681"/>
         <source>&amp;Debug</source>
         <translation>О&amp;тладка</translation>
     </message>
@@ -1069,218 +1143,223 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">&amp;Язык</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2694"/>
+        <location filename="../mainwindow.ui" line="2696"/>
         <source>&amp;New</source>
         <translation>Новая игра</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2699"/>
+        <location filename="../mainwindow.ui" line="2701"/>
         <source>&amp;Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2704"/>
+        <location filename="../mainwindow.ui" line="2706"/>
         <source>&amp;Credits</source>
         <translation>Благодарности</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2715"/>
+        <location filename="../mainwindow.ui" line="2717"/>
         <source>&amp;Detect Tram</source>
         <translation>Остальное моё</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2729"/>
+        <location filename="../mainwindow.ui" line="2731"/>
         <source>&amp;Sounds</source>
         <translation>Звуки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2740"/>
+        <location filename="../mainwindow.ui" line="2742"/>
         <source>&amp;Auto Centering</source>
         <translation>По центру</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2748"/>
+        <location filename="../mainwindow.ui" line="2750"/>
         <source>Cheat &amp;Mode</source>
         <translation>Чужие карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2759"/>
+        <location filename="../mainwindow.ui" line="2761"/>
         <source>&amp;Info Channel</source>
         <translation>Инфоканал</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2764"/>
+        <location filename="../mainwindow.ui" line="2766"/>
         <source>&amp;Rules</source>
         <translation>Правила</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2772"/>
+        <location filename="../mainwindow.ui" line="2774"/>
         <source>&amp;Perfect 100</source>
         <translation>Ровно 100</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2780"/>
+        <location filename="../mainwindow.ui" line="2782"/>
         <source>&amp;Omnibus</source>
         <translation>Омнибус</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2788"/>
+        <location filename="../mainwindow.ui" line="2790"/>
         <source>&amp;Queen Spade Break Heart</source>
         <translation>Дама пик открывает червы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2796"/>
+        <location filename="../mainwindow.ui" line="2798"/>
         <source>&amp;No Trick Bonus</source>
         <translation>Бонус за ноль взяток</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2804"/>
+        <location filename="../mainwindow.ui" line="2806"/>
         <source>New &amp;Moon</source>
         <translation>Новая луна</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2812"/>
+        <location filename="../mainwindow.ui" line="2814"/>
         <source>No &amp;Draw</source>
         <translation>Без ничьи</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2817"/>
+        <location filename="../mainwindow.ui" line="2819"/>
         <source>&amp;Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2828"/>
+        <location filename="../mainwindow.ui" line="2830"/>
         <source>Save &amp;Game (Quit)</source>
         <translation>Сохранить при выходе</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2833"/>
+        <location filename="../mainwindow.ui" line="2835"/>
         <source>&amp;Show</source>
         <translation>Просмотр</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2838"/>
+        <location filename="../mainwindow.ui" line="2840"/>
         <source>&amp;Reset</source>
         <translation>Сброс</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2843"/>
+        <location filename="../mainwindow.ui" line="2845"/>
         <source>&amp;Cards History</source>
         <translation>История карт</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2851"/>
-        <location filename="../mainwindow.ui" line="2905"/>
+        <location filename="../mainwindow.ui" line="2853"/>
+        <location filename="../mainwindow.ui" line="2907"/>
         <source>&amp;English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2859"/>
-        <location filename="../mainwindow.ui" line="2897"/>
+        <location filename="../mainwindow.ui" line="2861"/>
+        <location filename="../mainwindow.ui" line="2899"/>
         <source>&amp;Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2867"/>
+        <location filename="../mainwindow.ui" line="2869"/>
         <source>&amp;French</source>
         <translation>Французский</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2878"/>
+        <location filename="../mainwindow.ui" line="2880"/>
         <source>&amp;Easy card selection</source>
         <translation>Простой выбор карты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2889"/>
+        <location filename="../mainwindow.ui" line="2891"/>
         <source>&amp;Standard</source>
         <translation>Стандартная</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2910"/>
+        <location filename="../mainwindow.ui" line="2912"/>
         <source>Connect</source>
         <translation>Cоединить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2925"/>
+        <location filename="../mainwindow.ui" line="2927"/>
         <source>Online</source>
         <translation>Онлайн</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2930"/>
+        <location filename="../mainwindow.ui" line="2932"/>
         <source>Cards Played</source>
         <translation>Карты Сыграны</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2938"/>
+        <location filename="../mainwindow.ui" line="2940"/>
         <source>Slow</source>
         <translation>Медленный</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2946"/>
+        <location filename="../mainwindow.ui" line="2948"/>
         <source>Normal</source>
         <translation>Обычный</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2954"/>
+        <location filename="../mainwindow.ui" line="2956"/>
         <source>Fast</source>
         <translation>Быстро</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2962"/>
+        <location filename="../mainwindow.ui" line="2964"/>
         <source>Auto Start</source>
         <translation>Автоматический запуск</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2973"/>
+        <location filename="../mainwindow.ui" line="2975"/>
         <source>Animated Play</source>
         <translation>Анимированная игра</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2978"/>
+        <location filename="../mainwindow.ui" line="2980"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2986"/>
+        <location filename="../mainwindow.ui" line="2988"/>
         <source>None</source>
         <translation>Пустой</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2994"/>
+        <location filename="../mainwindow.ui" line="2996"/>
         <source>Univers</source>
         <translation>Вселенная</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3002"/>
+        <location filename="../mainwindow.ui" line="3004"/>
         <source>Ocean</source>
         <translation>Океан</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3010"/>
+        <location filename="../mainwindow.ui" line="3012"/>
         <source>Mt. Fuji</source>
         <translation>Гора Фудзи</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3026"/>
+        <location filename="../mainwindow.ui" line="3028"/>
         <source>Nicu (white)</source>
         <translation>Nicu (white)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3034"/>
+        <location filename="../mainwindow.ui" line="3036"/>
         <source>Everest</source>
         <translation>Эверест</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3042"/>
+        <location filename="../mainwindow.ui" line="3044"/>
         <source>Tigullio (modern)</source>
         <translation>Tigullio (modern)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3052"/>
+        <source>Customized (Expert)</source>
+        <translation>Индивидуальные (Эксперт)</translation>
     </message>
     <message>
         <source>Sakura</source>
         <translation type="vanished">Сакура</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3018"/>
+        <location filename="../mainwindow.ui" line="3020"/>
         <source>Desert</source>
         <translation>Пустыня</translation>
     </message>
@@ -1289,388 +1368,389 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Лес</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1166"/>
-        <location filename="../mainwindow.cpp" line="2170"/>
+        <location filename="../mainwindow.cpp" line="994"/>
+        <location filename="../mainwindow.cpp" line="1177"/>
+        <location filename="../mainwindow.cpp" line="2182"/>
         <source>You</source>
         <translation>Вы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1180"/>
-        <location filename="../mainwindow.cpp" line="2803"/>
+        <location filename="../mainwindow.cpp" line="1191"/>
+        <location filename="../mainwindow.cpp" line="2808"/>
         <source>omnibus </source>
         <translation>oмнибус </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1183"/>
-        <location filename="../mainwindow.cpp" line="2805"/>
+        <location filename="../mainwindow.cpp" line="1194"/>
+        <location filename="../mainwindow.cpp" line="2810"/>
         <source>no trick bonus </source>
         <translation>бонус за ноль взяток </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1186"/>
-        <location filename="../mainwindow.cpp" line="2807"/>
+        <location filename="../mainwindow.cpp" line="1197"/>
+        <location filename="../mainwindow.cpp" line="2812"/>
         <source>&lt;unknown&gt; </source>
         <translation>&lt;неизвестный&gt; </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1190"/>
-        <location filename="../mainwindow.cpp" line="2811"/>
+        <location filename="../mainwindow.cpp" line="1201"/>
+        <location filename="../mainwindow.cpp" line="2816"/>
         <source>[Info]: You receive the bonus: </source>
         <translation>[Инфо]: Вы получаете бонус: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1190"/>
-        <location filename="../mainwindow.cpp" line="1193"/>
-        <location filename="../mainwindow.cpp" line="2811"/>
-        <location filename="../mainwindow.cpp" line="2814"/>
+        <location filename="../mainwindow.cpp" line="1201"/>
+        <location filename="../mainwindow.cpp" line="1204"/>
+        <location filename="../mainwindow.cpp" line="2816"/>
+        <location filename="../mainwindow.cpp" line="2819"/>
         <source> point(s)</source>
         <translation> баллов</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1192"/>
-        <location filename="../mainwindow.cpp" line="1207"/>
-        <location filename="../mainwindow.cpp" line="1304"/>
-        <location filename="../mainwindow.cpp" line="1344"/>
-        <location filename="../mainwindow.cpp" line="2813"/>
-        <location filename="../mainwindow.cpp" line="2826"/>
-        <location filename="../mainwindow.cpp" line="2935"/>
+        <location filename="../mainwindow.cpp" line="1203"/>
+        <location filename="../mainwindow.cpp" line="1218"/>
+        <location filename="../mainwindow.cpp" line="1315"/>
+        <location filename="../mainwindow.cpp" line="1355"/>
+        <location filename="../mainwindow.cpp" line="2818"/>
+        <location filename="../mainwindow.cpp" line="2831"/>
+        <location filename="../mainwindow.cpp" line="2940"/>
         <source>[Info]: Player &apos;</source>
         <translation>[Инфо]: Игрок &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1192"/>
-        <location filename="../mainwindow.cpp" line="2813"/>
+        <location filename="../mainwindow.cpp" line="1203"/>
+        <location filename="../mainwindow.cpp" line="2818"/>
         <source>&apos; receive the bonus: </source>
         <translation>&apos; получить бонус: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1205"/>
-        <location filename="../mainwindow.cpp" line="2824"/>
+        <location filename="../mainwindow.cpp" line="1216"/>
+        <location filename="../mainwindow.cpp" line="2829"/>
         <source>[Info]: You got the perfect 100!
 [Info]: Your score has been set to 50.</source>
         <translation>[Инфо]: Вы получили 100 баллов!
 [Инфо]: ваш счет был сброшен до 50.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1207"/>
-        <location filename="../mainwindow.cpp" line="2826"/>
+        <location filename="../mainwindow.cpp" line="1218"/>
+        <location filename="../mainwindow.cpp" line="2831"/>
         <source>&apos; got the perfect 100!
 [Info]: Player &apos;</source>
         <translation>&apos; получил ровно 100!
 [Информация]: игрок &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1208"/>
-        <location filename="../mainwindow.cpp" line="2827"/>
+        <location filename="../mainwindow.cpp" line="1219"/>
+        <location filename="../mainwindow.cpp" line="2832"/>
         <source>&apos; score has been set to 50.</source>
         <translation>&apos; ваш счет был сброшен до 50.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1220"/>
+        <location filename="../mainwindow.cpp" line="1231"/>
         <source>[Info]: Hearts has been broken!</source>
         <translation>[Инфо]: Червы в игре!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1241"/>
-        <location filename="../mainwindow.cpp" line="2866"/>
+        <location filename="../mainwindow.cpp" line="1252"/>
+        <location filename="../mainwindow.cpp" line="2871"/>
         <source>Drew !</source>
         <translation>Ничья !</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1239"/>
-        <location filename="../mainwindow.cpp" line="2868"/>
+        <location filename="../mainwindow.cpp" line="1250"/>
+        <location filename="../mainwindow.cpp" line="2873"/>
         <source>Won !</source>
         <translation>Выиграл(а) !</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="122"/>
+        <location filename="../mainwindow.cpp" line="127"/>
         <source>Welcome to </source>
         <translation>Добро пожаловать в </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="125"/>
+        <location filename="../mainwindow.cpp" line="130"/>
         <source>The statistics file is corrupted!</source>
         <translation>[Ошибка]: Файл статистики повреждён!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="973"/>
+        <location filename="../mainwindow.cpp" line="979"/>
         <source>[Info]: Previous saved game has been loaded!</source>
         <translation>[Инфо]: Предыдущая сохранённая игра загружена!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1058"/>
+        <location filename="../mainwindow.cpp" line="1067"/>
         <source>The saved game file is corrupted! Deleted!</source>
         <translation>[Ошибка]: Сохранённой игры файл повреждён! Удаляется!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1275"/>
-        <location filename="../mainwindow.cpp" line="2870"/>
+        <location filename="../mainwindow.cpp" line="1286"/>
+        <location filename="../mainwindow.cpp" line="2875"/>
         <source>[Info]: GAME OVER!
 [Info]: Player &apos;</source>
         <translation>[Инфо]: Игра окончена!
 [Инфо]: Игрок &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1276"/>
-        <location filename="../mainwindow.cpp" line="1278"/>
-        <location filename="../mainwindow.cpp" line="1280"/>
-        <location filename="../mainwindow.cpp" line="1282"/>
-        <location filename="../mainwindow.cpp" line="2871"/>
-        <location filename="../mainwindow.cpp" line="2873"/>
-        <location filename="../mainwindow.cpp" line="2875"/>
-        <location filename="../mainwindow.cpp" line="2877"/>
+        <location filename="../mainwindow.cpp" line="1287"/>
+        <location filename="../mainwindow.cpp" line="1289"/>
+        <location filename="../mainwindow.cpp" line="1291"/>
+        <location filename="../mainwindow.cpp" line="1293"/>
+        <location filename="../mainwindow.cpp" line="2876"/>
+        <location filename="../mainwindow.cpp" line="2878"/>
+        <location filename="../mainwindow.cpp" line="2880"/>
+        <location filename="../mainwindow.cpp" line="2882"/>
         <source> point(s) </source>
         <translation> очка(о)(ов) </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1277"/>
-        <location filename="../mainwindow.cpp" line="1279"/>
-        <location filename="../mainwindow.cpp" line="1281"/>
-        <location filename="../mainwindow.cpp" line="2872"/>
-        <location filename="../mainwindow.cpp" line="2874"/>
-        <location filename="../mainwindow.cpp" line="2876"/>
+        <location filename="../mainwindow.cpp" line="1288"/>
+        <location filename="../mainwindow.cpp" line="1290"/>
+        <location filename="../mainwindow.cpp" line="1292"/>
+        <location filename="../mainwindow.cpp" line="2877"/>
+        <location filename="../mainwindow.cpp" line="2879"/>
+        <location filename="../mainwindow.cpp" line="2881"/>
         <source>
 [Info]: Player &apos;</source>
         <translation>
 [Инфо]: Игрок &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1292"/>
-        <location filename="../mainwindow.cpp" line="2887"/>
+        <location filename="../mainwindow.cpp" line="1303"/>
+        <location filename="../mainwindow.cpp" line="2892"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1302"/>
+        <location filename="../mainwindow.cpp" line="1313"/>
         <source>[Info]: You takes the rest!</source>
         <translation>[Инфо]: Не сыгранные карты Ваши!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1304"/>
+        <location filename="../mainwindow.cpp" line="1315"/>
         <source>&apos; takes the rest!</source>
         <translation>&apos; возьмите оставшиеся карты!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1322"/>
-        <location filename="../mainwindow.cpp" line="2901"/>
+        <location filename="../mainwindow.cpp" line="1333"/>
+        <location filename="../mainwindow.cpp" line="2906"/>
         <source>[Info]: You shoot the moon!</source>
         <translation>[Инфо]: Вы прокрутили динамо!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1328"/>
-        <location filename="../mainwindow.cpp" line="2909"/>
+        <location filename="../mainwindow.cpp" line="1339"/>
+        <location filename="../mainwindow.cpp" line="2914"/>
         <source>You shoot the moon!</source>
         <translation>Вы прокрутили динамо!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1329"/>
-        <location filename="../mainwindow.cpp" line="2910"/>
+        <location filename="../mainwindow.cpp" line="1340"/>
+        <location filename="../mainwindow.cpp" line="2915"/>
         <source>What is your choice ?</source>
         <translation>Каков твой выбор ?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1330"/>
-        <location filename="../mainwindow.cpp" line="2911"/>
+        <location filename="../mainwindow.cpp" line="1341"/>
+        <location filename="../mainwindow.cpp" line="2916"/>
         <source>Add</source>
         <translation>Прибавить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1331"/>
-        <location filename="../mainwindow.cpp" line="2917"/>
+        <location filename="../mainwindow.cpp" line="1342"/>
+        <location filename="../mainwindow.cpp" line="2922"/>
         <source>Subtract</source>
         <translation>Вычесть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1335"/>
-        <location filename="../mainwindow.cpp" line="2921"/>
+        <location filename="../mainwindow.cpp" line="1346"/>
+        <location filename="../mainwindow.cpp" line="2926"/>
         <source>[Info]: You added 26 pts to everyone&apos;s scores!</source>
         <translation>[Инфо]: Вы добавили 26 очков к очкам каждого!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1338"/>
-        <location filename="../mainwindow.cpp" line="2925"/>
+        <location filename="../mainwindow.cpp" line="1349"/>
+        <location filename="../mainwindow.cpp" line="2930"/>
         <source>[Info]: You substracted 26 pts to your score!</source>
         <translation>[Инфо]: Вы вычли 26 очков с вашего счёта!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1344"/>
-        <location filename="../mainwindow.cpp" line="2935"/>
+        <location filename="../mainwindow.cpp" line="1355"/>
+        <location filename="../mainwindow.cpp" line="2940"/>
         <source>&apos; shoot the moon!</source>
         <translation>&apos; прокрутил(а) динамо!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1350"/>
-        <location filename="../mainwindow.cpp" line="2941"/>
+        <location filename="../mainwindow.cpp" line="1361"/>
+        <location filename="../mainwindow.cpp" line="2946"/>
         <source>information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1399"/>
-        <location filename="../mainwindow.cpp" line="2957"/>
+        <location filename="../mainwindow.cpp" line="1410"/>
+        <location filename="../mainwindow.cpp" line="2962"/>
         <source>[Info]: New scores: &apos;</source>
         <translation>[Инфо]: Новые результаты: &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1648"/>
+        <location filename="../mainwindow.cpp" line="1659"/>
         <source>You must play the two of clubs!</source>
         <translation>Вы должны играть двух клубах!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1970"/>
+        <location filename="../mainwindow.cpp" line="1981"/>
         <source>[Info]: Starting a new game.</source>
         <translation>[Инфо]: Старт новой игры.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2106"/>
+        <location filename="../mainwindow.cpp" line="2117"/>
         <source>Do you want to reset statistics?</source>
         <translation>Вы хотите сбросить статистику?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2107"/>
-        <location filename="../mainwindow.cpp" line="4115"/>
+        <location filename="../mainwindow.cpp" line="2118"/>
+        <location filename="../mainwindow.cpp" line="4120"/>
         <source>Are you sure?</source>
         <translation>Вы уверены?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2110"/>
-        <location filename="../mainwindow.cpp" line="4118"/>
+        <location filename="../mainwindow.cpp" line="2121"/>
+        <location filename="../mainwindow.cpp" line="4123"/>
         <source>Yes</source>
         <translation>Да</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2111"/>
-        <location filename="../mainwindow.cpp" line="4119"/>
+        <location filename="../mainwindow.cpp" line="2122"/>
+        <location filename="../mainwindow.cpp" line="4124"/>
         <source>No</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2115"/>
+        <location filename="../mainwindow.cpp" line="2126"/>
         <source>[Info]: You resetted the statistics!</source>
         <translation>[Инфо]: Вы сбросили статистику!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2554"/>
+        <location filename="../mainwindow.cpp" line="2559"/>
         <source>Undo can&apos;t be used during a new moon!</source>
         <translation>Отменить нельзя во время новолуния!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2559"/>
+        <location filename="../mainwindow.cpp" line="2564"/>
         <source>Undo is only available during your turn!</source>
         <translation>Отменить можно только во время вашего хода!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2578"/>
+        <location filename="../mainwindow.cpp" line="2583"/>
         <source>[Info]: Total cards(s) returned: </source>
         <translation>[Инфо]: Общее количество возвращенных карт: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2593"/>
+        <location filename="../mainwindow.cpp" line="2598"/>
         <source>There is no undo available!</source>
         <translation>На данный момент отмена невозможна!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2632"/>
+        <location filename="../mainwindow.cpp" line="2637"/>
         <source>Image by: ESO/G. Beccari</source>
         <translation>Автор изображения: ESO/G. Beccari</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2633"/>
+        <location filename="../mainwindow.cpp" line="2638"/>
         <source>Image by: Hiroki Ogawa</source>
         <translation>Автор изображения: Hiroki Ogawa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2635"/>
+        <location filename="../mainwindow.cpp" line="2640"/>
         <source>Image by: grumpylumixuser</source>
         <translation>Автор изображения: grumpylumixuser</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2634"/>
+        <location filename="../mainwindow.cpp" line="2639"/>
         <source>Image by: Jack Soma</source>
         <translation>Автор изображения: Jack Soma</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2636"/>
+        <location filename="../mainwindow.cpp" line="2641"/>
         <source>Image by: Peter Chisholm</source>
         <translation>Автор изображения: Peter Chisholm</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3804"/>
+        <location filename="../mainwindow.cpp" line="3809"/>
         <source>**** ANNOUNCEMENT from </source>
         <translation>**** Объявление от </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3856"/>
+        <location filename="../mainwindow.cpp" line="3861"/>
         <source>Games  : </source>
         <translation>Игры : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1641"/>
+        <location filename="../mainwindow.cpp" line="1652"/>
         <source>You can&apos;t break hearts yet!</source>
         <translation>Вы не можете пока играть червами!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1643"/>
+        <location filename="../mainwindow.cpp" line="1654"/>
         <source>You must follow the suit! The lead is in </source>
         <translation>Вы должны следить за мастью! Масть </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1646"/>
+        <location filename="../mainwindow.cpp" line="1657"/>
         <source>You can&apos;t play the queen of spade on the first hand!</source>
         <translation>Вы не можете разыграть Пиковую Даму при первой сдаче!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1803"/>
-        <location filename="../mainwindow.cpp" line="3068"/>
+        <location filename="../mainwindow.cpp" line="1814"/>
+        <location filename="../mainwindow.cpp" line="3073"/>
         <source>You needs to select 3 cards to pass!</source>
         <translation>Вам нужно выбрать 3 карты для продолжения!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1872"/>
+        <location filename="../mainwindow.cpp" line="1883"/>
         <source>[Error]: </source>
         <translation>[Ошибка]: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3855"/>
+        <location filename="../mainwindow.cpp" line="3860"/>
         <source>Your online statistics:<byte value="xd"/>
 </source>
         <translation>Ваша онлайн статистика:
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3857"/>
+        <location filename="../mainwindow.cpp" line="3862"/>
         <source><byte value="xd"/>
 First  : </source>
         <translation>
 Первый : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3858"/>
+        <location filename="../mainwindow.cpp" line="3863"/>
         <source><byte value="xd"/>
 Second : </source>
         <translation>
 Второй : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3859"/>
+        <location filename="../mainwindow.cpp" line="3864"/>
         <source><byte value="xd"/>
 Third  : </source>
         <translation>
 Третий : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3860"/>
+        <location filename="../mainwindow.cpp" line="3865"/>
         <source><byte value="xd"/>
 Fourth : </source>
         <translation>
 Четвертый : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3989"/>
+        <location filename="../mainwindow.cpp" line="3994"/>
         <source>Wrong value ! The range is: [</source>
         <translation>Плохое значение! Предел: [</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4114"/>
+        <location filename="../mainwindow.cpp" line="4119"/>
         <source>Do you want to leave the server?</source>
         <translation>Вы хотите покинуть сервер?</translation>
     </message>
@@ -1813,8 +1893,41 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Turn on/off the sound system.   &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Game Speed: &lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;(*)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Choose the speed of the game:&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;  Slow, Normal, Fast.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Choose the speed of the game:&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;  Slow, Normal, Fast or Customised (Expert mode).&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;   Customised (Expert mode):&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;You can tune-up all the game&apos;s delays.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   Select a slider handle using the mouse and scroll right or left to adjust the value.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   All values are in millisecond (ms). (1000 ms = 1 second).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   For a gentle adjustement use the arrows &amp;lt;right&amp;gt; or &amp;lt;left&amp;gt; from the keyboard for a step by 1 adjustement.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline;&quot;&gt;Play a card:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   This delay is applied before a card is played. (except the two of clubs).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline;&quot;&gt;Play the two of clubs:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   Same as &amp;quot;Play a card&amp;quot; specifically for that specific card.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline;&quot;&gt;Shuffle the deck:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   This delay is applied after the shuffling sound, and before dealing the cards.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline;&quot;&gt;Clear table:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   This delay is applied before each time the table has to be cleared.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   (for eg: at the end of a trick).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline;&quot;&gt;Your turn:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   This delay must be over to allow you to play a card.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline;&quot;&gt;Pass cards:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   This delay is applied after you&apos;ve received your 3 cards just before those cards are placed into your hand in order.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline;&quot;&gt;Animate deal cards:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   This delay is applied each time a card is dealt.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   NOTE: This delay may affect the startup boot time of the application !&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   &lt;/span&gt;&lt;span style=&quot; font-size:14pt; text-decoration: underline;&quot;&gt;Animate play card:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;   This delay is applied each time a computer choose a card to play. Showing the card, before being dropped in the center of the table.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt; Apply only to offline games.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Card deck:&lt;/span&gt;&lt;/p&gt;

@@ -24,6 +24,7 @@
 #include "cdeck.h"
 #include "client.h"
 #include "ctable.h"
+#include "speed.h"
 
 #ifdef DEBUG
 #include "debug.h"
@@ -151,6 +152,8 @@ private slots:
     void on_actionDesert_triggered();
     void on_actionEverest_triggered();
 
+    void on_actionCustom_Expert_triggered();
+
 private:
     Ui::MainWindow *ui;
     QImage *img_pass[4];
@@ -195,6 +198,7 @@ private:
     CConfig *config;
     CStatistics *stats;
     CDeck *deck;
+    CSpeed *speed;
 
 #ifdef DEBUG
     CDebug  *debug;
@@ -354,6 +358,7 @@ public slots:
     void handle_new_game();
     void unset_bkg_checked();
     void set_theme_colors();
+    void menu_speed_about_to_show();
 };
 
 #endif // MAINWINDOW_H

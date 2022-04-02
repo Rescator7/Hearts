@@ -24,6 +24,8 @@ CClient::CClient()
 CClient::~CClient()
 {
   tcpSocket->disconnectFromHost();
+
+  delete tcpSocket;
 }
 
 void CClient::init_var()

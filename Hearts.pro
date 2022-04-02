@@ -79,7 +79,8 @@ SOURCES += main.cpp\
     credits.cpp \
     settings.cpp \
     cdeck.cpp \
-    cstatistics.cpp
+    cstatistics.cpp \
+    speed.cpp
 
 HEADERS  += mainwindow.h \
     clabel.h \
@@ -92,12 +93,14 @@ HEADERS  += mainwindow.h \
     define.h \
     cdeck.h \
     cstatistics.h \
+    speed.h
 
 FORMS    += mainwindow.ui \
     rules.ui \
     credits.ui \
     settings.ui \
-    cstatistics.ui
+    cstatistics.ui \
+    speed.ui
 
 RESOURCES += \
     resources.qrc

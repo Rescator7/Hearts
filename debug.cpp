@@ -10,8 +10,6 @@
 #include <QColor>
 #include <QGroupBox>
 
-const char PLR_NOBODY[7] = "Nobody";
-
 CDebug::CDebug(CDeck *d)
 {
   setWindowTitle(tr("Cards history"));
@@ -32,6 +30,8 @@ CDebug::CDebug(CDeck *d)
 
   for (int i=7; i<14; i++) {
     labels[i] = new QLabel(this);
+    labels[i]->resize(80, 12);
+    labels[i]->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
     box2->addWidget(labels[i]);
   }
 
@@ -60,7 +60,8 @@ CDebug::CDebug(CDeck *d)
 
   reset();
 
-  resize(600, 200);
+  setFixedWidth(600);
+  setFixedHeight(250);
 }
 
 CDebug::~CDebug()
@@ -78,7 +79,15 @@ void CDebug::show_history(int slide)
 {
   for (int i=0; i<7; i++) {
     labels[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(cards[i + ptr_screen - slide])->scaledToHeight(100)));
-    labels[i+7]->setText(plr_names[i + ptr_screen - slide]);
+
+    if (plr_names[i + ptr_screen - slide]) {
+      if (!connected && !strcmp(plr_names[i + ptr_screen - slide], "You"))
+        labels[i+7]->setText(tr("You"));
+      else
+        labels[i+7]->setText(plr_names[i + ptr_screen - slide]);
+    }
+    else
+      labels[i+7]->setText(tr("Nobody"));
 
     if (winners[i + ptr_screen - slide])
       labels[i+7]->setStyleSheet("QLabel { color : white; }");
@@ -94,10 +103,7 @@ void CDebug::save_card(int card, const char *name)
 
   cards[history_size] = card;
 
-  if (name)
-    plr_names[history_size] = name;
-  else
-    plr_names[history_size] = reinterpret_cast<const char *>(&PLR_NOBODY);
+  plr_names[history_size] = name;
 
   if ((card == empty) || (card == your_turn))
     cards_saved = 0;
@@ -132,8 +138,10 @@ void CDebug::save_card(int card, const char *name)
   show_history(0);
 }
 
-void CDebug::reset()
+void CDebug::reset(bool conn_state)
 {
+  connected = conn_state;
+
   history_size = 0;
   cards_saved = 0;
   ptr_screen = 0;
@@ -147,7 +155,7 @@ void CDebug::reset()
   // show 7 empty cards
   for (int i=0; i<7; i++) {
     labels[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaledToHeight(100)));
-    labels[i+7]->setText("Nobody");
+    labels[i+7]->setText(tr("Nobody"));
     labels[i+7]->setStyleSheet("QLabel { color : black; }");
   }
 
@@ -155,7 +163,7 @@ void CDebug::reset()
   for (int i=0; i<MAX_HISTORY_SIZE; i++) {
     winners[i] = false;
     cards[i] = empty;
-    plr_names[i] = reinterpret_cast<const char *>(&PLR_NOBODY);
+    plr_names[i] = nullptr;
   }
 }
 
@@ -167,6 +175,7 @@ void CDebug::handle_bar(int value)
 void CDebug::Translate()
 {
   setWindowTitle(tr("Cards history"));
+  refresh();
 }
 
 void CDebug::refresh()

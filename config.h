@@ -35,6 +35,7 @@ const int BACKGROUND_DESERT              = 5;
 const int SPEED_SLOW                     = 0;
 const int SPEED_NORMAL                   = 1;
 const int SPEED_FAST                     = 2;
+const int SPEED_EXPERT                   = 3;
 
 const int SPEED_PLAY_CARD                = 0;
 const int SPEED_PLAY_TWO_CLUBS           = 1;
@@ -44,6 +45,7 @@ const int SPEED_YOUR_TURN                = 4;
 const int SPEED_PASS_CARDS               = 5;
 const int SPEED_ANIMATE_PASS_CARDS       = 6;
 const int SPEED_ANIMATE_PLAY_CARD        = 7;
+const int MAX_SPEEDS                     = 8;
 
 const int SPEED_PLAY_CARD_VALUES[3]      = {550, 400, 200};
 const int SPEED_PLAY_TWO_CLUBS_VALUES[3] = {1000, 700, 350};
@@ -71,6 +73,7 @@ private:
     int deck_style;
     int speed;
     int background;
+    int expert_speeds[MAX_SPEEDS];
 
     // game variants
     bool perfect_100;
@@ -107,6 +110,7 @@ public:
     int set_language(int lang);
     int set_deck_style(int style);
     int set_speed(int s);
+    int set_expert_speeds(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8);
     int set_background(int b);
     int get_language();
     int get_deck_style();

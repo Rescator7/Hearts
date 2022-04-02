@@ -56,6 +56,9 @@ const char suit_names[4][10]   = {"club", "spade", "diamond", "heart"};
 const char SAVEDGAME_FILENAME[20]  = "/.hearts.saved";
 const char SAVEDGAME_CORRUPTED[20] = "/.hearts.saved.bak";
 
+const int first_card_suit[4] = {two_clubs, two_spade, two_diamond, two_heart};
+const int last_card_suit[4]  = {ace_clubs, ace_spade, ace_diamond, ace_heart};
+
 class CHearts : public QObject
 {
     Q_OBJECT
@@ -143,7 +146,7 @@ private: // functions
    bool is_prepass_to_moon();
    bool is_moon_an_option();
    bool is_card_on_table(int card);
-
+   bool get_cpu_moon_add(int plr);
 
    int  get_lowest_suit(int plr, int suit);
    int  get_lowest_suit_pos(int plr, int suit);

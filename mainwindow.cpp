@@ -27,6 +27,7 @@
 #include "settings.h"
 #include "online.h"
 #include "cgame.h"
+#include "speed.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -53,6 +54,8 @@ MainWindow::MainWindow(QWidget *parent) :
     load_sounds();
 
     config = new CConfig;
+
+    speed = new CSpeed(0, config);
 
     hearts = new CHearts;
 
@@ -115,6 +118,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(hearts, SIGNAL(sig_got_queen_spade(int)), this, SLOT(got_queen_spade(int)));
     connect(hearts, SIGNAL(sig_pass_cards(int,int,int,int,int,int,int,int,int)), this, SLOT(animate_pass_cards(int,int,int,int,int,int,int,int,int)));
     connect(hearts, SIGNAL(sig_new_game()), this, SLOT(handle_new_game()));
+
+    connect(ui->menuGame_Speed, SIGNAL(aboutToShow()), this, SLOT(menu_speed_about_to_show()));
 
     connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(aboutToQuit()));
     connect(ui->actionQuit, SIGNAL(triggered(bool)), this, SLOT(close()));
@@ -593,6 +598,7 @@ MainWindow::~MainWindow()
 #endif // ONLINE_PLAY
 
   delete hearts;
+  delete speed;
   delete config;
   delete stats;
   delete deck;
@@ -984,7 +990,10 @@ void MainWindow::load_saved_game()
     int name_id = hearts->get_plr_name_id(i);
 
     plr_names_idx[i] = name_id;
-    label_player_name[i]->setText(names[name_id]);
+    if (name_id == 0)
+      label_player_name[i]->setText(tr("You"));
+    else
+      label_player_name[i]->setText(names[name_id]);
   }
 
   if (hearts->is_mode_playing()) {
@@ -1122,12 +1131,14 @@ void MainWindow::set_settings()
   }
 
   adjust_under_deck();
+}
 
-  switch (config->get_speed()) {
-    case SPEED_SLOW:    ui->actionSlow->setChecked(true); break;
-    case SPEED_NORMAL:  ui->actionNormal->setChecked(true); break;
-    case SPEED_FAST:    ui->actionFast->setChecked(true); break;
-  }
+void MainWindow::menu_speed_about_to_show()
+{
+  ui->actionNormal->setChecked(config->get_speed() == SPEED_NORMAL);
+  ui->actionSlow->setChecked(config->get_speed() == SPEED_SLOW);
+  ui->actionFast->setChecked(config->get_speed() == SPEED_FAST);
+  ui->actionCustom_Expert->setChecked(config->get_speed() == SPEED_EXPERT);
 }
 
 void MainWindow::set_options()
@@ -2162,6 +2173,7 @@ void MainWindow::set_language(int lang)
  set_credit();
 
  stats->Translate();
+ speed->Translate();
 
 #ifdef ONLINE_PLAY
  table_list->Translate();
@@ -2521,31 +2533,24 @@ void MainWindow::on_actionTigullio_modern_triggered()
 // Speed Slow
 void MainWindow::on_actionSlow_triggered()
 {
- ui->actionSlow->setChecked(true);
- ui->actionNormal->setChecked(false);
- ui->actionFast->setChecked(false);
-
- config->set_speed(SPEED_SLOW);
+  config->set_speed(SPEED_SLOW);
 }
 
 // Speed Normal
 void MainWindow::on_actionNormal_triggered()
 {
- ui->actionSlow->setChecked(false);
- ui->actionNormal->setChecked(true);
- ui->actionFast->setChecked(false);
-
- config->set_speed(SPEED_NORMAL);
+  config->set_speed(SPEED_NORMAL);
 }
 
 // Speed Fast
 void MainWindow::on_actionFast_triggered()
 {
- ui->actionSlow->setChecked(false);
- ui->actionNormal->setChecked(false);
- ui->actionFast->setChecked(true);
+  config->set_speed(SPEED_FAST);
+}
 
- config->set_speed(SPEED_FAST);
+void MainWindow::on_actionCustom_Expert_triggered()
+{
+  speed->popup();
 }
 
 void MainWindow::on_actionUndo_triggered()
@@ -2570,7 +2575,7 @@ void MainWindow::on_actionUndo_triggered()
 
 #ifdef DEBUG
     // Orange marker in cards history means Undo requested.
-    debug->save_card(your_turn, 0);
+    debug->save_card(your_turn, nullptr);
 #endif // DEBUG
 
     int num_cards = hearts->undo();
@@ -3416,7 +3421,7 @@ void MainWindow::online_action(unsigned int action, QString param)
            online_set_settings(true);
 
 #ifdef DEBUG
-           debug->reset();
+           debug->reset(true);
 #endif
 
            light_connected(true);
@@ -3552,7 +3557,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_connected = false;
 
 #ifdef DEBUG
-            debug->reset();
+            debug->reset(false);
 #endif
 
             start_game(false);

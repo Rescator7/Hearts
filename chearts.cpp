@@ -596,12 +596,9 @@ int CHearts::eval_card_strength(int plr, int card)
  if (!plr_cards_in_suit[plr][suit])
    return 0;
 
- const int first[4] = {two_clubs, two_spade, two_diamond, two_heart};
- const int last[4]  = {ace_clubs, ace_spade, ace_diamond, ace_heart};
-
  int cpt = 0;
 
- for (int i=first[suit]; i<=last[suit]; i++) {
+ for (int i=first_card_suit[suit]; i<=last_card_suit[suit]; i++) {
     if (!cards_played[i] && !plr_has_card[plr][i]) {
       if (card > i)
         cpt++;
@@ -1025,8 +1022,10 @@ int CHearts::AI_eval_lead_diamond(int card)
 
   // You are the last one to play in the trick, try to use your Jack of diamond:
   // if it the strongest card of the trick.
-       if ((hand_turn == FOURTH_CARD) && !is_card_on_table(queen_spade) && !is_card_on_table(ace_diamond) &&
-                               !is_card_on_table(king_diamond) && !is_card_on_table(queen_diamond))
+       if ((hand_turn == FOURTH_CARD) && !is_card_on_table(queen_spade) &&
+                                         !is_card_on_table(ace_diamond) &&
+                                         !is_card_on_table(king_diamond) &&
+                                         !is_card_on_table(queen_diamond))
          return 30;
 
        // don't play the jack of diamond
@@ -1070,6 +1069,7 @@ int CHearts::AI_get_cpu_move()
     if ((card == empty) || (check_invalid_move(turn, card) != NOERROR))
       eval[i] = -32768;
     else {
+
       // only valid move from here
       switch (current_suit) {
          case FREESUIT: eval[i] = AI_eval_lead_freesuit(card);
@@ -1152,29 +1152,25 @@ void CHearts::process_next_pass(bool skip_moon_check)
       if (!omnibus || (plr_jack_diamond == i))
         if (plr_hand_score[i] == 26) {
           shoot_moon = true;
-          int my_score = plr_score[user_id];    // 27-11-2018 (bob): fix to an elusive bug. i can't test below
-                                                // plr_score[usr_id] >= 26 because, emit will trigger
-                                                // [add][subs] and substract choice will modify plr_score[user_id]
-                                                // because we return here after the reentrant, and the condition here
-                                                // will fail, it will break instead of return !, but that way my_score
-                                                // preserve it, because it's a copy before emit, and we won't
-                                                // enter this because of skip_moon_check. (REENTRANT issue avoided)
+          int the_score = plr_score[i];
 
-          if (new_moon && (i == user_id) && (my_score >= 26)) {
-            moon_wait = true;
-            emit sig_shoot_moon(i);
-            return;                             // if new_moon is enabled, the score is above 26, and
-                                                // it's not a cpu who moon... we return, because
-                                                // we need to select [add] or [subtract]...
-                                                // emit_signal(SIG_SHOOT_MOON) will trigger the choice
-                                                // and, we will return by set_moon_add_score() that will skip
-                                                // this part.
+          if (new_moon && (the_score >= 26)) {
+            if (i == user_id) {
+              moon_wait = true;
+              emit sig_shoot_moon(i);
+
+              return;                      // if new_moon is enabled, the score is above 26, and
+                                           // it's not a cpu who moon... we return, because
+                                           // we need to select [add] or [subtract]...
+                                           // emit_signal(SIG_SHOOT_MOON) will trigger the choice
+                                           // and, we will return by set_moon_add_score() that will skip
+                                           // this part.
+            } else
+                moon_add_to_scores = get_cpu_moon_add(i);
           }
-          else {
-            emit sig_shoot_moon(i);
-            break;                              // we found someone who moon. no need to look further.
-          }
-        }
+          emit sig_shoot_moon(i);
+          break;                    // we found someone who moon. no need to look further.
+      }
     }
   }
 
@@ -1184,10 +1180,10 @@ void CHearts::process_next_pass(bool skip_moon_check)
           plr_hand_score[i] = 26;
         else {
           if (plr_hand_score[i] == 26) {
-            if (i != user_id)           // computer player don't subsctract.. only add.
-              plr_hand_score[i] = 0;
+            if (new_moon && !moon_add_to_scores)
+              plr_hand_score[i] = -26;
             else
-              plr_hand_score[i] = new_moon && !moon_add_to_scores ? -26 : 0;
+              plr_hand_score[i] = 0;
           }
         }
      } else {
@@ -2197,4 +2193,14 @@ bool CHearts::is_undo_available()
 bool CHearts::is_moon_wait()
 {
   return moon_wait;
+}
+
+bool CHearts::get_cpu_moon_add(int plr)
+{
+  if (plr_score[PLAYER_SOUTH] + 26 < plr_score[plr]) return false;
+  if ((plr != PLAYER_WEST) && (plr_score[PLAYER_WEST] + 26 < plr_score[plr])) return false;
+  if ((plr != PLAYER_NORTH) && (plr_score[PLAYER_NORTH] + 26 < plr_score[plr])) return false;
+  if ((plr != PLAYER_EAST) && (plr_score[PLAYER_EAST] + 26 < plr_score[plr])) return false;
+
+  return true;
 }

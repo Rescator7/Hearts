@@ -30,6 +30,7 @@ private: // variables;
 
     const char *plr_names[MAX_HISTORY_SIZE];
 
+    bool connected;
     bool winners[MAX_HISTORY_SIZE];
 
     int cards[MAX_HISTORY_SIZE];
@@ -48,7 +49,7 @@ public:
     ~CDebug();
 
     void save_card(int card, const char *name);
-    void reset();
+    void reset(bool conn_state = false);
     void refresh();
     void Translate();
 
