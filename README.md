@@ -1,4 +1,4 @@
-# Hearts 1.8.9 (Linux, C++)
+# Hearts 1.8.10 (Linux, C++)
 The card game Hearts for QT 5 or 6, and liballegro 5 (for sounds support)
 
 <p>You can download Hearts as a snap package from:</p>
@@ -31,7 +31,8 @@ The card game Hearts for QT 5 or 6, and liballegro 5 (for sounds support)
 ## Offline Options:
 - Undo. 
 - Animated play.
-- Three game speed: Slow, Normal, Fast.
+- Three pre-defined game speed: Slow, Normal, Fast. 
+- A Customized game speed option (for expert only).
 - Autosave/Autoreload of the unfinished game.
 - Cheat mode. (Reveal your opponents's cards).
 - Cards history.
