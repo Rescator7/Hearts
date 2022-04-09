@@ -27,6 +27,8 @@
 #       or on the shell: make clean; qmake Hearts.pro; make
 DEFINES += ONLINE_PLAY USE_LIBALLEGRO5 FULL_SCREEN DEBUG
 
+equals(QMAKE_CXX, g++) { QMAKE_LFLAGS += -no-pie }
+
 QT      += core gui svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
