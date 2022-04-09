@@ -75,6 +75,17 @@ make: *** [Makefile:902: qrc_resources.o] Error 1</code></pre>
 <pre><code> cd Hearts
  qmake Hearts.pro
  make</code></pre>
+ 
+### 3b. Install / Execute Hearts
+<p>Please note: There is no "make install" as the binary "Hearts" already contains all the components: icons, sounds, images, etc. It can be run by (from the build directory):</p> 
+<code> ./Hearts</code>
+<p></p>
+<p>It could be copied to the Desktop (run by double-click Hearts)</p>
+<code>cp ./Hearts ~/Desktop</code>
+<p></p>
+<p>Or copied to a "common" binaries's path such as:</p>
+<pre><code>cp ./Hearts /usr/local/bin</code>
+Hearts</code></pre>
    
 ## 4. Licenses: 
  - MIT for the software (source code)
