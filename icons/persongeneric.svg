@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg5332"
+   viewBox="0 0 256.00007 256.00002"
+   height="72.248894mm"
+   width="72.248909mm">
+  <title
+     id="title7463">Person Generic</title>
+  <defs
+     id="defs5334" />
+  <metadata
+     id="metadata5337">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Person Generic</dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Josh &quot;Cheeseness&quot; Bush</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:description>Originally created for TwoLofBees.com, and later used in the official shirt for the 2014 Open Source Developers' Conference held at Griffith University.</dc:description>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>person</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:date>2014-10-22</dc:date>
+        <dc:coverage></dc:coverage>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-362.5464,-406.21469)"
+     id="layer1">
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:15.45291996;marker:none;enable-background:accumulate"
+       d="m 490.54601,406.2147 c 22.5791,0 41.0865,18.50734 41.0865,41.08643 0,22.57909 -18.5074,41.08642 -41.0865,41.08642 -22.579,0 -41.0864,-18.50733 -41.0864,-41.08642 0,-22.57909 18.5074,-41.08643 41.0864,-41.08643 z m 31.605,91.65429 c 3.259,-0.002 6.4611,1.80842 8.1384,4.60265 l 37.926,63.20999 c 1.7169,2.86197 1.7639,6.65668 0.119,9.56046 -1.6458,2.90347 -4.9194,4.8022 -8.257,4.79976 l -15.8025,0 c -2.9306,0 -5.8265,-1.44808 -7.5852,-3.79258 l -9.7578,-13.0171 4.6814,88.98759 c 0.1373,2.56296 -0.8229,5.16803 -2.5877,7.03197 -1.7645,1.86425 -4.3073,2.96114 -6.874,2.96297 l -18.9631,0 c -2.1993,-0.002 -4.397,-0.80062 -6.084,-2.21239 -1.6867,-1.41146 -2.8498,-3.42521 -3.2394,-5.59 l -3.3184,-18.25196 -3.3185,18.25196 c -0.3899,2.16479 -1.5527,4.17854 -3.2397,5.59 -1.6867,1.41177 -3.8844,2.21056 -6.084,2.21239 l -18.9628,0 c -2.567,-0.002 -5.1095,-1.09872 -6.874,-2.96297 -1.7647,-1.86394 -2.7265,-4.46901 -2.5876,-7.03197 l 4.6813,-88.98759 -9.7578,13.0171 c -1.7587,2.3445 -4.6549,3.79258 -7.5855,3.79258 l -15.8025,0 c -3.3373,0.003 -6.6109,-1.89629 -8.2567,-4.79976 -1.6455,-2.90378 -1.5985,-6.69849 0.119,-9.56046 l 37.9261,-63.20999 c 1.6772,-2.79423 4.879,-4.60509 8.1383,-4.60265 l 31.6047,0 z"
+       id="path4942-0" />
+  </g>
+</svg>

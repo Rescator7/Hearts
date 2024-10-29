@@ -11,6 +11,8 @@
 #include <QTime>
 #include <QResource>
 #include <QResizeEvent>
+#include <QPicture>
+#include <QScreen>
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   #include <QRect>
@@ -79,10 +81,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     init_vars();
 
-    set_settings();
     set_options();
     set_language(config->get_language());
     set_background(); // must be called after set_language to set the credit
+    set_settings(); // background must be set, before calling settings
 
     hide_waiting();
 
@@ -485,10 +487,7 @@ void MainWindow::resizeWidth(int perc_h)
   ui->label_heart_n->resize(h, h);
   ui->label_heart_e->resize(h, h);
 
-  ui->label_heart_s->setPixmap(QPixmap::fromImage(img_heart->scaledToHeight(h)));
-  ui->label_heart_w->setPixmap(QPixmap::fromImage(img_heart->scaledToHeight(h)));
-  ui->label_heart_n->setPixmap(QPixmap::fromImage(img_heart->scaledToHeight(h)));
-  ui->label_heart_e->setPixmap(QPixmap::fromImage(img_heart->scaledToHeight(h)));
+  set_hearts_style_icons(config->get_hearts_style());
 }
 
 void MainWindow::resizeWidthSouth(int perc_h) {
@@ -609,7 +608,6 @@ MainWindow::~MainWindow()
 
   delete ui;
 
-  delete img_heart;
   delete img_connected;
   delete img_disconnected;
 
@@ -691,7 +689,7 @@ void MainWindow::init_vars()
 
   aspect_ratio_flag = Qt::KeepAspectRatio;
 
-  background = BACKGROUND_UNSET;
+  background = BACKGROUND_NONE;
 
   orig_posy_deck_n = ui->label_deck_n->y();
   orig_posy_deck_s = ui->label_deck_s->y();
@@ -855,7 +853,6 @@ void MainWindow::disable_online()
 
 void MainWindow::init_pointers()
 {
-    img_heart = new QImage(":/icons/heart.png", "PNG");
     img_connected = new QImage(":/icons/connected.png", "PNG");
     img_disconnected = new QImage(":/icons/disconnected.png", "PNG");
     img_pass[pLEFT] = new QImage(":/icons/left-icon.png", "PNG");
@@ -997,7 +994,7 @@ void MainWindow::load_saved_game()
   }
 
   if (hearts->is_mode_playing()) {
-    ui->label_pass_to->setDisabled(true);
+    set_show_direction(true);
 
     int cpt = PLAYER_SOUTH;
     for (int i=0; i<3; i++) {
@@ -1100,6 +1097,7 @@ void MainWindow::set_settings()
 
   ui->actionAuto_Centering->setChecked(config->is_auto_centering());
   ui->actionInfo_Channel->setChecked(config->is_info_channel());
+  ui->actionShow_direction->setChecked(config->is_show_direction());
   ui->actionSounds->setChecked(config->is_sounds());
   ui->actionTram->setChecked(config->is_detect_tram());
   ui->actionEasy_card_selection->setChecked(config->is_easy_card_selection());
@@ -1113,8 +1111,12 @@ void MainWindow::set_settings()
   ui->actionNo_Draw->setChecked(config->is_no_draw());
   ui->actionSave_Game_Quit->setChecked(config->is_save_game());
   ui->actionAnimate_Play->setChecked(config->is_animated_play());
+  ui->actionCards_Display->setChecked(config->is_card_display());
 
+  set_card_display(config->is_card_display());
+  set_hearts_style(config->get_hearts_style());
   set_info_channel_enabled(config->is_info_channel());
+  set_show_direction(!hearts->is_mode_playing());
 
   switch (config->get_deck_style()) {
     case ENGLISH_DECK:         aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
@@ -1373,7 +1375,8 @@ void MainWindow::pass_to(int pass_to)
 #endif // ONLINE_PLAY
 
   ui->label_pass_to->setPixmap(QPixmap::fromImage(img_pass[pass_to]->scaledToHeight(80)));
-  ui->label_pass_to->setDisabled(pass_to == pNOPASS);
+
+  set_show_direction(pass_to == pNOPASS);
 
 #ifdef DEBUG
   deck->reset_cards_played();
@@ -1569,7 +1572,7 @@ void MainWindow::set_info_channel_enabled(bool enable)
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #ifdef FULL_SCREEN
-      QRect rec = QApplication::desktop()->screenGeometry();
+      QRect rec = QGuiApplication::primaryScreen()->geometry();
 
       // Qt 5.5.1 create a buggy window, if we try to resize a maximazed height window to a smaller
       // height. Qt 5.11 don't create a bugyy window, but doesn't resize anyway. All version resize
@@ -1816,7 +1819,7 @@ void MainWindow::on_label_pass_to_clicked()
     return;
   }
 
-  ui->label_pass_to->setDisabled(true);
+  set_show_direction(true);
 
   ui->actionNew->setDisabled(true);
   ui->actionConnect->setDisabled(true);
@@ -2606,14 +2609,21 @@ void MainWindow::hide_waiting()
   ui->label_waiting_e->hide();
 }
 
-void MainWindow::unset_bkg_checked()
+void MainWindow::unset_background()
 {
+  ui->actionGreen->setChecked(false);
   ui->actionUnivers->setChecked(false);
   ui->actionOcean->setChecked(false);
   ui->actionNo_image->setChecked(false);
   ui->actionMt_Fuji->setChecked(false);
   ui->actionDesert->setChecked(false);
   ui->actionEverest->setChecked(false);
+  ui->actionWooden_planks->setChecked(false);
+  ui->actionWood_texture->setChecked(false);
+  ui->actionWooden_floor->setChecked(false);
+  ui->actionOverlapping_planks_5->setChecked(false);
+  ui->actionLeaves->setChecked(false);
+  ui->actionMarble->setChecked(false);
 }
 
 void MainWindow::set_background()
@@ -2621,11 +2631,18 @@ void MainWindow::set_background()
   int background = config->get_background();
 
   switch (background) {
+     case BACKGROUND_GREEN:    on_actionGreen_triggered(); break;
      case BACKGROUND_UNIVERSE: on_actionUnivers_triggered(); break;
      case BACKGROUND_OCEAN:    on_actionOcean_triggered(); break;
      case BACKGROUND_EVEREST:  on_actionEverest_triggered(); break;
      case BACKGROUND_MT_FUJI:  on_actionMt_Fuji_triggered(); break;
      case BACKGROUND_DESERT:   on_actionDesert_triggered(); break;
+     case BACKGROUND_WOODEN_1: on_actionWooden_planks_triggered(); break;
+     case BACKGROUND_WOODEN_2: on_actionWood_texture_triggered(); break;
+     case BACKGROUND_WOODEN_3: on_actionWooden_floor_triggered(); break;
+     case BACKGROUND_WOODEN_4: on_actionOverlapping_planks_5_triggered(); break;
+     case BACKGROUND_LEAVES:   on_actionLeaves_triggered(); break;
+     case BACKGROUND_MARBLE:   on_actionMarble_triggered(); break;
 
      default: on_actionNo_image_triggered();
   }
@@ -2633,29 +2650,51 @@ void MainWindow::set_background()
 
 void MainWindow::set_credit()
 {
+  ui->label_credit->setStyleSheet(QString("color: lightgray"));
   switch (background) {
-     case BACKGROUND_UNIVERSE: ui->label_credit->setText(tr("Image by: ESO/G. Beccari")); break;
-     case BACKGROUND_EVEREST:  ui->label_credit->setText(tr("Image by: Hiroki Ogawa")); break;
-     case BACKGROUND_MT_FUJI:  ui->label_credit->setText(tr("Image by: Jack Soma")); break;
-     case BACKGROUND_OCEAN:    ui->label_credit->setText(tr("Image by: grumpylumixuser")); break;
-     case BACKGROUND_DESERT:   ui->label_credit->setText(tr("Image by: Peter Chisholm")); break;
-
+     case BACKGROUND_GREEN:    ui->label_credit->setText(tr("Background image by: Attila Tóth")); break;
+     case BACKGROUND_UNIVERSE: ui->label_credit->setText(tr("Background image by: ESO/G. Beccari")); break;
+     case BACKGROUND_EVEREST:  ui->label_credit->setText(tr("Background image by: Hiroki Ogawa")); break;
+     case BACKGROUND_MT_FUJI:  ui->label_credit->setText(tr("Background image by: Jack Soma")); break;
+     case BACKGROUND_OCEAN:    ui->label_credit->setText(tr("Background image by: grumpylumixuser")); break;
+     case BACKGROUND_DESERT:   ui->label_credit->setText(tr("Background image by: Peter Chisholm")); break;
+     case BACKGROUND_WOODEN_4:
+     case BACKGROUND_WOODEN_3:
+     case BACKGROUND_WOODEN_1: ui->label_credit->setText(tr("Background image by: Firkin"));
+                               ui->label_credit->setStyleSheet(QString("color: black"));
+                               break;
+     case BACKGROUND_WOODEN_2: ui->label_credit->setText(tr("Background image by: Firkin")); break;
+     case BACKGROUND_LEAVES:   ui->label_credit->setText(tr("Background created using gimp 2.10.18"));
+                               ui->label_credit->setStyleSheet(QString("color: lightgray"));
+                               break;
+     case BACKGROUND_MARBLE:   ui->label_credit->setText(tr("Background created using gimp 2.10.18"));
+                               ui->label_credit->setStyleSheet(QString("color: black"));
+                               break;
      default: ui->label_credit->setText("");
   }
 }
 
 void MainWindow::set_theme_colors()
 {
-   const char colors[6][3][15] = {{"#3f9f52", "#3f9f52", "black"},              // None
-                                  {"transparent", "transparent", "yellow"},     // Universe
-                                  {"transparent", "#219f9b", "Yellow"},         // Ocean
-                                  {"transparent", "#ef955c", "Yellow"},         // Mt. Fuji
-                                  {"transparent", "#219f9b", "Yellow"},         // Everest
-                                  {"transparent", "#9f3f2b", "Yellow"}};        // Desert
+   const char colors[BACKGROUND_MAX][3][15] =
+                                 {{"#3f9f52", "#3f9f52", "black"},              // None
+                                  {"transparent", "#34b44d", "lightgray"},      // Green
+                                  {"transparent", "transparent", "lightgray"},  // Universe
+                                  {"transparent", "#219f9b", "lightgray"},      // Ocean
+                                  {"transparent", "#ef955c", "lightgray"},      // Mt. Fuji
+                                  {"transparent", "#219f9b", "black"},          // Everest
+                                  {"transparent", "#9f3f2b", "black"},          // Desert
+                                  {"transparent", "transparent", "black"},      // Wooden Planks 1
+                                  {"transparent", "#9f3f2b", "lightgray"},      // Wood Texture
+                                  {"transparent", "#b2988b", "lightgray"},      // Wooden Floor 2
+                                  {"transparent", "#e2b46c", "black"},          // Overlapping planks 5
+                                  {"transparent", "#5e7e1e", "lightgray"},      // Leaves
+                                  {"transparent", "transparent", "black"}       // Marble
+                                 };
 
    QString color1, color2, color3;
 
-   if ((background >= 0) && (background < 6)) {
+   if ((background >= 0) && (background < BACKGROUND_MAX)) {
      color1 = colors[background][0];
      color2 = colors[background][1];
      color3 = colors[background][2];
@@ -2675,11 +2714,13 @@ void MainWindow::set_theme_colors()
                                                             "QWidget:disabled {background-color: ") + color2 + ";}");
 
    ui->label_online->setStyleSheet("color: " + color3);
+
+   check_text_only();
 }
 
 void MainWindow::on_actionUnivers_triggered()
 {
-  unset_bkg_checked();
+  unset_background();
   ui->actionUnivers->setChecked(true);
 
   if (background == BACKGROUND_UNIVERSE)
@@ -2699,7 +2740,7 @@ void MainWindow::on_actionUnivers_triggered()
 
 void MainWindow::on_actionEverest_triggered()
 {
-  unset_bkg_checked();
+  unset_background();
   ui->actionEverest->setChecked(true);
 
   if (background == BACKGROUND_EVEREST)
@@ -2719,7 +2760,7 @@ void MainWindow::on_actionEverest_triggered()
 
 void MainWindow::on_actionOcean_triggered()
 {
-  unset_bkg_checked();
+  unset_background();
   ui->actionOcean->setChecked(true);
 
   if (background == BACKGROUND_OCEAN)
@@ -2730,7 +2771,7 @@ void MainWindow::on_actionOcean_triggered()
   config->set_background(BACKGROUND_OCEAN);
 
   centralWidget()->setStyleSheet("#centralWidget {"
-                   "border-image: url(:/backgrounds/_Palm_ _Beach._Port_Douglas._-_panoramio.jpg)"
+                   "border-image: url(:/backgrounds/__Palm___Beach._Port_Douglas._-_panoramio.jpg)"
                    " 0 0 0 0 stretch stretch; }");
 
   set_credit();
@@ -2739,7 +2780,7 @@ void MainWindow::on_actionOcean_triggered()
 
 void MainWindow::on_actionNo_image_triggered()
 {
-  unset_bkg_checked();
+  unset_background();
   ui->actionNo_image->setChecked(true);
 
   if (background == BACKGROUND_NONE)
@@ -2757,7 +2798,7 @@ void MainWindow::on_actionNo_image_triggered()
 
 void MainWindow::on_actionMt_Fuji_triggered()
 {
-  unset_bkg_checked();
+  unset_background();
   ui->actionMt_Fuji->setChecked(true);
 
   if (background == BACKGROUND_MT_FUJI)
@@ -2777,7 +2818,7 @@ void MainWindow::on_actionMt_Fuji_triggered()
 
 void MainWindow::on_actionDesert_triggered()
 {
-  unset_bkg_checked();
+  unset_background();
   ui->actionDesert->setChecked(true);
 
   if (background == BACKGROUND_DESERT)
@@ -2795,6 +2836,350 @@ void MainWindow::on_actionDesert_triggered()
   set_theme_colors();
 }
 
+void MainWindow::on_actionWooden_planks_triggered()
+{
+  unset_background();
+  ui->actionWooden_planks->setChecked(true);
+
+  if (background == BACKGROUND_WOODEN_1)
+    return;
+
+  background = BACKGROUND_WOODEN_1;
+
+  config->set_background(BACKGROUND_WOODEN_1);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                  "border-image: url(:/backgrounds/WoodenPlanks.svg)"
+                  " 0 0 0 0 stretch stretch; }");
+
+  set_credit();
+  set_theme_colors();
+}
+
+
+void MainWindow::on_actionWood_texture_triggered()
+{
+  unset_background();
+  ui->actionWood_texture->setChecked(true);
+
+  if (background == BACKGROUND_WOODEN_2)
+    return;
+
+  background = BACKGROUND_WOODEN_2;
+
+  config->set_background(BACKGROUND_WOODEN_2);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                  "border-image: url(:/backgrounds/WoodTexture.svg)"
+                    " 0 0 0 0 stretch stretch; }");
+
+  set_credit();
+  set_theme_colors();
+}
+
+void MainWindow::on_actionWooden_floor_triggered()
+{
+  unset_background();
+  ui->actionWooden_floor->setChecked(true);
+
+  if (background == BACKGROUND_WOODEN_3)
+    return;
+
+  background = BACKGROUND_WOODEN_3;
+
+  config->set_background(BACKGROUND_WOODEN_3);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                  "border-image: url(:/backgrounds/WoodenFloor2.svg)"
+                  " 0 0 0 0 stretch stretch; }");
+
+  set_credit();
+  set_theme_colors();
+}
+
+void MainWindow::on_actionOverlapping_planks_5_triggered()
+{
+  unset_background();
+  ui->actionOverlapping_planks_5->setChecked(true);
+
+  if (background == BACKGROUND_WOODEN_4)
+    return;
+
+   background = BACKGROUND_WOODEN_4;
+
+   config->set_background(BACKGROUND_WOODEN_4);
+
+   centralWidget()->setStyleSheet("#centralWidget {"
+                    "border-image: url(:/backgrounds/OverlappingPlanks5.svg)"
+                    " 0 0 0 0 stretch stretch; }");
+
+   set_credit();
+   set_theme_colors();
+}
+
+void MainWindow::on_actionLeaves_triggered()
+{
+  unset_background();
+  ui->actionLeaves->setChecked(true);
+
+  if (background == BACKGROUND_LEAVES)
+    return;
+
+  background = BACKGROUND_LEAVES;
+
+  config->set_background(BACKGROUND_LEAVES);
+
+  centralWidget()->setStyleSheet("#centralWidget {"
+                   "border-image: url(:/backgrounds/leaves.jpg)"
+                   " 0 0 0 0 stretch stretch; }");
+
+  set_credit();
+  set_theme_colors();
+}
+
+void MainWindow::on_actionMarble_triggered()
+{
+  unset_background();
+  ui->actionMarble->setChecked(true);
+
+  if (background == BACKGROUND_MARBLE)
+    return;
+
+   background = BACKGROUND_MARBLE;
+
+   config->set_background(BACKGROUND_MARBLE);
+
+   centralWidget()->setStyleSheet("#centralWidget {"
+                    "border-image: url(:/backgrounds/marble.jpg)"
+                    " 0 0 0 0 stretch stretch; }");
+
+   set_credit();
+   set_theme_colors();
+}
+
+void MainWindow::on_actionGreen_triggered()
+{
+  unset_background();
+  ui->actionGreen->setChecked(true);
+
+  if (background == BACKGROUND_GREEN)
+    return;
+
+   background = BACKGROUND_GREEN;
+
+   config->set_background(BACKGROUND_GREEN);
+
+   centralWidget()->setStyleSheet("#centralWidget {"
+                      "border-image: url(:/backgrounds/380441109-2ed06248-c87c-4a56-a718-0584d0cdc85d.png)"
+                      " 0 0 0 0 stretch stretch; }");
+
+   set_credit();
+   set_theme_colors();
+}
+
+void MainWindow::unset_hearts_style()
+{
+  ui->actionText_only->setChecked(false);
+  ui->actionHearts_Pink->setChecked(false);
+  ui->actionHearts_Grey->setChecked(false);
+  ui->actionSuits->setChecked(false);
+  ui->actionCPU_Human->setChecked(false);
+}
+
+void MainWindow::set_hearts_style_checked(int style)
+{
+  switch (style) {
+    case HEARTS_TEXT_ONLY: ui->actionText_only->setChecked(true); break;
+    case HEARTS_ICONS_PINK: ui->actionHearts_Pink->setChecked(true); break;
+    case HEARTS_ICONS_GREY: ui->actionHearts_Grey->setChecked(true); break;
+    case HEARTS_ICONS_SUIT: ui->actionSuits->setChecked(true); break;
+    case HEARTS_ICONS_CPU: ui->actionCPU_Human->setChecked(true); break;
+  }
+}
+
+void MainWindow::check_text_only()
+{
+  const char ccolor[BACKGROUND_MAX][20] = {"black",     // NONE
+                                           "white",     // GREEN
+                                           "white",     // UNIVERSE
+                                           "black",     // OCEAN
+                                           "cyan",      // MT_FUJI
+                                           "black",     // EVEREST
+                                           "white",     // DESERT
+                                           "yellow",    // WOODEN_1
+                                           "lightgray", // WOODEN_2
+                                           "white",     // WOODEN_3
+                                           "black",     // WOODEN_4
+                                           "lightgray", // LEAVES
+                                           "black"      // MARBLE
+                                          };
+
+  QString color;
+
+  switch (config->get_hearts_style()) {
+     case HEARTS_TEXT_ONLY:  color = ccolor[background]; break;
+     case HEARTS_ICONS_SUIT: color = "white"; break;
+
+     default:  color = "black"; break;
+  }
+
+  ui->label_name_n->setStyleSheet(QString("QLabel { color: ") + color + QString("; }"));
+  ui->label_score_n->setStyleSheet(QString("QLabel { color: ") + color + QString("; }"));
+  ui->label_name_s->setStyleSheet(QString("QLabel { color: ") + color + QString("; }"));
+  ui->label_score_s->setStyleSheet(QString("QLabel { color: ") + color + QString("; }"));
+  ui->label_name_e->setStyleSheet(QString("QLabel { color: ") + color + QString("; }"));
+  ui->label_score_e->setStyleSheet(QString("QLabel { color: ") + color + QString("; }"));
+  ui->label_name_w->setStyleSheet(QString("QLabel { color: ") + color + QString("; }"));
+  ui->label_score_w->setStyleSheet(QString("QLabel { color: ") + color + QString("; }"));
+}
+
+void MainWindow::set_hearts_style_icons(int style)
+{
+  int w, h;
+
+  w = ui->label_heart_n->width();
+  h = ui->label_heart_n->height();
+
+  QString body("<html><head/><body><p><center><img src=\"");
+  QString html, end;
+
+  end = QString("\" width=\"") + QString::number(w) + QString("\" height=\"") + QString::number(h) +
+        QString("\"/><center/></p></body></html>");
+
+  switch (style) {
+    case HEARTS_TEXT_ONLY:
+         ui->label_heart_n->setText(QString(""));
+         ui->label_heart_s->setText(QString(""));
+         ui->label_heart_e->setText(QString(""));
+         ui->label_heart_w->setText(QString(""));
+         break;
+    case HEARTS_ICONS_PINK:
+         html = body + QString(":/icons/heart.png") + end;
+         ui->label_heart_n->setText(html);
+         ui->label_heart_s->setText(html);
+         ui->label_heart_e->setText(html);
+         ui->label_heart_w->setText(html);
+         break;
+    case HEARTS_ICONS_GREY:
+         html = body + QString(":/icons/heart-grey.png") + end;
+         ui->label_heart_n->setText(html);
+         ui->label_heart_s->setText(html);
+         ui->label_heart_e->setText(html);
+         ui->label_heart_w->setText(html);
+         break;
+    case HEARTS_ICONS_SUIT:
+         ui->label_heart_n->setText(body + QString(":/icons/Spades-Symbol-by-Merlin2525.svg") + end);
+         ui->label_heart_s->setText(body + QString(":/icons/Diamonds-Symbol-by-Merlin2525.svg") + end);
+         ui->label_heart_w->setText(body + QString(":/icons/Hearts-Symbol-by-Merlin2525.svg") + end);
+         ui->label_heart_e->setText(body + QString(":/icons/Clubs-Symbol-by-Merlin2525.svg") + end);
+         break;
+    case HEARTS_ICONS_CPU:
+
+#ifdef ONLINE_PLAY
+                     if (online_connected) {
+                       online_check_cpu_human();
+                       return;
+                     }
+#endif
+                     html = body + QString(":/icons/computer-icon.png") + end;
+                     ui->label_heart_n->setText(html);
+                     ui->label_heart_s->setText(body + QString(":/icons/persongeneric.svg") + end);
+                     ui->label_heart_e->setText(html);
+                     ui->label_heart_w->setText(html);
+                     break;
+    }
+}
+
+void MainWindow::set_hearts_style(int style)
+{
+  unset_hearts_style();
+
+  set_hearts_style_icons(style);
+  set_hearts_style_checked(style);
+
+  check_text_only();
+}
+
+void MainWindow::on_actionText_only_triggered()
+{
+  config->set_hearts_style(HEARTS_TEXT_ONLY);
+  set_hearts_style(HEARTS_TEXT_ONLY);
+}
+
+void MainWindow::on_actionHearts_Pink_triggered()
+{
+  config->set_hearts_style(HEARTS_ICONS_PINK);
+  set_hearts_style(HEARTS_ICONS_PINK);
+}
+
+void MainWindow::on_actionHearts_Grey_triggered()
+{
+  config->set_hearts_style(HEARTS_ICONS_GREY);
+  set_hearts_style(HEARTS_ICONS_GREY);
+}
+
+void MainWindow::on_actionSuits_triggered()
+{
+  config->set_hearts_style(HEARTS_ICONS_SUIT);
+  set_hearts_style(HEARTS_ICONS_SUIT);
+
+}
+
+void MainWindow::on_actionCPU_Human_triggered()
+{
+  config->set_hearts_style(HEARTS_ICONS_CPU);
+  set_hearts_style(HEARTS_ICONS_CPU);
+}
+
+void MainWindow::set_card_display(bool checked) {
+  if (checked) {
+    ui->label_deck_n->show();
+    ui->label_deck_s->show();
+    ui->label_deck_e->show();
+    ui->label_deck_w->show();
+  } else {
+      ui->label_deck_n->hide();
+      ui->label_deck_s->hide();
+      ui->label_deck_e->hide();
+      ui->label_deck_w->hide();
+  }
+}
+
+void MainWindow::on_actionCards_Display_triggered()
+{
+  bool checked = ui->actionCards_Display->isChecked();
+
+  config->set_config_file(CONFIG_CARD_DISPLAY, checked);
+
+  set_card_display(checked);
+}
+
+void MainWindow::set_show_direction(bool disable)
+{
+  ui->label_pass_to->setDisabled(disable);
+
+  if (disable && !config->is_show_direction())
+    ui->label_pass_to->hide();
+  else
+    ui->label_pass_to->show();
+}
+
+void MainWindow::on_actionShow_direction_triggered()
+{
+  bool checked = ui->actionShow_direction->isChecked();
+
+  config->set_config_file(CONFIG_SHOW_DIRECTION, checked);
+
+  bool disable = true;
+
+#ifdef ONLINE_PLAY
+  if (online_connected && !online_playing) disable = false;
+#endif // ONLINE_PLAY
+  else
+  if (!online_connected && !hearts->is_mode_playing()) disable = false;
+
+  set_show_direction(disable);
+}
 
 //***************************************************************************************************
 //****************************** ONLY ONLINE FUNCTIONS FROM HERE ************************************
@@ -3075,7 +3460,7 @@ void MainWindow::online_pass_cards()
     return;
   }
 
-  ui->label_pass_to->setDisabled(true);
+  set_show_direction(true);
 
   int n = 0;
   QString s = "pass ";
@@ -3332,6 +3717,7 @@ void MainWindow::init_online_game()
   label_player_name[PLAYER_WEST]->setText("");
   label_player_name[PLAYER_NORTH]->setText("");
   label_player_name[PLAYER_EAST]->setText("");
+  online_check_cpu_human();
 
   // Clear score and hand score
   for (int i=0; i<4; i++) {
@@ -3478,6 +3864,7 @@ void MainWindow::online_action(unsigned int action, QString param)
               label_waiting[c1]->hide();
            }
 
+           online_check_cpu_human();
            break;
     case ACTION_MY_CHAIR:
             if (pList.size() != 1) {
@@ -3513,6 +3900,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             }
 
             label_player_name[c1]->setText(name);
+            online_check_cpu_human();
 
             break;
     case ACTION_CREATE_TABLE:
@@ -3559,8 +3947,9 @@ void MainWindow::online_action(unsigned int action, QString param)
 #ifdef DEBUG
             debug->reset(false);
 #endif
-
+            set_hearts_style_icons(config->get_hearts_style());
             start_game(false);
+
             break;
     case ACTION_SET_CARDS:
             if (pList.size() != 15) {
@@ -3612,7 +4001,7 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_cards_received_pos[1] = c2;
             online_cards_received_pos[2] = c3;
             wait_delay = true;
-            ui->label_pass_to->setDisabled(true);
+            set_show_direction(true);
 
             for (int i=0; i<13; i++)
               online_selected[i] = false;
@@ -3959,8 +4348,9 @@ void MainWindow::online_action(unsigned int action, QString param)
             online_passto = pList.at(16).toInt();
 
             pass_to(online_passto);
-            if ((c1 == STATUS_PASSED) || (c1 != STATUS_PASSING))
-              ui->label_pass_to->setDisabled(true);
+            if ((c1 == STATUS_PASSED) || (c1 != STATUS_PASSING)) {
+              set_show_direction(true);
+            }
 
             online_heart_broken = pList.at(17).toInt();
             online_num_cards[PLAYER_SOUTH] = 0;
@@ -4010,6 +4400,54 @@ void MainWindow::online_action(unsigned int action, QString param)
   }
 }
 
+void MainWindow::online_check_cpu_human() {
+  if (config->get_hearts_style() != HEARTS_ICONS_CPU)
+    return;
+
+  int w, h;
+
+  w = ui->label_heart_n->width();
+  h = ui->label_heart_n->height();
+
+  QString cpu, human;
+
+  cpu = QString("<html><head/><body><p><center><img src=\":/icons/computer-icon.png") +
+        QString("\" width=\"") + QString::number(w) + QString("\" height=\"") + QString::number(h) +
+        QString("\"/><center/></p></body></html>");
+
+  human = QString("<html><head/><body><p><center><img src=\":/icons/persongeneric.svg") +
+          QString("\" width=\"") + QString::number(w) + QString("\" height=\"") + QString::number(h) +
+          QString("\"/><center/></p></body></html>");
+
+  if (label_player_name[PLAYER_NORTH]->text().isEmpty() ||
+      label_player_name[PLAYER_NORTH]->text().contains("(") ||
+      label_player_name[PLAYER_NORTH]->text().contains("*"))
+    ui->label_heart_n->setText(cpu);
+  else
+    ui->label_heart_n->setText(human);
+
+  if (label_player_name[PLAYER_SOUTH]->text().isEmpty() ||
+      label_player_name[PLAYER_SOUTH]->text().contains("(") ||
+      label_player_name[PLAYER_SOUTH]->text().contains("*"))
+    ui->label_heart_s->setText(cpu);
+  else
+    ui->label_heart_s->setText(human);
+
+  if (label_player_name[PLAYER_EAST]->text().isEmpty() ||
+      label_player_name[PLAYER_EAST]->text().contains("(") ||
+      label_player_name[PLAYER_EAST]->text().contains("*"))
+    ui->label_heart_e->setText(cpu);
+  else
+    ui->label_heart_e->setText(human);
+
+  if (label_player_name[PLAYER_WEST]->text().isEmpty() ||
+      label_player_name[PLAYER_WEST]->text().contains("(") ||
+      label_player_name[PLAYER_WEST]->text().contains("*"))
+    ui->label_heart_w->setText(cpu);
+  else
+    ui->label_heart_w->setText(human);
+}
+
 void MainWindow::online_rotate_players_name()
 {
   QString name_s, name_w, name_n, name_e;
@@ -4026,6 +4464,8 @@ void MainWindow::online_rotate_players_name()
     label_player_name[convert_chair(PLAYER_EAST)]->setText(name_e);
     label_player_name[convert_chair(PLAYER_SOUTH)]->setText(name_s);
   }
+
+  online_check_cpu_human();
 }
 
 int MainWindow::convert_chair(int chair)

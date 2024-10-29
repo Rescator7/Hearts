@@ -2630,20 +2630,41 @@
       <string>Background</string>
      </property>
      <addaction name="actionNo_image"/>
+     <addaction name="actionGreen"/>
      <addaction name="actionUnivers"/>
      <addaction name="actionEverest"/>
      <addaction name="actionMt_Fuji"/>
      <addaction name="actionOcean"/>
      <addaction name="actionDesert"/>
+     <addaction name="separator"/>
+     <addaction name="actionWooden_planks"/>
+     <addaction name="actionWood_texture"/>
+     <addaction name="actionWooden_floor"/>
+     <addaction name="actionOverlapping_planks_5"/>
+     <addaction name="actionLeaves"/>
+     <addaction name="actionMarble"/>
+    </widget>
+    <widget class="QMenu" name="menuScore_Styles">
+     <property name="title">
+      <string>Display Score</string>
+     </property>
+     <addaction name="actionText_only"/>
+     <addaction name="actionHearts_Pink"/>
+     <addaction name="actionHearts_Grey"/>
+     <addaction name="actionSuits"/>
+     <addaction name="actionCPU_Human"/>
     </widget>
     <addaction name="actionAnimate_Play"/>
     <addaction name="actionAuto_Centering"/>
     <addaction name="actionAuto_Start"/>
     <addaction name="actionTram"/>
     <addaction name="actionEasy_card_selection"/>
+    <addaction name="actionCards_Display"/>
     <addaction name="actionInfo_Channel"/>
+    <addaction name="actionShow_direction"/>
     <addaction name="actionSave_Game_Quit"/>
     <addaction name="actionSounds"/>
+    <addaction name="menuScore_Styles"/>
     <addaction name="menuGame_Speed"/>
     <addaction name="menuDeck"/>
     <addaction name="menuLanguage_2"/>
@@ -2711,7 +2732,7 @@
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>&amp;Detect Tram</string>
@@ -2877,7 +2898,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Easy card selection</string>
+    <string>&amp;Easy Card Selection</string>
    </property>
   </action>
   <action name="actionStandard">
@@ -3050,6 +3071,118 @@
    </property>
    <property name="text">
     <string>Customized (Expert)</string>
+   </property>
+  </action>
+  <action name="actionWooden_planks">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Wooden planks</string>
+   </property>
+  </action>
+  <action name="actionWood_texture">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Wood texture</string>
+   </property>
+  </action>
+  <action name="actionText_only">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Text only</string>
+   </property>
+  </action>
+  <action name="actionHearts_Pink">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hearts (Pink)</string>
+   </property>
+  </action>
+  <action name="actionHearts_Grey">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hearts (Grey)</string>
+   </property>
+  </action>
+  <action name="actionSuits">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Suits</string>
+   </property>
+  </action>
+  <action name="actionCards_Display">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Card Display</string>
+   </property>
+  </action>
+  <action name="actionOverlapping_planks_5">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Overlapping planks 5</string>
+   </property>
+  </action>
+  <action name="actionLeaves">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Leaves</string>
+   </property>
+  </action>
+  <action name="actionMarble">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Marble</string>
+   </property>
+  </action>
+  <action name="actionGreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Green</string>
+   </property>
+  </action>
+  <action name="actionCPU_Human">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CPU / Human</string>
+   </property>
+  </action>
+  <action name="actionWooden_floor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Wooden floor 2</string>
+   </property>
+  </action>
+  <action name="actionShow_direction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Direction</string>
    </property>
   </action>
  </widget>

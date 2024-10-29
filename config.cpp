@@ -29,9 +29,11 @@ void CConfig::init_vars()
   auto_centering = true;
   cheat_mode = false;
   info_channel = true;
+  show_direction = true;
   sounds = true;
   detect_tram = true;
   easy_card_selection = true;
+  card_display = true;
   save_game = true;
   auto_start = false;
 
@@ -58,8 +60,9 @@ void CConfig::init_vars()
   warning = true;
 
   language = LANG_ENGLISH;
-  deck_style = STANDARD_DECK;
-  background = BACKGROUND_NONE;
+  deck_style = NICU_WHITE_DECK;
+  background = BACKGROUND_MARBLE;
+  hearts_style = HEARTS_ICONS_CPU;
 }
 
 int CConfig::load_config_file() {
@@ -105,6 +108,25 @@ int CConfig::load_config_file() {
         else
         if (value == "tigullio_modern")
           deck_style = TIGULLIO_MODERN_DECK;
+
+        continue;
+      }
+
+      if (param == "Hearts_Style") {
+        if (value == "text")
+          hearts_style = HEARTS_TEXT_ONLY;
+        else
+        if (value == "pink")
+          hearts_style = HEARTS_ICONS_PINK;
+        else
+        if (value == "grey")
+          hearts_style = HEARTS_ICONS_GREY;
+        else
+        if (value == "suit")
+          hearts_style = HEARTS_ICONS_SUIT;
+        else
+        if (value == "cpu")
+          hearts_style = HEARTS_ICONS_CPU;
 
         continue;
       }
@@ -177,6 +199,9 @@ int CConfig::load_config_file() {
         if (value == "None")
           background = BACKGROUND_NONE;
         else
+        if (value == "Green")
+          background = BACKGROUND_GREEN;
+        else
         if (value == "Universe")
           background = BACKGROUND_UNIVERSE;
         else
@@ -191,6 +216,24 @@ int CConfig::load_config_file() {
         else
         if (value == "Desert")
           background = BACKGROUND_DESERT;
+        else
+        if (value == "Wooden_1")
+          background = BACKGROUND_WOODEN_1;
+        else
+        if (value == "Wooden_2")
+          background = BACKGROUND_WOODEN_2;
+        else
+        if (value == "Wooden_3")
+          background = BACKGROUND_WOODEN_3;
+        else
+        if (value == "Wooden_4")
+          background = BACKGROUND_WOODEN_4;
+        else
+        if (value == "Leaves")
+          background = BACKGROUND_LEAVES;
+        else
+        if (value == "Marble")
+          background = BACKGROUND_MARBLE;
 
         continue;
       }
@@ -224,6 +267,9 @@ int CConfig::load_config_file() {
       if (param == "Info_Channel")
         info_channel = enable;
       else
+      if (param == "Show_Direction")
+        show_direction = enable;
+      else
       if (param == "Sounds")
         sounds = enable;
       else
@@ -232,6 +278,9 @@ int CConfig::load_config_file() {
       else
       if (param == "Easy_Card_Selection")
         easy_card_selection = enable;
+      else
+      if (param == "Card_Display")
+        card_display = enable;
       else
       if (param == "Perfect_100")
         perfect_100 = enable;
@@ -263,7 +312,7 @@ int CConfig::load_config_file() {
           // unknown param
       }
 
-      if (cpt > 30) break; // too many lines ?? corrupted file ??
+      if (cpt > 33) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
@@ -278,6 +327,12 @@ int CConfig::set_language(int lang) {
 
 int CConfig::set_deck_style(int style) {
   deck_style = style;
+
+  return save_config_file();
+}
+
+int CConfig::set_hearts_style(int style) {
+  hearts_style = style;
 
   return save_config_file();
 }
@@ -317,6 +372,7 @@ int CConfig::set_config_file(int param, bool enable)
     case CONFIG_AUTO_CENTERING :          auto_centering = enable; break;
     case CONFIG_CHEAT_MODE :              cheat_mode = enable; break;
     case CONFIG_INFO_CHANNEL :            info_channel = enable; break;
+    case CONFIG_SHOW_DIRECTION :          show_direction = enable; break;
     case CONFIG_SOUNDS :                  sounds = enable; break;
     case CONFIG_DETECT_TRAM :             detect_tram = enable; break;
     case CONFIG_PERFECT_100 :             perfect_100 = enable; break;
@@ -327,6 +383,7 @@ int CConfig::set_config_file(int param, bool enable)
     case CONFIG_NO_DRAW :                 no_draw = enable; break;
     case CONFIG_SAVE_GAME :               save_game = enable; break;
     case CONFIG_EASY_CARD_SELECTION :     easy_card_selection = enable; break;
+    case CONFIG_CARD_DISPLAY :            card_display = enable; break;
     case CONFIG_WARNING :                 warning = enable; break;
     case CONFIG_AUTO_START :              auto_start = enable; break;
     case CONFIG_ANIMATED_PLAY :           animated_play = enable; break;
@@ -365,22 +422,39 @@ int CConfig::save_config_file()
     case TIGULLIO_MODERN_DECK: out << "Deck_Style = tigullio_modern" << EOL; break;
   }
 
+  switch (hearts_style) {
+    case HEARTS_TEXT_ONLY:  out << "Hearts_Style = text" << EOL; break;
+    case HEARTS_ICONS_PINK: out << "Hearts_Style = pink" << EOL; break;
+    case HEARTS_ICONS_GREY: out << "Hearts_Style = grey" << EOL; break;
+    case HEARTS_ICONS_SUIT: out << "Hearts_Style = suit" << EOL; break;
+    case HEARTS_ICONS_CPU:  out << "Hearts_Style = cpu" << EOL; break;
+  }
+
   switch (background) {
     case BACKGROUND_NONE:     out << "Background = None" << EOL; break;
+    case BACKGROUND_GREEN:    out << "Background = Green" << EOL; break;
     case BACKGROUND_UNIVERSE: out << "Background = Universe" << EOL; break;
     case BACKGROUND_OCEAN:    out << "Background = Ocean" << EOL; break;
     case BACKGROUND_EVEREST:  out << "Background = Everest" << EOL; break;
     case BACKGROUND_MT_FUJI:  out << "Background = Mt_Fuji" << EOL; break;
     case BACKGROUND_DESERT:   out << "Background = Desert" << EOL; break;
+    case BACKGROUND_WOODEN_1: out << "Background = Wooden_1" << EOL; break;
+    case BACKGROUND_WOODEN_2: out << "Background = Wooden_2" << EOL; break;
+    case BACKGROUND_WOODEN_3: out << "Background = Wooden_3" << EOL; break;
+    case BACKGROUND_WOODEN_4: out << "Background = Wooden_4" << EOL; break;
+    case BACKGROUND_LEAVES:   out << "Background = Leaves" << EOL; break;
+    case BACKGROUND_MARBLE:   out << "Background = Marble" << EOL; break;
   }
 
   out << "Animated_Play = " << (animated_play ? "true" : "false") << EOL;
   out << "Auto_Centering = " << (auto_centering ? "true" : "false") << EOL;
   out << "Cheat_Mode = " << (cheat_mode ? "true" : "false") << EOL;
   out << "Info_Channel = " << (info_channel ? "true" : "false") << EOL;
+  out << "Show_Direction = " << (show_direction ? "true" : "false") << EOL;
   out << "Sounds = " << (sounds ? "true" : "false") << EOL;
   out << "Detect_Tram = " << (detect_tram ? "true" : "false") << EOL;
   out << "Easy_Card_Selection = " << (easy_card_selection ? "true" : "false") << EOL;
+  out << "Card_Display = " << (card_display ? "true" : "false") << EOL;
   out << "Auto_Start = " << (auto_start ? "true" : "false") << EOL;
 
   switch (speed) {
@@ -488,12 +562,20 @@ bool CConfig::is_easy_card_selection() {
   return easy_card_selection;
 }
 
+bool CConfig::is_card_display() {
+  return card_display;
+}
+
 bool CConfig::is_auto_start() {
   return auto_start;
 }
 
 bool CConfig::is_animated_play() {
   return animated_play;
+}
+
+bool CConfig::is_show_direction() {
+  return show_direction;
 }
 
 int CConfig::get_language() {
@@ -525,7 +607,10 @@ int CConfig::get_speed(int type) {
   return 0;
 }
 
-int CConfig::get_background()
-{
+int CConfig::get_background() {
   return background;
+}
+
+int CConfig::get_hearts_style() {
+  return hearts_style;
 }

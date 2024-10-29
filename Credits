@@ -19,6 +19,30 @@ License: https://creativecommons.org/publicdomain/zero/1.0/deed.en
 Ocean: Ocean: Photo by grumpylumixuser
 License: https://creativecommons.org/licenses/by/3.0/deed.en
 
+Green: Image by Attila Tóth
+License: Image created for this software. https://github.com/Rescator7/Hearts/issues/4
+
+Wood Texture: Image by Firkin
+https://openclipart.org/detail/299936/wood-texture
+License: https://openclipart.org/share
+
+Wooden Floor 2: Image by Firkin
+https://openclipart.org/detail/267070/wooden-floor-2
+License: https://openclipart.org/share
+
+Overlapping planks 5: Image by Firkin
+https://openclipart.org/detail/269799/overlapping-planks-5
+License: https://openclipart.org/share
+
+Wooden planks: Image by Firkin
+https://openclipart.org/detail/269803/wooden-planks
+License: https://openclipart.org/share
+
+Leaves:
+Marble: By: Bob <castillo7@hotmail.com>
+Created using gimp 2.10.18
+License: https://creativecommons.org/publicdomain/zero/1.0/
+
 
 Decks cards images:
 -------------------
@@ -62,23 +86,53 @@ Used as: Players under cards.
 Created using gimp. They are fill patern available in gimp 2.8.
 License: https://creativecommons.org/publicdomain/zero/1.0/
 
-Icons: Heart
+Icons: Heart (Pink) & Heart (Grey)
 Used as: Player's name & scores
 Artist:  icojam
 Website: https://www.iconarchive.com/artist/icojam.html
 License: (Public Domain) https://www.iconarchive.com/show/blue-bits-icons-by-icojam/love-heart-icon.html
 
-Icons: used as online_exit, online_table_leave, online_create_table, online_mute_table
-       used as online_start_game
+Icons: online_exit, online_table_leave, online_create_table, online_mute_table
+       online_start_game
 Artist: paomedia
 Iconset: Small & Flat Icons
 Website: https://www.iconarchive.com/show/small-n-flat-icons-by-paomedia.html
 License: Public Domain
 
-Icons: used as online_show_tables
+Icons: online_show_tables
 Artist: Fatcow Web Hosting
 Website: https://www.iconarchive.com/artist/fatcow.html
 License: CC Attribution 4.0
+
+Icon: person-generic
+Artist: Cheeseness
+Website: https://openclipart.org/detail/275133/person-generic
+License: https://openclipart.org/share
+
+Icon: computer-icon
+Artist: kuba
+Website: https://openclipart.org/detail/89275/computer-icon
+License: https://openclipart.org/share
+
+Icon: hearts-symbol
+Artist: Merlin2525
+Website: https://openclipart.org/detail/216901/hearts-symbol
+License: https://openclipart.org/share
+
+Icon: diamonds-symbol
+Artist: Merlin2525
+Website: https://openclipart.org/detail/216899/diamonds-symbol
+License: https://openclipart.org/share
+
+Icon: spades-symbol
+Artist: Merlin2525
+Website: https://openclipart.org/detail/216898/spades-symbol
+License: https://openclipart.org/share
+
+Icon: clubs-symbol
+Artist: Merlin2525
+Website: https://openclipart.org/detail/216897/clubs-symbol
+License: https://openclipart.org/share
 
 
 Sounds credits goes to:

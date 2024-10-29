@@ -17,20 +17,36 @@ const int CONFIG_NO_DRAW                 = 10;
 const int CONFIG_SAVE_GAME               = 11;
 const int CONFIG_LANGUAGE                = 12;
 const int CONFIG_EASY_CARD_SELECTION     = 13;
-const int CONFIG_AUTO_START              = 14;
-const int CONFIG_DECK_STYLE              = 15;
-const int CONFIG_ANIMATED_PLAY           = 16;
-const int CONFIG_USERNAME                = 17;
-const int CONFIG_PASSWORD                = 18;
-const int CONFIG_WARNING                 = 19;
+const int CONFIG_CARD_DISPLAY            = 14;
+const int CONFIG_AUTO_START              = 15;
+const int CONFIG_DECK_STYLE              = 16;
+const int CONFIG_ANIMATED_PLAY           = 17;
+const int CONFIG_USERNAME                = 18;
+const int CONFIG_PASSWORD                = 19;
+const int CONFIG_WARNING                 = 20;
+const int CONFIG_SHOW_DIRECTION          = 21;
 
-const int BACKGROUND_UNSET               = -1;
 const int BACKGROUND_NONE                = 0;
-const int BACKGROUND_UNIVERSE            = 1;
-const int BACKGROUND_OCEAN               = 2;
-const int BACKGROUND_MT_FUJI             = 3;
-const int BACKGROUND_EVEREST             = 4;
-const int BACKGROUND_DESERT              = 5;
+const int BACKGROUND_GREEN               = 1;
+const int BACKGROUND_UNIVERSE            = 2;
+const int BACKGROUND_OCEAN               = 3;
+const int BACKGROUND_MT_FUJI             = 4;
+const int BACKGROUND_EVEREST             = 5;
+const int BACKGROUND_DESERT              = 6;
+const int BACKGROUND_WOODEN_1            = 7;
+const int BACKGROUND_WOODEN_2            = 8;
+const int BACKGROUND_WOODEN_3            = 9;
+const int BACKGROUND_WOODEN_4            = 10;
+const int BACKGROUND_LEAVES              = 11;
+const int BACKGROUND_MARBLE              = 12;
+
+const int BACKGROUND_MAX                 = 13;
+
+const int HEARTS_TEXT_ONLY               = 0;
+const int HEARTS_ICONS_PINK              = 1;
+const int HEARTS_ICONS_GREY              = 2;
+const int HEARTS_ICONS_SUIT              = 3;
+const int HEARTS_ICONS_CPU               = 4;
 
 const int SPEED_SLOW                     = 0;
 const int SPEED_NORMAL                   = 1;
@@ -73,6 +89,7 @@ private:
     int deck_style;
     int speed;
     int background;
+    int hearts_style;
     int expert_speeds[MAX_SPEEDS];
 
     // game variants
@@ -89,9 +106,11 @@ private:
     bool auto_centering;
     bool cheat_mode;
     bool info_channel;
+    bool show_direction;
     bool sounds;
     bool detect_tram;
     bool easy_card_selection;
+    bool card_display;
     bool save_game;
 
     // online
@@ -109,6 +128,7 @@ public:
     int set_config_file(int param, bool enable);
     int set_language(int lang);
     int set_deck_style(int style);
+    int set_hearts_style(int style);
     int set_speed(int s);
     int set_expert_speeds(int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8);
     int set_background(int b);
@@ -117,6 +137,7 @@ public:
     int get_speed();
     int get_speed(int type);
     int get_background();
+    int get_hearts_style();
 
     bool is_auto_centering();
     bool is_cheat_mode();
@@ -132,8 +153,10 @@ public:
     bool is_no_draw();
     bool is_save_game();
     bool is_easy_card_selection();
+    bool is_card_display();
     bool is_auto_start();
     bool is_animated_play();
+    bool is_show_direction();
 };
 
 #endif // CONFIG_H

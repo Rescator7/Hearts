@@ -151,15 +151,27 @@ private slots:
     void on_actionMt_Fuji_triggered();
     void on_actionDesert_triggered();
     void on_actionEverest_triggered();
-
     void on_actionCustom_Expert_triggered();
+    void on_actionWooden_planks_triggered();
+    void on_actionWood_texture_triggered();
+    void on_actionText_only_triggered();
+    void on_actionHearts_Pink_triggered();
+    void on_actionHearts_Grey_triggered();
+    void on_actionSuits_triggered();
+    void on_actionCards_Display_triggered();
+    void on_actionOverlapping_planks_5_triggered();
+    void on_actionLeaves_triggered();
+    void on_actionMarble_triggered();
+    void on_actionGreen_triggered();
+    void on_actionCPU_Human_triggered();
+    void on_actionWooden_floor_triggered();
+    void on_actionShow_direction_triggered();
 
 private:
     Ui::MainWindow *ui;
     QImage *img_pass[4];
     QImage *img_connected;
     QImage *img_disconnected;
-    QImage *img_heart;
     QLabel *label_cards[4][13];
     QLabel *label_scores[4];
     QLabel *label_player_name[4];
@@ -206,6 +218,7 @@ private:
 
     bool wait_delay;
     bool stop_delay;
+    bool show_direction;
 
     int perc_height_cards_s;
     int background;
@@ -262,7 +275,6 @@ private:
 
     char online_names[4][20];
 
-
 // private online functions
     int convert_chair(int chair);
     void online_set_settings(bool disable);
@@ -282,7 +294,13 @@ private:
     void set_language(int lang);
     void set_credit();
     void set_background();
+    void check_text_only();
+    void set_card_display(bool checked);
+    void set_hearts_style_icons(int style);
+    void set_hearts_style(int style);
+    void set_hearts_style_checked(int style);
     void set_cards_disabled(bool d);
+    void set_show_direction(bool disable);
     void refresh_cards_played();
     void init_vars();
     void load_sounds();
@@ -320,6 +338,7 @@ public:
     void online_show_lineedit(bool enable);
     void online_show_deck();
     void online_hide_progress_bar();
+    void online_check_cpu_human();
 #endif // ONLINE_PLAY
 
 public slots:
@@ -356,7 +375,8 @@ public slots:
     void aboutToQuit();
     void animate_pass_cards(int w1, int w2, int w3, int n1, int n2, int n3, int e1, int e2, int e3);
     void handle_new_game();
-    void unset_bkg_checked();
+    void unset_background();
+    void unset_hearts_style();
     void set_theme_colors();
     void menu_speed_about_to_show();
 };

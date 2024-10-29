@@ -1,4 +1,4 @@
-# Hearts 1.8.10 (Linux, C++)
+# Hearts 1.9 (Linux, C++)
 The card game Hearts for QT 5 or 6, and liballegro 5 (for sounds support)
 
 <p>You can download Hearts as a snap package from:</p>
@@ -13,7 +13,10 @@ The card game Hearts for QT 5 or 6, and liballegro 5 (for sounds support)
 - Support online and offline game play.
 - Support 3 languages. (English, French, Russian). 
 - Support 5 differents deck: Standard, Nicu (white), English, Russian, Tigullio (modern).
-- 5 background images theme: Universe, Ocean, Mt. Fuji, Everest, Desert.
+- 12 background images theme: Green, Universe, Ocean, Mt. Fuji, Everest, Desert,
+                              Wooden planks, Wood texture, Wooden floor 2, Overlapping planks 5,
+                              Leaves, Marble.
+- Support 5 scores styles: Text only, Hearts (Pink), Hearts (Grey), Suits, Cpu / Human.
 - Helps [Rules, Online, Settings, Credits]
 - Sounds.
 - Easy card selection. (offline only)
@@ -96,4 +99,4 @@ Hearts</code></pre>
  - Icons: (read credits)
  - READ CREDITS for all the licenses details: https://github.com/Rescator7/Hearts/blob/master/Credits
 
-![screenshoot](https://github.com/Rescator7/Hearts/blob/master/screenshot/SCR1-hearts-1.8.jpg)
+![screenshoot](https://github.com/Rescator7/Hearts/blob/master/screenshot/SCR1-hearts-1.9.jpg)

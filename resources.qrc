@@ -251,7 +251,6 @@
         <file>backgrounds/8,848m_Everest_8,516m_Lhotse_Himalaya_Mountain_Flights_Nepal_-_panoramio_(2).jpg</file>
         <file>backgrounds/Mount._Fuji_early_in_the_morning_早朝の富士山_-_panoramio.jpg</file>
         <file>backgrounds/Wadi_rum_desert.jpg</file>
-        <file>backgrounds/_Palm_ _Beach._Port_Douglas._-_panoramio.jpg</file>
         <file>SVG-cards/tigullio-modern/back.png</file>
         <file>SVG-cards/tigullio-modern/club_1.png</file>
         <file>SVG-cards/tigullio-modern/club_2.png</file>
@@ -305,5 +304,20 @@
         <file>SVG-cards/tigullio-modern/spade_jack.png</file>
         <file>SVG-cards/tigullio-modern/spade_king.png</file>
         <file>SVG-cards/tigullio-modern/spade_queen.png</file>
+        <file>backgrounds/WoodenPlanks.svg</file>
+        <file>backgrounds/WoodTexture.svg</file>
+        <file>icons/heart-grey.png</file>
+        <file>backgrounds/OverlappingPlanks5.svg</file>
+        <file>icons/Spades-Symbol-by-Merlin2525.svg</file>
+        <file>icons/Hearts-Symbol-by-Merlin2525.svg</file>
+        <file>icons/Diamonds-Symbol-by-Merlin2525.svg</file>
+        <file>icons/Clubs-Symbol-by-Merlin2525.svg</file>
+        <file>backgrounds/leaves.jpg</file>
+        <file>backgrounds/marble.jpg</file>
+        <file>backgrounds/380441109-2ed06248-c87c-4a56-a718-0584d0cdc85d.png</file>
+        <file>icons/persongeneric.svg</file>
+        <file>backgrounds/WoodenFloor2.svg</file>
+        <file>icons/computer-icon.png</file>
+        <file>backgrounds/__Palm___Beach._Port_Douglas._-_panoramio.jpg</file>
     </qresource>
 </RCC>

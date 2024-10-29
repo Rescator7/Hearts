@@ -204,3 +204,11 @@
 31 Mar 2022: New setting: settings->Game_Speed->Customized (Expert mode) 
              https://github.com/Rescator7/Hearts/issues/3
 
+29 Oct 2024: Version 1.9
+-------------------------------------------------------------------------------------------------
+29 Oct 2024: Added 7 new backgrounds: Green, "Wooden planks", "Wood texture", "Wooden floor", 
+             "Overlapping planks 5", Leaves, Marble 
+	     Added checkable settings: "Card Display", "Show direction"
+	     Added "Display Score" : "Text only", "Hearts (Pink)", "Hearts (Grey)", "Suits", "CPU / Human"
+             https://github.com/Rescator7/Hearts/issues/4
+
