@@ -8,29 +8,31 @@
 #define THIRD_CARD   2
 #define FOURTH_CARD  3
 
-const int DECK_SIZE     = 52;
+const int DECK_SIZE       = 52;
 
-const int NOT_FOUND     = -1;
+const int NOT_FOUND       = -1;
 
-const int two_clubs     = 0;
-const int ace_clubs     = 12;
-const int two_spade     = 13;
-const int queen_spade   = 23;
-const int king_spade    = 24;
-const int ace_spade     = 25;
-const int two_diamond   = 26;
-const int jack_diamond  = 35;
-const int queen_diamond = 36;
-const int king_diamond  = 37;
-const int ace_diamond   = 38;
-const int two_heart     = 39;
-const int jack_heart    = 48;
-const int queen_heart   = 49;
-const int king_heart    = 50;
-const int ace_heart     = 51;
-const int back_card     = 100;
-const int empty         = 127;
-const int your_turn     = 255;
+const int two_clubs       = 0;
+const int ace_clubs       = 12;
+const int two_spade       = 13;
+const int queen_spade     = 23;
+const int king_spade      = 24;
+const int ace_spade       = 25;
+const int two_diamond     = 26;
+const int jack_diamond    = 35;
+const int queen_diamond   = 36;
+const int king_diamond    = 37;
+const int ace_diamond     = 38;
+const int two_heart       = 39;
+const int jack_heart      = 48;
+const int queen_heart     = 49;
+const int king_heart      = 50;
+const int ace_heart       = 51;
+const int back_card       = 100;
+const int empty           = 127;
+const int invisible       = 128;
+const int your_turn_frame = 254;
+const int your_turn       = 255;
 
 const int pLEFT         = 0;
 const int pRIGHT        = 1;

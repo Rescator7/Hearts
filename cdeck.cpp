@@ -11,6 +11,8 @@ CDeck::CDeck(int deck)
 
   img_empty_card = new QImage(":/SVG-cards/Default/empty.png", "PNG");
   img_your_turn = new QImage(":/SVG-cards/Default/card-base2.png", "PNG");
+  img_card_frame = new QImage(":/SVG-cards/Default/card-frame.png", "PNG");
+  img_card_invis = new QImage(":/SVG-cards/Default/card-invis.png", "PNG");
 
   switch (deck) {
      case ENGLISH_DECK:          set_english_deck(); break;
@@ -294,7 +296,7 @@ void CDeck::set_russian_deck()
   img_cards[50] = new QImage(":/SVG-cards/Russian/heart_king.png", "PNG");
   img_cards[51] = new QImage(":/SVG-cards/Russian/heart_1.png", "PNG");
 
-  img_back_card = new QImage(":/SVG-cards/Default/back.png", "PNG");
+  img_back_card = new QImage(":/SVG-cards/Russian/back.svg", "SVG");
 }
 
 void CDeck::set_tigullio_modern_deck()
@@ -361,6 +363,8 @@ CDeck::~CDeck()
 {
   delete img_empty_card;
   delete img_your_turn;
+  delete img_card_frame;
+  delete img_card_invis;
 
 #ifdef DEBUG
   delete cards_played;
@@ -372,7 +376,10 @@ CDeck::~CDeck()
 QImage *CDeck::get_img_card(int card) {
   switch (card) {
      case empty:     return img_empty_card;
+     case invisible: return img_card_invis;
      case back_card: return img_back_card;
+     case your_turn_frame: 
+             return img_card_frame;
      case your_turn: return img_your_turn;
 
      default:        assert((card >= 0) && (card < DECK_SIZE));

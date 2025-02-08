@@ -694,6 +694,9 @@ void MainWindow::init_vars()
   orig_posy_deck_n = ui->label_deck_n->y();
   orig_posy_deck_s = ui->label_deck_s->y();
   orig_posx_deck_e = ui->label_deck_e->x();
+
+  _empty = empty;
+  _your_turn = your_turn;
 }
 
 void MainWindow::load_sounds()
@@ -1130,6 +1133,18 @@ void MainWindow::set_settings()
 
     default: aspect_ratio_flag = Qt::KeepAspectRatio;
              ui->actionStandard->setChecked(true);
+  }
+
+  if (config->is_empty_slot_opaque()) {
+    _empty = empty;
+    _your_turn = your_turn;
+
+    ui->actionOpaque->setChecked(true);
+  } else {
+      _empty = invisible;
+      _your_turn = your_turn_frame;
+
+      ui->actionTransparent->setChecked(true);
   }
 
   adjust_under_deck();
@@ -1610,7 +1625,7 @@ void MainWindow::clear_table()
 {
   delay(config->get_speed(SPEED_CLEAR_TABLE));
   for (int i=0; i<4; i++) {
-    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(empty)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
+    label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(_empty)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
     card_played[i] = empty;
   }
 
@@ -1778,7 +1793,7 @@ void MainWindow::show_your_turn(int idx)
 {
   delay(config->get_speed(SPEED_YOUR_TURN));
 
-  label_card_played[idx]->setPixmap(QPixmap::fromImage(deck->get_img_card(your_turn)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
+  label_card_played[idx]->setPixmap(QPixmap::fromImage(deck->get_img_card(_your_turn)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
   card_played[idx] = your_turn;
 
 #ifdef __al_included_allegro5_allegro_audio_h
@@ -1870,7 +1885,13 @@ void MainWindow::reverse_cards_rgb()
 void MainWindow::refresh_cards_played()
 {
   for (int i=0; i<4; i++) {
-    int card = card_played[i];
+    int card;
+   
+    if (card_played[i] == empty) card = _empty; 
+    else
+      if (card_played[i] == your_turn) card = _your_turn;
+      else
+	card = card_played[i];
 
     label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
   }
@@ -3179,6 +3200,32 @@ void MainWindow::on_actionShow_direction_triggered()
   if (!online_connected && !hearts->is_mode_playing()) disable = false;
 
   set_show_direction(disable);
+}
+
+void MainWindow::on_actionOpaque_triggered()
+{
+  ui->actionOpaque->setChecked(true);
+  ui->actionTransparent->setChecked(false);
+
+  _empty = empty;
+  _your_turn = your_turn;
+
+  config->set_config_file(CONFIG_EMPTY_SLOT, true);
+
+  refresh_cards_played();
+}
+
+void MainWindow::on_actionTransparent_triggered()
+{
+  ui->actionOpaque->setChecked(false);
+  ui->actionTransparent->setChecked(true);
+
+  _empty = invisible;
+  _your_turn = your_turn_frame;
+
+  config->set_config_file(CONFIG_EMPTY_SLOT, false);
+
+  refresh_cards_played();
 }
 
 //***************************************************************************************************

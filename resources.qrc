@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>SVG-cards/Default/back.png</file>
         <file>SVG-cards/Default/card-base2.png</file>
+        <file>SVG-cards/Default/card-frame.png</file>
+        <file>SVG-cards/Default/card-invis.png</file>
         <file>SVG-cards/Default/club_1.png</file>
         <file>SVG-cards/Default/club_2.png</file>
         <file>SVG-cards/Default/club_3.png</file>
@@ -160,6 +162,7 @@
         <file>SVG-cards/Russian/spade_jack.png</file>
         <file>SVG-cards/Russian/spade_king.png</file>
         <file>SVG-cards/Russian/spade_queen.png</file>
+        <file>SVG-cards/Russian/back.svg</file>
         <file>sounds/34201__themfish__glass-house1.wav</file>
         <file>sounds/96127__bmaczero__contact1.wav</file>
         <file>sounds/133283__fins__game-over.wav</file>

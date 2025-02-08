@@ -36,6 +36,7 @@ void CConfig::init_vars()
   card_display = true;
   save_game = true;
   auto_start = false;
+  empty_slot_opaque = true;
 
   perfect_100 = false;
   omnibus = false;
@@ -282,6 +283,9 @@ int CConfig::load_config_file() {
       if (param == "Card_Display")
         card_display = enable;
       else
+      if (param == "Empty_Slot")
+        empty_slot_opaque = enable;
+      else
       if (param == "Perfect_100")
         perfect_100 = enable;
       else
@@ -312,7 +316,7 @@ int CConfig::load_config_file() {
           // unknown param
       }
 
-      if (cpt > 33) break; // too many lines ?? corrupted file ??
+      if (cpt > 34) break; // too many lines ?? corrupted file ??
   }
   file.close();
 
@@ -384,6 +388,7 @@ int CConfig::set_config_file(int param, bool enable)
     case CONFIG_SAVE_GAME :               save_game = enable; break;
     case CONFIG_EASY_CARD_SELECTION :     easy_card_selection = enable; break;
     case CONFIG_CARD_DISPLAY :            card_display = enable; break;
+    case CONFIG_EMPTY_SLOT :              empty_slot_opaque = enable; break;
     case CONFIG_WARNING :                 warning = enable; break;
     case CONFIG_AUTO_START :              auto_start = enable; break;
     case CONFIG_ANIMATED_PLAY :           animated_play = enable; break;
@@ -455,6 +460,7 @@ int CConfig::save_config_file()
   out << "Detect_Tram = " << (detect_tram ? "true" : "false") << EOL;
   out << "Easy_Card_Selection = " << (easy_card_selection ? "true" : "false") << EOL;
   out << "Card_Display = " << (card_display ? "true" : "false") << EOL;
+  out << "Empty_Slot = " << (empty_slot_opaque ? "true" : "false") << EOL;
   out << "Auto_Start = " << (auto_start ? "true" : "false") << EOL;
 
   switch (speed) {
@@ -576,6 +582,10 @@ bool CConfig::is_animated_play() {
 
 bool CConfig::is_show_direction() {
   return show_direction;
+}
+
+bool CConfig::is_empty_slot_opaque() {
+  return empty_slot_opaque;
 }
 
 int CConfig::get_language() {

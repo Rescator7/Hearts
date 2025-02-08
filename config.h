@@ -25,6 +25,7 @@ const int CONFIG_USERNAME                = 18;
 const int CONFIG_PASSWORD                = 19;
 const int CONFIG_WARNING                 = 20;
 const int CONFIG_SHOW_DIRECTION          = 21;
+const int CONFIG_EMPTY_SLOT              = 22;
 
 const int BACKGROUND_NONE                = 0;
 const int BACKGROUND_GREEN               = 1;
@@ -112,6 +113,7 @@ private:
     bool easy_card_selection;
     bool card_display;
     bool save_game;
+    bool empty_slot_opaque;
 
     // online
     QString username;
@@ -157,6 +159,7 @@ public:
     bool is_auto_start();
     bool is_animated_play();
     bool is_show_direction();
+    bool is_empty_slot_opaque();
 };
 
 #endif // CONFIG_H

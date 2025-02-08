@@ -2654,12 +2654,20 @@
      <addaction name="actionSuits"/>
      <addaction name="actionCPU_Human"/>
     </widget>
+    <widget class="QMenu" name="menuEmpty_slot">
+     <property name="title">
+      <string>Empty Slot</string>
+     </property>
+     <addaction name="actionOpaque"/>
+     <addaction name="actionTransparent"/>
+    </widget>
     <addaction name="actionAnimate_Play"/>
     <addaction name="actionAuto_Centering"/>
     <addaction name="actionAuto_Start"/>
     <addaction name="actionTram"/>
     <addaction name="actionEasy_card_selection"/>
     <addaction name="actionCards_Display"/>
+    <addaction name="menuEmpty_slot"/>
     <addaction name="actionInfo_Channel"/>
     <addaction name="actionShow_direction"/>
     <addaction name="actionSave_Game_Quit"/>
@@ -3183,6 +3191,22 @@
    </property>
    <property name="text">
     <string>Show Direction</string>
+   </property>
+  </action>
+  <action name="actionOpaque">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Opaque</string>
+   </property>
+  </action>
+  <action name="actionTransparent">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Transparent</string>
    </property>
   </action>
  </widget>

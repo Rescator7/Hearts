@@ -166,6 +166,8 @@ private slots:
     void on_actionCPU_Human_triggered();
     void on_actionWooden_floor_triggered();
     void on_actionShow_direction_triggered();
+    void on_actionOpaque_triggered();
+    void on_actionTransparent_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -231,6 +233,8 @@ private:
     int card_played[4];
     int scores[4];
     int hand_scores[4];
+    int _your_turn;
+    int _empty;
     Qt::AspectRatioMode aspect_ratio_flag;
 
     int y_factor;

@@ -29,6 +29,8 @@ private:
     QImage *img_empty_card;
     QImage *img_your_turn;
     QImage *img_back_card;
+    QImage *img_card_frame;
+    QImage *img_card_invis;
 
 #ifdef DEBUG
     CCardsPlayed *cards_played;
@@ -54,6 +56,7 @@ public:
     void show_cards_played();
     void hide_cards_played();
     void Translate();
+	    
 #endif // DEBUG
 };
 
