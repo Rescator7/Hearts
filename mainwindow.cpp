@@ -445,6 +445,12 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
                          ui->label_credit->width() - 30, ui->label_credit->y());
 }
 
+int MainWindow::card_played_formated(int card) {
+  if (card == empty) return _empty;
+  if (card == your_turn) return _your_turn;
+  return card;
+}
+
 void MainWindow::resizeWidth(int perc_h)
 {
   int h = (130 * perc_h) / 100;
@@ -460,13 +466,13 @@ void MainWindow::resizeWidth(int perc_h)
   label_card_played[PLAYER_EAST]->resize(nw, h);
 
   // Resize the image of the cards played
-  int card = card_played[PLAYER_SOUTH];
+  int card = card_played_formated(card_played[PLAYER_SOUTH]);
   label_card_played[PLAYER_SOUTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatio)));
 
-  card = card_played[PLAYER_WEST];
+  card = card_played_formated(card_played[PLAYER_WEST]);
   label_card_played[PLAYER_WEST]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatio)));
 
-  card = card_played[PLAYER_NORTH];
+  card = card_played_formated(card_played[PLAYER_NORTH]);
   label_card_played[PLAYER_NORTH]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatio)));
 
 #ifdef ONLINE_PLAY
@@ -476,7 +482,7 @@ void MainWindow::resizeWidth(int perc_h)
   label_waiting[PLAYER_EAST]->resize(nw, h);
 #endif // ONLINE_PLAY
 
-  card = card_played[PLAYER_EAST];
+  card = card_played_formated(card_played[PLAYER_EAST]);
   label_card_played[PLAYER_EAST]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(nw, h, Qt::KeepAspectRatio)));
 
   // heart 100% = 140w x 140h
@@ -1885,13 +1891,7 @@ void MainWindow::reverse_cards_rgb()
 void MainWindow::refresh_cards_played()
 {
   for (int i=0; i<4; i++) {
-    int card;
-   
-    if (card_played[i] == empty) card = _empty; 
-    else
-      if (card_played[i] == your_turn) card = _your_turn;
-      else
-	card = card_played[i];
+    int card = card_played_formated(card_played[i]);
 
     label_card_played[i]->setPixmap(QPixmap::fromImage(deck->get_img_card(card)->scaled(90, cards_played_height, Qt::KeepAspectRatio)));
   }

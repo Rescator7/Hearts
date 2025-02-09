@@ -195,26 +195,37 @@
         <translation> not found.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="402"/>
+        <location filename="../client.cpp" line="423"/>
+        <source>pass - Pass your 3 cards. Used by the client when you click button pass.
+Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
+        <translation type="unfinished">pass - Pass your 3 cards. Used by the client when you click button pass.
+Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="455"/>
+        <source>admin - Make a user to admin level. Usage: Admin user.
+Note: require level super user.</source>
+        <translation type="unfinished">admin - Raise a user to admin level. Usage: Admin username.
+Note: require level super user.</translation>
+    </message>
+    <message>
         <source>help - Show the command list.
 help &lt;command&gt; - Show &lt;command&gt;&apos;s help.
 </source>
-        <translation>help - Show the command list.
+        <translation type="vanished">help - Show the command list.
 help &lt;command&gt; - Show &lt;command&gt;&apos;s help.
 </translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="406"/>
         <source>join &lt;id&gt; - Join table #id.
 join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</source>
-        <translation>join &lt;id&gt; - Join table #id.
+        <translation type="vanished">join &lt;id&gt; - Join table #id.
 join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="410"/>
         <source>leave - Leave a table.
 Please note: If you were playing that would make you finish in fourth place.</source>
-        <translation>leave - Leave a table.
+        <translation type="vanished">leave - Leave a table.
 Please note: If you were playing that would make you finish in fourth place.</translation>
     </message>
     <message>
@@ -373,13 +384,6 @@ Please note: If you were playing that would make you finish in fourth place.</tr
         <translation>new - Create a new table. Usage: New &lt;flags&gt;. Note: Use interface &quot;create table&quot;.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="423"/>
-        <source>pass - Pass your 3 cards. Used by the client when you click button pass.
-Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
-        <translation>pass - Pass your 3 cards. Used by the client when you click button pass.
-Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</translation>
-    </message>
-    <message>
         <location filename="../client.cpp" line="427"/>
         <source>password - Change your password. Usage: password old new.</source>
         <translation>password - Change your password. Usage: password old new.</translation>
@@ -423,13 +427,6 @@ Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</translation>
         <location filename="../client.cpp" line="451"/>
         <source>Start - Start the game. The empty chairs will be played by BOT.</source>
         <translation>Start - Start the game. The empty chairs will be played by BOT.</translation>
-    </message>
-    <message>
-        <location filename="../client.cpp" line="455"/>
-        <source>admin - Make a user to admin level. Usage: Admin user.
-Note: require level super user.</source>
-        <translation>admin - Raise a user to admin level. Usage: Admin username.
-Note: require level super user.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="459"/>
@@ -815,7 +812,7 @@ It is also saved unencrypted in ~/.hearts
 DON&apos;T reuse this password !
 
 Do you want to continue ?</source>
-        <translation>The password will be sent unencrypted over the internet.
+        <translation type="unfinished">The password will be sent unencrypted over the internet.
 It is also saved unencrypted in ~/.hearts
 
 DON&apos;T reuse this password !
@@ -1169,7 +1166,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="2659"/>
         <source>Empty Slot</source>
-        <translation>Empty-Slot</translation>
+        <translation>Empty Slot</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2683"/>
@@ -1505,49 +1502,49 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Forest</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="994"/>
-        <location filename="../mainwindow.cpp" line="1194"/>
+        <location filename="../mainwindow.cpp" line="1000"/>
+        <location filename="../mainwindow.cpp" line="1200"/>
         <location filename="../mainwindow.cpp" line="2206"/>
         <source>You</source>
         <translation>You</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1208"/>
+        <location filename="../mainwindow.cpp" line="1214"/>
         <location filename="../mainwindow.cpp" line="3240"/>
         <source>omnibus </source>
         <translation>omnibus </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1211"/>
+        <location filename="../mainwindow.cpp" line="1217"/>
         <location filename="../mainwindow.cpp" line="3242"/>
         <source>no trick bonus </source>
         <translation>no trick bonus </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1214"/>
+        <location filename="../mainwindow.cpp" line="1220"/>
         <location filename="../mainwindow.cpp" line="3244"/>
         <source>&lt;unknown&gt; </source>
         <translation>&lt;unknown&gt; </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1218"/>
+        <location filename="../mainwindow.cpp" line="1224"/>
         <location filename="../mainwindow.cpp" line="3248"/>
         <source>[Info]: You receive the bonus: </source>
         <translation>[Info]: You receive the bonus: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1218"/>
-        <location filename="../mainwindow.cpp" line="1221"/>
+        <location filename="../mainwindow.cpp" line="1224"/>
+        <location filename="../mainwindow.cpp" line="1227"/>
         <location filename="../mainwindow.cpp" line="3248"/>
         <location filename="../mainwindow.cpp" line="3251"/>
         <source> point(s)</source>
         <translation> point(s)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1220"/>
-        <location filename="../mainwindow.cpp" line="1235"/>
-        <location filename="../mainwindow.cpp" line="1332"/>
-        <location filename="../mainwindow.cpp" line="1372"/>
+        <location filename="../mainwindow.cpp" line="1226"/>
+        <location filename="../mainwindow.cpp" line="1241"/>
+        <location filename="../mainwindow.cpp" line="1338"/>
+        <location filename="../mainwindow.cpp" line="1378"/>
         <location filename="../mainwindow.cpp" line="3250"/>
         <location filename="../mainwindow.cpp" line="3263"/>
         <location filename="../mainwindow.cpp" line="3372"/>
@@ -1555,13 +1552,13 @@ p, li { white-space: pre-wrap; }
         <translation>[Info]: Player &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1220"/>
+        <location filename="../mainwindow.cpp" line="1226"/>
         <location filename="../mainwindow.cpp" line="3250"/>
         <source>&apos; receive the bonus: </source>
         <translation>&apos; receive the bonus: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1233"/>
+        <location filename="../mainwindow.cpp" line="1239"/>
         <location filename="../mainwindow.cpp" line="3261"/>
         <source>[Info]: You got the perfect 100!
 [Info]: Your score has been set to 50.</source>
@@ -1569,7 +1566,7 @@ p, li { white-space: pre-wrap; }
 [Info]: Your score has been set to 50.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1235"/>
+        <location filename="../mainwindow.cpp" line="1241"/>
         <location filename="../mainwindow.cpp" line="3263"/>
         <source>&apos; got the perfect 100!
 [Info]: Player &apos;</source>
@@ -1577,24 +1574,24 @@ p, li { white-space: pre-wrap; }
 [Info]: Player &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1236"/>
+        <location filename="../mainwindow.cpp" line="1242"/>
         <location filename="../mainwindow.cpp" line="3264"/>
         <source>&apos; score has been set to 50.</source>
         <translation>&apos; score has been set to 50.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1248"/>
+        <location filename="../mainwindow.cpp" line="1254"/>
         <source>[Info]: Hearts has been broken!</source>
         <translation>[Info]: Hearts has been broken!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1269"/>
+        <location filename="../mainwindow.cpp" line="1275"/>
         <location filename="../mainwindow.cpp" line="3303"/>
         <source>Drew !</source>
         <translation>Drew !</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1267"/>
+        <location filename="../mainwindow.cpp" line="1273"/>
         <location filename="../mainwindow.cpp" line="3305"/>
         <source>Won !</source>
         <translation>Won !</translation>
@@ -1610,17 +1607,17 @@ p, li { white-space: pre-wrap; }
         <translation>The statistics file is corrupted!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="979"/>
+        <location filename="../mainwindow.cpp" line="985"/>
         <source>[Info]: Previous saved game has been loaded!</source>
         <translation>[Info]: Previous saved game has been loaded!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1067"/>
+        <location filename="../mainwindow.cpp" line="1073"/>
         <source>The saved game file is corrupted! Deleted!</source>
         <translation>The saved game file is corrupted! Deleted!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1303"/>
+        <location filename="../mainwindow.cpp" line="1309"/>
         <location filename="../mainwindow.cpp" line="3307"/>
         <source>[Info]: GAME OVER!
 [Info]: Player &apos;</source>
@@ -1628,10 +1625,10 @@ p, li { white-space: pre-wrap; }
 [Info]: Player &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1304"/>
-        <location filename="../mainwindow.cpp" line="1306"/>
-        <location filename="../mainwindow.cpp" line="1308"/>
         <location filename="../mainwindow.cpp" line="1310"/>
+        <location filename="../mainwindow.cpp" line="1312"/>
+        <location filename="../mainwindow.cpp" line="1314"/>
+        <location filename="../mainwindow.cpp" line="1316"/>
         <location filename="../mainwindow.cpp" line="3308"/>
         <location filename="../mainwindow.cpp" line="3310"/>
         <location filename="../mainwindow.cpp" line="3312"/>
@@ -1640,9 +1637,9 @@ p, li { white-space: pre-wrap; }
         <translation> point(s) </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1305"/>
-        <location filename="../mainwindow.cpp" line="1307"/>
-        <location filename="../mainwindow.cpp" line="1309"/>
+        <location filename="../mainwindow.cpp" line="1311"/>
+        <location filename="../mainwindow.cpp" line="1313"/>
+        <location filename="../mainwindow.cpp" line="1315"/>
         <location filename="../mainwindow.cpp" line="3309"/>
         <location filename="../mainwindow.cpp" line="3311"/>
         <location filename="../mainwindow.cpp" line="3313"/>
@@ -1652,83 +1649,83 @@ p, li { white-space: pre-wrap; }
 [Info]: Player &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1320"/>
+        <location filename="../mainwindow.cpp" line="1326"/>
         <location filename="../mainwindow.cpp" line="3324"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1330"/>
+        <location filename="../mainwindow.cpp" line="1336"/>
         <source>[Info]: You takes the rest!</source>
         <translation>[Info]: You takes the rest!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1332"/>
+        <location filename="../mainwindow.cpp" line="1338"/>
         <source>&apos; takes the rest!</source>
         <translation>&apos; takes the rest!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1350"/>
+        <location filename="../mainwindow.cpp" line="1356"/>
         <location filename="../mainwindow.cpp" line="3338"/>
         <source>[Info]: You shoot the moon!</source>
         <translation>[Info]: You shoot the moon!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1356"/>
+        <location filename="../mainwindow.cpp" line="1362"/>
         <location filename="../mainwindow.cpp" line="3346"/>
         <source>You shoot the moon!</source>
         <translation>You shoot the moon!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1357"/>
+        <location filename="../mainwindow.cpp" line="1363"/>
         <location filename="../mainwindow.cpp" line="3347"/>
         <source>What is your choice ?</source>
         <translation>What is your choice ?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1358"/>
+        <location filename="../mainwindow.cpp" line="1364"/>
         <location filename="../mainwindow.cpp" line="3348"/>
         <source>Add</source>
         <translation>Add</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1359"/>
+        <location filename="../mainwindow.cpp" line="1365"/>
         <location filename="../mainwindow.cpp" line="3354"/>
         <source>Subtract</source>
         <translation>Subtract</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1363"/>
+        <location filename="../mainwindow.cpp" line="1369"/>
         <location filename="../mainwindow.cpp" line="3358"/>
         <source>[Info]: You added 26 pts to everyone&apos;s scores!</source>
         <translation>[Info]: You added 26 pts to everyone&apos;s scores!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1366"/>
+        <location filename="../mainwindow.cpp" line="1372"/>
         <location filename="../mainwindow.cpp" line="3362"/>
         <source>[Info]: You substracted 26 pts to your score!</source>
         <translation>[Info]: You substracted 26 pts to your score!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1372"/>
+        <location filename="../mainwindow.cpp" line="1378"/>
         <location filename="../mainwindow.cpp" line="3372"/>
         <source>&apos; shoot the moon!</source>
         <translation>&apos; shoot the moon!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1378"/>
+        <location filename="../mainwindow.cpp" line="1384"/>
         <location filename="../mainwindow.cpp" line="3378"/>
         <source>information</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1428"/>
+        <location filename="../mainwindow.cpp" line="1434"/>
         <location filename="../mainwindow.cpp" line="3394"/>
         <source>[Info]: New scores: &apos;</source>
         <translation>[Info]: New scores: &apos;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1677"/>
+        <location filename="../mainwindow.cpp" line="1683"/>
         <source>You must play the two of clubs!</source>
         <translation>You must play the two of clubs!</translation>
     </message>
@@ -1786,6 +1783,34 @@ p, li { white-space: pre-wrap; }
         <translation>There is no undo available!</translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="4298"/>
+        <source>
+First  : </source>
+        <translation type="unfinished">
+First : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4299"/>
+        <source>
+Second : </source>
+        <translation type="unfinished">
+Second : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4300"/>
+        <source>
+Third  : </source>
+        <translation type="unfinished">
+Third  : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4301"/>
+        <source>
+Fourth : </source>
+        <translation type="unfinished">
+Fourth : </translation>
+    </message>
+    <message>
         <source>Image by: ESO/G. Beccari</source>
         <translation type="vanished">Image by: ESO/G. Beccari</translation>
     </message>
@@ -1811,27 +1836,34 @@ p, li { white-space: pre-wrap; }
         <translation>**** ANNOUNCEMENT from </translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="4296"/>
+        <source>Your online statistics:
+</source>
+        <translation type="unfinished">Your online statistics:
+</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="4297"/>
         <source>Games  : </source>
         <translation>Games  : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1670"/>
+        <location filename="../mainwindow.cpp" line="1676"/>
         <source>You can&apos;t break hearts yet!</source>
         <translation>You can&apos;t break hearts yet!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1672"/>
+        <location filename="../mainwindow.cpp" line="1678"/>
         <source>You must follow the suit! The lead is in </source>
         <translation>You must follow the suit! The lead is in </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1675"/>
+        <location filename="../mainwindow.cpp" line="1681"/>
         <source>You can&apos;t play the queen of spade on the first hand!</source>
         <translation>You can&apos;t play the queen of spade on the first hand!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1832"/>
+        <location filename="../mainwindow.cpp" line="1838"/>
         <location filename="../mainwindow.cpp" line="3505"/>
         <source>You needs to select 3 cards to pass!</source>
         <translation>You needs to select 3 cards to pass!</translation>
@@ -1882,41 +1914,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../mainwindow.cpp" line="2691"/>
         <source>Background created using gimp 2.10.18</source>
         <translation>Background created using gimp 2.10.18</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4296"/>
-        <source>Your online statistics:
-</source>
-        <translation>Your online statistics:
-</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4298"/>
-        <source>
-First  : </source>
-        <translation>
-First : </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4299"/>
-        <source>
-Second : </source>
-        <translation>
-Second : </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4300"/>
-        <source>
-Third  : </source>
-        <translation>
-Third  : </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4301"/>
-        <source>
-Fourth : </source>
-        <translation>
-Fourth : </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4431"/>

@@ -320,6 +320,7 @@ private:
 
 public:
     int convert_char_to_player(QString p);
+    int card_played_formated(int card);
 
     void delay(int n);
     void set_plr_names();
