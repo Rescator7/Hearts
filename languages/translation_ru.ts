@@ -195,17 +195,15 @@
         <translation> не найден.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="423"/>
         <source>pass - Pass your 3 cards. Used by the client when you click button pass.
 Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
-        <translation type="unfinished">pass - Передайте свои 3 карты. Используется клиентом при нажатии на кнопку прохождения.
+        <translation type="obsolete">pass - Передайте свои 3 карты. Используется клиентом при нажатии на кнопку прохождения.
 Применение: пройти pos1 pos2 pos3. Значения позиций 0-12.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="455"/>
         <source>admin - Make a user to admin level. Usage: Admin user.
 Note: require level super user.</source>
-        <translation type="unfinished">admin - Сделать пользователя администратором. Применение: Админ пользователь.
+        <translation type="obsolete">admin - Сделать пользователя администратором. Применение: Админ пользователь.
 Примечание: Требуется уровень суперпользователя.</translation>
     </message>
     <message>
@@ -811,7 +809,7 @@ It is also saved unencrypted in ~/.hearts
 DON&apos;T reuse this password !
 
 Do you want to continue ?</source>
-        <translation type="unfinished">Пароль будет отправлен в незашифрованном виде через Интернет.
+        <translation>Пароль будет отправлен в незашифрованном виде через Интернет.
 Он также хранится в незашифрованном виде в ~/.hearts
 
 НЕ используйте этот пароль повторно!
@@ -1782,31 +1780,27 @@ p, li { white-space: pre-wrap; }
         <translation>На данный момент отмена невозможна!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4298"/>
         <source>
 First  : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Первый : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4299"/>
         <source>
 Second : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Второй : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4300"/>
         <source>
 Third  : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Третий : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4301"/>
         <source>
 Fourth : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Четвертый : </translation>
     </message>
     <message>
@@ -1835,10 +1829,9 @@ Fourth : </source>
         <translation>**** Объявление от </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4296"/>
         <source>Your online statistics:
 </source>
-        <translation type="unfinished">Ваша онлайн статистика:
+        <translation type="obsolete">Ваша онлайн статистика:
 </translation>
     </message>
     <message>

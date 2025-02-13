@@ -195,17 +195,15 @@
         <translation> not found.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="423"/>
         <source>pass - Pass your 3 cards. Used by the client when you click button pass.
 Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
-        <translation type="unfinished">pass - Pass your 3 cards. Used by the client when you click button pass.
+        <translation type="obsolete">pass - Pass your 3 cards. Used by the client when you click button pass.
 Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="455"/>
         <source>admin - Make a user to admin level. Usage: Admin user.
 Note: require level super user.</source>
-        <translation type="unfinished">admin - Raise a user to admin level. Usage: Admin username.
+        <translation type="obsolete">admin - Raise a user to admin level. Usage: Admin username.
 Note: require level super user.</translation>
     </message>
     <message>
@@ -812,7 +810,7 @@ It is also saved unencrypted in ~/.hearts
 DON&apos;T reuse this password !
 
 Do you want to continue ?</source>
-        <translation type="unfinished">The password will be sent unencrypted over the internet.
+        <translation>The password will be sent unencrypted over the internet.
 It is also saved unencrypted in ~/.hearts
 
 DON&apos;T reuse this password !
@@ -1783,31 +1781,27 @@ p, li { white-space: pre-wrap; }
         <translation>There is no undo available!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4298"/>
         <source>
 First  : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 First : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4299"/>
         <source>
 Second : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Second : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4300"/>
         <source>
 Third  : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Third  : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4301"/>
         <source>
 Fourth : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Fourth : </translation>
     </message>
     <message>
@@ -1836,10 +1830,9 @@ Fourth : </translation>
         <translation>**** ANNOUNCEMENT from </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4296"/>
         <source>Your online statistics:
 </source>
-        <translation type="unfinished">Your online statistics:
+        <translation type="obsolete">Your online statistics:
 </translation>
     </message>
     <message>

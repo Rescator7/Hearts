@@ -195,17 +195,15 @@
         <translation> introuvable.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="423"/>
         <source>pass - Pass your 3 cards. Used by the client when you click button pass.
 Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
-        <translation type="unfinished">pass - Passez vos 3 cartes. Utilisé par le client lorsque vous cliquez sur le bouton Passer.
+        <translation type="obsolete">pass - Passez vos 3 cartes. Utilisé par le client lorsque vous cliquez sur le bouton Passer.
 Utilisation: passer pos1 pos2 pos3. Les valeurs sont des positions de carte 0-12.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="455"/>
         <source>admin - Make a user to admin level. Usage: Admin user.
 Note: require level super user.</source>
-        <translation type="unfinished">admin - Mettre un joueur dans la liste des administrateurs. Utilisation: admin joueur.
+        <translation type="obsolete">admin - Mettre un joueur dans la liste des administrateurs. Utilisation: admin joueur.
 Remarque: nécessite le niveau de super utilisateur.</translation>
     </message>
     <message>
@@ -811,7 +809,7 @@ It is also saved unencrypted in ~/.hearts
 DON&apos;T reuse this password !
 
 Do you want to continue ?</source>
-        <translation type="unfinished">Le mot de passe sera envoyé non crypté sur Internet.
+        <translation>Le mot de passe sera envoyé non crypté sur Internet.
 Il est également enregistré non chiffré dans ~ / .hearts
 
 NE réutilisez PAS ce mot de passe!
@@ -1782,31 +1780,27 @@ en attente</translation>
         <translation>Il n&apos;y a pas d&apos;annulation disponible!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4298"/>
         <source>
 First  : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Premier : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4299"/>
         <source>
 Second : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Deuxième : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4300"/>
         <source>
 Third  : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Troisième  : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4301"/>
         <source>
 Fourth : </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Quatrième : </translation>
     </message>
     <message>
@@ -1835,10 +1829,9 @@ Quatrième : </translation>
         <translation>**** ANNONCE de </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4296"/>
         <source>Your online statistics:
 </source>
-        <translation type="unfinished">Vos statistiques en ligne:
+        <translation type="obsolete">Vos statistiques en ligne:
 </translation>
     </message>
     <message>
