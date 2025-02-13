@@ -195,36 +195,40 @@
         <translation> introuvable.</translation>
     </message>
     <message>
-        <source>pass - Pass your 3 cards. Used by the client when you click button pass.
-Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
-        <translation type="obsolete">pass - Passez vos 3 cartes. Utilisé par le client lorsque vous cliquez sur le bouton Passer.
-Utilisation: passer pos1 pos2 pos3. Les valeurs sont des positions de carte 0-12.</translation>
-    </message>
-    <message>
-        <source>admin - Make a user to admin level. Usage: Admin user.
-Note: require level super user.</source>
-        <translation type="obsolete">admin - Mettre un joueur dans la liste des administrateurs. Utilisation: admin joueur.
-Remarque: nécessite le niveau de super utilisateur.</translation>
-    </message>
-    <message>
+        <location filename="../client.cpp" line="402"/>
         <source>help - Show the command list.
 help &lt;command&gt; - Show &lt;command&gt;&apos;s help.
 </source>
-        <translation type="vanished">help - Affiche la liste des commandes.
-help &lt;command&gt; - Affiche l&apos;aide de &lt;command&gt;.
-</translation>
+        <translation>help - Affiche la liste des commandes.
+help &lt;command&gt; - Affiche l&apos;aide de &lt;command&gt;.</translation>
     </message>
     <message>
+        <location filename="../client.cpp" line="406"/>
         <source>join &lt;id&gt; - Join table #id.
 join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</source>
-        <translation type="vanished">oin &lt;id&gt; - Rejoignez la table #id.
+        <translation>join &lt;id&gt; - Rejoignez la table #id.
 join &lt;id&gt; &lt;chair&gt; - Rejoignez la table #id et asseyez-vous sur la chaise (n, s, e, w).</translation>
     </message>
     <message>
+        <location filename="../client.cpp" line="410"/>
         <source>leave - Leave a table.
 Please note: If you were playing that would make you finish in fourth place.</source>
-        <translation type="vanished">leave - Quitter une table.
+        <translation>leave - Quitter une table.
 Remarque: si vous jouiez, cela vous ferait terminer à la quatrième place.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="423"/>
+        <source>pass - Pass your 3 cards. Used by the client when you click button pass.
+Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
+        <translation>pass - Passez vos 3 cartes. Utilisé par le client lorsque vous cliquez sur le bouton Passer.
+Utilisation: passer pos1 pos2 pos3. Les valeurs sont des positions de carte 0-12.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="455"/>
+        <source>admin - Make a user to admin level. Usage: Admin user.
+Note: require level super user.</source>
+        <translation>admin - Mettre un joueur dans la liste des administrateurs. Utilisation: admin joueur.
+Remarque: nécessite le niveau de super utilisateur.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="271"/>
@@ -1127,10 +1131,6 @@ en attente</translation>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <source>A&amp;bout</source>
-        <translation type="vanished">À &amp;propos</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2598"/>
         <source>S&amp;ettings</source>
         <translation>&amp;Options</translation>
@@ -1184,10 +1184,6 @@ en attente</translation>
         <location filename="../mainwindow.ui" line="2710"/>
         <source>&amp;Debug</source>
         <translation>&amp;Débuggage</translation>
-    </message>
-    <message>
-        <source>&amp;Language</source>
-        <translation type="vanished">&amp;Langues</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2725"/>
@@ -1392,10 +1388,6 @@ en attente</translation>
         <translation>Transparent</translation>
     </message>
     <message>
-        <source>&amp;Easy card selection</source>
-        <translation type="vanished">Sélection de carte assistée</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2920"/>
         <source>&amp;Standard</source>
         <translation>Standard</translation>
@@ -1486,17 +1478,9 @@ en attente</translation>
         <translation>Personnalisé (Expert)</translation>
     </message>
     <message>
-        <source>Sakura</source>
-        <translation type="vanished">Sakura</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3049"/>
         <source>Desert</source>
         <translation>Désert</translation>
-    </message>
-    <message>
-        <source>Forest</source>
-        <translation type="vanished">Forêt</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1000"/>
@@ -1780,64 +1764,49 @@ en attente</translation>
         <translation>Il n&apos;y a pas d&apos;annulation disponible!</translation>
     </message>
     <message>
-        <source>
-First  : </source>
-        <translation type="obsolete">
-Premier : </translation>
-    </message>
-    <message>
-        <source>
-Second : </source>
-        <translation type="obsolete">
-Deuxième : </translation>
-    </message>
-    <message>
-        <source>
-Third  : </source>
-        <translation type="obsolete">
-Troisième  : </translation>
-    </message>
-    <message>
-        <source>
-Fourth : </source>
-        <translation type="obsolete">
-Quatrième : </translation>
-    </message>
-    <message>
-        <source>Image by: ESO/G. Beccari</source>
-        <translation type="vanished">Image de: ESO/G. Beccari</translation>
-    </message>
-    <message>
-        <source>Image by: Hiroki Ogawa</source>
-        <translation type="vanished">Image de: Hiroki Ogawa</translation>
-    </message>
-    <message>
-        <source>Image by: grumpylumixuser</source>
-        <translation type="vanished">Image de: grumpylumixuser</translation>
-    </message>
-    <message>
-        <source>Image by: Jack Soma</source>
-        <translation type="vanished">Image de: Jack Soma</translation>
-    </message>
-    <message>
-        <source>Image by: Peter Chisholm</source>
-        <translation type="vanished">Image de: Peter Chisholm</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="4245"/>
         <source>**** ANNOUNCEMENT from </source>
         <translation>**** ANNONCE de </translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="4296"/>
         <source>Your online statistics:
 </source>
-        <translation type="obsolete">Vos statistiques en ligne:
+        <translation>Vos statistiques en ligne:
 </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4297"/>
         <source>Games  : </source>
         <translation>Parties : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4298"/>
+        <source>
+First  : </source>
+        <translation>
+Premier : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4299"/>
+        <source>
+Second : </source>
+        <translation>
+Deuxième : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4300"/>
+        <source>
+Third  : </source>
+        <translation>
+Troisième  : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4301"/>
+        <source>
+Fourth : </source>
+        <translation>
+Quatrième : </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1676"/>

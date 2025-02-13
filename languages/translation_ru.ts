@@ -195,36 +195,40 @@
         <translation> не найден.</translation>
     </message>
     <message>
-        <source>pass - Pass your 3 cards. Used by the client when you click button pass.
-Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
-        <translation type="obsolete">pass - Передайте свои 3 карты. Используется клиентом при нажатии на кнопку прохождения.
-Применение: пройти pos1 pos2 pos3. Значения позиций 0-12.</translation>
-    </message>
-    <message>
-        <source>admin - Make a user to admin level. Usage: Admin user.
-Note: require level super user.</source>
-        <translation type="obsolete">admin - Сделать пользователя администратором. Применение: Админ пользователь.
-Примечание: Требуется уровень суперпользователя.</translation>
-    </message>
-    <message>
+        <location filename="../client.cpp" line="402"/>
         <source>help - Show the command list.
 help &lt;command&gt; - Show &lt;command&gt;&apos;s help.
 </source>
-        <translation type="vanished">help - Показать список команд.
-help &lt;команда&gt; - Показать справку &lt;команды&gt;.
-</translation>
+        <translation>help - Показать список команд.
+help &lt;команда&gt; - Показать справку &lt;команды&gt;.</translation>
     </message>
     <message>
+        <location filename="../client.cpp" line="406"/>
         <source>join &lt;id&gt; - Join table #id.
 join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</source>
-        <translation type="vanished">join &lt;id&gt; - Присоединиться к столу #id.
+        <translation>join &lt;id&gt; - Присоединиться к столу #id.
 join &lt;id&gt; &lt;стул&gt; - присоединиться к столу #id и сесть на стул (n, s, e, w).</translation>
     </message>
     <message>
+        <location filename="../client.cpp" line="410"/>
         <source>leave - Leave a table.
 Please note: If you were playing that would make you finish in fourth place.</source>
-        <translation type="vanished">leave - Покинуть стол.
+        <translation>leave - Покинуть стол.
 Обратите внимание: если бы вы играли, это заставило бы вас занять четвертое место.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="423"/>
+        <source>pass - Pass your 3 cards. Used by the client when you click button pass.
+Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
+        <translation>pass - Передайте свои 3 карты. Используется клиентом при нажатии на кнопку прохождения.
+Применение: пройти pos1 pos2 pos3. Значения позиций 0-12.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="455"/>
+        <source>admin - Make a user to admin level. Usage: Admin user.
+Note: require level super user.</source>
+        <translation>admin - Сделать пользователя администратором. Применение: Админ пользователь.
+Примечание: Требуется уровень суперпользователя.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="271"/>
@@ -1127,10 +1131,6 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <source>A&amp;bout</source>
-        <translation type="vanished">&amp;Об игре</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2598"/>
         <source>S&amp;ettings</source>
         <translation>&amp;Настройки</translation>
@@ -1184,10 +1184,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../mainwindow.ui" line="2710"/>
         <source>&amp;Debug</source>
         <translation>О&amp;тладка</translation>
-    </message>
-    <message>
-        <source>&amp;Language</source>
-        <translation type="vanished">&amp;Язык</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2725"/>
@@ -1392,10 +1388,6 @@ p, li { white-space: pre-wrap; }
         <translation>Прозрачный</translation>
     </message>
     <message>
-        <source>&amp;Easy card selection</source>
-        <translation type="vanished">Простой выбор карты</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2920"/>
         <source>&amp;Standard</source>
         <translation>Стандартная</translation>
@@ -1486,17 +1478,9 @@ p, li { white-space: pre-wrap; }
         <translation>Индивидуальные (Эксперт)</translation>
     </message>
     <message>
-        <source>Sakura</source>
-        <translation type="vanished">Сакура</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3049"/>
         <source>Desert</source>
         <translation>Пустыня</translation>
-    </message>
-    <message>
-        <source>Forest</source>
-        <translation type="vanished">Лес</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1000"/>
@@ -1780,64 +1764,49 @@ p, li { white-space: pre-wrap; }
         <translation>На данный момент отмена невозможна!</translation>
     </message>
     <message>
-        <source>
-First  : </source>
-        <translation type="obsolete">
-Первый : </translation>
-    </message>
-    <message>
-        <source>
-Second : </source>
-        <translation type="obsolete">
-Второй : </translation>
-    </message>
-    <message>
-        <source>
-Third  : </source>
-        <translation type="obsolete">
-Третий : </translation>
-    </message>
-    <message>
-        <source>
-Fourth : </source>
-        <translation type="obsolete">
-Четвертый : </translation>
-    </message>
-    <message>
-        <source>Image by: ESO/G. Beccari</source>
-        <translation type="vanished">Автор изображения: ESO/G. Beccari</translation>
-    </message>
-    <message>
-        <source>Image by: Hiroki Ogawa</source>
-        <translation type="vanished">Автор изображения: Hiroki Ogawa</translation>
-    </message>
-    <message>
-        <source>Image by: grumpylumixuser</source>
-        <translation type="vanished">Автор изображения: grumpylumixuser</translation>
-    </message>
-    <message>
-        <source>Image by: Jack Soma</source>
-        <translation type="vanished">Автор изображения: Jack Soma</translation>
-    </message>
-    <message>
-        <source>Image by: Peter Chisholm</source>
-        <translation type="vanished">Автор изображения: Peter Chisholm</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="4245"/>
         <source>**** ANNOUNCEMENT from </source>
         <translation>**** Объявление от </translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="4296"/>
         <source>Your online statistics:
 </source>
-        <translation type="obsolete">Ваша онлайн статистика:
+        <translation>Ваша онлайн статистика:
 </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4297"/>
         <source>Games  : </source>
         <translation>Игры : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4298"/>
+        <source>
+First  : </source>
+        <translation>
+Первый : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4299"/>
+        <source>
+Second : </source>
+        <translation>
+Второй : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4300"/>
+        <source>
+Third  : </source>
+        <translation>
+Третий : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4301"/>
+        <source>
+Fourth : </source>
+        <translation>
+Четвертый : </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1676"/>

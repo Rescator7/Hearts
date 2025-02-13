@@ -195,36 +195,40 @@
         <translation> not found.</translation>
     </message>
     <message>
-        <source>pass - Pass your 3 cards. Used by the client when you click button pass.
-Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
-        <translation type="obsolete">pass - Pass your 3 cards. Used by the client when you click button pass.
-Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</translation>
-    </message>
-    <message>
-        <source>admin - Make a user to admin level. Usage: Admin user.
-Note: require level super user.</source>
-        <translation type="obsolete">admin - Raise a user to admin level. Usage: Admin username.
-Note: require level super user.</translation>
-    </message>
-    <message>
+        <location filename="../client.cpp" line="402"/>
         <source>help - Show the command list.
 help &lt;command&gt; - Show &lt;command&gt;&apos;s help.
 </source>
-        <translation type="vanished">help - Show the command list.
-help &lt;command&gt; - Show &lt;command&gt;&apos;s help.
-</translation>
+        <translation>help - Show the command list.
+help &lt;command&gt; - Show &lt;command&gt;&apos;s help.</translation>
     </message>
     <message>
+        <location filename="../client.cpp" line="406"/>
         <source>join &lt;id&gt; - Join table #id.
 join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</source>
-        <translation type="vanished">join &lt;id&gt; - Join table #id.
+        <translation>join &lt;id&gt; - Join table #id.
 join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</translation>
     </message>
     <message>
+        <location filename="../client.cpp" line="410"/>
         <source>leave - Leave a table.
 Please note: If you were playing that would make you finish in fourth place.</source>
-        <translation type="vanished">leave - Leave a table.
+        <translation>leave - Leave a table.
 Please note: If you were playing that would make you finish in fourth place.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="423"/>
+        <source>pass - Pass your 3 cards. Used by the client when you click button pass.
+Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
+        <translation>pass - Pass your 3 cards. Used by the client when you click button pass.
+Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="455"/>
+        <source>admin - Make a user to admin level. Usage: Admin user.
+Note: require level super user.</source>
+        <translation>admin - Raise a user to admin level. Usage: Admin username.
+Note: require level super user.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="271"/>
@@ -1128,10 +1132,6 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;File</translation>
     </message>
     <message>
-        <source>A&amp;bout</source>
-        <translation type="vanished">&amp;About</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2598"/>
         <source>S&amp;ettings</source>
         <translation>&amp;Settings</translation>
@@ -1185,10 +1185,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../mainwindow.ui" line="2710"/>
         <source>&amp;Debug</source>
         <translation>&amp;Debug</translation>
-    </message>
-    <message>
-        <source>&amp;Language</source>
-        <translation type="vanished">&amp;Language</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2725"/>
@@ -1393,10 +1389,6 @@ p, li { white-space: pre-wrap; }
         <translation>Transparent</translation>
     </message>
     <message>
-        <source>&amp;Easy card selection</source>
-        <translation type="vanished">Easy card selection</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2920"/>
         <source>&amp;Standard</source>
         <translation>Standard</translation>
@@ -1487,17 +1479,9 @@ p, li { white-space: pre-wrap; }
         <translation>Customized (Expert)</translation>
     </message>
     <message>
-        <source>Sakura</source>
-        <translation type="vanished">Sakura</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3049"/>
         <source>Desert</source>
         <translation>Desert</translation>
-    </message>
-    <message>
-        <source>Forest</source>
-        <translation type="vanished">Forest</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1000"/>
@@ -1781,64 +1765,49 @@ p, li { white-space: pre-wrap; }
         <translation>There is no undo available!</translation>
     </message>
     <message>
-        <source>
-First  : </source>
-        <translation type="obsolete">
-First : </translation>
-    </message>
-    <message>
-        <source>
-Second : </source>
-        <translation type="obsolete">
-Second : </translation>
-    </message>
-    <message>
-        <source>
-Third  : </source>
-        <translation type="obsolete">
-Third  : </translation>
-    </message>
-    <message>
-        <source>
-Fourth : </source>
-        <translation type="obsolete">
-Fourth : </translation>
-    </message>
-    <message>
-        <source>Image by: ESO/G. Beccari</source>
-        <translation type="vanished">Image by: ESO/G. Beccari</translation>
-    </message>
-    <message>
-        <source>Image by: Hiroki Ogawa</source>
-        <translation type="vanished">Image by: Hiroki Ogawa</translation>
-    </message>
-    <message>
-        <source>Image by: grumpylumixuser</source>
-        <translation type="vanished">Image by: grumpylumixuser</translation>
-    </message>
-    <message>
-        <source>Image by: Jack Soma</source>
-        <translation type="vanished">Image by: Jack Soma</translation>
-    </message>
-    <message>
-        <source>Image by: Peter Chisholm</source>
-        <translation type="vanished">Image by: Peter Chisholm</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="4245"/>
         <source>**** ANNOUNCEMENT from </source>
         <translation>**** ANNOUNCEMENT from </translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="4296"/>
         <source>Your online statistics:
 </source>
-        <translation type="obsolete">Your online statistics:
+        <translation>Your online statistics:
 </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4297"/>
         <source>Games  : </source>
         <translation>Games  : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4298"/>
+        <source>
+First  : </source>
+        <translation>
+First : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4299"/>
+        <source>
+Second : </source>
+        <translation>
+Second : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4300"/>
+        <source>
+Third  : </source>
+        <translation>
+Third  : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4301"/>
+        <source>
+Fourth : </source>
+        <translation>
+Fourth : </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1676"/>
