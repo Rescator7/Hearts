@@ -195,39 +195,34 @@
         <translation> не найден.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="402"/>
         <source>help - Show the command list.
 help &lt;command&gt; - Show &lt;command&gt;&apos;s help.
 </source>
-        <translation>help - Показать список команд.
+        <translation type="vanished">help - Показать список команд.
 help &lt;команда&gt; - Показать справку &lt;команды&gt;.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="406"/>
         <source>join &lt;id&gt; - Join table #id.
 join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</source>
-        <translation>join &lt;id&gt; - Присоединиться к столу #id.
+        <translation type="vanished">join &lt;id&gt; - Присоединиться к столу #id.
 join &lt;id&gt; &lt;стул&gt; - присоединиться к столу #id и сесть на стул (n, s, e, w).</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="410"/>
         <source>leave - Leave a table.
 Please note: If you were playing that would make you finish in fourth place.</source>
-        <translation>leave - Покинуть стол.
+        <translation type="vanished">leave - Покинуть стол.
 Обратите внимание: если бы вы играли, это заставило бы вас занять четвертое место.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="423"/>
         <source>pass - Pass your 3 cards. Used by the client when you click button pass.
 Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
-        <translation>pass - Передайте свои 3 карты. Используется клиентом при нажатии на кнопку прохождения.
+        <translation type="vanished">pass - Передайте свои 3 карты. Используется клиентом при нажатии на кнопку прохождения.
 Применение: пройти pos1 pos2 pos3. Значения позиций 0-12.</translation>
     </message>
     <message>
-        <location filename="../client.cpp" line="455"/>
         <source>admin - Make a user to admin level. Usage: Admin user.
 Note: require level super user.</source>
-        <translation>admin - Сделать пользователя администратором. Применение: Админ пользователь.
+        <translation type="vanished">admin - Сделать пользователя администратором. Применение: Админ пользователь.
 Примечание: Требуется уровень суперпользователя.</translation>
     </message>
     <message>
@@ -371,6 +366,29 @@ Note: require level super user.</source>
         <translation>exit - Выход с сервера и возврат в режим автономной игры.</translation>
     </message>
     <message>
+        <location filename="../client.cpp" line="402"/>
+        <source>help - Show the command list.<byte value="xd"/>
+help &lt;command&gt; - Show &lt;command&gt;&apos;s help.<byte value="xd"/>
+</source>
+        <translation>help - Показать список команд.
+help &lt;команда&gt; - Показать справку &lt;команды&gt;.
+</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="406"/>
+        <source>join &lt;id&gt; - Join table #id.<byte value="xd"/>
+join &lt;id&gt; &lt;chair&gt; - Join table #id and sit on chair (n, s, e, w).</source>
+        <translation>join &lt;id&gt; - Присоединиться к столу #id.
+join &lt;id&gt; &lt;стул&gt; - присоединиться к столу #id и сесть на стул (n, s, e, w).</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="410"/>
+        <source>leave - Leave a table.<byte value="xd"/>
+Please note: If you were playing that would make you finish in fourth place.</source>
+        <translation>leave - Покинуть стол.
+Обратите внимание: если бы вы играли, это заставило бы вас занять четвертое место.</translation>
+    </message>
+    <message>
         <location filename="../client.cpp" line="414"/>
         <source>moon - Used during new moon to choose between add and substract. Usage: &quot;moon +&quot;  or &quot;mooon -&quot;.</source>
         <translation>moon - используется во время динамо для выбора между сложением и вычитанием. Применение: &apos;moon +&apos; или &apos;moon -&apos;.</translation>
@@ -384,6 +402,13 @@ Note: require level super user.</source>
         <location filename="../client.cpp" line="420"/>
         <source>new - Create a new table. Usage: New &lt;flags&gt;. Note: Use interface &quot;create table&quot;.</source>
         <translation>new - Создать новый стол. Применение: Новый &lt;flags&gt;. Примечание: используйте интерфейс «Создать стол».</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="423"/>
+        <source>pass - Pass your 3 cards. Used by the client when you click button pass.<byte value="xd"/>
+Usage: pass pos1 pos2 pos3. Values are card posititions 0-12.</source>
+        <translation>pass - Передайте свои 3 карты. Используется клиентом при нажатии на кнопку прохождения.
+Применение: пройти pos1 pos2 pos3. Значения позиций 0-12.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="427"/>
@@ -429,6 +454,13 @@ Note: require level super user.</source>
         <location filename="../client.cpp" line="451"/>
         <source>Start - Start the game. The empty chairs will be played by BOT.</source>
         <translation>Start - Начать игру. Пустые стулья будут заняты ботами.</translation>
+    </message>
+    <message>
+        <location filename="../client.cpp" line="455"/>
+        <source>admin - Make a user to admin level. Usage: Admin user.<byte value="xd"/>
+Note: require level super user.</source>
+        <translation>admin - Сделать пользователя администратором. Применение: Админ пользователь.
+Примечание: Требуется уровень суперпользователя.</translation>
     </message>
     <message>
         <location filename="../client.cpp" line="459"/>
@@ -807,13 +839,27 @@ Note: require level super user.</source>
     </message>
     <message>
         <location filename="../connect.cpp" line="75"/>
+        <source>The password will be sent unencrypted over the internet.<byte value="xd"/>
+It is also saved unencrypted in ~/.hearts<byte value="xd"/>
+<byte value="xd"/>
+DON&apos;T reuse this password !<byte value="xd"/>
+<byte value="xd"/>
+Do you want to continue ?</source>
+        <translation>Пароль будет отправлен в незашифрованном виде через Интернет.
+Он также хранится в незашифрованном виде в ~/.hearts
+
+НЕ используйте этот пароль повторно!
+
+Вы хотите продолжить?</translation>
+    </message>
+    <message>
         <source>The password will be sent unencrypted over the internet.
 It is also saved unencrypted in ~/.hearts
 
 DON&apos;T reuse this password !
 
 Do you want to continue ?</source>
-        <translation>Пароль будет отправлен в незашифрованном виде через Интернет.
+        <translation type="vanished">Пароль будет отправлен в незашифрованном виде через Интернет.
 Он также хранится в незашифрованном виде в ~/.hearts
 
 НЕ используйте этот пароль повторно!
@@ -1769,10 +1815,9 @@ p, li { white-space: pre-wrap; }
         <translation>**** Объявление от </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4296"/>
         <source>Your online statistics:
 </source>
-        <translation>Ваша онлайн статистика:
+        <translation type="vanished">Ваша онлайн статистика:
 </translation>
     </message>
     <message>
@@ -1781,31 +1826,27 @@ p, li { white-space: pre-wrap; }
         <translation>Игры : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4298"/>
         <source>
 First  : </source>
-        <translation>
+        <translation type="vanished">
 Первый : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4299"/>
         <source>
 Second : </source>
-        <translation>
+        <translation type="vanished">
 Второй : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4300"/>
         <source>
 Third  : </source>
-        <translation>
+        <translation type="vanished">
 Третий : </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4301"/>
         <source>
 Fourth : </source>
-        <translation>
+        <translation type="vanished">
 Четвертый : </translation>
     </message>
     <message>
@@ -1875,6 +1916,41 @@ Fourth : </source>
         <location filename="../mainwindow.cpp" line="2691"/>
         <source>Background created using gimp 2.10.18</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4296"/>
+        <source>Your online statistics:<byte value="xd"/>
+</source>
+        <translation>Ваша онлайн статистика:
+</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4298"/>
+        <source><byte value="xd"/>
+First  : </source>
+        <translation>
+Первый : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4299"/>
+        <source><byte value="xd"/>
+Second : </source>
+        <translation>
+Второй : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4300"/>
+        <source><byte value="xd"/>
+Third  : </source>
+        <translation>
+Третий : </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="4301"/>
+        <source><byte value="xd"/>
+Fourth : </source>
+        <translation>
+Четвертый : </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4431"/>
