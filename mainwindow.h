@@ -281,6 +281,7 @@ private:
 
 // private online functions
     int convert_chair(int chair);
+    void adjust_progress_bar_position();
     void online_set_settings(bool disable);
     void online_rotate_players_name();
 #endif // ONLINE_PLAY

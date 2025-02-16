@@ -223,3 +223,8 @@
 12 Feb 2025: I applied the resizing to the English, Russian and White cards to 90x130 by AndnoVember
              for a slightly better cards rendering
 
+15 Feb 2025: Version 1.9.3
+-------------------------------------------------------------------------------------------------
+15 Feb 2025: Fixed the adjustement of the new version of Nicu(white) card deck over the card display
+             Online: Adjusted the time bank bar position depending on the Hearts style used. 
+

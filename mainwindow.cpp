@@ -145,10 +145,59 @@ MainWindow::MainWindow(QWidget *parent) :
     start_game(true);
 }
 
+#ifdef ONLINE_PLAY
+void MainWindow::adjust_progress_bar_position()
+{
+  int x, y, adj = 0;
+
+  switch (config->get_hearts_style()) {
+     case HEARTS_ICONS_SUIT:
+     case HEARTS_ICONS_CPU: adj = 10; break;
+     case HEARTS_TEXT_ONLY: adj = -25; break;
+  }
+
+  // Move progress bar under the Heart, normal progress bar under deck_s
+  x = ui->label_heart_s->x() +
+      ui->label_heart_s->width() / 2 -
+      progress_bar_time[PLAYER_SOUTH]->width() / 2;
+  y = ui->label_heart_s->y() +
+      ui->label_heart_s->height() - 8;
+  progress_bar_time[PLAYER_SOUTH]->move(x, y + adj);
+
+  x = ui->label_heart_w->x() +
+      ui->label_heart_w->width() / 2 -
+      progress_bar_time[PLAYER_WEST]->width() / 2;
+  y = ui->label_heart_w->y() +
+      ui->label_heart_w->height() - 8;
+  progress_bar_time[PLAYER_WEST]->move(x, y + adj);
+
+  x = ui->label_heart_n->x() +
+      ui->label_heart_n->width() / 2 -
+      progress_bar_time[PLAYER_NORTH]->width() / 2;
+  y = ui->label_heart_n->y() +
+      ui->label_heart_n->height() - 8;
+  progress_bar_time[PLAYER_NORTH]->move(x, y + adj);
+
+  x = ui->label_heart_e->x() +
+      ui->label_heart_e->width() / 2 -
+      progress_bar_time[PLAYER_EAST]->width() / 2;
+  y = ui->label_heart_e->y() +
+      ui->label_heart_e->height() - 8;
+  progress_bar_time[PLAYER_EAST]->move(x, y + adj);
+
+  x = ui->label_deck_s->x() +
+      ui->label_deck_s->width() / 2 -
+      progress_bar_time[4]->width() / 2;
+  y = ui->label_deck_s->y() +
+      ui->label_deck_s->height() + 1;
+  progress_bar_time[4]->move(x, y);
+}
+#endif
+
 #ifdef FULL_SCREEN
 void MainWindow::adjust_objs_distances(QResizeEvent *event)
 { 
-  int s, x, y, z, ew, adj_deck_n, adj_deck_s, adj_nicu = 0;
+  int s, x, y, z, ew, adj_deck_n, adj_deck_s;
 
   int unselect_adj = 0;
 
@@ -163,27 +212,24 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
     ew  = label_cards[PLAYER_WEST][i]->width();
     y = orig_posy_cards[PLAYER_WEST][i];
 
-    if (config->get_deck_style() == NICU_WHITE_DECK)
-      adj_nicu = 10;
-
 #ifdef ONLINE_PLAY
     if (!online_connected) {
 #endif // ONLINE_PLAY
        if (!hearts->is_mode_playing() &&
            hearts->is_card_selected(PLAYER_EAST, 12 - i))
-         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 35 + adj_nicu, y + y_factor * 4);
+         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 35, y + y_factor * 4);
        else
-         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20 + adj_nicu, y + y_factor * 4);
+         label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20, y + y_factor * 4);
 
 #ifdef ONLINE_PLAY
     } else
-        label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20 + adj_nicu, y + y_factor * 4);
+        label_cards[PLAYER_EAST][12 - i]->move(w - ew - 20, y + y_factor * 4);
 #endif // ONLINE_PLAY
 
     label_cards[PLAYER_WEST][i]->move(label_cards[PLAYER_WEST][i]->x(),
                                       orig_posy_cards[PLAYER_WEST][i] + y_factor * 4);
 
-    orig_posx_cards[PLAYER_EAST][i] = w - ew - 20 + adj_nicu;
+    orig_posx_cards[PLAYER_EAST][i] = w - ew - 20;
 
     z = label_cards[PLAYER_NORTH][i]->width();
     x = (w - (12 * 35 + z)) / 2;
@@ -227,19 +273,14 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
 
   adj_deck_s = 0;
   switch (config->get_deck_style()) {
-    case NICU_WHITE_DECK: adj_deck_n = 10;
-                          if (perc_height_cards_s == 100)
-                            adj_deck_s = 5;
-                          else
-                            adj_deck_s = 2;
-                          break;
+    case NICU_WHITE_DECK:
     case ENGLISH_DECK:
     case RUSSIAN_DECK: adj_deck_n = 6;
                        break;
     case TIGULLIO_MODERN_DECK: adj_deck_n = 8;
                                adj_deck_s = 1;
                                break;
-    default: adj_deck_n = 8;
+    default: adj_deck_n = 7;
   }
 
   // Move Under Deck North to Card N13
@@ -394,41 +435,7 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
                                   ui->label_heart_e->y() + y + w);
 
 #ifdef ONLINE_PLAY
-  // Move progress bar under the Heart, normal progress bar under deck_s
-  x = ui->label_heart_s->x() +
-      ui->label_heart_s->width() / 2 -
-      progress_bar_time[PLAYER_SOUTH]->width() / 2;
-  y = ui->label_heart_s->y() +
-      ui->label_heart_s->height() - 8;
-  progress_bar_time[PLAYER_SOUTH]->move(x, y);
-
-  x = ui->label_heart_w->x() +
-      ui->label_heart_w->width() / 2 -
-      progress_bar_time[PLAYER_WEST]->width() / 2;
-  y = ui->label_heart_w->y() +
-      ui->label_heart_w->height() - 8;
-  progress_bar_time[PLAYER_WEST]->move(x, y);
-
-  x = ui->label_heart_n->x() +
-      ui->label_heart_n->width() / 2 -
-      progress_bar_time[PLAYER_NORTH]->width() / 2;
-  y = ui->label_heart_n->y() +
-      ui->label_heart_n->height() - 8;
-  progress_bar_time[PLAYER_NORTH]->move(x, y);
-
-  x = ui->label_heart_e->x() +
-      ui->label_heart_e->width() / 2 -
-      progress_bar_time[PLAYER_EAST]->width() / 2;
-  y = ui->label_heart_e->y() +
-      ui->label_heart_e->height() - 8;
-  progress_bar_time[PLAYER_EAST]->move(x, y);
-
-  x = ui->label_deck_s->x() +
-      ui->label_deck_s->width() / 2 -
-      progress_bar_time[4]->width() / 2;
-  y = ui->label_deck_s->y() +
-      ui->label_deck_s->height() + 1;
-  progress_bar_time[4]->move(x, y);
+  adjust_progress_bar_position();
 #endif // ONLINE_PLAY
 
   ui->textEdit->move(ui->textEdit->x(),
@@ -518,19 +525,10 @@ void MainWindow::resizeWidthSouth(int perc_h) {
         label_cards[PLAYER_SOUTH][12]->width() -
         label_cards[PLAYER_SOUTH][0]->x();
 
-   int adj = 0;
-
-   switch (config->get_deck_style()) {
-      case NICU_WHITE_DECK:  if (perc_h == 100)
-                               adj = 10;
-                             else
-                               adj = 7;
-                             break;
-      case TIGULLIO_MODERN_DECK: adj = 3;
-                                 break;
-   }
-
-   ui->label_deck_s->resize(w, h - adj);
+   if (config->get_deck_style() == TIGULLIO_MODERN_DECK)
+     ui->label_deck_s->resize(w, h - 3);
+   else
+     ui->label_deck_s->resize(w, h);
 
 #ifdef ONLINE_PLAY
    if (online_connected)
@@ -1535,7 +1533,7 @@ void MainWindow::show_deck(bool animate, bool replace)
 
       if (ui->actionAuto_Centering->isChecked())
         adj = adjust_pos[hearts->get_plr_num_cards(PLAYER_NORTH)];
-      label_cards[PLAYER_NORTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(trf_n).scaled(60, 87, aspect_ratio_flag)));
+      label_cards[PLAYER_NORTH][i/4+adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(show_card)->transformed(trf_n).scaled(cards_height_WNE, 88, aspect_ratio_flag)));
       label_cards[PLAYER_NORTH][i/4+adj]->show();
     } else
         total_empty++;
@@ -2315,15 +2313,7 @@ void MainWindow::adjust_under_deck()
       adj_move_deck_e = 0;
 
   switch (config->get_deck_style()) {
-     case NICU_WHITE_DECK:  adj_move_deck_s = 4;
-                            adj_move_deck_n = 2;
-                            adj = 5;
-                            if (perc_height_cards_s == 100)
-                              adj_deck_size_s = 10;
-                            else {
-                              adj_deck_size_s = 7;
-                              adj_move_deck_s--;
-                            }
+     case NICU_WHITE_DECK:  adj = -1;
                             break;
      case ENGLISH_DECK:
      case RUSSIAN_DECK:     adj = -3;
@@ -3119,6 +3109,10 @@ void MainWindow::set_hearts_style(int style)
   set_hearts_style_checked(style);
 
   check_text_only();
+
+#ifdef ONLINE_PLAY
+  adjust_progress_bar_position();
+#endif // ONLINE_PLAY
 }
 
 void MainWindow::on_actionText_only_triggered()
@@ -3143,7 +3137,6 @@ void MainWindow::on_actionSuits_triggered()
 {
   config->set_hearts_style(HEARTS_ICONS_SUIT);
   set_hearts_style(HEARTS_ICONS_SUIT);
-
 }
 
 void MainWindow::on_actionCPU_Human_triggered()
@@ -3434,7 +3427,7 @@ void MainWindow::online_show_deck()
   for (int i=0; i<online_num_cards[PLAYER_NORTH]; i++) {
      if (ui->actionAuto_Centering->isChecked())
        adj = adjust_pos[online_num_cards[PLAYER_NORTH]];
-     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(trf_n).scaled(60, 87, aspect_ratio_flag)));
+     label_cards[PLAYER_NORTH][i + adj]->setPixmap(QPixmap::fromImage(deck->get_img_card(back_card)->transformed(trf_n).scaled(cards_height_WNE, 88, aspect_ratio_flag)));
      label_cards[PLAYER_NORTH][i + adj]->show();
   }
 
