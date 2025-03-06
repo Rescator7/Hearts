@@ -14,17 +14,24 @@ CDeck::CDeck(int deck)
   img_card_frame = new QImage(":/SVG-cards/Default/card-frame.png", "PNG");
   img_card_invis = new QImage(":/SVG-cards/Default/card-invis.png", "PNG");
 
-  switch (deck) {
-     case ENGLISH_DECK:          set_english_deck(); break;
-     case RUSSIAN_DECK:          set_russian_deck(); break;
-     case NICU_WHITE_DECK:       set_nicu_white_deck(); break;
-     case TIGULLIO_MODERN_DECK : set_tigullio_modern_deck(); break;
-
-     default: set_standard_deck();
-  }
+  load_deck(deck);
 
 #ifdef DEBUG
   cards_played = new CCardsPlayed(this);
+}
+
+void CDeck::load_deck(int deck) {
+  switch (deck) {
+    case ENGLISH_DECK:                set_english_deck(); break;
+    case RUSSIAN_DECK:                set_russian_deck(); break;
+    case NICU_WHITE_DECK:             set_nicu_white_deck(); break;
+    case TIGULLIO_MODERN_DECK:        set_tigullio_modern_deck(); break;
+    case MITTELALTER_DECK:            set_mittelalter_deck(); break;
+    case NEOCLASSICAL_DECK:           set_neoclassical_deck(); break;
+    case TIGULLIO_INTERNATIONAL_DECK: set_tigullio_international_deck(); break;
+
+    default: set_standard_deck();
+  }
 }
 
 void CDeck::set_card_played(int card)
@@ -359,6 +366,190 @@ void CDeck::set_tigullio_modern_deck()
 
   img_back_card = new QImage(":/SVG-cards/tigullio-modern/back.png", "PNG");
 }
+
+void CDeck::set_mittelalter_deck()
+{
+  img_cards[0] = new QImage(":/SVG-cards/mittelalter/club_2.png", "PNG");
+  img_cards[1] = new QImage(":/SVG-cards/mittelalter/club_3.png", "PNG");
+  img_cards[2] = new QImage(":/SVG-cards/mittelalter/club_4.png", "PNG");
+  img_cards[3] = new QImage(":/SVG-cards/mittelalter/club_5.png", "PNG");
+  img_cards[4] = new QImage(":/SVG-cards/mittelalter/club_6.png", "PNG");
+  img_cards[5] = new QImage(":/SVG-cards/mittelalter/club_7.png", "PNG");
+  img_cards[6] = new QImage(":/SVG-cards/mittelalter/club_8.png", "PNG");
+  img_cards[7] = new QImage(":/SVG-cards/mittelalter/club_9.png", "PNG");
+  img_cards[8] = new QImage(":/SVG-cards/mittelalter/club_10.png", "PNG");
+  img_cards[9] = new QImage(":/SVG-cards/mittelalter/club_jack.png", "PNG");
+  img_cards[10] = new QImage(":/SVG-cards/mittelalter/club_queen.png", "PNG");
+  img_cards[11] = new QImage(":/SVG-cards/mittelalter/club_king.png", "PNG");
+  img_cards[12] = new QImage(":/SVG-cards/mittelalter/club_1.png", "PNG");
+
+  img_cards[13] = new QImage(":/SVG-cards/mittelalter/spade_2.png", "PNG");
+  img_cards[14] = new QImage(":/SVG-cards/mittelalter/spade_3.png", "PNG");
+  img_cards[15] = new QImage(":/SVG-cards/mittelalter/spade_4.png", "PNG");
+  img_cards[16] = new QImage(":/SVG-cards/mittelalter/spade_5.png", "PNG");
+  img_cards[17] = new QImage(":/SVG-cards/mittelalter/spade_6.png", "PNG");
+  img_cards[18] = new QImage(":/SVG-cards/mittelalter/spade_7.png", "PNG");
+  img_cards[19] = new QImage(":/SVG-cards/mittelalter/spade_8.png", "PNG");
+  img_cards[20] = new QImage(":/SVG-cards/mittelalter/spade_9.png", "PNG");
+  img_cards[21] = new QImage(":/SVG-cards/mittelalter/spade_10.png", "PNG");
+  img_cards[22] = new QImage(":/SVG-cards/mittelalter/spade_jack.png", "PNG");
+  img_cards[23] = new QImage(":/SVG-cards/mittelalter/spade_queen.png", "PNG");
+  img_cards[24] = new QImage(":/SVG-cards/mittelalter/spade_king.png", "PNG");
+  img_cards[25] = new QImage(":/SVG-cards/mittelalter/spade_1.png", "PNG");
+
+  img_cards[26] = new QImage(":/SVG-cards/mittelalter/diamond_2.png", "PNG");
+  img_cards[27] = new QImage(":/SVG-cards/mittelalter/diamond_3.png", "PNG");
+  img_cards[28] = new QImage(":/SVG-cards/mittelalter/diamond_4.png", "PNG");
+  img_cards[29] = new QImage(":/SVG-cards/mittelalter/diamond_5.png", "PNG");
+  img_cards[30] = new QImage(":/SVG-cards/mittelalter/diamond_6.png", "PNG");
+  img_cards[31] = new QImage(":/SVG-cards/mittelalter/diamond_7.png", "PNG");
+  img_cards[32] = new QImage(":/SVG-cards/mittelalter/diamond_8.png", "PNG");
+  img_cards[33] = new QImage(":/SVG-cards/mittelalter/diamond_9.png", "PNG");
+  img_cards[34] = new QImage(":/SVG-cards/mittelalter/diamond_10.png", "PNG");
+  img_cards[35] = new QImage(":/SVG-cards/mittelalter/diamond_jack.png", "PNG");
+  img_cards[36] = new QImage(":/SVG-cards/mittelalter/diamond_queen.png", "PNG");
+  img_cards[37] = new QImage(":/SVG-cards/mittelalter/diamond_king.png", "PNG");
+  img_cards[38] = new QImage(":/SVG-cards/mittelalter/diamond_1.png", "PNG");
+
+  img_cards[39] = new QImage(":/SVG-cards/mittelalter/heart_2.png", "PNG");
+  img_cards[40] = new QImage(":/SVG-cards/mittelalter/heart_3.png", "PNG");
+  img_cards[41] = new QImage(":/SVG-cards/mittelalter/heart_4.png", "PNG");
+  img_cards[42] = new QImage(":/SVG-cards/mittelalter/heart_5.png", "PNG");
+  img_cards[43] = new QImage(":/SVG-cards/mittelalter/heart_6.png", "PNG");
+  img_cards[44] = new QImage(":/SVG-cards/mittelalter/heart_7.png", "PNG");
+  img_cards[45] = new QImage(":/SVG-cards/mittelalter/heart_8.png", "PNG");
+  img_cards[46] = new QImage(":/SVG-cards/mittelalter/heart_9.png", "PNG");
+  img_cards[47] = new QImage(":/SVG-cards/mittelalter/heart_10.png", "PNG");
+  img_cards[48] = new QImage(":/SVG-cards/mittelalter/heart_jack.png", "PNG");
+  img_cards[49] = new QImage(":/SVG-cards/mittelalter/heart_queen.png", "PNG");
+  img_cards[50] = new QImage(":/SVG-cards/mittelalter/heart_king.png", "PNG");
+  img_cards[51] = new QImage(":/SVG-cards/mittelalter/heart_1.png", "PNG");
+
+  img_back_card = new QImage(":/SVG-cards/mittelalter/back.png", "PNG");
+}
+
+void CDeck::set_neoclassical_deck()
+{
+  img_cards[0] = new QImage(":/SVG-cards/neoclassical/club_2.svg", "SVG");
+  img_cards[1] = new QImage(":/SVG-cards/neoclassical/club_3.svg", "SVG");
+  img_cards[2] = new QImage(":/SVG-cards/neoclassical/club_4.svg", "SVG");
+  img_cards[3] = new QImage(":/SVG-cards/neoclassical/club_5.svg", "SVG");
+  img_cards[4] = new QImage(":/SVG-cards/neoclassical/club_6.svg", "SVG");
+  img_cards[5] = new QImage(":/SVG-cards/neoclassical/club_7.svg", "SVG");
+  img_cards[6] = new QImage(":/SVG-cards/neoclassical/club_8.svg", "SVG");
+  img_cards[7] = new QImage(":/SVG-cards/neoclassical/club_9.svg", "SVG");
+  img_cards[8] = new QImage(":/SVG-cards/neoclassical/club_10.svg", "SVG");
+  img_cards[9] = new QImage(":/SVG-cards/neoclassical/club_jack.svg", "SVG");
+  img_cards[10] = new QImage(":/SVG-cards/neoclassical/club_queen.svg", "SVG");
+  img_cards[11] = new QImage(":/SVG-cards/neoclassical/club_king.svg", "SVG");
+  img_cards[12] = new QImage(":/SVG-cards/neoclassical/club_1.svg", "SVG");
+
+  img_cards[13] = new QImage(":/SVG-cards/neoclassical/spade_2.svg", "SVG");
+  img_cards[14] = new QImage(":/SVG-cards/neoclassical/spade_3.svg", "SVG");
+  img_cards[15] = new QImage(":/SVG-cards/neoclassical/spade_4.svg", "SVG");
+  img_cards[16] = new QImage(":/SVG-cards/neoclassical/spade_5.svg", "SVG");
+  img_cards[17] = new QImage(":/SVG-cards/neoclassical/spade_6.svg", "SVG");
+  img_cards[18] = new QImage(":/SVG-cards/neoclassical/spade_7.svg", "SVG");
+  img_cards[19] = new QImage(":/SVG-cards/neoclassical/spade_8.svg", "SVG");
+  img_cards[20] = new QImage(":/SVG-cards/neoclassical/spade_9.svg", "SVG");
+  img_cards[21] = new QImage(":/SVG-cards/neoclassical/spade_10.svg", "SVG");
+  img_cards[22] = new QImage(":/SVG-cards/neoclassical/spade_jack.svg", "SVG");
+  img_cards[23] = new QImage(":/SVG-cards/neoclassical/spade_queen.svg", "SVG");
+  img_cards[24] = new QImage(":/SVG-cards/neoclassical/spade_king.svg", "SVG");
+  img_cards[25] = new QImage(":/SVG-cards/neoclassical/spade_1.svg", "SVG");
+
+  img_cards[26] = new QImage(":/SVG-cards/neoclassical/diamond_2.svg", "SVG");
+  img_cards[27] = new QImage(":/SVG-cards/neoclassical/diamond_3.svg", "SVG");
+  img_cards[28] = new QImage(":/SVG-cards/neoclassical/diamond_4.svg", "SVG");
+  img_cards[29] = new QImage(":/SVG-cards/neoclassical/diamond_5.svg", "SVG");
+  img_cards[30] = new QImage(":/SVG-cards/neoclassical/diamond_6.svg", "SVG");
+  img_cards[31] = new QImage(":/SVG-cards/neoclassical/diamond_7.svg", "SVG");
+  img_cards[32] = new QImage(":/SVG-cards/neoclassical/diamond_8.svg", "SVG");
+  img_cards[33] = new QImage(":/SVG-cards/neoclassical/diamond_9.svg", "SVG");
+  img_cards[34] = new QImage(":/SVG-cards/neoclassical/diamond_10.svg", "SVG");
+  img_cards[35] = new QImage(":/SVG-cards/neoclassical/diamond_jack.svg", "SVG");
+  img_cards[36] = new QImage(":/SVG-cards/neoclassical/diamond_queen.svg", "SVG");
+  img_cards[37] = new QImage(":/SVG-cards/neoclassical/diamond_king.svg", "SVG");
+  img_cards[38] = new QImage(":/SVG-cards/neoclassical/diamond_1.svg", "SVG");
+
+  img_cards[39] = new QImage(":/SVG-cards/neoclassical/heart_2.svg", "SVG");
+  img_cards[40] = new QImage(":/SVG-cards/neoclassical/heart_3.svg", "SVG");
+  img_cards[41] = new QImage(":/SVG-cards/neoclassical/heart_4.svg", "SVG");
+  img_cards[42] = new QImage(":/SVG-cards/neoclassical/heart_5.svg", "SVG");
+  img_cards[43] = new QImage(":/SVG-cards/neoclassical/heart_6.svg", "SVG");
+  img_cards[44] = new QImage(":/SVG-cards/neoclassical/heart_7.svg", "SVG");
+  img_cards[45] = new QImage(":/SVG-cards/neoclassical/heart_8.svg", "SVG");
+  img_cards[46] = new QImage(":/SVG-cards/neoclassical/heart_9.svg", "SVG");
+  img_cards[47] = new QImage(":/SVG-cards/neoclassical/heart_10.svg", "SVG");
+  img_cards[48] = new QImage(":/SVG-cards/neoclassical/heart_jack.svg", "SVG");
+  img_cards[49] = new QImage(":/SVG-cards/neoclassical/heart_queen.svg", "SVG");
+  img_cards[50] = new QImage(":/SVG-cards/neoclassical/heart_king.svg", "SVG");
+  img_cards[51] = new QImage(":/SVG-cards/neoclassical/heart_1.svg", "SVG");
+
+  img_back_card = new QImage(":/SVG-cards/neoclassical/back.svg", "SVG");
+}
+
+void CDeck::set_tigullio_international_deck()
+{
+  img_cards[0] = new QImage(":/SVG-cards/tigullio-international/club_2.svg", "SVG");
+  img_cards[1] = new QImage(":/SVG-cards/tigullio-international/club_3.svg", "SVG");
+  img_cards[2] = new QImage(":/SVG-cards/tigullio-international/club_4.svg", "SVG");
+  img_cards[3] = new QImage(":/SVG-cards/tigullio-international/club_5.svg", "SVG");
+  img_cards[4] = new QImage(":/SVG-cards/tigullio-international/club_6.svg", "SVG");
+  img_cards[5] = new QImage(":/SVG-cards/tigullio-international/club_7.svg", "SVG");
+  img_cards[6] = new QImage(":/SVG-cards/tigullio-international/club_8.svg", "SVG");
+  img_cards[7] = new QImage(":/SVG-cards/tigullio-international/club_9.svg", "SVG");
+  img_cards[8] = new QImage(":/SVG-cards/tigullio-international/club_10.svg", "SVG");
+  img_cards[9] = new QImage(":/SVG-cards/tigullio-international/club_jack.svg", "SVG");
+  img_cards[10] = new QImage(":/SVG-cards/tigullio-international/club_queen.svg", "SVG");
+  img_cards[11] = new QImage(":/SVG-cards/tigullio-international/club_king.svg", "SVG");
+  img_cards[12] = new QImage(":/SVG-cards/tigullio-international/club_1.svg", "SVG");
+
+  img_cards[13] = new QImage(":/SVG-cards/tigullio-international/spade_2.svg", "SVG");
+  img_cards[14] = new QImage(":/SVG-cards/tigullio-international/spade_3.svg", "SVG");
+  img_cards[15] = new QImage(":/SVG-cards/tigullio-international/spade_4.svg", "SVG");
+  img_cards[16] = new QImage(":/SVG-cards/tigullio-international/spade_5.svg", "SVG");
+  img_cards[17] = new QImage(":/SVG-cards/tigullio-international/spade_6.svg", "SVG");
+  img_cards[18] = new QImage(":/SVG-cards/tigullio-international/spade_7.svg", "SVG");
+  img_cards[19] = new QImage(":/SVG-cards/tigullio-international/spade_8.svg", "SVG");
+  img_cards[20] = new QImage(":/SVG-cards/tigullio-international/spade_9.svg", "SVG");
+  img_cards[21] = new QImage(":/SVG-cards/tigullio-international/spade_10.svg", "SVG");
+  img_cards[22] = new QImage(":/SVG-cards/tigullio-international/spade_jack.svg", "SVG");
+  img_cards[23] = new QImage(":/SVG-cards/tigullio-international/spade_queen.svg", "SVG");
+  img_cards[24] = new QImage(":/SVG-cards/tigullio-international/spade_king.svg", "SVG");
+  img_cards[25] = new QImage(":/SVG-cards/tigullio-international/spade_1.svg", "SVG");
+
+  img_cards[26] = new QImage(":/SVG-cards/tigullio-international/diamond_2.svg", "SVG");
+  img_cards[27] = new QImage(":/SVG-cards/tigullio-international/diamond_3.svg", "SVG");
+  img_cards[28] = new QImage(":/SVG-cards/tigullio-international/diamond_4.svg", "SVG");
+  img_cards[29] = new QImage(":/SVG-cards/tigullio-international/diamond_5.svg", "SVG");
+  img_cards[30] = new QImage(":/SVG-cards/tigullio-international/diamond_6.svg", "SVG");
+  img_cards[31] = new QImage(":/SVG-cards/tigullio-international/diamond_7.svg", "SVG");
+  img_cards[32] = new QImage(":/SVG-cards/tigullio-international/diamond_8.svg", "SVG");
+  img_cards[33] = new QImage(":/SVG-cards/tigullio-international/diamond_9.svg", "SVG");
+  img_cards[34] = new QImage(":/SVG-cards/tigullio-international/diamond_10.svg", "SVG");
+  img_cards[35] = new QImage(":/SVG-cards/tigullio-international/diamond_jack.svg", "SVG");
+  img_cards[36] = new QImage(":/SVG-cards/tigullio-international/diamond_queen.svg", "SVG");
+  img_cards[37] = new QImage(":/SVG-cards/tigullio-international/diamond_king.svg", "SVG");
+  img_cards[38] = new QImage(":/SVG-cards/tigullio-international/diamond_1.svg", "SVG");
+
+  img_cards[39] = new QImage(":/SVG-cards/tigullio-international/heart_2.svg", "SVG");
+  img_cards[40] = new QImage(":/SVG-cards/tigullio-international/heart_3.svg", "SVG");
+  img_cards[41] = new QImage(":/SVG-cards/tigullio-international/heart_4.svg", "SVG");
+  img_cards[42] = new QImage(":/SVG-cards/tigullio-international/heart_5.svg", "SVG");
+  img_cards[43] = new QImage(":/SVG-cards/tigullio-international/heart_6.svg", "SVG");
+  img_cards[44] = new QImage(":/SVG-cards/tigullio-international/heart_7.svg", "SVG");
+  img_cards[45] = new QImage(":/SVG-cards/tigullio-international/heart_8.svg", "SVG");
+  img_cards[46] = new QImage(":/SVG-cards/tigullio-international/heart_9.svg", "SVG");
+  img_cards[47] = new QImage(":/SVG-cards/tigullio-international/heart_10.svg", "SVG");
+  img_cards[48] = new QImage(":/SVG-cards/tigullio-international/heart_jack.svg", "SVG");
+  img_cards[49] = new QImage(":/SVG-cards/tigullio-international/heart_queen.svg", "SVG");
+  img_cards[50] = new QImage(":/SVG-cards/tigullio-international/heart_king.svg", "SVG");
+  img_cards[51] = new QImage(":/SVG-cards/tigullio-international/heart_1.svg", "SVG");
+
+  img_back_card = new QImage(":/SVG-cards/tigullio-international/b_blue.svg", "SVG");
+}
+
 CDeck::~CDeck()
 {
   delete img_empty_card;
@@ -407,14 +598,7 @@ void CDeck::set_deck(int deck)
 
   delete_current_deck();
 
-  switch (deck) {
-     case ENGLISH_DECK:         set_english_deck(); break;
-     case RUSSIAN_DECK:         set_russian_deck(); break;
-     case NICU_WHITE_DECK:      set_nicu_white_deck(); break;
-     case TIGULLIO_MODERN_DECK: set_tigullio_modern_deck(); break;
-
-     default: set_standard_deck();
-  }
+  load_deck(deck);
 
   current_deck = deck;
 

@@ -273,6 +273,7 @@ void MainWindow::adjust_objs_distances(QResizeEvent *event)
 
   adj_deck_s = 0;
   switch (config->get_deck_style()) {
+    case TIGULLIO_INTERNATIONAL_DECK:
     case NICU_WHITE_DECK:
     case ENGLISH_DECK:
     case RUSSIAN_DECK: adj_deck_n = 6;
@@ -1124,20 +1125,7 @@ void MainWindow::set_settings()
   set_hearts_style(config->get_hearts_style());
   set_info_channel_enabled(config->is_info_channel());
   set_show_direction(!hearts->is_mode_playing());
-
-  switch (config->get_deck_style()) {
-    case ENGLISH_DECK:         aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
-                               ui->actionEnglish_2->setChecked(true); break;
-    case RUSSIAN_DECK:         aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
-                               ui->actionRussian_2->setChecked(true); break;
-    case NICU_WHITE_DECK:      aspect_ratio_flag = Qt::KeepAspectRatio;
-                               ui->actionNicu_white->setChecked(true); break;
-    case TIGULLIO_MODERN_DECK: aspect_ratio_flag = Qt::KeepAspectRatio;
-                               ui->actionTigullio_modern->setChecked(true); break;
-
-    default: aspect_ratio_flag = Qt::KeepAspectRatio;
-             ui->actionStandard->setChecked(true);
-  }
+  set_checked_deck(config->get_deck_style());
 
   if (config->is_empty_slot_opaque()) {
     _empty = empty;
@@ -1321,7 +1309,7 @@ void MainWindow::game_over(int score1, int score2, int score3, int score4)
 #endif
 
   if (!ui->actionInfo_Channel->isChecked())
-    QMessageBox::information(this, tr("Information"), mesg);
+    QMessageBox::information(this, tr("Information"), mesg.remove(tr("[Info]: ")));
 
   ui->actionNew->setDisabled(false);
 }
@@ -2137,6 +2125,7 @@ void MainWindow::on_actionReset_triggered()
 {
   QMessageBox msgBox(this);
   msgBox.setText(tr("Do you want to reset statistics?"));
+  msgBox.setWindowTitle(tr("Warning!"));
   msgBox.setInformativeText(tr("Are you sure?"));
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
   msgBox.setDefaultButton(QMessageBox::No);
@@ -2313,6 +2302,8 @@ void MainWindow::adjust_under_deck()
       adj_move_deck_e = 0;
 
   switch (config->get_deck_style()) {
+     case MITTELALTER_DECK:
+     case NEOCLASSICAL_DECK:
      case NICU_WHITE_DECK:  adj = -1;
                             break;
      case ENGLISH_DECK:
@@ -2325,6 +2316,12 @@ void MainWindow::adjust_under_deck()
                             adj_move_deck_s = 1;
                             adj_move_deck_e = 1;
                             adj_deck_size_s = 3;
+                            break;
+      case TIGULLIO_INTERNATIONAL_DECK:
+                            if (!ui->actionCheat->isChecked())
+                              adj = -3;
+                            else
+                              adj = -2;
   }
 
   ui->label_deck_e->resize(orig_width_deck_h - adj,
@@ -2378,28 +2375,47 @@ void MainWindow::set_checked_deck(int deck)
   ui->actionRussian_2->setChecked(false);
   ui->actionNicu_white->setChecked(false);
   ui->actionTigullio_modern->setChecked(false);
+  ui->actionMittelalter->setChecked(false);
+  ui->actionNeo_Classical->setChecked(false);
+  ui->actionTigullio_international->setChecked(false);
 
   // set the selected deck
   switch (deck) {
-    case ENGLISH_DECK: ui->actionEnglish_2->setChecked(true); break;
-    case RUSSIAN_DECK: ui->actionRussian_2->setChecked(true); break;
-    case NICU_WHITE_DECK: ui->actionNicu_white->setChecked(true); break;
-    case TIGULLIO_MODERN_DECK: ui->actionTigullio_modern->setChecked(true); break;
-
-    default: ui->actionStandard->setChecked(true);
+    case ENGLISH_DECK:         ui->actionEnglish_2->setChecked(true);
+                               aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+                               break;
+    case RUSSIAN_DECK:         ui->actionRussian_2->setChecked(true);
+                               aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
+                               break;
+    case NICU_WHITE_DECK:      ui->actionNicu_white->setChecked(true);
+                               aspect_ratio_flag = Qt::KeepAspectRatio;
+                               break;
+    case TIGULLIO_MODERN_DECK: ui->actionTigullio_modern->setChecked(true);
+                               aspect_ratio_flag = Qt::KeepAspectRatio;
+                               break;
+    case MITTELALTER_DECK:     ui->actionMittelalter->setChecked(true);
+                               aspect_ratio_flag = Qt::KeepAspectRatio;
+                               break;
+    case NEOCLASSICAL_DECK:    ui->actionNeo_Classical->setChecked(true);
+                               aspect_ratio_flag = Qt::KeepAspectRatio;
+                               break;
+    case TIGULLIO_INTERNATIONAL_DECK:
+                               ui->actionTigullio_international->setChecked(true);
+                               aspect_ratio_flag = Qt::KeepAspectRatio;
+                               break;
+    default:                   ui->actionStandard->setChecked(true);
+                               aspect_ratio_flag = Qt::KeepAspectRatio;
   }
 }
 
-void MainWindow::on_actionStandard_triggered()
+void MainWindow::load_deck(int deck_style)
 {
-  set_checked_deck(STANDARD_DECK);
+  set_checked_deck(deck_style);
 
-  if (config->get_deck_style() == STANDARD_DECK)
+  if (config->get_deck_style() == deck_style)
     return;
 
-  aspect_ratio_flag = Qt::KeepAspectRatio;
-
-  deck->set_deck(STANDARD_DECK);
+  deck->set_deck(deck_style);
 
 #ifdef DEBUG
   debug->refresh();
@@ -2414,134 +2430,50 @@ void MainWindow::on_actionStandard_triggered()
 
   refresh_cards_played();
 
-  config->set_deck_style(STANDARD_DECK);
+  config->set_deck_style(deck_style);
 
   adjust_under_deck();
   set_theme_colors(); // must be called after config->set_deck_style()
 }
 
+void MainWindow::on_actionStandard_triggered()
+{
+  load_deck(STANDARD_DECK);
+}
+
 void MainWindow::on_actionNicu_white_triggered()
 {
-  set_checked_deck(NICU_WHITE_DECK);
-
-  if (config->get_deck_style() == NICU_WHITE_DECK)
-    return;
-
-  aspect_ratio_flag = Qt::KeepAspectRatio;
-
-  deck->set_deck(NICU_WHITE_DECK);
-
-#ifdef DEBUG
-   debug->refresh();
-#endif
-
-#ifdef ONLINE_PLAY
-  if (online_connected)
-    online_show_deck();
-  else
-#endif // ONLINE_PLAY
-
-    show_deck(false, true);
-
-  refresh_cards_played();
-
-  config->set_deck_style(NICU_WHITE_DECK);
-
-  adjust_under_deck();
-  set_theme_colors();
+  load_deck(NICU_WHITE_DECK);
 }
 
 void MainWindow::on_actionEnglish_2_triggered()
 {
-  set_checked_deck(ENGLISH_DECK);
-
-  if (config->get_deck_style() == ENGLISH_DECK)
-    return;
-
-  aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
-
-  deck->set_deck(ENGLISH_DECK);
-
-#ifdef DEBUG
-  debug->refresh();
-#endif
-
-#ifdef ONLINE_PLAY
-  if (online_connected)
-    online_show_deck();
-  else
-#endif // ONLINE_PLAY
-
-    show_deck(false, true);
-
-  refresh_cards_played();
-
-  config->set_deck_style(ENGLISH_DECK);
-
-  adjust_under_deck();
-  set_theme_colors();
+  load_deck(ENGLISH_DECK);
 }
 
 void MainWindow::on_actionRussian_2_triggered()
 {
-  set_checked_deck(RUSSIAN_DECK);
-
-  if (config->get_deck_style() == RUSSIAN_DECK)
-    return;
-
-  aspect_ratio_flag = Qt::KeepAspectRatioByExpanding;
-
-  deck->set_deck(RUSSIAN_DECK);
-
-#ifdef DEBUG
-  debug->refresh();
-#endif
-
-#ifdef ONLINE_PLAY
-  if (online_connected)
-    online_show_deck();
-  else
-#endif // ONLINE_PLAY
-
-    show_deck(false, true);
-
-  refresh_cards_played();
-
-  config->set_deck_style(RUSSIAN_DECK);
-
-  adjust_under_deck();
-  set_theme_colors();
+  load_deck(RUSSIAN_DECK);
 }
 
 void MainWindow::on_actionTigullio_modern_triggered()
 {
-  set_checked_deck(TIGULLIO_MODERN_DECK);
+  load_deck(TIGULLIO_MODERN_DECK);
+}
 
-  if (config->get_deck_style() == TIGULLIO_MODERN_DECK)
-    return;
+void MainWindow::on_actionMittelalter_triggered()
+{
+  load_deck(MITTELALTER_DECK);
+}
 
-  aspect_ratio_flag = Qt::KeepAspectRatio;
+void MainWindow::on_actionNeo_Classical_triggered()
+{
+  load_deck(NEOCLASSICAL_DECK);
+}
 
-  deck->set_deck(TIGULLIO_MODERN_DECK);
-
-#ifdef DEBUG
-  debug->refresh();
-#endif
-
-#ifdef ONLINE_PLAY
-  if (online_connected)
-    online_show_deck();
-  else
-#endif // ONLINE_PLAY
-
-    show_deck(false, true);
-
-  refresh_cards_played();
-
-  config->set_deck_style(TIGULLIO_MODERN_DECK);
-
-  adjust_under_deck();
-  set_theme_colors();
+void MainWindow::on_actionTigullio_international_triggered()
+{
+  load_deck(TIGULLIO_INTERNATIONAL_DECK);
 }
 
 // Speed Slow
@@ -2729,263 +2661,136 @@ void MainWindow::set_theme_colors()
    check_text_only();
 }
 
-void MainWindow::on_actionUnivers_triggered()
+void MainWindow::load_background(int background_style)
 {
-  unset_background();
-  ui->actionUnivers->setChecked(true);
+  const char background_StyleSheet[BACKGROUND_MAX][255] =
+      {"",                                                                                                                                     // BACKGROUND_NONE
+       "border-image: url(:/backgrounds/380441109-2ed06248-c87c-4a56-a718-0584d0cdc85d.png) 0 0 0 0 stretch stretch; }",                       // BACKGROUND_GREEN
+       "border-image: url(:/backgrounds/eso1723a.jpg) 0 0 0 0 stretch;}",                                                                      // BACKGROUND_UNIVERSE
+       "border-image: url(:/backgrounds/__Palm___Beach._Port_Douglas._-_panoramio.jpg) 0 0 0 0 stretch stretch; }",                            // BACKGROUND_OCEAN
+       "border-image: url(:/backgrounds/Mount._Fuji_early_in_the_morning_早朝の富士山_-_panoramio.jpg) 0 0 0 0 stretch stretch; }",            // BACKGROUND_MT_FUJI
+       "border-image: url(:/backgrounds/8,848m_Everest_8,516m_Lhotse_Himalaya_Mountain_Flights_Nepal_-_panoramio_(2).jpg) 0 0 0 0 stretch; }", // BACKGROUND_EVEREST
+       "border-image: url(:/backgrounds/Wadi_rum_desert.jpg) 0 0 0 0 stretch stretch; }",                                                      // BACKGROUND_DESERT
+       "border-image: url(:/backgrounds/WoodenPlanks.svg) 0 0 0 0 stretch stretch; }",                                                         // BACKGROUND_WOODEN_1
+       "border-image: url(:/backgrounds/WoodTexture.svg) 0 0 0 0 stretch stretch; }",                                                          // BACKGROUND_WOODEN_2
+       "border-image: url(:/backgrounds/WoodenFloor2.svg) 0 0 0 0 stretch stretch; }",                                                         // BACKGROUND_WOODEN_3
+       "border-image: url(:/backgrounds/OverlappingPlanks5.svg) 0 0 0 0 stretch stretch; }",                                                   // BACKGROUND_WOODEN_4
+       "border-image: url(:/backgrounds/leaves.jpg) 0 0 0 0 stretch stretch; }",                                                               // BACKGROUND_LEAVES
+       "border-image: url(:/backgrounds/marble.jpg) 0 0 0 0 stretch stretch; }"                                                                // BACKGROUND_MARBLE
+      };
 
-  if (background == BACKGROUND_UNIVERSE)
+  assert((background_style >= 0) && (background_style < BACKGROUND_MAX));
+
+  unset_background();
+
+  switch (background_style) {
+     case BACKGROUND_UNIVERSE: ui->actionUnivers->setChecked(true);
+                               break;
+     case BACKGROUND_EVEREST:  ui->actionEverest->setChecked(true);
+                               break;
+     case BACKGROUND_OCEAN:    ui->actionOcean->setChecked(true);
+                               break;
+     case BACKGROUND_MT_FUJI:  ui->actionMt_Fuji->setChecked(true);
+                               break;
+     case BACKGROUND_DESERT:   ui->actionDesert->setChecked(true);
+                               break;
+     case BACKGROUND_WOODEN_1: ui->actionWooden_planks->setChecked(true);
+                               break;
+     case BACKGROUND_WOODEN_2: ui->actionWood_texture->setChecked(true);
+                               break;
+     case BACKGROUND_WOODEN_3: ui->actionWooden_floor->setChecked(true);
+                               break;
+     case BACKGROUND_WOODEN_4: ui->actionOverlapping_planks_5->setChecked(true);
+                               break;
+     case BACKGROUND_LEAVES:   ui->actionLeaves->setChecked(true);
+                               break;
+     case BACKGROUND_MARBLE:   ui->actionMarble->setChecked(true);
+                               break;
+     case BACKGROUND_GREEN:    ui->actionGreen->setChecked(true);
+                               break;
+     case BACKGROUND_NONE:
+     default:                  ui->actionNo_image->setChecked(true);
+  }
+
+  if (background == background_style)
     return;
 
-  background = BACKGROUND_UNIVERSE;
+  background = background_style;
 
-  config->set_background(BACKGROUND_UNIVERSE);
+  config->set_background(background_style);
 
-  centralWidget()->setStyleSheet("#centralWidget {"
-                  "border-image: url(:/backgrounds/eso1723a.jpg)"
-                  " 0 0 0 0 stretch;}");
+  if (background_style == BACKGROUND_NONE)
+    centralWidget()->setStyleSheet("");
+  else
+    centralWidget()->setStyleSheet(QString("#centralWidget {") + QString(background_StyleSheet[background_style]));
 
   set_credit();
   set_theme_colors();
+}
+
+void MainWindow::on_actionUnivers_triggered()
+{
+  load_background(BACKGROUND_UNIVERSE);
 }
 
 void MainWindow::on_actionEverest_triggered()
 {
-  unset_background();
-  ui->actionEverest->setChecked(true);
-
-  if (background == BACKGROUND_EVEREST)
-    return;
-
-  background = BACKGROUND_EVEREST;
-
-  config->set_background(BACKGROUND_EVEREST);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                  "border-image: url(:/backgrounds/8,848m_Everest_8,516m_Lhotse_Himalaya_Mountain_Flights_Nepal_-_panoramio_(2).jpg)"
-                  " 0 0 0 0 stretch;}");
-
-  set_credit();
-  set_theme_colors();
+  load_background(BACKGROUND_EVEREST);
 }
 
 void MainWindow::on_actionOcean_triggered()
 {
-  unset_background();
-  ui->actionOcean->setChecked(true);
-
-  if (background == BACKGROUND_OCEAN)
-    return;
-
-  background = BACKGROUND_OCEAN;
-
-  config->set_background(BACKGROUND_OCEAN);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                   "border-image: url(:/backgrounds/__Palm___Beach._Port_Douglas._-_panoramio.jpg)"
-                   " 0 0 0 0 stretch stretch; }");
-
-  set_credit();
-  set_theme_colors();
+  load_background(BACKGROUND_OCEAN);
 }
 
 void MainWindow::on_actionNo_image_triggered()
 {
-  unset_background();
-  ui->actionNo_image->setChecked(true);
-
-  if (background == BACKGROUND_NONE)
-    return;
-
-  background = BACKGROUND_NONE;
-
-  config->set_background(BACKGROUND_NONE);
-
-  centralWidget()->setStyleSheet("");
-
-  set_credit();
-  set_theme_colors();
+  load_background(BACKGROUND_NONE);
 }
 
 void MainWindow::on_actionMt_Fuji_triggered()
 {
-  unset_background();
-  ui->actionMt_Fuji->setChecked(true);
-
-  if (background == BACKGROUND_MT_FUJI)
-    return;
-
-  background = BACKGROUND_MT_FUJI;
-
-  config->set_background(BACKGROUND_MT_FUJI);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                   "border-image: url(:/backgrounds/Mount._Fuji_early_in_the_morning_早朝の富士山_-_panoramio.jpg)"
-                   " 0 0 0 0 stretch stretch; }");
-
-  set_credit();
-  set_theme_colors();
+  load_background(BACKGROUND_MT_FUJI);
 }
 
 void MainWindow::on_actionDesert_triggered()
 {
-  unset_background();
-  ui->actionDesert->setChecked(true);
-
-  if (background == BACKGROUND_DESERT)
-    return;
-
-  background = BACKGROUND_DESERT;
-
-  config->set_background(BACKGROUND_DESERT);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                  "border-image: url(:/backgrounds/Wadi_rum_desert.jpg)"
-                  " 0 0 0 0 stretch stretch; }");
-
-  set_credit();
-  set_theme_colors();
+  load_background(BACKGROUND_DESERT);
 }
 
 void MainWindow::on_actionWooden_planks_triggered()
 {
-  unset_background();
-  ui->actionWooden_planks->setChecked(true);
-
-  if (background == BACKGROUND_WOODEN_1)
-    return;
-
-  background = BACKGROUND_WOODEN_1;
-
-  config->set_background(BACKGROUND_WOODEN_1);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                  "border-image: url(:/backgrounds/WoodenPlanks.svg)"
-                  " 0 0 0 0 stretch stretch; }");
-
-  set_credit();
-  set_theme_colors();
+  load_background(BACKGROUND_WOODEN_1);
 }
-
 
 void MainWindow::on_actionWood_texture_triggered()
 {
-  unset_background();
-  ui->actionWood_texture->setChecked(true);
-
-  if (background == BACKGROUND_WOODEN_2)
-    return;
-
-  background = BACKGROUND_WOODEN_2;
-
-  config->set_background(BACKGROUND_WOODEN_2);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                  "border-image: url(:/backgrounds/WoodTexture.svg)"
-                    " 0 0 0 0 stretch stretch; }");
-
-  set_credit();
-  set_theme_colors();
+  load_background(BACKGROUND_WOODEN_2);
 }
 
 void MainWindow::on_actionWooden_floor_triggered()
 {
-  unset_background();
-  ui->actionWooden_floor->setChecked(true);
-
-  if (background == BACKGROUND_WOODEN_3)
-    return;
-
-  background = BACKGROUND_WOODEN_3;
-
-  config->set_background(BACKGROUND_WOODEN_3);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                  "border-image: url(:/backgrounds/WoodenFloor2.svg)"
-                  " 0 0 0 0 stretch stretch; }");
-
-  set_credit();
-  set_theme_colors();
+  load_background(BACKGROUND_WOODEN_3);
 }
 
 void MainWindow::on_actionOverlapping_planks_5_triggered()
 {
-  unset_background();
-  ui->actionOverlapping_planks_5->setChecked(true);
-
-  if (background == BACKGROUND_WOODEN_4)
-    return;
-
-   background = BACKGROUND_WOODEN_4;
-
-   config->set_background(BACKGROUND_WOODEN_4);
-
-   centralWidget()->setStyleSheet("#centralWidget {"
-                    "border-image: url(:/backgrounds/OverlappingPlanks5.svg)"
-                    " 0 0 0 0 stretch stretch; }");
-
-   set_credit();
-   set_theme_colors();
+  load_background(BACKGROUND_WOODEN_4);
 }
 
 void MainWindow::on_actionLeaves_triggered()
 {
-  unset_background();
-  ui->actionLeaves->setChecked(true);
-
-  if (background == BACKGROUND_LEAVES)
-    return;
-
-  background = BACKGROUND_LEAVES;
-
-  config->set_background(BACKGROUND_LEAVES);
-
-  centralWidget()->setStyleSheet("#centralWidget {"
-                   "border-image: url(:/backgrounds/leaves.jpg)"
-                   " 0 0 0 0 stretch stretch; }");
-
-  set_credit();
-  set_theme_colors();
+  load_background(BACKGROUND_LEAVES);
 }
 
 void MainWindow::on_actionMarble_triggered()
 {
-  unset_background();
-  ui->actionMarble->setChecked(true);
-
-  if (background == BACKGROUND_MARBLE)
-    return;
-
-   background = BACKGROUND_MARBLE;
-
-   config->set_background(BACKGROUND_MARBLE);
-
-   centralWidget()->setStyleSheet("#centralWidget {"
-                    "border-image: url(:/backgrounds/marble.jpg)"
-                    " 0 0 0 0 stretch stretch; }");
-
-   set_credit();
-   set_theme_colors();
+  load_background(BACKGROUND_MARBLE);
 }
 
 void MainWindow::on_actionGreen_triggered()
 {
-  unset_background();
-  ui->actionGreen->setChecked(true);
-
-  if (background == BACKGROUND_GREEN)
-    return;
-
-   background = BACKGROUND_GREEN;
-
-   config->set_background(BACKGROUND_GREEN);
-
-   centralWidget()->setStyleSheet("#centralWidget {"
-                      "border-image: url(:/backgrounds/380441109-2ed06248-c87c-4a56-a718-0584d0cdc85d.png)"
-                      " 0 0 0 0 stretch stretch; }");
-
-   set_credit();
-   set_theme_colors();
+  load_background(BACKGROUND_GREEN);
 }
 
 void MainWindow::unset_hearts_style()
@@ -4597,6 +4402,7 @@ void MainWindow::on_pushButton_exit_clicked()
   QMessageBox msgBox(this);
 
   msgBox.setText(tr("Do you want to leave the server?"));
+  msgBox.setWindowTitle(tr("Server connection"));
   msgBox.setInformativeText(tr("Are you sure?"));
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
   msgBox.setDefaultButton(QMessageBox::No);

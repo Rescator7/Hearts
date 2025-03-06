@@ -109,6 +109,15 @@ int CConfig::load_config_file() {
         else
         if (value == "tigullio_modern")
           deck_style = TIGULLIO_MODERN_DECK;
+        else
+        if (value == "mittelalter")
+          deck_style = MITTELALTER_DECK;
+        else
+        if (value == "neoclassical")
+          deck_style = NEOCLASSICAL_DECK;
+        else
+        if (value == "tigullio_international")
+          deck_style = TIGULLIO_INTERNATIONAL_DECK;
 
         continue;
       }
@@ -420,11 +429,14 @@ int CConfig::save_config_file()
   }
 
   switch (deck_style) {
-    case STANDARD_DECK:        out << "Deck_Style = standard" << EOL; break;
-    case ENGLISH_DECK:         out << "Deck_Style = english" << EOL; break;
-    case RUSSIAN_DECK:         out << "Deck_Style = russian" << EOL; break;
-    case NICU_WHITE_DECK:      out << "Deck_Style = nicu_white" << EOL; break;
-    case TIGULLIO_MODERN_DECK: out << "Deck_Style = tigullio_modern" << EOL; break;
+    case STANDARD_DECK:               out << "Deck_Style = standard" << EOL; break;
+    case ENGLISH_DECK:                out << "Deck_Style = english" << EOL; break;
+    case RUSSIAN_DECK:                out << "Deck_Style = russian" << EOL; break;
+    case NICU_WHITE_DECK:             out << "Deck_Style = nicu_white" << EOL; break;
+    case TIGULLIO_MODERN_DECK:        out << "Deck_Style = tigullio_modern" << EOL; break;
+    case MITTELALTER_DECK:            out << "Deck_Style = mittelalter" << EOL; break;
+    case NEOCLASSICAL_DECK:           out << "Deck_Style = neoclassical" << EOL; break;
+    case TIGULLIO_INTERNATIONAL_DECK: out << "Deck_Style = tigullio_international" << EOL; break;
   }
 
   switch (hearts_style) {

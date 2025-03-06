@@ -168,6 +168,9 @@ private slots:
     void on_actionShow_direction_triggered();
     void on_actionOpaque_triggered();
     void on_actionTransparent_triggered();
+    void on_actionMittelalter_triggered();
+    void on_actionNeo_Classical_triggered();
+    void on_actionTigullio_international_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -318,6 +321,8 @@ private:
     void disable_cheat();
     void check_easy_cards();
     void adjust_under_deck();
+    void load_deck(int deck_style);
+    void load_background(int background_style);
 
 public:
     int convert_char_to_player(QString p);

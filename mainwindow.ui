@@ -2606,6 +2606,9 @@
      <addaction name="actionEnglish_2"/>
      <addaction name="actionRussian_2"/>
      <addaction name="actionTigullio_modern"/>
+     <addaction name="actionTigullio_international"/>
+     <addaction name="actionMittelalter"/>
+     <addaction name="actionNeo_Classical"/>
     </widget>
     <widget class="QMenu" name="menuGame_Speed">
      <property name="title">
@@ -3207,6 +3210,30 @@
    </property>
    <property name="text">
     <string>Transparent</string>
+   </property>
+  </action>
+  <action name="actionMittelalter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Mittelalter</string>
+   </property>
+  </action>
+  <action name="actionNeo_Classical">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Neo Classical</string>
+   </property>
+  </action>
+  <action name="actionTigullio_international">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Tigullio (international)</string>
    </property>
   </action>
  </widget>
