@@ -20,20 +20,6 @@ CDeck::CDeck(int deck)
   cards_played = new CCardsPlayed(this);
 }
 
-void CDeck::load_deck(int deck) {
-  switch (deck) {
-    case ENGLISH_DECK:                set_english_deck(); break;
-    case RUSSIAN_DECK:                set_russian_deck(); break;
-    case NICU_WHITE_DECK:             set_nicu_white_deck(); break;
-    case TIGULLIO_MODERN_DECK:        set_tigullio_modern_deck(); break;
-    case MITTELALTER_DECK:            set_mittelalter_deck(); break;
-    case NEOCLASSICAL_DECK:           set_neoclassical_deck(); break;
-    case TIGULLIO_INTERNATIONAL_DECK: set_tigullio_international_deck(); break;
-
-    default: set_standard_deck();
-  }
-}
-
 void CDeck::set_card_played(int card)
 {
   cards_played->play(card);
@@ -61,6 +47,20 @@ void CDeck::Translate()
 #else
 }
 #endif // DEBUG
+
+void CDeck::load_deck(int deck) {
+  switch (deck) {
+    case ENGLISH_DECK:                set_english_deck(); break;
+    case RUSSIAN_DECK:                set_russian_deck(); break;
+    case NICU_WHITE_DECK:             set_nicu_white_deck(); break;
+    case TIGULLIO_MODERN_DECK:        set_tigullio_modern_deck(); break;
+    case MITTELALTER_DECK:            set_mittelalter_deck(); break;
+    case NEOCLASSICAL_DECK:           set_neoclassical_deck(); break;
+    case TIGULLIO_INTERNATIONAL_DECK: set_tigullio_international_deck(); break;
+
+    default: set_standard_deck();
+  }
+}
 
 void CDeck::set_standard_deck()
 {
