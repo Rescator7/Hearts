@@ -386,8 +386,6 @@ public slots:
     void aboutToQuit();
     void animate_pass_cards(int w1, int w2, int w3, int n1, int n2, int n3, int e1, int e2, int e3);
     void handle_new_game();
-    void unset_background();
-    void unset_hearts_style();
     void set_theme_colors();
     void menu_speed_about_to_show();
 };

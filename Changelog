@@ -120,7 +120,7 @@
 -------------------------------------------------------------------------------------------------
 06 Jan 2021: Fix a resize glitch: If you resize the width of the mainwindow while the first card
              is selected and ready to be passed. The under deck move to a wrong y axis position.
-06 Jan 2011: The online connect windows buttons: Connect, Register and Cancel will be translatable.
+06 Jan 2021: The online connect windows buttons: Connect, Register and Cancel will be translatable.
              The code is revamped, and the little hack removed.
 06 Jan 2021: Online play: Creating a table will now show: "Waiting for a player" on the empties
              chairs, instead of "Sit Here" on every chair, because it was confusing. Also, "Sit Here"
@@ -231,4 +231,9 @@
 06 Mar 2025: Version 1.9.4
 -------------------------------------------------------------------------------------------------
 06 Mar 2025: Added new card decks: Tigullio (International), Neo Classical and Mittelalter
+
+28 May 2025: Version 1.9.5
+-------------------------------------------------------------------------------------------------
+28 May 2025: Added shortcuts
+             https://github.com/Rescator7/Hearts/issues/6
 

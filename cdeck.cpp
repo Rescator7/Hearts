@@ -566,15 +566,14 @@ CDeck::~CDeck()
 
 QImage *CDeck::get_img_card(int card) {
   switch (card) {
-     case empty:     return img_empty_card;
-     case invisible: return img_card_invis;
-     case back_card: return img_back_card;
-     case your_turn_frame: 
-             return img_card_frame;
-     case your_turn: return img_your_turn;
+     case empty:           return img_empty_card;
+     case invisible:       return img_card_invis;
+     case back_card:       return img_back_card;
+     case your_turn_frame: return img_card_frame;
+     case your_turn:       return img_your_turn;
 
-     default:        assert((card >= 0) && (card < DECK_SIZE));
-                     return img_cards[card];
+     default:              assert((card >= 0) && (card < DECK_SIZE));
+                           return img_cards[card];
   }
 }
 

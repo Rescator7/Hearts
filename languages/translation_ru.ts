@@ -1212,7 +1212,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="2633"/>
         <source>Background</source>
-        <translation>Обои на стену</translation>
+        <translation>Фон</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2652"/>
@@ -1484,17 +1484,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="2972"/>
         <source>Slow</source>
-        <translation>Медленный</translation>
+        <translation>Медленная</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2980"/>
         <source>Normal</source>
-        <translation>Обычный</translation>
+        <translation>Обычная</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2988"/>
         <source>Fast</source>
-        <translation>Быстро</translation>
+        <translation>Быстрая</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2996"/>

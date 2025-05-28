@@ -1367,7 +1367,7 @@ void MainWindow::shoot_moon(int plr)
   message(mesg);
 
   if (!ui->actionInfo_Channel->isChecked())
-    QMessageBox::information(this, tr("information"), mesg);
+    QMessageBox::information(this, tr("information"), mesg.remove(tr("[Info]: ")));
 }
 
 void MainWindow::pass_to(int pass_to)
@@ -2552,23 +2552,6 @@ void MainWindow::hide_waiting()
   ui->label_waiting_e->hide();
 }
 
-void MainWindow::unset_background()
-{
-  ui->actionGreen->setChecked(false);
-  ui->actionUnivers->setChecked(false);
-  ui->actionOcean->setChecked(false);
-  ui->actionNo_image->setChecked(false);
-  ui->actionMt_Fuji->setChecked(false);
-  ui->actionDesert->setChecked(false);
-  ui->actionEverest->setChecked(false);
-  ui->actionWooden_planks->setChecked(false);
-  ui->actionWood_texture->setChecked(false);
-  ui->actionWooden_floor->setChecked(false);
-  ui->actionOverlapping_planks_5->setChecked(false);
-  ui->actionLeaves->setChecked(false);
-  ui->actionMarble->setChecked(false);
-}
-
 void MainWindow::set_background()
 {
   int background = config->get_background();
@@ -2681,36 +2664,19 @@ void MainWindow::load_background(int background_style)
 
   assert((background_style >= 0) && (background_style < BACKGROUND_MAX));
 
-  unset_background();
-
-  switch (background_style) {
-     case BACKGROUND_UNIVERSE: ui->actionUnivers->setChecked(true);
-                               break;
-     case BACKGROUND_EVEREST:  ui->actionEverest->setChecked(true);
-                               break;
-     case BACKGROUND_OCEAN:    ui->actionOcean->setChecked(true);
-                               break;
-     case BACKGROUND_MT_FUJI:  ui->actionMt_Fuji->setChecked(true);
-                               break;
-     case BACKGROUND_DESERT:   ui->actionDesert->setChecked(true);
-                               break;
-     case BACKGROUND_WOODEN_1: ui->actionWooden_planks->setChecked(true);
-                               break;
-     case BACKGROUND_WOODEN_2: ui->actionWood_texture->setChecked(true);
-                               break;
-     case BACKGROUND_WOODEN_3: ui->actionWooden_floor->setChecked(true);
-                               break;
-     case BACKGROUND_WOODEN_4: ui->actionOverlapping_planks_5->setChecked(true);
-                               break;
-     case BACKGROUND_LEAVES:   ui->actionLeaves->setChecked(true);
-                               break;
-     case BACKGROUND_MARBLE:   ui->actionMarble->setChecked(true);
-                               break;
-     case BACKGROUND_GREEN:    ui->actionGreen->setChecked(true);
-                               break;
-     case BACKGROUND_NONE:
-     default:                  ui->actionNo_image->setChecked(true);
-  }
+  ui->actionGreen->setChecked(background_style == BACKGROUND_GREEN);
+  ui->actionUnivers->setChecked(background_style == BACKGROUND_UNIVERSE);
+  ui->actionOcean->setChecked(background_style == BACKGROUND_OCEAN);
+  ui->actionNo_image->setChecked(background_style == BACKGROUND_NONE);
+  ui->actionMt_Fuji->setChecked(background_style == BACKGROUND_MT_FUJI);
+  ui->actionDesert->setChecked(background_style == BACKGROUND_DESERT);
+  ui->actionEverest->setChecked(background_style == BACKGROUND_EVEREST);
+  ui->actionWooden_planks->setChecked(background_style == BACKGROUND_WOODEN_1);
+  ui->actionWood_texture->setChecked(background_style == BACKGROUND_WOODEN_2);
+  ui->actionWooden_floor->setChecked(background_style == BACKGROUND_WOODEN_3);
+  ui->actionOverlapping_planks_5->setChecked(background_style == BACKGROUND_WOODEN_4);
+  ui->actionLeaves->setChecked(background_style == BACKGROUND_LEAVES);
+  ui->actionMarble->setChecked(background_style == BACKGROUND_MARBLE);
 
   if (background == background_style)
     return;
@@ -2793,24 +2759,13 @@ void MainWindow::on_actionGreen_triggered()
   load_background(BACKGROUND_GREEN);
 }
 
-void MainWindow::unset_hearts_style()
-{
-  ui->actionText_only->setChecked(false);
-  ui->actionHearts_Pink->setChecked(false);
-  ui->actionHearts_Grey->setChecked(false);
-  ui->actionSuits->setChecked(false);
-  ui->actionCPU_Human->setChecked(false);
-}
-
 void MainWindow::set_hearts_style_checked(int style)
 {
-  switch (style) {
-    case HEARTS_TEXT_ONLY: ui->actionText_only->setChecked(true); break;
-    case HEARTS_ICONS_PINK: ui->actionHearts_Pink->setChecked(true); break;
-    case HEARTS_ICONS_GREY: ui->actionHearts_Grey->setChecked(true); break;
-    case HEARTS_ICONS_SUIT: ui->actionSuits->setChecked(true); break;
-    case HEARTS_ICONS_CPU: ui->actionCPU_Human->setChecked(true); break;
-  }
+  ui->actionText_only->setChecked(style == HEARTS_TEXT_ONLY);
+  ui->actionHearts_Pink->setChecked(style == HEARTS_ICONS_PINK);
+  ui->actionHearts_Grey->setChecked(style == HEARTS_ICONS_GREY);
+  ui->actionSuits->setChecked(style == HEARTS_ICONS_SUIT);
+  ui->actionCPU_Human->setChecked(style == HEARTS_ICONS_CPU);
 }
 
 void MainWindow::check_text_only()
@@ -2908,8 +2863,6 @@ void MainWindow::set_hearts_style_icons(int style)
 
 void MainWindow::set_hearts_style(int style)
 {
-  unset_hearts_style();
-
   set_hearts_style_icons(style);
   set_hearts_style_checked(style);
 
@@ -3119,7 +3072,7 @@ void MainWindow::online_game_over(int north, int south, int west, int east)
  #endif
 
    if (!ui->actionInfo_Channel->isChecked())
-     QMessageBox::information(this, tr("Information"), mesg);
+     QMessageBox::information(this, tr("Information"), mesg.remove(tr("[Info]: ")));
 }
 
 // this is the online version of shoot_moon()
@@ -3173,7 +3126,7 @@ void MainWindow::shoot_moon(int plr, int delay)
   message(mesg);
 
   if (!ui->actionInfo_Channel->isChecked())
-    QMessageBox::information(this, tr("information"), mesg);
+    QMessageBox::information(this, tr("information"), mesg.remove(tr("[Info]: ")));
 }
 
 void MainWindow::online_end_hand(int north, int south, int west, int east) {
