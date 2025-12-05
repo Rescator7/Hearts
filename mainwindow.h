@@ -208,6 +208,7 @@ private:
     ALLEGRO_SAMPLE *snd_disconnected;
     ALLEGRO_SAMPLE *snd_announcement;
     ALLEGRO_SAMPLE *snd_undo;
+    bool audio_installed = false;
 #endif
 
 private:

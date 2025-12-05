@@ -707,7 +707,19 @@ void MainWindow::init_vars()
 void MainWindow::load_sounds()
 {
 #ifdef __al_included_allegro5_allegro_audio_h
-    al_install_audio();
+    if (!al_init()) {
+      ui->actionSounds->setDisabled(true);
+      return;
+    } // al_install_audio() used to call al_init(), but not anymore. 
+      // It wasn't standard to call al_install_audio() only.
+
+    if (!al_install_audio()) {
+      ui->actionSounds->setDisabled(true);
+      return;
+    }
+
+    audio_installed = true;
+
     al_init_acodec_addon();
     al_reserve_samples(15);
 
@@ -810,6 +822,7 @@ void MainWindow::load_sounds()
 void MainWindow::destroy_sounds()
 {
 #ifdef __al_included_allegro5_allegro_audio_h
+  if (audio_installed) {
     al_destroy_sample(snd_breaking_heart);
     al_destroy_sample(snd_dealing_card);
     al_destroy_sample(snd_error);
@@ -825,6 +838,9 @@ void MainWindow::destroy_sounds()
     al_destroy_sample(snd_disconnected);
     al_destroy_sample(snd_announcement);
     al_destroy_sample(snd_undo);
+
+    al_uninstall_audio();
+  }
 #endif
 }
 
@@ -3066,10 +3082,10 @@ void MainWindow::online_game_over(int north, int south, int west, int east)
 
   message(mesg);
 
- #ifdef __al_included_allegro5_allegro_audio_h
+#ifdef __al_included_allegro5_allegro_audio_h
    if (ui->actionSounds->isChecked())
      al_play_sample(snd_game_over, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
- #endif
+#endif
 
    if (!ui->actionInfo_Channel->isChecked())
      QMessageBox::information(this, tr("Information"), mesg.remove(tr("[Info]: ")));
