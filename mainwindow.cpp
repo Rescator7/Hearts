@@ -2145,8 +2145,7 @@ void MainWindow::on_actionReset_triggered()
   msgBox.setInformativeText(tr("Are you sure?"));
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
   msgBox.setDefaultButton(QMessageBox::No);
-  msgBox.setButtonText(QMessageBox::Yes, tr("Yes"));
-  msgBox.setButtonText(QMessageBox::No, tr("No"));
+
   int ret = msgBox.exec();
   if (ret == QMessageBox::Yes) {
      stats->reset();
@@ -4375,8 +4374,6 @@ void MainWindow::on_pushButton_exit_clicked()
   msgBox.setInformativeText(tr("Are you sure?"));
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
   msgBox.setDefaultButton(QMessageBox::No);
-  msgBox.setButtonText(QMessageBox::Yes, tr("Yes"));
-  msgBox.setButtonText(QMessageBox::No, tr("No"));
 
   int ret = msgBox.exec();
   if (ret == QMessageBox::Yes) {
