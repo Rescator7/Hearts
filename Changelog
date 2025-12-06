@@ -241,3 +241,4 @@
 -------------------------------------------------------------------------------------------------
 05 Dec 2025: Fixed liballegro initialization
              https://github.com/Rescator7/Hearts/pull/7
+06 Dec 2025: Fixed Qt6 compiling warning

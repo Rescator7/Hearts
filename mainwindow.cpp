@@ -2140,15 +2140,18 @@ void MainWindow::on_actionSettings_triggered()
 void MainWindow::on_actionReset_triggered()
 {
   QMessageBox msgBox(this);
-  msgBox.setText(tr("Do you want to reset statistics?"));
   msgBox.setWindowTitle(tr("Warning!"));
+  msgBox.setText(tr("Do you want to reset statistics?"));
   msgBox.setInformativeText(tr("Are you sure?"));
-  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-  msgBox.setDefaultButton(QMessageBox::No);
-  msgBox.setButtonText(QMessageBox::Yes, tr("Yes"));
-  msgBox.setButtonText(QMessageBox::No, tr("No"));
-  int ret = msgBox.exec();
-  if (ret == QMessageBox::Yes) {
+  msgBox.setIcon(QMessageBox::Warning);
+
+  QPushButton *yesButton = msgBox.addButton(tr("Yes"), QMessageBox::AcceptRole);
+  QPushButton *noButton  = msgBox.addButton(tr("No"),  QMessageBox::RejectRole);
+  msgBox.setDefaultButton(noButton);
+
+  msgBox.exec();
+
+  if (msgBox.clickedButton() == yesButton) {
      stats->reset();
      message(tr("[Info]: You resetted the statistics!"));
   }
@@ -4370,16 +4373,19 @@ void MainWindow::on_pushButton_exit_clicked()
 {
   QMessageBox msgBox(this);
 
-  msgBox.setText(tr("Do you want to leave the server?"));
   msgBox.setWindowTitle(tr("Server connection"));
+  msgBox.setText(tr("Do you want to leave the server?"));
   msgBox.setInformativeText(tr("Are you sure?"));
-  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-  msgBox.setDefaultButton(QMessageBox::No);
-  msgBox.setButtonText(QMessageBox::Yes, tr("Yes"));
-  msgBox.setButtonText(QMessageBox::No, tr("No"));
+  msgBox.setIcon(QMessageBox::Warning);
 
-  int ret = msgBox.exec();
-  if (ret == QMessageBox::Yes) {
+  QPushButton *yesButton = msgBox.addButton(tr("Yes"), QMessageBox::AcceptRole);
+  QPushButton *noButton  = msgBox.addButton(tr("No"),  QMessageBox::RejectRole);
+
+  msgBox.setDefaultButton(noButton);
+
+  msgBox.exec();
+
+  if (msgBox.clickedButton() == yesButton) {
     client->send("exit");
   }
 }
