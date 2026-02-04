@@ -9,12 +9,11 @@ The card game Hearts for QT 5 or 6, and liballegro 5 (for sounds support)
 <p>Alternatively, you can download an AppImage from https://www.linux-apps.com/p/1275760/ in the files section.</p>
 <p>Or see below "How to build the source code" on your computer.</p>
 
-==============================================================================================================
+=============================================================================<br>
 <b>NEW !</b><br>
 <p>A complete overhaul of Hearts, based on Qt6, is available and ready for testing in Hearts 2.0 RC2. Please read the warning at the link below:</p>
 <a href="https://github.com/Rescator7/Hearts2">https://github.com/Rescator7/Hearts2</a>
-==============================================================================================================
-
+=============================================================================<br>
 ## Game Features:
 - Support online and offline game play.
 - Support 3 languages. (English, French, Russian). 
