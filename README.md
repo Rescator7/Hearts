@@ -7,10 +7,9 @@ The card game Hearts for QT 5 or 6, and liballegro 5 (for sounds support)
   <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"/></a>
 <br>
 <p>Alternatively, you can download an AppImage from:</p>
-**Linux AppImage (version 1.9)** available here:  
-- https://www.appimagehub.com/p/1275760/ 
-- https://www.pling.com/p/1275760/  
-- https://www.opendesktop.org/p/1275760/
+https://www.appimagehub.com/p/1275760/<br>
+https://www.pling.com/p/1275760/<br>
+https://www.opendesktop.org/p/1275760/<br>
 <p>Or see below "How to build the source code" on your computer.</p>
 
 =============================================================================<br>
