@@ -9,7 +9,7 @@ The card game Hearts for QT 5 or 6, and liballegro 5 (for sounds support)
 <p>Alternatively, you can download an AppImage from:</p>
 https://www.appimagehub.com/p/1275760/<br>
 https://www.pling.com/p/1275760/<br>
-https://www.opendesktop.org/p/1275760/<br>
+https://www.opendesktop.org/p/1275760/<br><br>
 <p>Or see below "How to build the source code" on your computer.</p>
 
 =============================================================================<br>
