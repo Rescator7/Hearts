@@ -13,8 +13,8 @@ https://www.opendesktop.org/p/1275760/<br><br>
 <p>Or see below "How to build the source code" on your computer.</p>
 
 =============================================================================<br>
-<b>NEW !</b><br>
-<p>A complete overhaul of Hearts, based on Qt6, is available and ready for testing in Hearts 2.0 RC2. Please read the warning at the link below:</p>
+<b>NEW ! Hearts 2.0</b><br>
+<p>A complete overhaul of Hearts, based on Qt6, is available.</p>
 <a href="https://github.com/Rescator7/Hearts2">https://github.com/Rescator7/Hearts2</a>
 =============================================================================<br>
 
