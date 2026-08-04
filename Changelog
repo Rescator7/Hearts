@@ -243,3 +243,8 @@
              https://github.com/Rescator7/Hearts/pull/7
 06 Dec 2025: Fixed Qt6 compiling warning
              https://github.com/Rescator7/Hearts/pull/8
+
+04 Aug 2026: Version 1.9.7
+-------------------------------------------------------------------------------------------------
+03 Aug 2026: Fixed compiling directive. (issue trying to compile without ONLINE_PLAY)
+04 Aug 2026: Merged https://github.com/Rescator7/Hearts/pull/11

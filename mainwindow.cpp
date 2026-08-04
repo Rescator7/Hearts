@@ -2964,10 +2964,12 @@ void MainWindow::on_actionShow_direction_triggered()
   bool disable = true;
 
 #ifdef ONLINE_PLAY
-  if (online_connected && !online_playing) disable = false;
-#endif // ONLINE_PLAY
+  if (online_connected) {
+    if (!online_playing) disable = false;
+  } 
   else
-  if (!online_connected && !hearts->is_mode_playing()) disable = false;
+#endif // ONLINE_PLAY
+  if (!hearts->is_mode_playing()) disable = false;
 
   set_show_direction(disable);
 }
